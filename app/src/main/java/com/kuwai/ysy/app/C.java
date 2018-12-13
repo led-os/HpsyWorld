@@ -87,4 +87,8 @@ public class C {
     public static final int DY_TXT = 0;//纯文本
     public static final int DY_PIC = 1;//图片
     public static final int DY_FILM = 2;//视频
+
+
+    //通知
+    public static final int MSG_LOGIN = 0x0000010;
 }

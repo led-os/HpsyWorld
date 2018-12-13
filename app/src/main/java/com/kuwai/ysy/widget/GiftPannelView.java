@@ -18,13 +18,14 @@ import com.kuwai.ysy.bean.Model;
 import com.kuwai.ysy.callback.GiftClickCallback;
 import com.kuwai.ysy.module.chat.adapter.GridViewAdapter;
 import com.kuwai.ysy.module.chat.adapter.ViewPagerAdapter;
+import com.kuwai.ysy.module.find.bean.GiftPopBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GiftPannelView extends RelativeLayout {
 
-    private List<Model> mDataList;//数据集合；
+    private List<GiftPopBean.DataBean> mDataList = new ArrayList<>();//数据集合；
     private ViewPager viewPager;
     private LinearLayout idotLayout;//知识圆点
     private List<View> mPagerList;//页面集合
@@ -71,17 +72,12 @@ public class GiftPannelView extends RelativeLayout {
         this.giftClickCallback = clickCallBack;
     }
 
-    private void initValues(Context mContext) {
+    public void setData(List<GiftPopBean.DataBean> data, Context context) {
+        mDataList = data;
+        initValues(context);
+    }
 
-        mDataList = new ArrayList<>();
-        //初始化图标资源
-        for (int i = 0; i < 18; i++) {
-            Drawable imageId = mContext.getResources().getDrawable(R.drawable.gift6);
-            Model model = new Model();
-            model.setImage(imageId);
-            model.setMoney("520钻石");
-            mDataList.add(model);
-        }
+    private void initValues(Context mContext) {
 
         mInflater = LayoutInflater.from(mContext);
         //总的页数=总数/每页数量，并取整
@@ -102,7 +98,7 @@ public class GiftPannelView extends RelativeLayout {
                         giftClickCallback.giftClick(position);
                     }
                     for (int i = 0; i < mDataList.size(); i++) {
-                        Model model = mDataList.get(i);
+                        GiftPopBean.DataBean model = mDataList.get(i);
                         if (i == id) {
                             if (model.isSelected()) {
                                 model.setSelected(false);
@@ -121,7 +117,10 @@ public class GiftPannelView extends RelativeLayout {
         }
 
         viewPager.setAdapter(new ViewPagerAdapter(mPagerList, mContext));
-        setOvalLayout();
+        if (mDataList.size() > 0) {
+            setOvalLayout();
+        }
+
     }
 
     /**

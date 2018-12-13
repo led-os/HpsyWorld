@@ -16,6 +16,7 @@ import com.kuwai.ysy.R;
 import com.kuwai.ysy.bean.Model;
 import com.kuwai.ysy.module.chat.adapter.GridViewAdapter;
 import com.kuwai.ysy.module.chat.adapter.ViewPagerAdapter;
+import com.kuwai.ysy.module.find.bean.GiftPopBean;
 import com.rayhahah.dialoglib.CustomDialog;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import java.util.List;
 
 public class GiftDialog extends CustomDialog{
 
-    private List<Model> mDataList;//数据集合；
+    private List<GiftPopBean.DataBean> mDataList;//数据集合；
     private ViewPager viewPager;
     private LinearLayout idotLayout;//知识圆点
     private List<View> mPagerList;//页面集合
@@ -53,7 +54,7 @@ public class GiftDialog extends CustomDialog{
 
     private void initValues(Context mContext) {
 
-        mDataList = new ArrayList<>();
+      /*  mDataList = new ArrayList<>();
         //初始化图标资源
         for (int i = 0; i < 18; i++) {
             Drawable imageId = mContext.getResources().getDrawable(R.drawable.gift6);
@@ -61,7 +62,7 @@ public class GiftDialog extends CustomDialog{
             model.setImage(imageId);
             model.setMoney("520钻石");
             mDataList.add(model);
-        }
+        }*/
 
         mInflater = LayoutInflater.from(mContext);
         //总的页数=总数/每页数量，并取整
@@ -79,7 +80,7 @@ public class GiftDialog extends CustomDialog{
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     for (int i = 0; i < mDataList.size(); i++) {
-                        Model model = mDataList.get(i);
+                        GiftPopBean.DataBean model = mDataList.get(i);
                         if (i == id) {
                             if (model.isSelected()) {
                                 model.setSelected(false);

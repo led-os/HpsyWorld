@@ -19,6 +19,7 @@ import com.kuwai.ysy.module.find.adapter.CustomThemeAdapter;
 import com.kuwai.ysy.module.find.adapter.MoneyAdapter;
 import com.kuwai.ysy.module.find.adapter.PublishGiftAdapter;
 import com.kuwai.ysy.module.find.adapter.ThemeAdapter;
+import com.kuwai.ysy.module.find.bean.GiftPopBean;
 import com.kuwai.ysy.module.find.bean.HomeAppUavBean;
 import com.kuwai.ysy.module.find.bean.ThemeBean;
 import com.kuwai.ysy.module.find.bean.theme.DateTheme;
@@ -50,6 +51,8 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
     private List<DateTheme.DataBean.CustomHotBean> mThemeList = new ArrayList<>();
     private int mPos;
     private SuperButton btnNext;
+
+    private GiftPopBean giftPopBean;
 
     public static PublishInviteFragment newInstance() {
         Bundle args = new Bundle();
@@ -216,11 +219,13 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         mPresenter.getAllTheme("1");
+        mPresenter.getAllGifts();
     }
 
     @Override
     public void onItemAddClick() {
         GiftPannelView pannelView = new GiftPannelView(getActivity());
+        pannelView.setData(giftPopBean.getData(),getActivity());
         pannelView.setGiftClickCallBack(this);
         if (customDialog == null) {
             customDialog = new CustomDialog.Builder(getActivity())
@@ -246,6 +251,11 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
 //        mDataList.addAll(theme.getData().getCustom());
         mThemeList.addAll(theme.getData().getCustom_hot());
         themeAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setGifts(GiftPopBean popBean) {
+        giftPopBean = popBean;
     }
 
     @Override

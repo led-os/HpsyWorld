@@ -2,6 +2,7 @@ package com.kuwai.ysy.module.find.business.theme;
 
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.find.api.AppointApiFactory;
+import com.kuwai.ysy.module.find.bean.GiftPopBean;
 import com.kuwai.ysy.module.find.bean.theme.DateTheme;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
@@ -44,6 +45,23 @@ public class ThemeListPresenter extends RBasePresenter<ThemeListContract.ThemeLi
     }
 
     @Override
+    public void getAllGifts() {
+        addSubscription(AppointApiFactory.getAllGifts()
+                .subscribe(new Consumer<GiftPopBean>() {
+                    @Override
+                    public void accept(@NonNull GiftPopBean dateTheme) throws Exception {
+                        mView.dismissLoading();
+                        mView.setGifts(dateTheme);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        mView.showViewError(throwable);
+                    }
+                }));
+    }
+
+    @Override
     public void delCustomTheme(String uid, int sid) {
         addSubscription(AppointApiFactory.delCustomTheme(uid, sid)
                 .subscribe(new Consumer<SimpleResponse>() {
@@ -53,7 +71,7 @@ public class ThemeListPresenter extends RBasePresenter<ThemeListContract.ThemeLi
                         //mView.getAllThemes(dateTheme);
                         if (dateTheme.code == 200) {
                             mView.delSuccess();
-                        }else{
+                        } else {
                             ToastUtils.showShort("删除失败");
                         }
                     }
