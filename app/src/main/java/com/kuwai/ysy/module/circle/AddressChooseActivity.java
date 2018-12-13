@@ -86,7 +86,6 @@ public class AddressChooseActivity extends AppCompatActivity implements Location
     private String searchKey = "";
     private LatLonPoint searchLatlonPoint;
 
-
     private List<PoiItem> resultData;
 
     private SearchAddressAdapter searchResultAdapter;
