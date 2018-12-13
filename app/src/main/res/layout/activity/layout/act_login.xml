@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp">
+
+    <ImageView
+        android:id="@+id/img_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="14dp"
+        android:src="@drawable/sl_signin_ic_closed" />
+
+    <TextView
+        android:id="@+id/tv_regist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:padding="14dp"
+        android:text="注册"
+        android:textColor="#ff282838"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="100dp"
+        android:text="你好，\n欢迎来到鱼水缘"
+        android:textColor="#ff282838"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tv_tel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="50dp"
+        android:text="手机号"
+        android:textColor="#ff7b7b7b"
+        android:textSize="16sp" />
+
+    <com.kuwai.ysy.widget.MyEditText
+        android:id="@+id/et_tel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_tel"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="30dp"
+        android:layout_toRightOf="@+id/tv_tel"
+        android:background="@null"
+        android:gravity="bottom"
+        android:inputType="phone"
+        android:textColor="#ff282838"
+        android:textSize="20sp"
+        app:ic_delete="@drawable/sl_repa_ic_delete" />
+
+    <View
+        android:id="@+id/line1"
+        style="@style/horizontal_line"
+        android:layout_alignLeft="@+id/tv_tel"
+        android:layout_below="@+id/tv_tel"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/tv_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line1"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="30dp"
+        android:text="输入密码"
+        android:textColor="#ff7b7b7b"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/img_eye"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_code"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:src="@drawable/sl_login_ic_blink" />
+
+    <com.kuwai.ysy.widget.MyEditText
+        android:id="@+id/et_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_code"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@id/img_eye"
+        android:layout_toRightOf="@id/tv_code"
+        android:background="@null"
+        android:inputType="textPassword"
+        android:textColor="#ff282838"
+        android:textSize="20sp"
+        app:ic_delete="@drawable/sl_repa_ic_delete" />
+
+    <View
+        android:id="@+id/line2"
+        style="@style/horizontal_line"
+        android:layout_alignLeft="@id/tv_code"
+        android:layout_below="@id/tv_code"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/tv_forget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line2"
+        android:layout_marginLeft="34dp"
+        android:layout_marginTop="14dp"
+        android:text="忘记了？找回密码"
+        android:textColor="#ff282838"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/tv_login_by_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_forget"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="14dp"
+        android:text="验证码登录"
+        android:textColor="#ff282838"
+        android:textSize="13sp" />
+
+    <com.allen.library.SuperButton
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/tv_forget"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="20dp"
+        android:text="登录"
+        app:sCornersRadius="4dp"
+        app:sSelectorNormalColor="@color/theme"
+        app:sUseSelector="true"
+        android:enabled="false"
+        android:textColor="@color/white"
+        app:sSelectorDisableColor="@color/line_color"
+        android:textSize="16sp"
+        app:sSolidColor="@color/line_color" />
+
+    <ImageView
+        android:id="@+id/img_qq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="26dp"
+        android:src="@drawable/sl_sign_ic_qq" />
+
+    <ImageView
+        android:id="@+id/img_wechat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/img_qq"
+        android:layout_marginRight="56dp"
+        android:layout_toLeftOf="@id/img_qq"
+        android:src="@drawable/sl_sign_ic_wechat" />
+
+    <ImageView
+        android:id="@+id/img_sina"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/img_qq"
+        android:layout_marginLeft="56dp"
+        android:layout_toRightOf="@id/img_qq"
+        android:src="@drawable/sl_sign_ic_sina" />
+
+    <TextView
+        android:id="@+id/tv_third"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/img_qq"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:text="第三方登录"
+        android:textColor="#ff7b7b7b"
+        android:textSize="12sp" />
+
+    <View
+        style="@style/horizontal_line"
+        android:layout_above="@id/img_qq"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@id/tv_third" />
+
+    <View
+        style="@style/horizontal_line"
+        android:layout_above="@id/img_qq"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="70dp"
+        android:layout_toRightOf="@id/tv_third" />
+</RelativeLayout>

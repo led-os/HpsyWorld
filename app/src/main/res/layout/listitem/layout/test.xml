@@ -1,0 +1,265 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/top_lay"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        app:layout_scrollFlags="scroll">
+
+        <ImageView
+            android:id="@+id/left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/dyn_tree_ic_back" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="这件事想说很久了"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/right_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/dyn_tree_ic_more" />
+
+    </RelativeLayout>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_lay">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentScrim="@color/transparent"
+                app:expandedTitleMarginEnd="48dp"
+                app:expandedTitleMarginStart="48dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+
+                <LinearLayout
+                    android:id="@+id/head_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_collapseMode="pin"
+                    app:layout_collapseParallaxMultiplier="0.7">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/corner_no_bottom"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/img_head"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/beau_girl" />
+
+                        <TextView
+                            android:id="@+id/tv_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_toRightOf="@id/img_head"
+                            android:text="匿名用户"
+                            android:textColor="@color/balck_28"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tv_name"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_toRightOf="@id/img_head"
+                            android:text="发布于2018.12.15 | 4563人看过"
+                            android:textColor="@color/grey_bd"
+                            android:textSize="14sp" />
+
+                        <com.allen.library.SuperButton
+                            android:layout_width="66dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="10dp"
+                            android:text="私聊"
+                            android:textColor="@color/theme"
+                            android:textSize="15sp"
+                            app:sCornersRadius="14dp"
+                            app:sSolidColor="@color/white"
+                            app:sStrokeColor="@color/theme"
+                            app:sStrokeWidth="1px" />
+
+                        <TextView
+                            android:id="@+id/tv_tile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/img_head"
+                            android:layout_marginTop="18dp"
+                            android:text="这件事想说很久了"
+                            android:textColor="@color/balck_28"
+                            android:textSize="16sp" />
+
+                        <View
+                            android:id="@+id/line1"
+                            style="@style/horizontal_line"
+                            android:layout_below="@id/tv_tile"
+                            android:layout_marginTop="16dp" />
+
+                        <TextView
+                            android:id="@+id/container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/line1"
+                            android:layout_marginTop="16dp"
+                            android:text="我们欠了很多钱，房子车子甚至家里的金器全卖光了，现在还欠外面600多万。老公已经是黑户，我自己信用卡逾期20多万，三个月没还了。但是这已经是...我们欠了很多钱，房子车子甚至家里的金器全卖光了，现在还欠外面600多万。老公已经是黑户，我自己信用卡逾期20多万，三个月没还了。但是这已经是...我们欠了很多钱，房子车子甚至家里的金器全卖光了，现在还欠外面600多万。老公已经是黑户，我自己信用卡逾期20多万，三个月没还了。但是这已经是..."
+                            android:textColor="#cc282828"
+                            android:textSize="15sp" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_below="@id/container"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:background="@color/line_color" />
+                </LinearLayout>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+
+            <RadioGroup
+                android:id="@+id/main_radiogroup"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:orientation="horizontal"
+                app:layout_scrollFlags="scroll">
+
+                <RadioButton
+                    android:id="@+id/radio_dashang"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radiobutton_background"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="打赏(20)"
+                    android:textColor="@color/radio_color"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_reward"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radiobutton_background"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="评论(10)"
+                    android:textColor="@color/radio_color"
+                    android:textSize="16sp" />
+
+            </RadioGroup>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nsv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:fillViewport="true"
+            android:scrollbars="none"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <com.kuwai.ysy.widget.ResetHeightViewpager
+                android:id="@+id/main_vp_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.design.widget.CoordinatorLayout>
+
+    <com.allen.library.SuperButton
+        android:id="@+id/dialog_comment_bt"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/top"
+        android:text="提交"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:sGradientEndColor="#bfb5ea"
+        app:sGradientOrientation="LEFT_RIGHT"
+        app:sGradientStartColor="#9a7df7"
+        app:sGradientType="linear" />
+
+    <LinearLayout
+        android:id="@+id/bottom_lay"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white"
+        android:elevation="2dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/detail_page_do_comment"
+            android:layout_width="0dp"
+            android:layout_height="34dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/comment_bt_selector"
+            android:gravity="center_vertical"
+            android:paddingLeft="18dp"
+            android:text="说点什么吧..."
+            android:textColor="#B6B6B6"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+</RelativeLayout>

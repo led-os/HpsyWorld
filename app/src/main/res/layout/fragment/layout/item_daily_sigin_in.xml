@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:text="今天"
+        android:textColor="#ffffff"
+        android:textSize="13sp" />
+
+    <LinearLayout
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="9dp"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/center_ic_no" />
+
+        <View
+            android:layout_width="36dp"
+            android:layout_height="1dp"
+            android:background="#FDF294" />
+    </LinearLayout>
+
+</LinearLayout>

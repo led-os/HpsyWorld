@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.kuwai.ysy.widget.NavigationLayout
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:rightTxt="实名作用？"
+            app:rightColor="@color/theme"
+            app:title1="实名认证"></com.kuwai.ysy.widget.NavigationLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/center_aut_img_banner_1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#0d4E05FF"
+            android:padding="8dp"
+            android:text="请拍摄并上传你的身份证"
+            android:textColor="#ff5415f9"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingStart="21dp"
+            android:paddingTop="13dp"
+            android:paddingEnd="21dp"
+            android:paddingBottom="13dp">
+
+            <ImageView
+                android:id="@+id/iv_ID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/center_aut_add" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/center_aut_img_1" />
+
+            <ImageView
+                android:id="@+id/iv_hand_ID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_ID"
+                android:layout_marginTop="27dp"
+                android:src="@drawable/center_aut_add" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/iv_hand_ID"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/center_aut_img_2" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#0d4E05FF"
+            android:padding="8dp"
+            android:text="以上信息仅供此次认证使用，将严格保密"
+            android:textColor="#ff5415f9"
+            android:textSize="14sp" />
+
+        <EditText
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="输入你的真实姓名"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</ScrollView>

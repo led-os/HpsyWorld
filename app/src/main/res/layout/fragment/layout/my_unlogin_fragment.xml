@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:id="@+id/rl_unlogin"
+        android:layout_width="match_parent"
+        android:layout_height="144dp">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_gravity="bottom"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/user_headicon_default"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="11dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/center_img_user_default" />
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/tv_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:layout_marginTop="13dp"
+                android:layout_toEndOf="@+id/user_headicon_default"
+                android:text="未登录"
+                android:textColor="#282828"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="9dp"
+                android:layout_marginTop="18dp"
+                android:layout_toEndOf="@+id/tv_text"
+                android:src="@drawable/center_ic_vip_default" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_text"
+                android:layout_marginStart="17dp"
+                android:layout_marginTop="2dp"
+                android:layout_toEndOf="@+id/user_headicon_default"
+                android:text="ID:000000"
+                android:textColor="#ffbdbdbd"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/center_img_xxx_default">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_alignParentBottom="true"
+                android:background="#ccffffff"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/center_ic_list_arrow"
+                    android:text="登录后查看主页"
+                    android:textColor="#ff7b7b7b"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_hearder_zise" />
+
+        <LinearLayout
+            android:id="@+id/rl_search"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp">
+
+            <RelativeLayout
+                android:layout_width="280dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/shape_found_edit">
+
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_text_search" />
+
+                <com.kuwai.ysy.widget.MyEditText
+                    android:id="@+id/et_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/img"
+                    android:background="@null"
+                    android:hint="搜索活动名称、约会主题"
+                    android:paddingRight="10dp"
+                    android:textColor="#66ffffff"
+                    android:textColorHint="#66ffffff"
+                    android:textSize="14sp"
+                    app:delete_height="48"
+                    app:delete_width="48" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableStart="@drawable/ic_nav_dingwei"
+                android:gravity="center_vertical"
+                android:text="苏州"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <com.kuwai.ysy.widget.BannerLayout
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_below="@+id/rl_search"
+            app:autoPlaying="true"
+            app:centerScale="1.3"
+            app:itemSpace="30"
+            app:moveSpeed="1.8" />
+
+
+        <RelativeLayout
+            android:id="@+id/iv_huaban"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/banner"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/bg_img_huaban">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_img_zouma"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="215dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/shape_found_text">
+
+                    <com.kuwai.ysy.widget.TextBannerView
+                        android:id="@+id/tv_banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="24dp"
+                        android:background="@color/transparent"
+                        app:setGravity="center"
+                        app:setSingleLine="true"
+                        app:setTextColor="#ccffffff"
+                        app:setTextSize="13sp" />
+                </LinearLayout>
+                <!--<com.allen.library.SuperButton-->
+                <!--android:layout_width="215dp"-->
+                <!--android:layout_height="24dp"-->
+                <!--android:background="#66804379"-->
+                <!--android:text="走马灯"-->
+                <!--android:textColor="#ccffffff"-->
+                <!--app:sCornersRadius="12dp" />-->
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/bg_user_head"
+                android:gravity="center">
+
+                <com.allen.library.CircleImageView
+                    android:id="@+id/iv_headicon"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginTop="4.5dp"
+                    android:src="@drawable/icon" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/find_bg_img_right" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/iv_huaban"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="16dp"
+            android:drawableStart="@drawable/ic_list_tab"
+            android:text="同城相约"
+            android:textColor="@color/balck_28"
+            android:textSize="@dimen/sp_18"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_city_meet_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/iv_huaban"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="16dp"
+            android:drawableEnd="@drawable/ic_list_jinru_pressed"
+            android:gravity="center_vertical"
+            android:text="更多"
+            android:textColor="#bdbdbd"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_city"
+            android:layout_width="match_parent"
+            android:layout_height="203dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tv_city"
+            android:layout_marginTop="19dp">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/tv_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/rv_city"
+            android:layout_marginStart="15dp"
+            android:drawableStart="@drawable/ic_list_tab"
+            android:text="脱单活动"
+            android:textColor="@color/balck_28"
+            android:textSize="@dimen/sp_18"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_tuodan_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/rv_city"
+            android:layout_marginEnd="15dp"
+            android:drawableEnd="@drawable/ic_list_jinru_pressed"
+            android:gravity="center_vertical"
+            android:text="更多"
+            android:textColor="#bdbdbd"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_activity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_activity">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
+</ScrollView>

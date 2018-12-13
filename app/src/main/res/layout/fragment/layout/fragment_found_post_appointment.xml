@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rightTxt="发布"
+        app:rightColor="@color/colorPrimary"
+        app:title1="填写信息">
+
+    </com.kuwai.ysy.widget.NavigationLayout>
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/tv_time"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:paddingStart="6dp"
+        app:sLeftTextSize="@dimen/sp_16"
+        app:sLeftTextString="约会时间"
+        app:sRightIconRes="@drawable/ic_list_enter"
+        app:sRightTextColor="#bdbdbd"
+        app:sRightTextSize="@dimen/sp_14"
+        app:sRightTextString="选择时间">
+
+    </com.allen.library.SuperTextView>
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/tv_address"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:paddingStart="6dp"
+        app:sLeftTextSize="@dimen/sp_16"
+        app:sLeftTextString="约会地点"
+        app:sRightIconRes="@drawable/ic_list_enter"
+        app:sRightTextColor="#bdbdbd"
+        app:sRightTextSize="@dimen/sp_14"
+        app:sRightTextString="选择地点">
+
+    </com.allen.library.SuperTextView>
+
+    <RelativeLayout
+        android:id="@+id/rl_object"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:textColor="@color/balck_28"
+            android:text="约会对象"
+            android:textSize="@dimen/sp_16" />
+
+        <RadioGroup
+            android:id="@+id/sex_rg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/no_limit_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_color_radiobutton_selector"
+                android:button="@color/transparent"
+                android:padding="6dp"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/colorPrimary"
+                android:text="不限" />
+
+            <RadioButton
+                android:id="@+id/male_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_color_radiobutton_selector"
+                android:button="@color/transparent"
+                android:padding="6dp"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/colorPrimary"
+                android:text="男" />
+
+            <RadioButton
+                android:id="@+id/famale_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_color_radiobutton_selector"
+                android:button="@color/transparent"
+                android:padding="6dp"
+                android:textColor="@color/colorPrimary"
+                android:text="女" />
+        </RadioGroup>
+
+    </RelativeLayout>
+
+    <View style="@style/horizontal_line" />
+
+    <RelativeLayout
+        android:id="@+id/rl_paypal"
+        android:layout_width="match_parent"
+        android:layout_height="53dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:text="消费类型"
+            android:textColor="@color/balck_28"
+            android:textSize="@dimen/sp_16" />
+
+        <RadioGroup
+            android:id="@+id/pay_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/aa_pay_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_color_radiobutton_selector"
+                android:button="@color/transparent"
+                android:padding="6dp"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/colorPrimary"
+                android:text="AA" />
+
+            <RadioButton
+                android:id="@+id/my_pay_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_color_radiobutton_selector"
+                android:button="@color/transparent"
+                android:padding="6dp"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/colorPrimary"
+                android:text="我买单" />
+
+            <RadioButton
+                android:id="@+id/you_pay_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_color_radiobutton_selector"
+                android:button="@color/transparent"
+                android:padding="6dp"
+                android:textColor="@color/colorPrimary"
+                android:text="你买单" />
+        </RadioGroup>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="@dimen/dp_18"
+        android:text="邀约寄语"
+        android:textColor="@color/balck_28"
+        android:textSize="@dimen/sp_16" />
+
+    <EditText
+        android:padding="10dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:gravity="top|start"
+        android:hint="给你们的约会来句寄语吧～"
+        android:paddingStart="16dp"
+        android:textSize="@dimen/sp_16" />
+
+</LinearLayout>

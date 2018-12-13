@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title1="我的钱包"
+        app:rightColor="@color/theme"
+        app:rightTxt="钱包明细"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/center_mark_img_money" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="现金总额(元)"
+            android:textColor="#ff282828"
+            android:textSize="16sp" />
+
+        <TextView
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="13789.0"
+            android:textColor="#ff5415f9"
+            android:textSize="30sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="3dp"
+        android:background="@android:color/white">
+
+        <LinearLayout
+            android:id="@+id/my_yubi"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="我的鱼币"
+                android:textColor="#ff282828"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_yubi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="1500"
+                android:textColor="#ff5415f9"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:background="#eeeeee" />
+
+        <LinearLayout
+            android:id="@+id/my_cash"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="金额可提现"
+                android:textColor="#ff282828"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_cash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="1500"
+                android:textColor="#ff5415f9"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.allen.library.SuperButton
+        android:id="@+id/sb_recharge"
+        android:layout_width="300dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="21dp"
+        android:text="充值"
+        android:textColor="#ff5415f9"
+        android:textSize="18sp"
+        app:sCornersRadius="2dp"
+        app:sSolidColor="@android:color/transparent"
+        app:sStrokeColor="#4E05FF"
+        app:sStrokeWidth="1dp" />
+
+    <Button
+        android:id="@+id/btn_cash"
+        android:layout_width="300dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/money_cash_btn"
+        android:text="提现"
+        android:textColor="#ffffffff"
+        android:textSize="18sp" />
+
+</LinearLayout>

@@ -1,0 +1,183 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="SplashTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/theme</item>
+        <item name="colorPrimaryDark">@color/theme</item>
+        <item name="colorAccent">@color/theme</item>
+    </style>
+
+    <style name="BeautyLevelBtnStyle">
+        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:background">@drawable/alivc_beauty_default_bt_selector</item>
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">14dp</item>
+    </style>
+
+    <declare-styleable name="QuViewPagerSlidingTabStrip">
+        <attr name="pstsIndicatorColor" format="color" />
+        <attr name="pstsUnderlineColor" format="color" />
+        <attr name="pstsDividerColor" format="color" />
+        <attr name="pstsIndicatorHeight" format="dimension" />
+        <attr name="pstsUnderlineHeight" format="dimension" />
+        <attr name="pstsDividerPadding" format="dimension" />
+        <attr name="pstsIndicatorPadding" format="dimension" />
+        <attr name="pstsTabPaddingLeftRight" format="dimension" />
+        <attr name="pstsScrollOffset" format="dimension" />
+        <attr name="pstsTabBackground" format="reference" />
+        <attr name="pstsShouldExpand" format="boolean" />
+        <attr name="pstsTextAllCaps" format="boolean" />
+    </declare-styleable>
+
+    <!-- 美颜底部tab style-->
+    <style name="BeautyChangeTabStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:button">@null</item>
+        <item name="android:drawableBottom">@drawable/alivc_beauty_level_tab_checked</item>
+        <item name="android:drawablePadding">6dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/alivc_beauty_level_text_selector</item>
+    </style>
+
+    <style name="bottom_dialog_animation">
+        <item name="android:windowEnterAnimation">@anim/aliyun_video_anim_trans_from_bottom</item>
+        <item name="android:windowExitAnimation">@anim/aliyun_video_anim_layout_bottom_out</item>
+    </style>
+
+    <style name="QUDemoFullStyle" parent="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="AppFullTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="BottomSheetEdit" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+
+    <style name="popWindow_animation">
+        <item name="android:windowEnterAnimation">@anim/window_in</item>
+        <item name="android:windowExitAnimation">@anim/window_out</item>
+    </style>
+
+    <style name="mine_regist_style">
+        <item name="android:textColor">@color/balck_28</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:drawablePadding">6dp</item>
+    </style>
+
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">18dp</item>
+    </style>
+
+    <style name="horizontal_line">
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/line_color</item>
+    </style>
+
+    <!--白天主题颜色-->
+    <style name="AppDayTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimaryDay</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDayDark</item>
+        <item name="colorAccent">@color/colorPrimaryDayAccent</item>
+        <!--<item name="android:background">@color/transparent</item>-->
+        <!--<item name="android:windowIsTranslucent">false</item>-->
+        <!--<item name="android:windowBackground">@color/transparent</item>-->
+        <item name="colorTextLight">@color/colorDayTextLight</item>
+        <item name="colorTextDark">@color/colorDayTextDark</item>
+        <item name="colorBg">@color/colorDayBg</item>
+        <item name="colorBgDark">@color/colorDayBgDark</item>
+
+        <item name="drawableRefresh">@drawable/ic_svg_refresh_day_bg_24</item>
+        <item name="drawableArrowRight">@drawable/ic_svg_arrow_right_day_bg_dark_24</item>
+    </style>
+
+    <!--夜晚主题颜色-->
+    <style name="AppNightTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimaryNight</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryNightDark</item>
+        <item name="colorAccent">@color/colorPrimaryNightAccent</item>
+        <!--<item name="android:background">@color/transparent</item>-->
+        <!--<item name="android:windowIsTranslucent">false</item>-->
+        <!--<item name="android:windowBackground">@color/transparent</item>-->
+        <item name="colorTextLight">@color/colorNightTextDark</item>
+        <item name="colorTextDark">@color/colorNightTextLight</item>
+        <item name="colorBg">@color/colorNightBg</item>
+        <item name="colorBgDark">@color/colorNightBgDark</item>
+
+        <item name="drawableRefresh">@drawable/ic_svg_refresh_night_bg_24</item>
+        <item name="drawableArrowRight">@drawable/ic_svg_arrow_right_night_bg_dark_24</item>
+    </style>
+
+    <style name="MultipleStatusView" />
+
+    <style name="MultipleStatusView.Content">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:textColor">#a9b7b7</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="CustomPopWindowStyle">
+        <item name="android:windowEnterAnimation">@anim/window_in</item>
+        <item name="android:windowExitAnimation">@anim/window_out</item>
+    </style>
+
+    <!--录制模块的UI配置（专业版）-->
+    <style name="AlivcRecordUIStyle" parent="Theme.AppCompat.NoActionBar">
+        <!--闪光灯按钮图片 - 自动-->
+        <item name="lightImageAuto">@mipmap/aliyun_svideo_icon_magic_light_auto</item>
+        <!--闪光灯按钮图片 - 关闭-->
+        <item name="lightImageClose">@mipmap/aliyun_svideo_icon_magic_light_off</item>
+        <!--闪光灯按钮图片 - 不可用/与关闭的图标相同自动加color过滤-->
+        <item name="lightImageUnable">@mipmap/aliyun_svideo_icon_magic_light_off</item>
+        <!--切换摄像头的图片-->
+        <item name="switchCameraImage">@mipmap/alivc_svideo_icon_magic_turn</item>
+        <!--完成的按钮图片 - 不可用-->
+        <item name="finishImageUnable">@mipmap/alivc_svideo_icon_next_not_ready</item>
+        <!--完成的按钮图片 - 可用-->
+        <item name="finishImageAble">@mipmap/alivc_svideo_icon_next_complete</item>
+        <!--底部滤镜，美颜，美肌对应的按钮图片-->
+        <item name="faceImage">@mipmap/alivc_svideo_icon_beauty_face</item>
+        <!--底部动图mv对应的按钮图片-->
+        <item name="magicImage">@mipmap/alivc_svideo_icon_gif_effect</item>
+        <!--拍摄按钮图片 - 未开始拍摄-->
+        <item name="videoShootImageNormal">@mipmap/alivc_svideo_bg_record_storp</item>
+        <!--拍摄按钮图片 - 拍摄中-->
+        <item name="videoShootImageShooting">@mipmap/alivc_svideo_bg_record_pause</item>
+        <!--拍摄按钮图片 - 长按中-->
+        <item name="videoShootImageLongPressing">@mipmap/alivc_svideo_bg_record_start</item>
+        <!--回删对应的图片-->
+        <item name="deleteImage">@mipmap/alivc_svideo_icon_delete</item>
+        <!--拍摄中红点对应的图片-->
+        <item name="dotImage">@mipmap/alivc_svideo_record_time_tip</item>
+        <!--向上的三角形对应的图片-->
+        <item name="triangleImage">@mipmap/alivc_svideo_icon_selected_indicator</item>
+
+    </style>
+</resources>

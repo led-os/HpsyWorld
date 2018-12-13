@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_city"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <RelativeLayout
+        android:id="@+id/rl_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <AutoCompleteTextView
+            android:id="@+id/search"
+            android:layout_width="fill_parent"
+            android:layout_height="32.0dip"
+            android:layout_marginLeft="16.0dip"
+            android:layout_marginRight="16.0dip"
+            android:layout_marginTop="8.0dip"
+            android:background="@drawable/sp_r16_f0f2f5"
+            android:drawableLeft="@drawable/icon_search_gray_32_32"
+            android:drawablePadding="3.0dip"
+            android:dropDownVerticalOffset="12.0dip"
+            android:dropDownWidth="fill_parent"
+            android:hint="@string/city_search_hint"
+            android:includeFontPadding="false"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:paddingLeft="16.0dip"
+            android:popupBackground="@color/white"
+            android:scrollbars="none"
+            android:textColor="@color/balck_28"
+            android:textColorHint="@color/gray_7b"
+            android:textSize="@dimen/dp_13" />
+
+        <RelativeLayout
+            android:id="@+id/ll_line"
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dip"
+            android:layout_below="@id/search"
+            android:layout_marginTop="11.5dip"
+            android:background="@color/line_color" />
+
+        <TextView
+            android:id="@+id/search_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="48.0dip"
+            android:text="@string/hint_city_search_empty"
+            android:textColor="@color/grey_bd"
+            android:textSize="@dimen/dp_13"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_search_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/rl_search"
+        android:background="@color/white">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_province"
+            android:layout_width="85.0dip"
+            android:layout_height="fill_parent" />
+
+        <FrameLayout
+            android:id="@+id/rl_content"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_toRightOf="@id/rv_province" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fl_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <com.kuwai.ysy.widget.NavigationLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            app:title1="首页"></com.kuwai.ysy.widget.NavigationLayout>
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/myText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            app:sLeftTextString="你在哪"
+            app:sRightTextString="我在家"></com.allen.library.SuperTextView>
+
+        <com.kuwai.ysy.widget.MyEditText
+            android:layout_width="200dp"
+            android:layout_height="56dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="310dp"
+            android:hint="用户名"
+            android:paddingLeft="0dp"
+            android:singleLine="true"
+            android:visibility="gone"
+            android:textSize="16sp"
+            app:left_text="用户名" />
+
+        <com.kuwai.ysy.widget.MyEditText
+            android:layout_width="200dp"
+            android:layout_height="56dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="410dp"
+            android:hint="用户名"
+            android:paddingLeft="0dp"
+            android:visibility="gone"
+            android:singleLine="true"
+            android:textSize="16sp"
+            app:left_text="密码" />
+    </LinearLayout>
+
+</FrameLayout>

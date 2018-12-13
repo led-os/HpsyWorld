@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
+
+    <ImageView
+        android:id="@+id/iv_headicon"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_centerVertical="true"
+        android:src="@color/colorAccent" />
+
+    <TextView
+        android:id="@+id/tv_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/iv_headicon"
+        android:text="风停停走走"
+        android:textColor="#ff282828"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/iv_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_toEndOf="@+id/tv_nickname"
+        android:src="@drawable/center_ic_head_pressed" />
+
+    <ImageView
+        android:id="@+id/iv_vip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_toEndOf="@+id/iv_sex"
+        android:src="@drawable/center_ic_head_pressed" />
+
+    <TextView
+        android:id="@+id/tv_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_nickname"
+        android:layout_alignStart="@+id/tv_nickname"
+        android:layout_marginTop="5dp"
+        android:text="屏蔽于 2018-09-27 09:50"
+        android:textColor="#ffbdbdbd"
+        android:textSize="13sp" />
+
+    <com.allen.library.SuperButton
+        android:layout_width="65dp"
+        android:layout_height="28dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:text="移除"
+        android:textColor="#4e05ff"
+        android:textSize="14sp"
+        app:sCornersRadius="2dp"
+        app:sSolidColor="@android:color/transparent"
+        app:sStrokeColor="#4E05FF"
+        app:sStrokeWidth="1dp" />
+
+</RelativeLayout>

@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">鱼水缘</string>
+
+    <string name="tab_home">首页</string>
+    <string name="tab_action">动态</string>
+    <string name="tab_chat">聊天</string>
+    <string name="tab_near">发现</string>
+    <string name="tab_mine">我的</string>
+
+    <string name="version_name">版本号</string>
+    <string name="example_version_name">1.0.0</string>
+    <string name="version_code">版本码</string>
+    <string name="example_version_code">1</string>
+    <string name="version_desc">内容</string>
+    <string name="city_search_hint">输入城市名或拼音查询</string>
+    <string name="hint_city_search_empty">未搜索到符合的城市</string>
+    <string name="example_version_desc">1、功能全面优化\n 2、UI全面优化\n 3、适配多种机型</string>
+    <string name="example_version_time">2017年9月10日</string>
+    <string name="time">时间</string>
+    <string name="cancel">取消</string>
+    <string name="login">登陆</string>
+    <string name="mine_register_forget">忘记密码</string>
+    <string name="confirm">确认</string>
+    <string name="mine_login_hint">账号/手机号</string>
+    <string name="password">密码</string>
+    <string name="mine_register_now">立即注册</string>
+    <string name="mine_other_register_way">其他注册方式</string>
+
+    <string name="error_view_hint">加载失败</string>
+    <string name="no_network_view_hint">网络异常</string>
+    <string name="loading_text">加载中&#8230;</string>
+    <string name="no_network">请检查网络后点击重新加载</string>
+    <string name="data_error">数据获取失败(ㄒoㄒ)~~</string>
+    <string name="meetagree_text">茫茫人海中，希望你能够选中我。期待与你的约会！</string>
+    <string name="empty_view_hint">暂时木有内容呀~~</string>
+    <string name="login_error">你还没有登录呢，登录才能查看呢～</string>
+
+    <string name="language_cn">中文</string>
+    <string name="language_en">ENGLISH</string>
+    <string name="language_auto">自动</string>
+    <string name="language_traditional">繁體</string>
+
+    <string name="language_select">当前选择的语言: %s</string>
+
+
+    <string name="hello_world">你好，世界！</string>
+    <string name="aliyun_filter_null">原片</string>
+    <string name="aliyun_compose">合成中</string>
+    <string name="aliyun_no_free_memory">剩余磁盘空间不足</string>
+
+
+    <string name="alivc_tips_fine_tuning">点击可微调</string>
+    <string name="alivc_record_press">拍照</string>
+    <string name="alivc_phone_state_calling">通话中, 录制时静音</string>
+    <string name="alivc_beauty_level_advanced">高级</string>
+    <string name="alivc_beauty_level_normal">正常</string>
+    <string name="alivc_filter_none">无效果</string>
+    <string name="alivc_record_click">视频</string>
+    <string name="alivc_record_long_press">拍照</string>
+
+    <string name="duihuan_note">1.兑换须知：虚拟礼物可兑换实物，兑换实物则不可兑现。\n
+2.兑换流程：点击礼物，进入兑换操作页面，根据系统提示操作即可。\n
+3.注意事项：兑换的礼物真是有效，将会通过快递送达（江浙沪包邮，其他地区邮费自理）。\n
+4.自兑换起，48小时内为您发货，如遇特殊情况可能会有延迟。\n
+5.快递寄出礼物非质量问题，暂不支持退换。</string>
+</resources>

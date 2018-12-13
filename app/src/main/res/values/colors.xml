@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/theme</color>
+    <color name="colorPrimaryDark">@color/theme</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="theme">#6732f8</color>
+    <color name="bg_gray_06">#6732f8</color>
+    <!-- title 半透明背景颜色 -->
+    <color name="color_title_bg">#CCFFFFFF</color>
+    <!-- 默认背景色 -->
+    <color name="backgroundColor">#EEEEEE</color>
+    <color name="base_DCDCDC">#DCDCDC</color>
+
+    <color name="colorPrimaryDay">#C01E2F</color>
+    <color name="colorPrimaryDayDark">#A82828</color>
+    <color name="colorPrimaryDayAccent">#F65663</color>
+    <color name="colorDayTextLight">#B6B6BE</color>
+    <color name="colorDayTextDark">#444242</color>
+    <color name="colorDayBg">#FFFFFF</color>
+    <color name="colorDayBgDark">#ECECEC</color>
+
+    <color name="colorPrimaryNight">#600F17</color>
+    <color name="colorPrimaryNightDark">#600F17</color>
+    <color name="colorPrimaryNightAccent">#C01E2F</color>
+    <color name="colorNightTextLight">#8A8A8A</color>
+    <color name="colorNightTextDark">#545459</color>
+    <color name="colorNightBg">#2C2C2C</color>
+    <color name="colorNightBgDark">#1F1F1F</color>
+
+    <color name="blueLight">#4974FF</color>
+    <color name="lineColor_click">#1296db</color>
+    <color name="color_darker_gray">#aaa</color>
+    <color name="lineColor_unclick">#9b9b9b</color>
+    <color name="transparent">#00ffffff</color>
+    <color name="color_gray">#9a9a9a</color>
+    <color name="blue_be">#bbbeee</color>
+
+    <color name="gray_7b">#7b7b7b</color>
+    <color name="gray_f2">#f2f2f2</color>
+    <color name="gray_68">#686868</color>
+    <color name="gray_e6">#e6e6e6</color>
+    <color name="balck_28">#282828</color>
+    <color name="grey_bd">#bdbdbd</color>
+    <color name="line_color">#eeeeee</color>
+    <color name="divider">#ffd2d2d2</color>
+    <color name="bg_color_f4">#f4f4f4</color>
+    <color name="bg_theme_f6">#f6f3ff</color>
+    <color name="grey_ed">#ededed</color>
+
+    <color name="bg_chengyi">#ddd0fe</color>
+
+    <color name="text_theme">#b35415f9</color>
+    <color name="text_orange">#ff6161</color>
+    <color name="shadow">#f1ecff</color>
+
+    <color name="filter_solid_select">#ddd0fe</color>
+    <color name="filter_text_select">#5415f9</color>
+
+    <color name="city_bg">#33bdbdbd</color>
+    <color name="city_press">#b35415f9</color>
+    <color name="qupai_white_opacity_50pct">#80FFFFFF</color>
+    <color name="aliyun_record_fill_progress">#fff600</color>
+    <color name="aliyun_white_alpha_50">#7FFFFFFF</color>
+
+    <color name="alivc_chooser_indicator_bg">#B3000000 </color>
+    <color name="alivc_line_gray">#979797</color>
+    <color name="alivc_line_gray_light">#C3C5C6 </color>
+    <color name="alivc_chooser_pager_bg">#B3000000</color>
+    <color name="alivc_white">#FFFFFF</color>
+    <color name="alivc_beauty_level_height">#FFFFFF</color>
+    <color name="alivc_beauty_level_normal">#C3C5C6</color>
+    <color name="alivc_svideo_tab_indicator_color">#00C1DE</color>
+    <color name="effect_bg_color">#00C1DE</color>
+    <color name="alivc_svideo_gray">#C0C0C0</color>
+    <color name="aliyun_transparent">#00ffffff</color>
+    <color name="aliyun_color_record_duraton">#fd4646</color>
+    <color name="aliyun_colorPrimary">#3F51B5</color>
+    <color name="alivc_bg_record_time">#33FFFFFF</color>
+    <color name="aliyun_white">#FFF</color>
+
+    <color name="theme_light">#b7aceb</color>
+
+    <color name="vip_huangjin">#5415F9</color>
+    <color name="vip_baijin">#FF6161</color>
+    <color name="vip_zuanshi">#01AEF0</color>
+    <color name="vip_super">#D4B483</color>
+
+    <color name="huangjin">#ffe87c</color>
+    <color name="baoyin">#bdbdbd</color>
+    <color name="qingtong">#e4a13f</color>
+</resources>

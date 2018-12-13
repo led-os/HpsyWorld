@@ -1,0 +1,56 @@
+package com.kuwai.ysy.module.find.business.MyCommicDetail;
+
+import android.util.Log;
+
+import com.kuwai.ysy.module.find.api.FoundApiFactory;
+import com.kuwai.ysy.module.find.bean.BlindBean;
+import com.kuwai.ysy.module.find.bean.CommisDetailBean;
+import com.kuwai.ysy.module.find.bean.MyCommisDetailBean;
+import com.kuwai.ysy.module.find.business.CommisDetail.CommisDetailContract;
+import com.rayhahah.rbase.base.RBasePresenter;
+
+import io.reactivex.functions.Consumer;
+
+/**
+ * @author
+ * @time
+ * @tips 这个类是Object的子类
+ * @fuction
+ */
+public class MyCommisDetailPresenter extends RBasePresenter<MyCommisDetailContract.IHomeView> implements MyCommisDetailContract.IHomePresenter {
+    private static final String TAG ="MyCommisDetailPresenter";
+    public MyCommisDetailPresenter(MyCommisDetailContract.IHomeView view) {
+        super(view);
+    }
+
+
+    @Override
+    public void requestHomeData(int rid) {
+        addSubscription(FoundApiFactory.getMyCommisDetail(rid).subscribe(new Consumer<MyCommisDetailBean>() {
+            @Override
+            public void accept(MyCommisDetailBean myCommisDetailBean) throws Exception {
+                mView.setHomeData(myCommisDetailBean);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.i(TAG, "accept: "+throwable);
+            }
+        }));
+    }
+
+    @Override
+    public void getAgree(int rdid, int status) {
+        addSubscription(FoundApiFactory.sendMeetAgree(rdid,status).subscribe(new Consumer<BlindBean>() {
+            @Override
+            public void accept(BlindBean blindBean) throws Exception {
+                mView.setAgree(blindBean);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.i(TAG, "accept: "+throwable);
+            }
+        }));
+    }
+}

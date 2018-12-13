@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title1="全部提现"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/navigation"
+        android:layout_marginBottom="50dp"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <View style="@style/horizontal_line" />
+
+        <TextView
+            android:id="@+id/tv_transfee"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:gravity="center_vertical"
+            android:text="快递费¥：10鱼币"
+            android:textColor="#ff282838"
+            android:textSize="12sp" />
+
+        <com.allen.library.SuperButton
+            android:id="@+id/btn_duihuan"
+            android:layout_width="116dp"
+            android:layout_height="match_parent"
+            android:text="立即提现"
+            android:textColor="@color/white"
+            android:layout_alignParentRight="true"
+            android:textSize="16sp"
+            app:sGradientEndColor="#b35415F9"
+            app:sGradientOrientation="LEFT_RIGHT"
+            app:sGradientStartColor="#665415F9"
+            app:sGradientType="linear" />
+    </RelativeLayout>
+</RelativeLayout>

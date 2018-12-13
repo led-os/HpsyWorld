@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_cover"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/ic_find_nav_back" />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/ic_find_nav_more" />
+
+
+        <RelativeLayout
+            android:id="@+id/top_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="240dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/shape_elevation_radius"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/balck_28"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/tv_name"
+                android:layout_marginLeft="28dp"
+                android:layout_toRightOf="@id/tv_name"
+                android:textColor="@color/balck_28"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/tv_age"
+                android:layout_marginLeft="6dp"
+                android:layout_toRightOf="@id/tv_age" />
+
+            <TextView
+                android:id="@+id/tv_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_name"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/gray_7b"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_sign"
+                android:layout_marginBottom="14dp">
+
+
+                <com.allen.library.SuperButton
+                    android:id="@+id/btn_chengyi"
+                    android:layout_width="54dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="6dp"
+                    android:text="有诚意"
+                    android:textColor="@color/text_theme"
+                    android:textSize="14sp"
+                    android:visibility="invisible"
+                    app:sCornersRadius="4dp"
+                    app:sSolidColor="@color/white"
+                    app:sStrokeColor="@color/text_theme"
+                    app:sStrokeWidth="1dp" />
+
+                <com.allen.library.SuperButton
+                    android:id="@+id/btn_gift"
+                    android:layout_width="54dp"
+                    android:layout_height="24dp"
+                    android:layout_below="@id/tv_sign"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/btn_chengyi"
+                    android:text="有礼物"
+                    android:textColor="@color/text_orange"
+                    android:textSize="14sp"
+                    android:visibility="invisible"
+                    app:sCornersRadius="4dp"
+                    app:sSolidColor="@color/white"
+                    app:sStrokeColor="@color/text_orange"
+                    app:sStrokeWidth="1dp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <com.allen.library.CircleImageView
+            android:id="@+id/user_headicon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="210dp"
+            android:layout_marginRight="22dp"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="3dp" />
+
+        <LinearLayout
+            android:id="@+id/grid1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/top_lay"
+            android:divider="@drawable/divider"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingTop="20dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="20dp"
+            android:showDividers="middle">
+
+            <TextView
+                android:id="@+id/regist"
+                style="@style/mine_regist_style"
+                android:drawableTop="@drawable/ic_find_list_theme" />
+
+            <TextView
+                android:id="@+id/tv_regist_order"
+                style="@style/mine_regist_style"
+                android:drawableTop="@drawable/ic_find_list_time_commis" />
+
+            <TextView
+                android:id="@+id/tv_recharge"
+                style="@style/mine_regist_style"
+                android:drawableTop="@drawable/ic_find_list_position" />
+
+            <TextView
+                android:id="@+id/tv_award_detail"
+                style="@style/mine_regist_style"
+                android:drawableTop="@drawable/ic_find_list_contype" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/grid1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/line_color" />
+
+        <LinearLayout
+            android:id="@+id/grid2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line1"
+            android:divider="@drawable/divider"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingTop="20dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="20dp"
+            android:showDividers="middle">
+
+            <TextView
+                android:id="@+id/ap_ob"
+                style="@style/mine_regist_style"
+                android:drawableTop="@drawable/ic_find_list_sex" />
+
+            <TextView
+                android:id="@+id/ap_num"
+                style="@style/mine_regist_style"
+                android:drawableTop="@drawable/ic_find_list_number" />
+
+            <TextView
+                android:id="@+id/ap_gift"
+                style="@style/mine_regist_style"
+                android:drawableTop="@drawable/ic_find_list_gift"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/tv_more"
+                style="@style/mine_regist_style"
+                android:drawableTop="@drawable/ic_commis_list_more"
+                android:text="更多"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/grid2"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/line_color" />
+
+        <LinearLayout
+            android:id="@+id/lay_center"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_below="@+id/line2"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.kuwai.ysy.widget.PileLayout
+                android:id="@+id/round_head"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"></com.kuwai.ysy.widget.PileLayout>
+
+            <TextView
+                android:id="@+id/tv_info"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/tv_nick"
+                android:layout_toRightOf="@id/round_head"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textColor="@color/balck_28"
+                android:textSize="14sp" />
+
+            <com.allen.library.SuperButton
+                android:id="@+id/btn_commis"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp"
+                android:text="应约"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:sCornersRadius="4dp"
+                app:sGradientEndColor="#baa3ff"
+                app:sGradientOrientation="LEFT_RIGHT"
+                app:sGradientStartColor="#9f7cfb" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/lay_center"
+            android:background="@color/line_color" />
+    </RelativeLayout>
+</ScrollView>

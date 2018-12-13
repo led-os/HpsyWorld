@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:stv="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        stv:title1="聊天设置"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/alipay_stv"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="12dp"
+        stv:sDividerLineColor="@color/transparent"
+        stv:sLeftBottomTextColor="@color/grey_bd"
+        stv:sLeftBottomTextSize="13sp"
+        stv:sLeftBottomTextString="ID:123456"
+        stv:sLeftIconHeight="50dp"
+        stv:sLeftIconRes="@drawable/icon_person"
+        stv:sLeftIconWidth="50dp"
+        stv:sLeftTextColor="@color/balck_28"
+        stv:sLeftTextSize="16sp"
+        stv:sLeftTextString="胡大大"
+        stv:sLeftTvDrawableHeight="20dp"
+        stv:sLeftTvDrawableRight="@drawable/ic_user_woman"
+        stv:sLeftTvDrawableWidth="20dp"
+        stv:sLeftViewGravity="left_center"
+        stv:sRightIconRes="@drawable/ic_arrow_right" />
+
+    <View style="@style/horizontal_line" />
+
+    <View
+        style="@style/horizontal_line"
+        android:layout_marginTop="12dp" />
+
+    <TextView
+        android:id="@+id/tv_change_remark"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:text="设置备注"
+        android:textColor="@color/balck_28" />
+
+    <View style="@style/horizontal_line" />
+
+    <View
+        style="@style/horizontal_line"
+        android:layout_marginTop="12dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:text="加入黑名单"
+            android:textColor="@color/gray_7b" />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="16dp"
+            android:gravity="right" />
+    </LinearLayout>
+
+    <View style="@style/horizontal_line" />
+
+    <TextView
+        android:id="@+id/tv_report"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:text="举报"
+        android:textColor="@color/gray_7b" />
+
+    <View style="@style/horizontal_line" />
+</LinearLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title1="支付密码"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/st_set_payfor_psd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        app:sLeftTextColor="#282828"
+        app:sLeftTextSize="16sp"
+        app:sLeftTextString="设置支付密码"
+        app:sRightTvDrawableRight="@drawable/center_ic_list_arrow" />
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/st_change_payfor_psd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        app:sLeftTextColor="#282828"
+        app:sLeftTextSize="16sp"
+        app:sLeftTextString="修改支付密码"
+        app:sRightTvDrawableRight="@drawable/center_ic_list_arrow" />
+
+</LinearLayout>

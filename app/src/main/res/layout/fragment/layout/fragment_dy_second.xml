@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.kuwai.ysy.widget.CommentExpandableListView
+        android:id="@+id/ex_comment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="54dp"
+        android:background="@color/white"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none" />
+
+</RelativeLayout>
+

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rightTxt="保存"
+        app:rightColor="@color/theme"
+        app:title1="修改密码"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/st_current_psd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        app:sCenterTextString="sdasfafagagag"
+        app:sLeftTextColor="#282828"
+        app:sLeftTextSize="16sp"
+        app:sLeftTextString="当前密码" />
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/st_new_psd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        app:sCenterTextString="sdasfafagagag"
+        app:sLeftTextColor="#282828"
+        app:sLeftTextSize="16sp"
+        app:sLeftTextString="新密码" />
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/st_renew_psd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        app:sCenterTextString="sdasfafagagag"
+        app:sLeftTextColor="#282828"
+        app:sLeftTextSize="16sp"
+        app:sLeftTextString="确认新密码" />
+
+</LinearLayout>

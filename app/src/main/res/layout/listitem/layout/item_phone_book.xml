@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="53dp">
+
+    <com.kuwai.ysy.widget.CircleTextView
+        android:id="@+id/img_head"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="14dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="S" />
+
+    <TextView
+        android:id="@+id/tv_nick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/img_head"
+        android:text="萨顶顶"
+        android:textColor="@color/balck_28"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/img_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_nick"
+        android:layout_toRightOf="@id/tv_nick"
+        android:visibility="gone"
+        android:src="@drawable/ic_user_woman" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_nick"
+        android:layout_toRightOf="@id/img_sex"
+        android:visibility="gone"
+        android:src="@drawable/ic_user_vip" />
+
+    <TextView
+        android:id="@+id/tv_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_nick"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="4dp"
+        android:layout_toRightOf="@id/img_head"
+        android:text="手机号: 110"
+        android:textColor="@color/gray_68"
+        android:textSize="12sp" />
+
+    <com.allen.library.SuperButton
+        android:layout_width="65dp"
+        android:layout_height="28dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="14dp"
+        android:text="邀请"
+        android:textColor="@color/theme"
+        android:textSize="13sp"
+        app:sCornersRadius="20dp"
+        app:sSolidColor="@color/white"
+        app:sStrokeColor="@color/theme"
+        app:sStrokeWidth="0.5dp" />
+</RelativeLayout>

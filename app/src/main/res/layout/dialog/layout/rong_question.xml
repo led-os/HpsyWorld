@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="14dp"
+    android:background="@color/white"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="有几个问题想了解你的看法，用你的回答来开启对话吧！"
+        android:textColor="@color/balck_28"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:id="@+id/img_center"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/banner_chat_list" />
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/img_center"
+        android:layout_marginTop="14dp"
+        android:background="@color/line_color" />
+
+    <TextView
+        android:id="@+id/tv_click"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line1"
+        android:layout_marginTop="10dp"
+        android:text="点击查看"
+        android:textColor="@color/grey_bd"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/line1"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/ic_chat_arrow_light" />
+</RelativeLayout>
+

@@ -1,0 +1,84 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
+    buildToolsVersion '27.0.3'
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    def dependencies = rootProject.ext.dependencies
+    compile dependencies.supportAppCompat
+    compile dependencies.supportDesign
+    compile dependencies.supportRecyclerview
+    compile dependencies.supportCardView
+
+    compile dependencies.rxJava2
+    compile dependencies.rxAndroid2
+    compile dependencies.rxPermission
+
+    //bmob okio依赖冲突
+    compile dependencies.retrofit
+    compile dependencies.retrofitGsonConverter
+    compile dependencies.retrofitRxjava2Adapter
+
+    compile dependencies.gson
+    //compile dependencies.glide
+    compile dependencies.flytab
+    //compile dependencies.bnb
+    compile dependencies.bravh
+    compile dependencies.smartRefreshLayout
+    compile dependencies.banner
+    //compile dependencies.bigImageViewPager
+    compile dependencies.pictureselector
+//    compile dependencies.greenDao
+//    compile dependencies.greenDaoUpgradeHelper
+
+    compile dependencies.eventbus
+
+    debugCompile dependencies.leakCanaryDebug
+    releaseCompile dependencies.leakCanaryRelease
+
+    compile dependencies.conconstraintLayout
+    compile dependencies.flexboxLayout
+    compile dependencies.photoView
+
+    compile dependencies.stetho
+    compile dependencies.stethoOkhttp3
+
+    api 'com.github.bumptech.glide:glide:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    testCompile 'junit:junit:4.12'
+
+}

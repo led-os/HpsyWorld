@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="320dp">
+
+    <RelativeLayout
+        android:id="@+id/lay_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="余额: 0"
+            android:textColor="@color/theme"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/tv_account"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:text="充值"
+            android:textColor="@color/balck_28"
+            android:textSize="15sp" />
+
+        <com.allen.library.SuperButton
+            android:layout_width="65dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="14dp"
+            android:text="发送"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:sGradientStartColor="#9a7df7"
+            app:sGradientEndColor="#bfb5ea"
+            app:sGradientType="linear"
+            app:sCornersRadius="18dp"
+            app:sGradientOrientation="LEFT_RIGHT"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_dot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/lay_bottom"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:paddingTop="10dp"
+        android:layout_above="@id/ll_dot"
+        android:background="@color/white" />
+</RelativeLayout>

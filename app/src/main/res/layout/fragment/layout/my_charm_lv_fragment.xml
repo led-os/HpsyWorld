@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rightTxt="如何提升？"
+        app:rightColor="@color/theme"
+        app:title1="魅力等级"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/center_charm_img_bg">
+
+        <ImageView
+            android:id="@+id/charm_headicon"
+            android:layout_width="69dp"
+            android:layout_height="62dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="14dp"
+            android:background="@color/colorAccent" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/charm_headicon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前积分:  "
+                android:textColor="#282828"
+                android:textSize="17sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="700"
+                android:textColor="#5415F9"
+                android:textSize="17sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:progress="50" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Lv1(400)"
+            android:textColor="#282828"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lv2(1000)"
+            android:textColor="#ff282828"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0d4E05FF"
+        android:padding="9dp"
+        android:text="魅力等级是您在鱼水缘平台上的活跃度，消费能力和受欢迎程度的综合体现。"
+        android:textColor="#ff5415f9"
+        android:textSize="13sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="今日加分"
+            android:textColor="#ff282828"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_daily_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(15分)"
+            android:textColor="#5415F9"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_score"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+</LinearLayout>

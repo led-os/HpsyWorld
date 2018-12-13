@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="14dp"
+        android:text="17"
+        android:textColor="#ff282838"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/month"
+        android:layout_toRightOf="@id/month"
+        android:text="07"
+        android:textColor="#ff282838"
+        android:textSize="14sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="10dp"
+        android:layout_toRightOf="@id/day"
+        android:background="@drawable/shape_dy_mine"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/img_pic"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/center_problem_banner" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:layout_toRightOf="@id/img_pic"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="非常不错的一个公园，很大，十一人还是很多的，很适合拍照。带娃的可以慢慢逛，至少可以打发一下午的时间，特别喜...
+少花做得不错，建设的可以的呢。"
+            android:textColor="#ff282838"
+            android:textSize="15sp" />
+    </RelativeLayout>
+</RelativeLayout>

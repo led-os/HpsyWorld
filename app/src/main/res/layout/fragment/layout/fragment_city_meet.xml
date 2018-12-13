@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rightImg="@drawable/ic_city_nav_mydate"
+        app:title1="同城相约">
+
+    </com.kuwai.ysy.widget.NavigationLayout>
+
+    <LinearLayout
+        android:id="@+id/lay_filter"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/navigation"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/ic_list_arrow_down"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:text="全城"
+            android:textColor="@color/balck_28"
+            android:textSize="16dp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/ic_city_list_filter_nor"
+            android:gravity="center_vertical"
+            android:paddingRight="12dp"
+            android:text="筛选"
+            android:textColor="@color/balck_28"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line1"
+        style="@style/horizontal_line"
+        android:layout_below="@id/lay_filter" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rl_city_meet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/line1">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/publish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="80dp"
+        android:clickable="true"
+        android:layout_marginRight="30dp"
+        android:drawableLeft="@drawable/dyn_dyn_btn_edit" />
+</RelativeLayout>

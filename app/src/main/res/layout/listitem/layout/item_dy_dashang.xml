@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:background="@color/white">
+
+    <com.allen.library.CircleImageView
+        android:id="@+id/img_head"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp" />
+
+    <TextView
+        android:id="@+id/tv_nick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="16dp"
+        android:layout_toRightOf="@id/img_head"
+        android:textColor="@color/balck_28"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:id="@+id/vip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_nick"
+        android:layout_toRightOf="@id/tv_nick"
+        android:visibility="gone"
+        android:src="@drawable/ic_user_vip" />
+
+    <ImageView
+        android:id="@+id/iv_sex"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignBottom="@id/tv_nick"
+        android:layout_toRightOf="@id/vip"/>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_nick"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="4dp"
+        android:layout_toRightOf="@id/img_head"
+        android:textColor="#6b6b6b"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/iv_gift"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="28dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/beau_girl" />
+
+    <com.allen.library.SuperButton
+        android:id="@+id/sb_gift_num"
+        android:layout_width="wrap_content"
+        android:layout_height="14dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:text="x12"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        app:sCornersRadius="8dp"
+        app:sSolidColor="#ff875bf0" />
+
+    <View style="@style/horizontal_line"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+</RelativeLayout>

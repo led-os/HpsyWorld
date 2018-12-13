@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginRight="20dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="6dp"
+    app:contentPadding="16dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.kuwai.ysy.widget.NiceImageView
+            android:id="@+id/img_head"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            app:corner_radius="6dp" />
+
+        <TextView
+            android:id="@+id/tv_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_toRightOf="@id/img_head"
+            android:text="杨和苏Ysny"
+            android:textColor="@color/balck_28"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/img_sex"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/tv_nick"
+            android:src="@drawable/ic_user_woman" />
+
+        <TextView
+            android:id="@+id/tv_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_nick"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/img_sex"
+            android:text="22岁"
+            android:textColor="@color/balck_28"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_nick"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/img_head"
+            android:text="真诚的想结交朋友,邀约寄语"
+            android:textColor="@color/gray_7b" />
+
+        <com.allen.library.SuperButton
+            android:id="@+id/btn_chengyi"
+            android:layout_width="54dp"
+            android:layout_height="24dp"
+            android:layout_below="@id/tv_info"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/img_head"
+            android:text="有诚意"
+            android:textColor="@color/text_theme"
+            android:textSize="14sp"
+            app:sCornersRadius="4dp"
+            app:sSolidColor="@color/white"
+            app:sStrokeColor="@color/text_theme"
+            app:sStrokeWidth="1dp" />
+
+        <com.allen.library.SuperButton
+            android:id="@+id/btn_gift"
+            android:layout_width="54dp"
+            android:layout_height="24dp"
+            android:layout_below="@id/tv_info"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/btn_chengyi"
+            android:text="有礼物"
+            android:textColor="@color/text_orange"
+            android:textSize="14sp"
+            app:sCornersRadius="4dp"
+            app:sSolidColor="@color/white"
+            app:sStrokeColor="@color/text_orange"
+            app:sStrokeWidth="1dp" />
+
+        <View
+            android:id="@+id/line1"
+            style="@style/horizontal_line"
+            android:layout_below="@id/img_head"
+            android:layout_marginTop="14dp" />
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/line1"
+            android:layout_marginTop="12dp"
+            android:drawableLeft="@drawable/ic_list_theme_sma"
+            android:drawablePadding="6dp"
+            android:text="看电影"
+            android:textColor="@color/balck_28"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/line1"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@id/tv_type"
+            android:drawableLeft="@drawable/ic_list_time_sma"
+            android:drawablePadding="6dp"
+            android:text="2018-08-09"
+            android:textColor="@color/balck_28"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_position"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_type"
+            android:layout_marginTop="12dp"
+            android:drawableLeft="@drawable/ic_list_positon_sma"
+            android:drawablePadding="6dp"
+            android:text="不限"
+            android:textColor="@color/balck_28"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_payfor"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_type"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@id/tv_position"
+            android:drawableLeft="@drawable/ic_list_theme_sma"
+            android:drawablePadding="6dp"
+            android:text="看电影"
+            android:textColor="@color/balck_28"
+            android:textSize="14sp" />
+
+        <com.allen.library.SuperButton
+            android:id="@+id/sb_sure"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/line1"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:text="应约"
+            android:textColor="@color/theme"
+            android:textSize="14sp"
+            app:sCornersRadius="20dp"
+            app:sSolidColor="@color/white"
+            app:sStrokeColor="@color/theme"
+            app:sStrokeWidth="1dp" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.allen.library.SuperButton
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginTop="10dp"
+        android:padding="3dp"
+        android:text="进行中"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_12"
+        app:sCornersRadius="2dp"
+        app:sSolidColor="#b3ff6161" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/tv_status"
+        android:text="盛夏相亲会：专属单身白领的派对！"
+        android:textColor="@color/balck_28"
+        android:textSize="@dimen/sp_16"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/iv_ad"
+        android:layout_width="match_parent"
+        android:layout_height="135dp"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="40dp" />
+
+    <com.allen.library.SuperButton
+        android:id="@+id/sb_nums"
+        android:layout_width="83dp"
+        android:layout_height="@dimen/dp_20"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="146dp"
+        android:layout_marginEnd="16dp"
+        android:drawableLeft="@drawable/ic_list_baoming"
+        android:text="2000人"
+        android:textSize="@dimen/sp_12"
+        app:sCornersRadius="10dp"
+        android:textColor="@color/white"
+        app:sSolidColor="#33282828" />
+
+
+</RelativeLayout>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rightColor="@color/gray_7b"
+        app:rightTxt="发布"
+        app:title1="发表动态"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <EditText
+        android:id="@+id/et_content"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@null"
+        android:gravity="left|top"
+        android:hint="这一刻的想法"
+        android:maxLength="300"
+        android:padding="10dp"
+        android:textColor="@color/balck_28"
+        android:textColorHint="@color/grey_bd"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:background="@drawable/dyn_re_bg"
+        android:gravity="center_horizontal"
+        android:paddingTop="8dp"
+        android:text="按住照片拖拽可以调整顺序" />
+
+    <com.kuwai.ysy.widget.exchange.BGASortableNinePhotoLayout
+        android:id="@+id/snpl_moment_add_photos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:bga_snpl_deleteDrawableOverlapQuarter="false"
+        app:bga_snpl_editable="true"
+        app:bga_snpl_itemCornerRadius="0dp"
+        app:bga_snpl_itemSpanCount="3"
+        app:bga_snpl_itemWhiteSpacing="4dp"
+        app:bga_snpl_itemWidth="0dp"
+        app:bga_snpl_maxItemCount="9"
+        app:bga_snpl_placeholderDrawable="@mipmap/bga_pp_ic_holder_light"
+        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
+        app:bga_snpl_plusEnable="true"
+        app:bga_snpl_sortable="true" />
+
+    <View
+        style="@style/horizontal_line"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginBottom="14dp"/>
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:drawableLeft="@drawable/dyn_re_ic_pos"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:text="所在位置"
+        android:textColor="@color/balck_28"
+        android:textSize="14dp" />
+
+    <View
+        style="@style/horizontal_line"
+        android:layout_margin="14dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/dyn_re_ic_pe"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:text="谁可以看"
+            android:textColor="@color/balck_28"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/tv_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="16dp"
+            android:drawablePadding="8dp"
+            android:text=""
+            android:textColor="@color/filter_text_select"
+            android:textSize="14dp" />
+    </LinearLayout>
+
+    <View
+        style="@style/horizontal_line"
+        android:layout_margin="14dp" />
+
+
+</LinearLayout>

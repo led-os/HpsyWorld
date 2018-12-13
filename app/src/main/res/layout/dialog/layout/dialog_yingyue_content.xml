@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_elevation_radius"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发送给："
+        android:textColor="#ff000000"
+        android:textSize="20sp" />
+
+    <com.allen.library.CircleImageView
+        android:id="@+id/img_head"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/title"
+        android:layout_marginTop="14dp"
+        android:src="@drawable/beau_girl" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="30dp"
+        android:layout_toRightOf="@id/img_head"
+        android:text="徐璐"
+        android:textColor="#ff282838"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/dialog_comment_et"
+        android:layout_width="match_parent"
+        android:layout_height="105dp"
+        android:layout_below="@id/img_head"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_question"
+        android:gravity="left|top"
+        android:hint="茫茫人海中，希望你能够选中我。期待与你的约会!"
+        android:paddingLeft="15dp"
+        android:paddingTop="12dp"
+        android:textColor="#808080"
+        android:textColorHint="#929292"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/dialog_comment_et"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="22dp"
+        android:text="发送"
+        android:textColor="#ff5415f9"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_send"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@id/tv_send"
+        android:text="取消"
+        android:textColor="#ffbdbdbd"
+        android:textSize="18sp" />
+
+</RelativeLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+    <ImageView
+        android:id="@+id/ic_theme"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_sel_draw" />
+
+    <ImageView
+        android:id="@+id/ic_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/ic_theme"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        android:src="@drawable/ic_sel_yes" />
+
+    <ImageView
+        android:id="@+id/ic_del"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/ic_theme"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        android:src="@drawable/ic_sel_del" />
+
+    <TextView
+        android:id="@+id/tv_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ic_theme"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="美食"
+        android:textColor="@color/balck_28"
+        android:textSize="15sp" />
+</RelativeLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title1="添加通讯录好友"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:gravity="center_vertical"
+        android:textSize="15sp"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/balck_28"
+        android:text="通讯录列表"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rl_phone_book"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title1="我的礼物"
+        app:rightColor="@color/theme"
+        app:rightTxt="全部提现"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <RadioGroup
+        android:id="@+id/main_radiogroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="14dp">
+
+        <RadioButton
+            android:id="@+id/radio_lookme"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:textColor="@color/radio_color_like"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/radio_mylook"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:button="@null"
+            android:gravity="center"
+            android:textColor="@color/radio_color_like"
+            android:textSize="16sp" />
+
+    </RadioGroup>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_dy_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

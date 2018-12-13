@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp">
+
+    <TextView
+        android:id="@+id/tv_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="跳过"
+        android:padding="14dp"
+        android:layout_alignParentRight="true"
+        android:textColor="#ff7b7b7b"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="让大家认识你"
+        android:textColor="#ff282838"
+        android:layout_centerHorizontal="true"
+        android:textSize="27sp"/>
+
+    <com.allen.library.CircleImageView
+        android:id="@+id/img_head"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/sl_mypr_bg_deav"
+        android:layout_below="@id/title"/>
+
+    <TextView
+        android:id="@+id/tv_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="上传头像"
+        android:layout_below="@id/img_head"
+        android:layout_marginTop="12dp"
+        android:textColor="#ff282838"
+        android:textSize="14sp"
+        />
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_head"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="70dp"
+        android:background="@null"
+        android:gravity="center"
+        android:hint="鱼水缘昵称"
+        android:textColor="#ff282838"
+        android:textColorHint="@color/gray_7b"
+        android:textSize="18sp"/>
+
+    <View
+        android:id="@+id/line1"
+        style="@style/horizontal_line"
+        android:layout_alignLeft="@id/et_name"
+        android:layout_below="@id/et_name"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp" />
+
+
+    <com.allen.library.SuperButton
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="20dp"
+        android:text="下一步"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/gray_7b"
+        android:textSize="16sp"
+        android:layout_marginBottom="30dp"
+        app:sSolidColor="@color/line_color" />
+
+</RelativeLayout>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp">
+
+    <TextView
+        android:id="@+id/tv_regist_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="注册(3/3)"
+        android:textColor="#ff282838"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="100dp"
+        android:text="设置登录密码"
+        android:textColor="#ff282838"
+        android:textSize="24sp" />
+
+    <com.kuwai.ysy.widget.MyEditText
+        android:id="@+id/et_psd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="60dp"
+        android:layout_toLeftOf="@id/img_eye"
+        android:background="@null"
+        android:gravity="bottom"
+        android:hint="请输入登录密码"
+        android:inputType="textPassword"
+        android:textColor="#ff282838"
+        android:textColorHint="@color/gray_7b"
+        android:textSize="16sp"
+        app:ic_delete="@drawable/sl_repa_ic_delete" />
+
+    <ImageView
+        android:id="@+id/img_eye"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/et_psd"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:src="@drawable/sl_login_ic_blink" />
+
+    <View
+        android:id="@+id/line1"
+        style="@style/horizontal_line"
+        android:layout_alignLeft="@id/et_psd"
+        android:layout_below="@id/et_psd"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/et_psd"
+        android:layout_below="@id/line1"
+        android:layout_marginTop="10dp"
+        android:text="密码需为6位以上数字、字母混合"
+        android:textColor="#ff7b7b7b"
+        android:textSize="13sp" />
+
+
+    <com.allen.library.SuperButton
+        android:id="@+id/btn_complete"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/line1"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="44dp"
+        android:text="完成"
+        android:textColor="@color/gray_7b"
+        android:textSize="16sp"
+        app:sSolidColor="@color/line_color" />
+
+</RelativeLayout>

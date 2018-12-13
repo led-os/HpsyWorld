@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp">
+
+    <ImageView
+        android:id="@+id/img_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="14dp"
+        android:src="@drawable/sl_sign_in_ic_kback" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="100dp"
+        android:text="重置密码"
+        android:textColor="#ff282838"
+        android:textSize="24sp" />
+
+    <com.kuwai.ysy.widget.MyEditText
+        android:id="@+id/et_tel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="60dp"
+        android:background="@null"
+        android:gravity="bottom"
+        android:hint="请输入手机号码"
+        android:inputType="phone"
+        android:textColor="#ff282838"
+        android:textColorHint="@color/gray_7b"
+        android:textSize="16sp"
+        app:ic_delete="@drawable/sl_repa_ic_delete" />
+
+    <View
+        android:id="@+id/line"
+        style="@style/horizontal_line"
+        android:layout_alignLeft="@id/et_tel"
+        android:layout_below="@id/et_tel"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp" />
+
+    <com.kuwai.ysy.widget.MyEditText
+        android:id="@+id/et_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_toLeftOf="@id/tv_count_down"
+        android:background="@null"
+        android:gravity="bottom"
+        android:hint="请输入验证码"
+        android:inputType="textPassword"
+        android:textColor="#ff282838"
+        android:textColorHint="@color/gray_7b"
+        android:textSize="16sp"
+        app:ic_delete="@drawable/sl_repa_ic_delete" />
+
+    <com.kuwai.ysy.widget.CountDownTextView
+        android:id="@+id/tv_count_down"
+        android:layout_width="80dp"
+        android:layout_height="28dp"
+        android:text="获取验证码"
+        android:layout_alignBottom="@+id/et_code"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:textSize="13sp"
+        android:textColor="@color/gray_7b"
+        android:background="@drawable/shape_count_down"
+        android:gravity="center" />
+
+    <View
+        android:id="@+id/line1"
+        style="@style/horizontal_line"
+        android:layout_alignLeft="@+id/et_code"
+        android:layout_below="@+id/et_code"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp" />
+
+    <com.kuwai.ysy.widget.MyEditText
+        android:id="@+id/et_psd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line1"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_toLeftOf="@id/img_eye"
+        android:background="@null"
+        android:gravity="bottom"
+        android:hint="密码长度6位以上数字、字母混合"
+        android:inputType="textPassword"
+        android:textColor="#ff282838"
+        android:textColorHint="@color/gray_7b"
+        android:textSize="16sp"
+        app:ic_delete="@drawable/sl_repa_ic_delete" />
+
+    <ImageView
+        android:id="@+id/img_eye"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/et_psd"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:src="@drawable/sl_login_ic_blink" />
+
+    <View
+        android:id="@+id/line2"
+        style="@style/horizontal_line"
+        android:layout_alignLeft="@id/et_psd"
+        android:layout_below="@id/et_psd"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp" />
+
+
+    <com.allen.library.SuperButton
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/line2"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="20dp"
+        android:text="登录"
+        android:textColor="@color/gray_7b"
+        android:textSize="16sp"
+        app:sSolidColor="@color/line_color" />
+
+</RelativeLayout>

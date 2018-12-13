@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title1="提现到支付宝"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0d4E05FF"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="暂时只支持支付宝提现，请填写真实信息。"
+        android:textColor="#ff5415f9"
+        android:textSize="13sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:background="@android:color/white"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="提现金额"
+            android:textColor="#ff282828"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_cash_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="21dp"
+            android:layout_toStartOf="@+id/tv_all"
+            android:text="13789.0"
+            android:textColor="#ff282828"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:text="全部提现"
+            android:textColor="#ffff6161"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/st_zfb_name"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:paddingStart="5dp"
+        app:sLeftTextColor="#282828"
+        app:sLeftTextSize="15sp"
+        app:sLeftTextString="支付宝姓名"
+        app:sRightTextColor="#bdbdbd"
+        app:sRightTextSize="14sp"
+        app:sRightTextString="请输入您的支付宝真实姓名" />
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/st_zfb_id"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:paddingStart="5dp"
+        app:sLeftTextColor="#282828"
+        app:sLeftTextSize="15sp"
+        app:sLeftTextString="支付宝账号"
+        app:sRightTextColor="#bdbdbd"
+        app:sRightTextSize="14sp"
+        app:sRightTextString="请输入您的支付宝真实账号" />
+
+    <Button
+        android:id="@+id/btn_cash"
+        android:layout_width="300dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="47dp"
+        android:background="@drawable/money_cash_btn"
+        android:text="提现"
+        android:textColor="#ffffffff"
+        android:textSize="18sp" />
+
+</LinearLayout>

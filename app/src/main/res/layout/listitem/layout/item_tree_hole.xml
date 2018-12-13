@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="14dp">
+
+    <ImageView
+        android:id="@+id/img_head"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/dyn_tree_ic_anony" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_toRightOf="@id/img_head"
+        android:ellipsize="end"
+        android:maxEms="15"
+        android:text="这件事我想很久了"
+        android:textColor="@color/balck_28"
+        android:textSize="16sp" />
+
+    <com.allen.library.SuperButton
+        android:visibility="gone"
+        android:id="@+id/id_hot"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/tv_title"
+        android:text="热"
+        android:textSize="10sp"
+        app:sCornersRadius="5dp"
+        android:textColor="@color/white"
+        app:sSolidColor="@android:color/holo_red_light" />
+
+    <ImageView
+        android:id="@+id/img_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_chat_nav_more" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_head"
+        android:layout_marginTop="16dp"
+        android:text="我们欠了很多钱，房子车子甚至家里的金器全卖光了，现在还欠外面600多万。老公已经是黑户，我自己信用卡逾期20多万，三个月没还了。但是这已经是..."
+        android:textColor="#cc282828"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_content"
+        android:layout_marginTop="14dp"
+        android:text="发布于5分钟前"
+        android:textColor="#ffbdbdbd"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_views"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="14dp"
+        android:text="44500人看过"
+        android:textColor="#ffbdbdbd"
+        android:textSize="12sp" />
+</RelativeLayout>

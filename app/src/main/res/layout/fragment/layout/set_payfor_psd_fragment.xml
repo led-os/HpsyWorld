@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title1="设置支付密码"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/st_set_psd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        app:sCenterTextString="sdasfafagagag"
+        app:sLeftTextColor="#282828"
+        app:sLeftTextSize="16sp"
+        app:sLeftTextString="设置密码" />
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/st_sure_psd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        app:sCenterTextString="sdasfafagagag"
+        app:sLeftTextColor="#282828"
+        app:sLeftTextSize="16sp"
+        app:sLeftTextString="确认密码" />
+
+
+</LinearLayout>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:text="你的学历？"
+        android:textColor="#ff282838"
+        android:textSize="27sp" />
+
+    <TextView
+        android:id="@+id/sub_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="鱼水缘为了更精确推荐/筛选"
+        android:textColor="#ff7b7b7b"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_education"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sub_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:text="本科"
+        android:textColor="#ff282838"
+        android:textSize="27sp" />
+
+    <View
+        android:id="@+id/line"
+        style="@style/horizontal_line"
+        android:layout_below="@id/tv_education"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginTop="10dp" />
+
+    <com.allen.library.SuperButton
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="20dp"
+        android:text="继续"
+        android:textColor="@color/gray_7b"
+        android:textSize="16sp"
+        app:sSolidColor="@color/line_color" />
+
+</RelativeLayout>

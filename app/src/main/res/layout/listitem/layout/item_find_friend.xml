@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.kuwai.ysy.widget.TextImageView
+        android:id="@+id/img_head"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="14dp"
+        android:src="@drawable/icon_person" />
+
+    <TextView
+        android:id="@+id/tv_nick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/img_head"
+        android:text="晴空万里"
+        android:textColor="@color/balck_28"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/img_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_nick"
+        android:layout_toRightOf="@id/tv_nick"
+        android:src="@drawable/ic_user_woman" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_nick"
+        android:layout_toRightOf="@id/img_sex"
+        android:src="@drawable/ic_user_vip" />
+
+    <TextView
+        android:id="@+id/tv_sign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_nick"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="4dp"
+        android:layout_toRightOf="@id/img_head"
+        android:text="ID: 202546"
+        android:textColor="@color/grey_bd"
+        android:textSize="12sp" />
+
+    <com.kuwai.ysy.widget.PileLayout
+        android:id="@+id/round_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="12dp"></com.kuwai.ysy.widget.PileLayout>
+
+    <com.allen.library.SuperButton
+        android:layout_width="65dp"
+        android:layout_height="28dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="14dp"
+        android:text="加好友"
+        android:textColor="@color/theme"
+        android:textSize="13sp"
+        android:visibility="gone"
+        app:sCornersRadius="20dp"
+        app:sSolidColor="@color/white"
+        app:sStrokeColor="@color/theme"
+        app:sStrokeWidth="0.5dp" />
+
+    <View
+        style="@style/horizontal_line"
+        android:layout_below="@id/tv_sign"
+        android:layout_marginTop="14dp"
+        android:layout_toRightOf="@id/img_head" />
+</RelativeLayout>

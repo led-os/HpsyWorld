@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:leftImg="@drawable/dyn_message_ic_back"
+        app:title1="消息中心"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/tv_comment"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:sLeftIconRes="@drawable/dyn_message_ic_com"
+        app:sLeftTextColor="@color/balck_28"
+        app:sLeftTextSize="16sp"
+        app:sLeftTextString="评论"
+        app:sRightIconRes="@drawable/dyn_message_ic_adv"></com.allen.library.SuperTextView>
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/tv_like"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:sLeftIconRes="@drawable/dyn_message_ic_like"
+        app:sLeftTextColor="@color/balck_28"
+        app:sLeftTextSize="16sp"
+        app:sLeftTextString="点赞"
+        app:sRightIconRes="@drawable/dyn_message_ic_adv"></com.allen.library.SuperTextView>
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/tv_reward"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:sLeftIconRes="@drawable/dyn_message_ic_reward"
+        app:sLeftTextColor="@color/balck_28"
+        app:sLeftTextSize="16sp"
+        app:sLeftTextString="打赏"
+        app:sRightIconRes="@drawable/dyn_message_ic_adv"></com.allen.library.SuperTextView>
+</LinearLayout>

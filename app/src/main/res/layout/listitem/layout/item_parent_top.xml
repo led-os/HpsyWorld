@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="14dp"
+    android:paddingRight="14dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="今天"
+        android:textColor="#ff282838"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:drawableRight="@drawable/ic_list_arrow_down"
+        android:gravity="center_vertical"
+        android:text="20人被我喜欢"
+        android:textColor="#ff5415f9"
+        android:textSize="14sp" />
+
+    <View
+        style="@style/horizontal_line"
+        android:layout_below="@id/title"
+        android:layout_marginTop="14dp" />
+</RelativeLayout>

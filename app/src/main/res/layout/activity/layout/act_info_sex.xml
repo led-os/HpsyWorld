@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp">
+
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:text="你的性别？"
+        android:textColor="#ff282838"
+        android:textSize="27sp" />
+
+    <TextView
+        android:id="@+id/sex_warn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="性别选定无法更改    "
+        android:textColor="#ff7b7b7b"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:id="@+id/lay_sex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sex_warn"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_man"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/sl_mypr_bg_boy_sel"
+            android:gravity="center"
+            android:text="男" />
+
+        <TextView
+            android:id="@+id/tv_woman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="66dp"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/sl_mypr_bg_girl"
+            android:gravity="center"
+            android:text="女" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_date_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lay_sex"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:text="你的出生年月？"
+        android:textColor="#ff282838"
+        android:textSize="27sp" />
+
+    <TextView
+        android:id="@+id/tv_warn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_date_info"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="仅用做推荐视频/图片的依据，鱼水缘会帮你保密"
+        android:textColor="#ff7b7b7b"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_warn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="1990年6月1日"
+        android:textColor="#ff282838"
+        android:textSize="27sp" />
+
+    <View
+        style="@style/horizontal_line"
+        android:layout_alignLeft="@id/et_name"
+        android:layout_below="@id/tv_date"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="10dp" />
+
+
+    <com.allen.library.SuperButton
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="20dp"
+        android:text="继续"
+        android:textColor="@color/gray_7b"
+        android:textSize="16sp"
+        app:sSolidColor="@color/line_color" />
+
+</RelativeLayout>

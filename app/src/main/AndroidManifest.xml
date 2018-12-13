@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.kuwai.ysy">
+
+    <!-- 允许联网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 获取GSM（2g）、WCDMA（联通3g）等网络状态的信息 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 获取wifi网络状态的信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 允许获取通讯录 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- 获取sd卡写的权限，用于文件上传和下载 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 允许读取手机状态 用于创建BmobInstallation -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+
+    <application
+        android:name="com.kuwai.ysy.app.MyApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".module.home.business.login.StartupPageActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        //首页
+        <activity android:name=".module.home.business.HomeActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".module.home.business.login.LoginActivity" />
+
+        //聊天
+        <activity android:name=".module.chat.MyFriendActivity" />
+        <activity android:name=".module.chat.business.ChatSettingActivity" />
+        <activity android:name=".module.chat.business.QuestionActivity" />
+
+        //动态
+        <activity
+            android:name=".module.circle.aliyun.AlivcSvideoRecordActivity"
+            android:theme="@style/AlivcRecordUIStyle" />
+        <activity
+            android:name=".module.circle.DyDetailActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".module.circle.HoleDetailActivity" />
+        <activity android:name=".module.circle.MessageActivity" />
+        <activity android:name=".module.circle.business.PublishHoleActivity" />
+        <activity android:name=".module.circle.business.RightChooseActivity" />
+        <activity android:name=".module.circle.AddressChooseActivity" />
+        <activity android:name=".module.circle.PublishDyActivity" />
+        <activity android:name=".module.circle.aliyun.AlivcRecorderActivity" />
+
+        //发现
+        <activity android:name=".module.find.FoundLocationActivity" />
+        <activity android:name=".module.find.business.TuoDan.TuodanActivity" />
+        <activity android:name=".module.find.CityMeetActivity" />
+
+        //我的
+        <activity android:name=".module.mine.MyPointActivity" />
+        <activity android:name=".module.mine.MyWalletActivity" />
+        <activity android:name="com.kuwai.ysy.module.mine.business.teamplayer.SingleListActivity" />
+        <activity android:name=".module.mine.MyCreditActivity" />
+        <activity android:name=".module.mine.SettingActivity" />
+        <activity android:name=".module.mine.VipCenterActivity" />
+        <activity android:name=".module.mine.business.like.StLikeActivity" />
+        <activity android:name=".module.mine.business.visitor.VisitorActivity" />
+        <activity android:name=".module.mine.business.gift.GiftActivity" />
+        <activity android:name=".module.mine.business.question.AskQuestionActivity" />
+        <activity android:name=".module.mine.business.homepage.HomePageActivity" />
+
+        <!--会话界面-->
+        <activity
+            android:name=".module.chat.ConversationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.kuwai.ysy"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
+        <!--QQ-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent100424468" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!--WX-->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!--新浪-->
+        <activity
+            android:name="com.umeng.socialize.media.WBShareCallBackActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+        <activity
+            android:name="com.sina.weibo.sdk.web.WeiboSdkWebActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize">
+
+        </activity>
+        <activity
+            android:name="com.sina.weibo.sdk.share.WbShareTransActivity"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
+
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.kuwai.ysy.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/rc_file_path" />
+        </provider>
+
+        <!-- 高德地图定位key -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="1710cbdfca064bab89a9b31ea21814b0" />
+    </application>
+
+</manifest>

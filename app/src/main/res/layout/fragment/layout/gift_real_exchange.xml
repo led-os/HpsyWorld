@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rightColor="@color/theme"
+        app:rightTxt="兑换须知"
+        app:title1="礼物真实兑换"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        android:scrollbars="none"
+        android:layout_below="@id/navigation">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/beau_girl" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
+                android:gravity="center_vertical"
+                android:text="兑换信息填写"
+                android:textColor="#ff282828"
+                android:textSize="16sp" />
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:text="兑换数量"
+                    android:textColor="#ff282828"
+                    android:textSize="15sp" />
+
+                <com.kuwai.ysy.widget.AmountView
+                    android:id="@+id/amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:gravity="center_vertical"
+                    app:btnWidth="26dp"
+                    app:tvWidth="50dp"></com.kuwai.ysy.widget.AmountView>
+            </RelativeLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="联系人"
+                    android:textColor="#ff282828"
+                    android:textSize="15sp" />
+
+                <com.kuwai.ysy.widget.MyEditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="填写收货人姓名"
+                    android:textColorHint="#ffbdbdbd"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="联系电话"
+                    android:textColor="#ff282828"
+                    android:textSize="15sp" />
+
+                <com.kuwai.ysy.widget.MyEditText
+                    android:id="@+id/et_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="填写收货人手机号"
+                    android:textColorHint="#ffbdbdbd"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="选择地址"
+                    android:textColor="#ff282828"
+                    android:textSize="15sp" />
+
+                <com.kuwai.ysy.widget.MyEditText
+                    android:id="@+id/et_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="选择收获地址"
+                    android:textColorHint="#ffbdbdbd"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="详细地址"
+                    android:textColor="#ff282828"
+                    android:textSize="15sp" />
+
+                <com.kuwai.ysy.widget.MyEditText
+                    android:id="@+id/et_address_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="填写详细收货地址"
+                    android:textColorHint="#ffbdbdbd"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="备注"
+                    android:textColor="#ff282828"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/et_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@null"
+                    android:gravity="left|top"
+                    android:hint="关于订单的额外备注信息，请在此处留
+言。"
+                    android:maxLength="100"
+                    android:paddingLeft="6dp"
+                    android:paddingTop="6dp"
+                    android:textColor="@color/balck_28"
+                    android:textColorHint="@color/grey_bd"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="设为默认地址"
+                    android:textColor="#ff282828"
+                    android:textSize="15sp" />
+
+                <Switch
+                    android:id="@+id/switch_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/line_color"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <View style="@style/horizontal_line" />
+
+        <TextView
+            android:id="@+id/tv_transfee"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:gravity="center_vertical"
+            android:text="快递费¥：10鱼币"
+            android:textColor="#ff282838"
+            android:textSize="12sp" />
+
+        <com.allen.library.SuperButton
+            android:id="@+id/btn_duihuan"
+            android:layout_width="116dp"
+            android:layout_height="match_parent"
+            android:text="立即兑换"
+            android:textColor="@color/white"
+            android:layout_alignParentRight="true"
+            android:textSize="16sp"
+            app:sGradientEndColor="#b35415F9"
+            app:sGradientOrientation="LEFT_RIGHT"
+            app:sGradientStartColor="#665415F9"
+            app:sGradientType="linear" />
+    </RelativeLayout>
+
+</RelativeLayout>

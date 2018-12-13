@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_left_theme" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="几丁二"
+            android:textColor="@color/balck_28"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/sub_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="24岁|165cm|本科|12-20万元"
+            android:textColor="@color/grey_bd"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:layout_marginRight="24dp"
+            android:src="@drawable/ic_chat_nav_more" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/line_color" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="12dp"
+        android:paddingTop="8dp">
+
+        <com.allen.library.CircleImageView
+            android:id="@+id/img_head"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/banner" />
+
+        <TextView
+            android:id="@+id/tv_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@id/img_head"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="几丁二"
+            android:textColor="@color/balck_28"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/img_vip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_nick"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/tv_nick"
+            android:src="@drawable/ic_user_vip" />
+
+        <TextView
+            android:id="@+id/tv_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_nick"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/img_vip"
+            android:background="@drawable/center_center_huangguan"
+            android:gravity="center_horizontal|bottom"
+            android:text="2"
+            android:textColor="@color/theme"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/tv_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_nick"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="16dp"
+            android:layout_toRightOf="@id/img_head"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="ID:109624 | 江苏苏州"
+            android:textColor="@color/grey_bd"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/img_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/center_center_right" />
+
+        <TextView
+            android:id="@+id/tv_xinyong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_toLeftOf="@id/img_right"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="信用度"
+            android:textColor="@color/balck_28"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/img_xinyong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_toLeftOf="@id/tv_xinyong"
+            android:src="@drawable/center_center_xinyong" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_toLeftOf="@id/img_xinyong"
+            android:background="@color/line_color" />
+
+        <View
+            android:id="@+id/line1"
+            android:layout_width="84dp"
+            android:layout_height="1dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/img_xinyong"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/line_color" />
+
+        <TextView
+            android:id="@+id/tv_shangxian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/line1"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="14dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="上线提醒"
+            android:textColor="@color/balck_28"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/img_shangxian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/img_xinyong"
+            android:layout_below="@id/line1"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/center_center_shangxian" />
+
+        <com.allen.library.SuperButton
+            android:id="@+id/btn_like"
+            android:layout_width="60dp"
+            android:layout_height="24dp"
+            android:layout_alignParentBottom="true"
+            android:text="喜欢"
+            android:textColor="@color/theme"
+            android:textSize="12sp"
+            app:sCornersRadius="2dp"
+            app:sSolidColor="@color/white"
+            app:sStrokeColor="@color/theme"
+            app:sStrokeWidth="1px" />
+
+        <com.allen.library.SuperButton
+            android:id="@+id/btn_chat"
+            android:layout_width="60dp"
+            android:layout_height="24dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/btn_like"
+            android:text="私聊"
+            android:textColor="@color/theme"
+            android:textSize="12sp"
+            app:sCornersRadius="2dp"
+            app:sSolidColor="@color/white"
+            app:sStrokeColor="@color/theme"
+            app:sStrokeWidth="1px" />
+
+        <com.allen.library.SuperButton
+            android:id="@+id/btn_send_gift"
+            android:layout_width="60dp"
+            android:layout_height="24dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/btn_chat"
+            android:text="送礼物"
+            android:textColor="@color/theme"
+            android:textSize="12sp"
+            app:sCornersRadius="2dp"
+            app:sSolidColor="@color/white"
+            app:sStrokeColor="@color/theme"
+            app:sStrokeWidth="1px" />
+    </RelativeLayout>
+
+    <View style="@style/horizontal_line" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rl_pic"
+        android:layout_width="match_parent"
+        android:layout_height="134dp"></android.support.v7.widget.RecyclerView>
+
+    <com.flyco.tablayout.CommonTabLayout
+        android:id="@+id/tl_9"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="@color/white"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        app:tl_indicator_color="@color/theme"
+        app:tl_indicator_width="60dp"
+        app:tl_divider_width="1dp"
+        app:tl_divider_color="@color/line_color"
+        app:tl_indicator_height="3dp"
+        app:tl_textSelectColor="@color/balck_28"
+        app:tl_textsize="15sp"
+        app:tl_textUnselectColor="@color/balck_28"
+        app:tl_indicator_corner_radius="25dp"
+        app:tl_indicator_margin_left="2dp"
+        app:tl_indicator_margin_right="2dp"/>
+
+    <View style="@style/horizontal_line"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

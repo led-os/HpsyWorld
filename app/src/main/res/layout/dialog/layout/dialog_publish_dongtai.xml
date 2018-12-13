@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/corner_no_right_bottom"
+    android:padding="14dp">
+
+    <TextView
+        android:id="@+id/tv_take"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="拍摄"
+        android:textColor="@color/balck_28"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_take"
+        android:layout_alignParentRight="true"
+        android:text="照片或者视频"
+        android:textColor="@color/gray_7b"
+        android:textSize="12sp" />
+
+    <View
+        android:id="@+id/line1"
+        style="@style/horizontal_line"
+        android:layout_below="@id/tv_take"
+        android:layout_marginTop="14dp" />
+
+    <TextView
+        android:id="@+id/tv_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line1"
+        android:layout_marginTop="14dp"
+        android:text="从相册选择"
+        android:textColor="@color/balck_28"
+        android:textSize="16sp" />
+
+</RelativeLayout>

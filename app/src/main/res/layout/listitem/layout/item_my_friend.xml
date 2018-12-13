@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="70dp">
+
+    <com.kuwai.ysy.widget.TextImageView
+        android:id="@+id/img_head"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/icon_person"
+        android:layout_marginLeft="14dp" />
+
+    <TextView
+        android:id="@+id/tv_nick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/img_head"
+        android:text="晴空万里"
+        android:textColor="@color/balck_28"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/img_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_nick"
+        android:layout_toRightOf="@id/tv_nick"
+        android:src="@drawable/ic_user_woman" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_nick"
+        android:layout_toRightOf="@id/img_sex"
+        android:src="@drawable/ic_user_vip" />
+
+    <TextView
+        android:id="@+id/tv_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_nick"
+        android:layout_marginLeft="14dp"
+        android:layout_toRightOf="@id/img_head"
+        android:text="31岁|168cm|本科|22-30万元"
+        android:textColor="@color/grey_bd"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_sign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_info"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="4dp"
+        android:layout_toRightOf="@id/img_head"
+        android:text="淡然看人生！"
+        android:textColor="@color/balck_28"
+        android:textSize="12sp" />
+</RelativeLayout>

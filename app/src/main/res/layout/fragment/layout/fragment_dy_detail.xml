@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rightImg="@drawable/ic_chat_nav_more"
+        app:title1="详情"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/navigation">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentScrim="@color/transparent"
+                app:expandedTitleMarginEnd="48dp"
+                app:expandedTitleMarginStart="48dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <com.kuwai.ysy.widget.NiceImageView
+                        android:id="@+id/img_head"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:scaleType="centerCrop"
+                        app:corner_radius="4dp" />
+
+                    <TextView
+                        android:id="@+id/tv_nick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_toRightOf="@id/img_head"
+                        android:textColor="@color/balck_28" />
+
+                    <ImageView
+                        android:id="@+id/iv_sex"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="6dp"
+                        android:layout_toRightOf="@id/tv_nick" />
+
+                    <TextView
+                        android:id="@+id/tv_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_nick"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_toRightOf="@id/img_head"
+                        android:background="@color/bg_theme_f6"
+                        android:paddingBottom="4dp"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
+                        android:paddingTop="4dp"
+                        android:textColor="@color/theme"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/tv_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_info"
+                        android:layout_marginTop="18dp"
+                        android:textColor="@color/balck_28"
+                        android:textSize="14sp" />
+
+                    <com.kuwai.ysy.widget.NineGridView
+                        android:id="@+id/nine_grid_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_content"
+                        android:layout_marginBottom="14dp"
+                        android:layout_marginTop="14dp">
+
+                    </com.kuwai.ysy.widget.NineGridView>
+
+                    <TextView
+                        android:id="@+id/tv_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/nine_grid_view"
+                        android:textColor="@color/gray_7b"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/nine_grid_view"
+                        android:layout_marginLeft="16dp"
+                        android:layout_toRightOf="@id/tv_location"
+                        android:textColor="@color/gray_7b"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/line_color" />
+
+            <RadioGroup
+                android:id="@+id/main_radiogroup"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_dashang"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radiobutton_background"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="打赏(20)"
+                    android:textColor="@color/radio_color"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_reward"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radiobutton_background"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="评论(10)"
+                    android:textColor="@color/radio_color"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_zan"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radiobutton_background"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="点赞(5)"
+                    android:textColor="@color/radio_color"
+                    android:textSize="16sp" />
+
+            </RadioGroup>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nsv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <com.kuwai.ysy.widget.MyViewPager
+                android:id="@+id/vp_dy_detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.design.widget.CoordinatorLayout>
+
+    <com.allen.library.SuperButton
+        android:id="@+id/dialog_comment_bt"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/top"
+        android:text="提交"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:sGradientEndColor="#bfb5ea"
+        app:sGradientOrientation="LEFT_RIGHT"
+        app:sGradientStartColor="#9a7df7"
+        app:sGradientType="linear" />
+
+    <LinearLayout
+        android:id="@+id/bottom_lay"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white"
+        android:elevation="2dp"
+        android:visibility="gone"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/detail_page_do_comment"
+            android:layout_width="0dp"
+            android:layout_height="34dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/comment_bt_selector"
+            android:gravity="center_vertical"
+            android:paddingLeft="18dp"
+            android:text="说点什么吧..."
+            android:textColor="#B6B6B6"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+</RelativeLayout>

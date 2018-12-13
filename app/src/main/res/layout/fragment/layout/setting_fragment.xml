@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+       <com.kuwai.ysy.widget.NavigationLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           app:title1="设置"></com.kuwai.ysy.widget.NavigationLayout>
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/st_security"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="1dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            app:sLeftTextColor="#282828"
+            app:sLeftTextSize="16sp"
+            app:sLeftTextString="账号与安全"
+            app:sRightTvDrawableRight="@drawable/center_ic_list_arrow" />
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/st_message"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            app:sLeftTextColor="#282828"
+            app:sLeftTextSize="16sp"
+            app:sLeftTextString="消息通知"
+            app:sRightTvDrawableRight="@drawable/center_ic_list_arrow" />
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/st_help"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="26dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            app:sLeftTextColor="#282828"
+            app:sLeftTextSize="16sp"
+            app:sLeftTextString="帮助与反馈"
+            app:sRightTvDrawableRight="@drawable/center_ic_list_arrow" />
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/st_agree"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            app:sLeftTextColor="#282828"
+            app:sLeftTextSize="16sp"
+            app:sLeftTextString="用户协议"
+            app:sRightTvDrawableRight="@drawable/center_ic_list_arrow" />
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/st_about"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            app:sLeftTextColor="#282828"
+            app:sLeftTextSize="16sp"
+            app:sLeftTextString="关于我们"
+            app:sRightTvDrawableRight="@drawable/center_ic_list_arrow" />
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/st_black"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            app:sLeftTextColor="#282828"
+            app:sLeftTextSize="16sp"
+            app:sLeftTextString="屏蔽与黑名单"
+            app:sRightTvDrawableRight="@drawable/center_ic_list_arrow" />
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/st_score"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            app:sLeftTextColor="#282828"
+            app:sLeftTextSize="16sp"
+            app:sLeftTextString="去评分"
+            app:sRightTvDrawableRight="@drawable/center_ic_list_arrow" />
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/st_clear"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="25dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            app:sLeftTextColor="#282828"
+            app:sLeftTextSize="16sp"
+            app:sLeftTextString="清除缓存"
+            app:sRightTvDrawableRight="@drawable/center_ic_list_arrow" />
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/st_exit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="78dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            app:sCenterTextString="退出登录" />
+
+    </LinearLayout>
+</ScrollView>
