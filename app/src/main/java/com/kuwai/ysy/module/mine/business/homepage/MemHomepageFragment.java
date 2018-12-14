@@ -19,6 +19,7 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.chat.FindFriendChildFragment;
 import com.kuwai.ysy.module.circle.adapter.MyPagerAdapter;
@@ -130,7 +131,7 @@ public class MemHomepageFragment extends BaseFragment implements View.OnClickLis
             mTabEntities.add(new TabEntity(mTitles[i]));
         }
         mFragments.add(PageDetailFragment.newInstance());
-        mFragments.add(DongtaiMainFragment.newInstance());
+        mFragments.add(DongtaiMainFragment.newInstance(C.TYPE_DY_ALL));
         mAdapter = new MyPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(mAdapter);
         //slidingTabLayout.setViewPager(viewPager);\

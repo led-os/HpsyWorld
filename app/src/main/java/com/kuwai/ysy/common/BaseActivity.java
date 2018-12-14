@@ -57,9 +57,11 @@ public abstract class BaseActivity<T extends RBasePresenter> extends RBaseActivi
     /**
      * 获取数据
      */
-    public void start(){
+    public void start() {
 
-    };
+    }
+
+    ;
 
     private boolean needImmersive() {
         return true;
@@ -87,6 +89,12 @@ public abstract class BaseActivity<T extends RBasePresenter> extends RBaseActivi
         if (bundle != null) {
             intent.putExtras(bundle);
         }
+        startActivity(intent);
+    }
+
+    public void openActivity(Class<?> clz, int type) {
+        Intent intent = new Intent(this, clz);
+        intent.putExtra("type", type);
         startActivity(intent);
     }
 

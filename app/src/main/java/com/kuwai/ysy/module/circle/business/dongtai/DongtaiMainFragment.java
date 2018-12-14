@@ -16,11 +16,14 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.SimpleResponse;
+import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.DyDetailActivity;
 import com.kuwai.ysy.module.circle.PublishDyActivity;
 import com.kuwai.ysy.module.circle.adapter.DongtaiAdapter;
+import com.kuwai.ysy.module.circle.aliyun.AlivcRecorderActivity;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.DyMainListBean;
 import com.kuwai.ysy.module.home.business.HomeActivity;
@@ -41,6 +44,8 @@ import java.util.List;
 import ch.ielse.view.imagewatcher.ImageWatcher;
 import io.reactivex.functions.Consumer;
 
+import static com.kuwai.ysy.app.C.TYPE_DY_ALL;
+
 public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> implements DongtaiMainContract.IHomeView, View.OnClickListener {
 
     private DongtaiAdapter mDongtaiAdapter;
@@ -53,9 +58,11 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
     private ImageWatcher mImageWatcher;
     private DyMainListBean mDyMainListBean;
     private int page = 1;
+    private String type = TYPE_DY_ALL;
 
-    public static DongtaiMainFragment newInstance() {
+    public static DongtaiMainFragment newInstance(String type) {
         Bundle args = new Bundle();
+        args.putString("type", type);
         DongtaiMainFragment fragment = new DongtaiMainFragment();
         fragment.setArguments(args);
         return fragment;
@@ -82,14 +89,12 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
 
     @Override
     public void initView(Bundle savedInstanceState) {
+
+        type = getArguments().getString("type");
+
         mDongtaiList = mRootView.findViewById(R.id.recyclerView);
         mPublishTv = mRootView.findViewById(R.id.tv_edit);
         mImageWatcher = mRootView.findViewById(R.id.image_watcher);
-//        mDataList.add(new CategoryBean());
-//        mDataList.add(new CategoryBean());
-//        mDataList.add(new CategoryBean());
-//        mDataList.add(new CategoryBean());
-//        mDataList.add(new CategoryBean());
 
         mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mDongtaiAdapter = new DongtaiAdapter(mDataList, mImageWatcher);
@@ -143,35 +148,34 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.requestHomeData(page, (String) SharedPreferencesUtils.getParam(mContext, "uid", "1"));
+        if (TYPE_DY_ALL.equals(type)) {
+            mPresenter.requestHomeData(page, (String) SharedPreferencesUtils.getParam(mContext, "uid", "1"));
+        } else if (C.TYPE_DY_FRIEND.equals(type)) {
+            mPresenter.requestFriendData(page, (String) SharedPreferencesUtils.getParam(mContext, "uid", "1"));
+        }
+
     }
 
     private void requestCameraPermission(final int type) {
+        if (mListPopWindow != null) {
+            mListPopWindow.dissmiss();
+        }
+        if (type == C.DY_TXT) {
+            ((BaseActivity) getActivity()).openActivity(PublishDyActivity.class, C.DY_TXT);
+            return;
+        }
         RxPermissions rxPermissions = new RxPermissions(getActivity());
-        rxPermissions.requestEach(Manifest.permission.CAMERA)
-                .subscribe(new Consumer<Permission>() {
+        rxPermissions.request(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(new Consumer<Boolean>() {
                     @Override
-                    public void accept(Permission permission) throws Exception {
-                        if (permission.granted) {
-                            /*PictureSelector.create(DongtaiMainFragment.this)
-                                    .openCamera(PictureMimeType.ofImage())
-                                    .compress(true)
-                                    .enableCrop(true)// 是否裁剪 true or false
-                                    .withAspectRatio(1, 1)// int 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
-                                    .freeStyleCropEnabled(true)// 裁剪框是否可拖拽 true or false
-                                    .circleDimmedLayer(false)// 是否圆形裁剪 true or false
-                                    .showCropFrame(true)// 是否显示裁剪矩形边框 圆形裁剪时建议设为false   true or false
-                                    .showCropGrid(true)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false    true or false
-                                    .forResult(type);*/
-//                            startActivity(new Intent(getActivity(), AlivcRecorderActivity.class));
-                        } else if (permission.shouldShowRequestPermissionRationale) {
-                            //拒绝权限请求
-                            Toast.makeText(getActivity(), "该功能需要获取相机权限", Toast.LENGTH_SHORT).show();
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (aBoolean) {
+                            ((BaseActivity) getActivity()).openActivity(PublishDyActivity.class, type);
+                            //startActivity(new Intent(getActivity(), AlivcRecorderActivity.class));
                         } else {
                             // 拒绝权限请求,并不再询问
                             // 可以提醒用户进入设置界面去设置权限
                             Toast.makeText(getActivity(), "该功能需要获取相机权限", Toast.LENGTH_SHORT).show();
-                            //Toast.makeText(RxPermissionsActivity.this, "已拒绝权限"+ permission.name +"并不再询问", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -189,19 +193,26 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
                 .size(Utils.dp2px(180), ViewGroup.LayoutParams.WRAP_CONTENT)//显示大小
                 .create()
                 .showAsDropDown(mPublishTv, (Utils.dp2px(-120)), -(Utils.dp2px(180)));
+
     }
 
     private void handleListView(View contentView) {
         contentView.findViewById(R.id.tv_take).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestCameraPermission(1);
+                requestCameraPermission(C.DY_FILM);
             }
         });
-        contentView.findViewById(R.id.tv_photo).setOnClickListener(new View.OnClickListener() {
+        contentView.findViewById(R.id.tv_text).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), PublishDyActivity.class));
+                requestCameraPermission(C.DY_TXT);
+            }
+        });
+        contentView.findViewById(R.id.tv_select).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestCameraPermission(C.DY_PIC);
             }
         });
     }
@@ -232,6 +243,12 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
     @Override
     public void dyListZan(SimpleResponse simpleResponse) {
 
+    }
+
+    @Override
+    public void setFriendData(DyMainListBean dyMainListBean) {
+        mDyMainListBean = dyMainListBean;
+        mDongtaiAdapter.addData(dyMainListBean.getData());
     }
 
     @Override
