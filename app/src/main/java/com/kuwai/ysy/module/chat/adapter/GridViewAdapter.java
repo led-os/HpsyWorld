@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.bean.Model;
+import com.kuwai.ysy.module.find.bean.GiftPopBean;
+import com.rayhahah.rbase.utils.useful.GlideUtil;
 
 import java.util.List;
 
@@ -18,7 +20,7 @@ import java.util.List;
  * Created by ZXM on 2016/9/12.
  */
 public class GridViewAdapter extends BaseAdapter {
-    private List<Model> mDatas;
+    private List<GiftPopBean.DataBean> mDatas;
     private LayoutInflater inflater;
     private Context mContext;
     /**
@@ -30,7 +32,7 @@ public class GridViewAdapter extends BaseAdapter {
      */
     private int pageSize = 8;
 
-    public GridViewAdapter(Context context, List<Model> mDatas, int curIndex) {
+    public GridViewAdapter(Context context, List<GiftPopBean.DataBean> mDatas, int curIndex) {
         inflater = LayoutInflater.from(context);
         this.mDatas = mDatas;
         this.curIndex = curIndex;
@@ -48,7 +50,7 @@ public class GridViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public Model getItem(int position) {
+    public GiftPopBean.DataBean getItem(int position) {
         return mDatas.get(position + curIndex * pageSize);
     }
 
@@ -73,9 +75,10 @@ public class GridViewAdapter extends BaseAdapter {
         /**
          * 在给View绑定显示的数据时，计算正确的position = position + curIndex * pageSize，
          */
-        Model model = getItem(position);
-        viewHolder.tv.setText(model.getMoney());
-        viewHolder.iv.setImageDrawable(model.getImage());
+        GiftPopBean.DataBean model = getItem(position);
+        viewHolder.tv.setText(model.getPrice());
+        GlideUtil.load(mContext,model.getGirft_img_url(),viewHolder.iv);
+        //viewHolder.iv.setImageDrawable(model.getGirft_img_url());
         if (model.isSelected()){//被选中
             viewHolder.item_layout.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.item_selector));
         }else {

@@ -4,27 +4,32 @@
     android:id="@+id/error_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical">
 
+    <include layout="@layout/my_unlogin_fragment" />
+
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
         android:src="@drawable/bg_img_login" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
         android:text="@string/login_error"
         android:textColor="@color/color_gray" />
 
     <com.allen.library.SuperButton
+        android:id="@+id/no_login"
         android:layout_width="80dp"
         android:layout_height="32dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        android:text="立即登录"
         android:clickable="false"
+        android:text="立即登录"
         android:textColor="@color/white"
         app:sCornersRadius="2dp"
         app:sSolidColor="@color/theme_light" />

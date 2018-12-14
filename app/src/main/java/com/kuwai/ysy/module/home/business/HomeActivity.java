@@ -17,7 +17,7 @@ import com.kuwai.ysy.controller.NavigationController;
 import com.kuwai.ysy.module.chat.ChatFragment;
 import com.kuwai.ysy.module.circle.business.DongtaiFragment;
 import com.kuwai.ysy.module.find.business.FoundHome.FoundFragment;
-import com.kuwai.ysy.module.mine.business.MineLoginFragment;
+import com.kuwai.ysy.module.mine.business.mine.MineLoginFragment;
 import com.kuwai.ysy.widget.PageNavigationView;
 import com.rayhahah.rbase.base.RBaseFragment;
 import com.rayhahah.rbase.base.RBasePresenter;

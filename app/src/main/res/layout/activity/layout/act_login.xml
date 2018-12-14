@@ -142,7 +142,7 @@
         android:layout_marginTop="20dp"
         android:text="登录"
         app:sCornersRadius="4dp"
-        app:sSelectorNormalColor="@color/theme"
+        app:sSelectorNormalColor="@color/theme_light"
         app:sUseSelector="true"
         android:enabled="false"
         android:textColor="@color/white"

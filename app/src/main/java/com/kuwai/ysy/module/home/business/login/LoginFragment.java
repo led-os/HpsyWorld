@@ -14,12 +14,16 @@ import android.widget.TextView;
 
 import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.home.business.HomeActivity;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.MyEditText;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.useful.SPManager;
+
+import static com.kuwai.ysy.app.C.MSG_LOGIN;
 
 public class LoginFragment extends BaseFragment implements View.OnClickListener {
 
@@ -96,6 +100,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.img_qq:
                 SPManager.get().putString("uid", "1");
+                EventBusUtil.sendEvent(new MessageEvent(MSG_LOGIN));
                 startActivity(new Intent(getActivity(), HomeActivity.class));
                 getActivity().finish();
                 break;
