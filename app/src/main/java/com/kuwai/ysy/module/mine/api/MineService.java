@@ -137,4 +137,12 @@ public interface MineService {
                                    @Query("client") String client);
 
 
+    /**
+     * 个人主页-资料-别人查看
+     */
+    @FormUrlEncoded
+    @POST("My/OtherPersonalInfo")
+    Observable<RResponse> getOtherPersonalInfo(@Field("uid") String uid,
+                                               @Field("other_uid") String otherid);
+
 }
