@@ -35,7 +35,7 @@ public interface MineService {
      */
     @FormUrlEncoded
     @POST("My/OtherPersonalInfo")
-    Observable<RResponse> getOtherPersonalInfo(@Field("uid") String uid,
+    Observable<UserInfo> getOtherPersonalInfo(@Field("uid") String uid,
                                                @Field("other_uid") String otherid);
 
 }
