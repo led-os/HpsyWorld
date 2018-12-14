@@ -26,6 +26,9 @@ import com.rayhahah.rbase.utils.base.StatusBarUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.kuwai.ysy.app.C.TYPE_DY_ALL;
+import static com.kuwai.ysy.app.C.TYPE_DY_FRIEND;
+
 public class DongtaiFragment extends BaseFragment implements View.OnClickListener {
 
     private TabLayout mTabLayout;
@@ -70,8 +73,8 @@ public class DongtaiFragment extends BaseFragment implements View.OnClickListene
         mMessageImg.setOnClickListener(this);
         fragmentList = new ArrayList<>();
         list_Title = new ArrayList<>();
-        fragmentList.add(DongtaiMainFragment.newInstance());
-        fragmentList.add(DongtaiMainFragment.newInstance());
+        fragmentList.add(DongtaiMainFragment.newInstance(TYPE_DY_ALL));
+        fragmentList.add(DongtaiMainFragment.newInstance(TYPE_DY_FRIEND));
         fragmentList.add(TreeHoleMainFragment.newInstance());
         list_Title.add("动态");
         list_Title.add("好友");

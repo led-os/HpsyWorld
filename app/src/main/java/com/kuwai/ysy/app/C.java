@@ -88,6 +88,9 @@ public class C {
     public static final int DY_PIC = 1;//图片
     public static final int DY_FILM = 2;//视频
 
+    public static final String TYPE_DY_ALL = "ALL_DY";//全部动态
+    public static final String TYPE_DY_FRIEND = "FRIEND_DY";//好友动态
+
 
     //通知
     public static final int MSG_LOGIN = 0x0000010;

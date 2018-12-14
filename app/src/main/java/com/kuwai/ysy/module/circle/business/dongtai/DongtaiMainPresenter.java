@@ -72,4 +72,19 @@ public class DongtaiMainPresenter extends RBasePresenter<DongtaiMainContract.IHo
         }));
     }
 
+    @Override
+    public void requestFriendData(int page, String uid) {
+        addSubscription(CircleApiFactory.getDyMyFriendListData(page, uid).subscribe(new Consumer<DyMainListBean>() {
+            @Override
+            public void accept(DyMainListBean dyMainListBean) throws Exception {
+                mView.setFriendData(dyMainListBean);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.i(TAG, "accept: " + throwable);
+            }
+        }));
+    }
+
 }

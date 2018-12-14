@@ -21,6 +21,8 @@ public class DongtaiMainContract {
 
         void dyListZan(SimpleResponse simpleResponse);
 
+        void setFriendData(DyMainListBean dyMainListBean);
+
         /**
          * 设置加载更多的数据
          */
@@ -42,6 +44,8 @@ public class DongtaiMainContract {
         void dyDetelt(String did, String uid);
 
         void dyListZan(String did, String uid, String otherid, int status);
+
+        void requestFriendData(int page, String uid);
 
     }
 }
