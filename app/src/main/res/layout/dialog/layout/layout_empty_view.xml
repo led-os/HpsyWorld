@@ -7,16 +7,15 @@
     android:orientation="vertical">
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@mipmap/ic_no_data"
-        />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bg_img_nothing" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/color_gray"
-        android:text="@string/empty_view_hint" />
+        android:layout_marginTop="20dp"
+        android:text="@string/empty_view_hint"
+        android:textColor="@color/color_gray" />
 
 </LinearLayout>

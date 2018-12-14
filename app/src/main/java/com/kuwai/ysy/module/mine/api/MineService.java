@@ -1,6 +1,7 @@
 package com.kuwai.ysy.module.mine.api;
 
 
+import com.kuwai.ysy.bean.RResponse;
 import com.kuwai.ysy.module.find.bean.appointment.MyAppointMent;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.kuwai.ysy.module.mine.bean.user.UserInfo;

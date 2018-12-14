@@ -6,6 +6,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.kuwai.ysy.utils.Utils;
+
 public class MyViewPager extends ViewPager {
 
     public MyViewPager(Context context) {
@@ -26,6 +28,10 @@ public class MyViewPager extends ViewPager {
             int h = child.getMeasuredHeight();
             if (h > height)
                 height = h;
+        }
+
+        if (height < Utils.dp2px(400)) {
+            height = Utils.dp2px(400);
         }
 
         heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);

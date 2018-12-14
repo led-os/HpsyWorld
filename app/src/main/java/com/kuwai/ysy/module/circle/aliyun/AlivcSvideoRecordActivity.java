@@ -31,10 +31,8 @@ import com.aliyun.svideo.sdk.external.struct.common.VideoQuality;
 import com.aliyun.svideo.sdk.external.struct.encoder.VideoCodecs;
 import com.aliyun.svideo.sdk.external.struct.snap.AliyunSnapVideoParam;
 import com.kuwai.ysy.R;
-import com.kuwai.ysy.module.circle.PublishDyActivity;
-import com.kuwai.ysy.utils.ActionInfo;
+import com.kuwai.ysy.module.circle.business.publishdy.PublishDyActivity;
 import com.kuwai.ysy.utils.PermissionUtils;
-import com.rayhahah.rbase.utils.base.ToastUtils;
 
 import java.io.File;
 import java.lang.ref.WeakReference;

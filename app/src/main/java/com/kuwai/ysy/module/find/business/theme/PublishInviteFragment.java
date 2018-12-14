@@ -24,13 +24,13 @@ import com.kuwai.ysy.module.find.bean.HomeAppUavBean;
 import com.kuwai.ysy.module.find.bean.ThemeBean;
 import com.kuwai.ysy.module.find.bean.theme.DateTheme;
 import com.kuwai.ysy.module.find.business.PostAppointment.PostAppointmentFragment;
-import com.kuwai.ysy.utils.SharedPreferencesUtils;
 import com.kuwai.ysy.widget.GiftPannelView;
 import com.kuwai.ysy.widget.MyEditText;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,7 +152,7 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
                 switch (view.getId()) {
                     case R.id.ic_del:
                         mPos = position;
-                        mPresenter.delCustomTheme((String) SharedPreferencesUtils.getParam(mContext, "uid", "1"), mDataList.get(position).getS_id());
+                        mPresenter.delCustomTheme(SPManager.get().getStringValue("uid"), mDataList.get(position).getS_id());
                         break;
                 }
             }

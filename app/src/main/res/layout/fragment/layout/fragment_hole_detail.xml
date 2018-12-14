@@ -212,7 +212,7 @@
             android:scrollbars="none"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <com.kuwai.ysy.widget.ResetHeightViewpager
+            <com.kuwai.ysy.widget.MyViewPager
                 android:id="@+id/main_vp_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

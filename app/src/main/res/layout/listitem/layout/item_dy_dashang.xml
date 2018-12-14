@@ -19,6 +19,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="16dp"
         android:layout_toRightOf="@id/img_head"
+        android:text="1313"
         android:textColor="@color/balck_28"
         android:textSize="15sp" />
 
@@ -26,15 +27,16 @@
         android:id="@+id/vip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/tv_nick"
-        android:layout_toRightOf="@id/tv_nick"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="20dp"
         android:visibility="gone"
+        android:layout_toRightOf="@id/tv_nick"
         android:src="@drawable/ic_user_vip" />
 
     <ImageView
         android:id="@+id/iv_sex"
         android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@id/tv_nick"
         android:layout_toRightOf="@id/vip"/>
 
@@ -74,8 +76,9 @@
         app:sCornersRadius="8dp"
         app:sSolidColor="#ff875bf0" />
 
-    <View style="@style/horizontal_line"
+    <View
+        style="@style/horizontal_line"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp" />
 </RelativeLayout>

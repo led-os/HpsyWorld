@@ -183,6 +183,7 @@
                 android:id="@+id/vp_dy_detail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:minHeight="400dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         </android.support.v4.widget.NestedScrollView>

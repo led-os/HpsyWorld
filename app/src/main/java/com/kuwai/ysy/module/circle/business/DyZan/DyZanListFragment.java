@@ -11,8 +11,8 @@ import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.adapter.DyZanAdapter;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.DyLikeListBean;
-import com.kuwai.ysy.utils.SharedPreferencesUtils;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class DyZanListFragment extends BaseFragment<DyZanPresenter> implements D
     private DyZanAdapter mDateAdapter;
     private RecyclerView mDongtaiList;
     private List<CategoryBean> mDataList = new ArrayList<>();
-    private int page =1;
+    private int page = 1;
     private String did;
 
     public static DyZanListFragment newInstance(Bundle bundle) {
@@ -50,6 +50,7 @@ public class DyZanListFragment extends BaseFragment<DyZanPresenter> implements D
     @Override
     public void initView(Bundle savedInstanceState) {
         mDongtaiList = mRootView.findViewById(R.id.recyclerView);
+        mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
         //mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false) {
             @Override
@@ -67,12 +68,17 @@ public class DyZanListFragment extends BaseFragment<DyZanPresenter> implements D
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         did = getArguments().getString("did");
-        mPresenter.requestHomeData(did,(String)SharedPreferencesUtils.getParam(mContext,"uid","1"),page);
+        mPresenter.requestHomeData(did, SPManager.get().getStringValue("uid", "1"), page);
     }
 
     @Override
     public void setHomeData(DyLikeListBean dyLikeListBean) {
-        mDateAdapter.addData(dyLikeListBean.getData().getGood());
+        if (dyLikeListBean.getData().getGood().size() > 0) {
+            mLayoutStatusView.showContent();
+            mDateAdapter.addData(dyLikeListBean.getData().getGood());
+        } else {
+            mLayoutStatusView.showEmpty();
+        }
     }
 
     @Override

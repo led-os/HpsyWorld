@@ -11,11 +11,11 @@ import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.DyMainListBean;
 import com.kuwai.ysy.others.NineImageAdapter;
-import com.kuwai.ysy.utils.SharedPreferencesUtils;
 import com.kuwai.ysy.widget.NineGridView;
 import com.kuwai.ysy.widget.TextImageView;
 import com.rayhahah.rbase.utils.base.DateTimeUitl;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -40,6 +40,7 @@ public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, Ba
     protected void convert(BaseViewHolder helper, final DyMainListBean.DataBean item) {
         switch (item.getType()) {
             case C.DY_TXT:
+                helper.setText(R.id.tv_content, item.getText());
                 break;
             case C.DY_PIC:
                 helper.setText(R.id.tv_content, item.getText());
@@ -88,8 +89,9 @@ public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, Ba
 
         helper.setText(R.id.tv_location, item.getAddress());
         helper.setText(R.id.tv_time, DateTimeUitl.getStandardDate(String.valueOf(item.getUpdate_time())));
+        SPManager.get().getStringValue("uid");
 
-        if (item.getUid() == (Integer.valueOf((String) SharedPreferencesUtils.getParam(mContext, "uid", "1")))) {
+        if (item.getUid() == (Integer.valueOf(SPManager.getStringValue("uid","1")))) {
             helper.getView(R.id.tv_delete).setVisibility(View.VISIBLE);
         } else {
             helper.getView(R.id.tv_delete).setVisibility(View.GONE);
@@ -97,12 +99,12 @@ public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, Ba
 
         helper.setText(R.id.tv_comms_num, String.valueOf(item.getComment()));
         helper.setText(R.id.tv_like, String.valueOf(item.getGood()));
-        switch (item.getWhatgood()){
+        switch (item.getWhatgood()) {
             case 0:
-                GlideUtil.load(mContext,R.drawable.dyn_dc_ic_like_nor,(ImageView)helper.getView(R.id.iv_like));
+                GlideUtil.load(mContext, R.drawable.dyn_dc_ic_like_nor, (ImageView) helper.getView(R.id.iv_like));
                 break;
             case 1:
-                GlideUtil.load(mContext,R.drawable.dyn_dc_ic_like_pre,(ImageView)helper.getView(R.id.iv_like));
+                GlideUtil.load(mContext, R.drawable.dyn_dc_ic_like_pre, (ImageView) helper.getView(R.id.iv_like));
                 break;
         }
 

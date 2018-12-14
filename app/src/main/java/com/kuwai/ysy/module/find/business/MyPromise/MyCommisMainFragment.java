@@ -14,10 +14,10 @@ import com.kuwai.ysy.module.find.bean.BlindBean;
 import com.kuwai.ysy.module.find.bean.appointment.MyCommis;
 import com.kuwai.ysy.module.find.business.CommisDetail.CommisDetailFragment;
 import com.kuwai.ysy.module.find.business.MyCommicDetail.CommicDetailMyFragment;
-import com.kuwai.ysy.utils.SharedPreferencesUtils;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.MyRecycleViewDivider;
 import com.rayhahah.rbase.utils.base.ToastUtils;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +66,7 @@ public class MyCommisMainFragment extends BaseFragment<MyPromisePresenter> imple
                     Bundle bundle = new Bundle();
                     bundle.putInt("rid", mMyCommis.getData().get(position).getR_id());
 
-                    if (Integer.valueOf((String) SharedPreferencesUtils.getParam(mContext, "uid", "1")) == (mMyCommis.getData().get(position).getUid())) {
+                    if ((Integer.valueOf(SPManager.get().getStringValue("uid","1"))) == (mMyCommis.getData().get(position).getUid())) {
                         ((BaseFragment) getParentFragment()).start(CommicDetailMyFragment.newInstance(bundle));
                     } else {
                         ((BaseFragment) getParentFragment()).start(CommisDetailFragment.newInstance(bundle));
@@ -84,7 +84,7 @@ public class MyCommisMainFragment extends BaseFragment<MyPromisePresenter> imple
                 if (view.getId()==R.id.sb_status){
                     if (mMyCommis.getData().get(position).getStatus() == 0) {
                         mPresenter.getCancelApply(mMyCommis.getData().get(position).getR_id(),
-                                Integer.valueOf((String) SharedPreferencesUtils.getParam(mContext, "uid", "1")));
+                                (Integer.valueOf(SPManager.get().getStringValue("uid","1"))));
                     }
                 }
             }

@@ -21,21 +21,18 @@ import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.DyDetailActivity;
-import com.kuwai.ysy.module.circle.PublishDyActivity;
+import com.kuwai.ysy.module.circle.business.publishdy.PublishDyActivity;
 import com.kuwai.ysy.module.circle.adapter.DongtaiAdapter;
-import com.kuwai.ysy.module.circle.aliyun.AlivcRecorderActivity;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.DyMainListBean;
 import com.kuwai.ysy.module.home.business.HomeActivity;
-import com.kuwai.ysy.utils.SharedPreferencesUtils;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.DragFloatActionButton;
 import com.kuwai.ysy.widget.GlideSimpleTarget;
 import com.kuwai.ysy.widget.popwindow.YsyPopWindow;
 import com.rayhahah.dialoglib.CustomDialog;
-import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
-import com.tbruyelle.rxpermissions2.Permission;
+import com.rayhahah.rbase.utils.useful.SPManager;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
@@ -120,14 +117,14 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
                         break;
                     case R.id.tv_delete:
                         mPresenter.dyDetelt(String.valueOf(mDyMainListBean.getData().get(position).getD_id()),
-                                (String) SharedPreferencesUtils.getParam(mContext, "uid", "1"));
+                                SPManager.get().getStringValue("uid"));
 
                         mDongtaiAdapter.remove(position);
                         break;
 
                     case R.id.ll_like:
                         mPresenter.dyListZan(String.valueOf(mDyMainListBean.getData().get(position).getD_id()),
-                                (String) SharedPreferencesUtils.getParam(mContext, "uid", "1"),
+                                SPManager.get().getStringValue("uid"),
                                 String.valueOf(mDyMainListBean.getData().get(position).getUid()),
                                 mDyMainListBean.getData().get(position).getWhatgood());
                         break;
@@ -149,9 +146,9 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         if (TYPE_DY_ALL.equals(type)) {
-            mPresenter.requestHomeData(page, (String) SharedPreferencesUtils.getParam(mContext, "uid", "1"));
+            mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid","1"));
         } else if (C.TYPE_DY_FRIEND.equals(type)) {
-            mPresenter.requestFriendData(page, (String) SharedPreferencesUtils.getParam(mContext, "uid", "1"));
+            mPresenter.requestFriendData(page, SPManager.get().getStringValue("uid","1"));
         }
 
     }

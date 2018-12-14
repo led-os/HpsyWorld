@@ -16,7 +16,6 @@ import com.kuwai.ysy.module.find.adapter.MyDateAdapter;
 import com.kuwai.ysy.module.find.bean.appointment.MyAppointMent;
 import com.kuwai.ysy.module.find.business.CommisDetail.CommisDetailFragment;
 import com.kuwai.ysy.module.find.business.MyCommicDetail.CommicDetailMyFragment;
-import com.kuwai.ysy.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;

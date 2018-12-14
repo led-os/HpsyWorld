@@ -94,7 +94,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                 start(Regist1Fragment.newInstance());
                 break;
             case R.id.btn_login:
-                SPManager.get().putString("uid", "");
+                SPManager.get().putString("uid", "1");
                 startActivity(new Intent(getActivity(), HomeActivity.class));
                 getActivity().finish();
                 break;

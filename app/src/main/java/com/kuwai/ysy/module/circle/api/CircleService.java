@@ -15,11 +15,14 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PartMap;
 
 public interface CircleService {
 
@@ -54,9 +57,9 @@ public interface CircleService {
     /**
      * 发布动态
      */
-    @FormUrlEncoded
+    @Multipart
     @POST("Dynamic/ReleaseDynamic")
-    Observable<SimpleResponse> publishDy(@FieldMap Map<String, String> map);
+    Observable<SimpleResponse> publishDy(@PartMap Map<String, RequestBody> map);
 
     /**
      * 删除动态

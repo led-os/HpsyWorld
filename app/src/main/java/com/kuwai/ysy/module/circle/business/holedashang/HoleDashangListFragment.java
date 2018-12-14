@@ -1,4 +1,4 @@
-package com.kuwai.ysy.module.circle.business.DyDashang;
+package com.kuwai.ysy.module.circle.business.holedashang;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,20 +6,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.RelativeLayout;
 
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.adapter.message.DashangAdapter;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.DyRewardlistBean;
-import com.kuwai.ysy.module.circle.business.DyDetail.DyDetailContract;
-import com.rayhahah.rbase.base.RBasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DyDashangListFragment extends BaseFragment<DyDashangPresenter> implements DyDashangContract.IHomeView, View.OnClickListener {
+public class HoleDashangListFragment extends BaseFragment<HoleDashangPresenter> implements HoleDashangContract.IHomeView, View.OnClickListener {
 
     private DashangAdapter mDateAdapter;
     private RecyclerView mDongtaiList;
@@ -27,8 +24,8 @@ public class DyDashangListFragment extends BaseFragment<DyDashangPresenter> impl
     private String did;
     private int page = 1;
 
-    public static DyDashangListFragment newInstance(Bundle bundle) {
-        DyDashangListFragment fragment = new DyDashangListFragment();
+    public static HoleDashangListFragment newInstance(Bundle bundle) {
+        HoleDashangListFragment fragment = new HoleDashangListFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -39,8 +36,8 @@ public class DyDashangListFragment extends BaseFragment<DyDashangPresenter> impl
     }
 
     @Override
-    protected DyDashangPresenter getPresenter() {
-        return new DyDashangPresenter(this);
+    protected HoleDashangPresenter getPresenter() {
+        return new HoleDashangPresenter(this);
     }
 
     @Override
@@ -69,7 +66,7 @@ public class DyDashangListFragment extends BaseFragment<DyDashangPresenter> impl
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        if ("1".equals(getArguments().getString("type"))) {
+        if (TextUtils.isEmpty(getArguments().getString("did"))) {
             did = getArguments().getString("did");
             mPresenter.requestHomeData(String.valueOf(did), page);
         } else {

@@ -25,16 +25,14 @@ import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.bean.HoleDetailBean;
 import com.kuwai.ysy.module.circle.business.DyDashang.DyDashangListFragment;
-import com.kuwai.ysy.module.circle.business.DySecFragment;
-import com.kuwai.ysy.utils.SharedPreferencesUtils;
+import com.kuwai.ysy.module.circle.business.dycomment.DySecFragment;
 import com.kuwai.ysy.utils.Utils;
-import com.kuwai.ysy.widget.NiceImageView;
+import com.kuwai.ysy.widget.MyViewPager;
 import com.kuwai.ysy.widget.ResetHeightViewpager;
 import com.kuwai.ysy.widget.popwindow.YsyPopWindow;
-import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.DateTimeUitl;
 import com.rayhahah.rbase.utils.base.StatusBarUtil;
-import com.rayhahah.rbase.utils.useful.GlideUtil;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -43,7 +41,7 @@ import java.util.List;
 
 public class HoleDetailMainFragment extends BaseFragment<HoleDetailPresenter> implements HoleDetailContract.IHomeView, View.OnClickListener {
 
-    private ResetHeightViewpager pager;
+    private MyViewPager pager;
     private List<Fragment> fragments;
     private RadioGroup radioGroup;
     private ImageView mRightImg;
@@ -158,6 +156,7 @@ public class HoleDetailMainFragment extends BaseFragment<HoleDetailPresenter> im
         mDetailPageDoComment = (TextView) mRootView.findViewById(R.id.detail_page_do_comment);
 
         pager = mRootView.findViewById(R.id.main_vp_container);
+        pager.setOffscreenPageLimit(2);
         radioGroup = (RadioGroup) mRootView.findViewById(R.id.main_radiogroup);
         mBottomLay = mRootView.findViewById(R.id.bottom_lay);
         mRightImg = mRootView.findViewById(R.id.right_txt);
@@ -169,6 +168,7 @@ public class HoleDetailMainFragment extends BaseFragment<HoleDetailPresenter> im
 
         Bundle bundle = new Bundle();
         bundle.putString("did", tid);
+        bundle.putString("type","2");
 
         fragments = new ArrayList<Fragment>();
         fragments.add(DyDashangListFragment.newInstance(bundle));
@@ -194,7 +194,7 @@ public class HoleDetailMainFragment extends BaseFragment<HoleDetailPresenter> im
 
             @Override
             public void onPageSelected(int position) {
-                pager.resetHeight(position);
+                //pager.resetHeight(position);
                 RadioButton radioButton = (RadioButton) radioGroup.getChildAt(position);
                 radioButton.setChecked(true);
                 switch (position) {
@@ -234,7 +234,7 @@ public class HoleDetailMainFragment extends BaseFragment<HoleDetailPresenter> im
         super.onLazyInitView(savedInstanceState);
         StatusBarUtil.setDarkMode(getActivity());
 
-        mPresenter.requestHomeData(tid, (String) SharedPreferencesUtils.getParam(mContext, "uid", ""));
+        mPresenter.requestHomeData(tid, SPManager.get().getStringValue("uid"));
     }
 
     @Override

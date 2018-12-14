@@ -2,6 +2,7 @@ package com.kuwai.ysy.module.circle.business.DyDetail;
 
 import android.util.Log;
 
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.circle.api.CircleApiFactory;
 import com.kuwai.ysy.module.circle.bean.DyDetailBean;
 import com.kuwai.ysy.module.circle.bean.DyMainListBean;
@@ -29,6 +30,21 @@ public class DyDetailPresenter extends RBasePresenter<DyDetailContract.IHomeView
             @Override
             public void accept(DyDetailBean dyDetailBean) throws Exception {
                 mView.setHomeData(dyDetailBean);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.i(TAG, "accept: " + throwable);
+            }
+        }));
+    }
+
+    @Override
+    public void addFirComment(String d_id, String uid, String text) {
+        addSubscription(CircleApiFactory.dyComment(d_id, uid,text).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse dyDetailBean) throws Exception {
+                mView.addFirCallBack(dyDetailBean);
             }
         }, new Consumer<Throwable>() {
             @Override
