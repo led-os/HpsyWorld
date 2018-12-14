@@ -5,6 +5,7 @@ import com.kuwai.ysy.bean.TeamListBean;
 import com.kuwai.ysy.module.find.api.AppointService;
 import com.kuwai.ysy.module.find.bean.appointment.MyAppointMent;
 import com.kuwai.ysy.module.mine.bean.ESUser;
+import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.kuwai.ysy.module.mine.bean.user.UserInfo;
 import com.kuwai.ysy.net.ApiClient;
 import com.kuwai.ysy.utils.HuPuHelper;
@@ -24,6 +25,13 @@ public class MineApiFactory {
                 .create(MineService.class)
                 .getUsetInfo(uid)
                 .compose(RxSchedulers.<UserInfo>ioMain());
+    }
+
+    public static Observable<PersolHomePageBean> getOtherHomepageInfo(String uid, String otherid) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getOtherPersonalInfo(uid, otherid)
+                .compose(RxSchedulers.<PersolHomePageBean>ioMain());
     }
 
 }

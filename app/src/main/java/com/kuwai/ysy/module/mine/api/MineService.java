@@ -2,6 +2,7 @@ package com.kuwai.ysy.module.mine.api;
 
 
 import com.kuwai.ysy.module.find.bean.appointment.MyAppointMent;
+import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.kuwai.ysy.module.mine.bean.user.UserInfo;
 
 import java.util.Map;
@@ -29,13 +30,14 @@ public interface MineService {
     @POST("My/PersonalInfo")
     Observable<UserInfo> getUsetInfoMine(@Field("uid") String uid);
 
-
     /**
      * 个人主页-资料-别人查看
      */
     @FormUrlEncoded
     @POST("My/OtherPersonalInfo")
-    Observable<UserInfo> getOtherPersonalInfo(@Field("uid") String uid,
-                                               @Field("other_uid") String otherid);
+    Observable<PersolHomePageBean> getOtherPersonalInfo(@Field("uid") String uid,
+                                                        @Field("other_uid") String otherid);
+
+
 
 }

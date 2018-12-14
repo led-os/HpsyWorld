@@ -10,27 +10,36 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
+import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
+import com.kuwai.ysy.module.mine.bean.vip.GallaryBean;
 import com.kuwai.ysy.utils.BlurTransformation;
 
 import java.util.List;
 
 
-public class PicAdapter extends BaseQuickAdapter<CategoryBean, BaseViewHolder> {
+public class PicAdapter extends BaseQuickAdapter<GallaryBean, BaseViewHolder> {
 
 
-    public PicAdapter(List data) {
-        super(R.layout.item_pic, data);
+    public PicAdapter() {
+        super(R.layout.item_pic);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, CategoryBean item) {
+    protected void convert(BaseViewHolder helper, GallaryBean item) {
         ImageView imageView = helper.getView(R.id.img_pic);
-        RequestOptions options = new RequestOptions()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                //高斯模糊 范围在 0 -- 25 越大模糊程度越高
-                .transforms(new BlurTransformation(mContext, 15));
-        Glide.with(mContext).load(R.drawable.banner).apply(options).into(imageView);
+
+        if (item.isVip() || item.isHasPay()) {
+            Glide.with(mContext).load(item.getPic()).into(imageView);
+        } else {
+            RequestOptions options = new RequestOptions()
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    //高斯模糊 范围在 0 -- 25 越大模糊程度越高
+                    .transforms(new BlurTransformation(mContext, 20));
+            Glide.with(mContext).load(item.getPic()).apply(options).into(imageView);
+
+
+        }
     }
 
 }
