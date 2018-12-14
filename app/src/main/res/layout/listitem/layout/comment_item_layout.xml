@@ -3,7 +3,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <com.allen.library.CircleImageView
         android:id="@+id/comment_item_logo"
@@ -28,7 +29,8 @@
         android:id="@+id/vip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/comment_item_userName"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="20dp"
         android:layout_toRightOf="@id/comment_item_userName"
         android:src="@drawable/ic_user_vip" />
 
@@ -36,6 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/comment_item_userName"
+        android:layout_marginLeft="6dp"
         android:layout_toRightOf="@id/vip"
         android:src="@drawable/ic_user_man" />
 
@@ -55,9 +58,9 @@
         android:id="@+id/comment_item_like"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:layout_alignBottom="@id/comment_item_time"
         android:layout_alignParentRight="true"
         android:layout_marginRight="28dp"
-        android:layout_alignBottom="@id/comment_item_time"
         android:scaleType="centerCrop"
         android:src="@drawable/dyn_dc_ic_like_pre" />
 
@@ -65,8 +68,8 @@
         android:id="@+id/comment_item_ping"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginRight="8dp"
         android:layout_alignBottom="@id/comment_item_time"
+        android:layout_marginRight="8dp"
         android:layout_toLeftOf="@id/comment_item_like"
         android:scaleType="centerCrop"
         android:src="@drawable/dyn_dc_ic_message" />
@@ -86,7 +89,7 @@
 
     <View
         style="@style/horizontal_line"
-        android:layout_below="@id/comment_item_content"
         android:layout_alignLeft="@id/comment_item_time"
+        android:layout_below="@id/comment_item_content"
         android:layout_marginRight="20dp" />
 </RelativeLayout>

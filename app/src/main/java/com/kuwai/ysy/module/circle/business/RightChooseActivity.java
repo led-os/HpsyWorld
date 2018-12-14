@@ -24,6 +24,7 @@ public class RightChooseActivity extends BaseActivity implements View.OnClickLis
     private List<RightChooseBean> mDataList = new ArrayList<>();
     private RightChooseAdapter mDongtaiAdapter;
     private String type = "公开";
+    private int id = 1;
 
     @Override
     protected RBasePresenter getPresenter() {
@@ -49,9 +50,9 @@ public class RightChooseActivity extends BaseActivity implements View.OnClickLis
     protected void initView() {
         mNavigation = findViewById(R.id.navigation);
         mRecyclerView = findViewById(R.id.recyclerView);
-        mDataList.add(new RightChooseBean("公开", "所有人可见", true));
-        mDataList.add(new RightChooseBean("私密", "仅自己可见", false));
-        mDataList.add(new RightChooseBean("仅好友可见", "互相喜欢的朋友可见", false));
+        mDataList.add(new RightChooseBean(1,"公开", "所有人可见", true));
+        mDataList.add(new RightChooseBean(2,"私密", "仅自己可见", false));
+        mDataList.add(new RightChooseBean(3,"仅好友可见", "互相喜欢的朋友可见", false));
         mDongtaiAdapter = new RightChooseAdapter(mDataList);
         mRecyclerView.setAdapter(mDongtaiAdapter);
         mNavigation.setLeftClick(new View.OnClickListener() {
@@ -65,6 +66,7 @@ public class RightChooseActivity extends BaseActivity implements View.OnClickLis
             public void onClick(View v) {
                 Intent aintent = new Intent(RightChooseActivity.this, PublishDyActivity.class);
                 aintent.putExtra("data", type);
+                aintent.putExtra("id",id);
                 setResult(RESULT_OK, aintent);
                 finish();
             }
@@ -79,6 +81,7 @@ public class RightChooseActivity extends BaseActivity implements View.OnClickLis
                 }
                 mDataList.get(position).setCheck(true);
                 type = mDataList.get(position).getTitle();
+                id = mDataList.get(position).getId();
                 mDongtaiAdapter.notifyDataSetChanged();
             }
         });

@@ -110,6 +110,10 @@ public class MultipleStatusView extends RelativeLayout {
         showEmpty(mEmptyViewResId, DEFAULT_LAYOUT_PARAMS);
     }
 
+    public final void showEmpty(ViewGroup.LayoutParams layoutParams) {
+        showEmpty(mEmptyViewResId, layoutParams);
+    }
+
     /**
      * 显示空视图
      * @param layoutId 自定义布局文件

@@ -11,6 +11,7 @@ import com.rayhahah.rbase.base.RBasePresenter;
 import java.util.HashMap;
 
 import io.reactivex.functions.Consumer;
+import okhttp3.RequestBody;
 
 public class PublishPresenter extends RBasePresenter<PublishDyContract.IPublishView> implements PublishDyContract.IPublishPresenter {
     private static final String TAG = "DyDetailPresenter";
@@ -21,7 +22,7 @@ public class PublishPresenter extends RBasePresenter<PublishDyContract.IPublishV
 
 
     @Override
-    public void publishDy(HashMap<String, String> map) {
+    public void publishDy(HashMap<String, RequestBody> map) {
         addSubscription(CircleApiFactory.publishDy(map).subscribe(new Consumer<SimpleResponse>() {
             @Override
             public void accept(SimpleResponse dyDetailBean) throws Exception {

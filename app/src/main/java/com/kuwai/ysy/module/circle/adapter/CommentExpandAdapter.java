@@ -15,11 +15,13 @@ import com.allen.library.CircleImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.module.circle.bean.DyCommentListBean;
 import com.kuwai.ysy.module.circle.bean.second.CommentDetailBean;
 import com.kuwai.ysy.module.circle.bean.second.CommentsBean;
 import com.kuwai.ysy.module.circle.bean.second.ReplyDetailBean;
 import com.kuwai.ysy.module.circle.bean.second.UserBean;
 import com.kuwai.ysy.widget.CommentsView;
+import com.rayhahah.rbase.utils.base.DateTimeUitl;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
 
 import java.util.ArrayList;
@@ -28,13 +30,18 @@ import java.util.List;
 
 public class CommentExpandAdapter extends BaseExpandableListAdapter {
     private static final String TAG = "CommentExpandAdapter";
-    private List<CommentDetailBean> commentBeanList;
+    private List<DyCommentListBean.DataBean> commentBeanList;
     private Context context;
     private int pageIndex = 1;
+    private AddSecComment addSecComment;
 
-    public CommentExpandAdapter(Context context, List<CommentDetailBean> commentBeanList) {
+    public CommentExpandAdapter(Context context, List<DyCommentListBean.DataBean> commentBeanList) {
         this.context = context;
         this.commentBeanList = commentBeanList;
+    }
+
+    public void setAddSecCallback(AddSecComment callback){
+        this.addSecComment = callback;
     }
 
     @Override
@@ -44,11 +51,11 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int i) {
-        if (commentBeanList.get(i).getReplyList() == null) {
+        if (commentBeanList.get(i).getSub() == null) {
             return 0;
         } else {
             //return commentBeanList.get(i).getReplyList().size() > 0 ? commentBeanList.get(i).getReplyList().size() : 0;
-            return commentBeanList.get(i).getReplyList().size() > 0 ? 1 : 0;
+            return commentBeanList.get(i).getSub().size() > 0 ? 1 : 0;
         }
 
     }
@@ -60,7 +67,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int i, int i1) {
-        return commentBeanList.get(i).getReplyList().get(i1);
+        return commentBeanList.get(i).getSub().get(i1);
         //return commentBeanList.get(i).getReplyList().get(0);
     }
 
@@ -93,9 +100,9 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
             groupHolder = (GroupHolder) convertView.getTag();
         }
         GlideUtil.load(context, R.drawable.beau_girl, groupHolder.logo);
-        groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getNickName());
-        groupHolder.tv_time.setText(commentBeanList.get(groupPosition).getCreateDate());
-        groupHolder.tv_content.setText(commentBeanList.get(groupPosition).getContent());
+        groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getNickname());
+        groupHolder.tv_time.setText(DateTimeUitl.getStandardDate(String.valueOf(commentBeanList.get(groupPosition).getUpdate_time())));
+        groupHolder.tv_content.setText(commentBeanList.get(groupPosition).getText());
         groupHolder.iv_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,6 +113,12 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
                     isLike = true;
                     groupHolder.iv_like.setColorFilter(Color.parseColor("#FF5C5C"));
                 }
+            }
+        });
+        groupHolder.iv_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addSecComment.addSec(String.valueOf(commentBeanList.get(groupPosition).getD_c_id()),commentBeanList.get(groupPosition).getUid(),groupPosition);
             }
         });
 
@@ -123,7 +136,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
             childHolder = (ChildHolder) convertView.getTag();
         }
 
-        childHolder.commentsView.setList(commentBeanList.get(groupPosition).getReplyList());
+        childHolder.commentsView.setList(commentBeanList.get(groupPosition).getSub());
         childHolder.commentsView.notifyDataSetChanged();
         return convertView;
     }
@@ -136,7 +149,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     private class GroupHolder {
         private CircleImageView logo;
         private TextView tv_name, tv_content, tv_time;
-        private ImageView iv_like;
+        private ImageView iv_like,iv_comment;
 
         public GroupHolder(View view) {
             logo = (CircleImageView) view.findViewById(R.id.comment_item_logo);
@@ -144,6 +157,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
             tv_name = (TextView) view.findViewById(R.id.comment_item_userName);
             tv_time = (TextView) view.findViewById(R.id.comment_item_time);
             iv_like = (ImageView) view.findViewById(R.id.comment_item_like);
+            iv_comment = view.findViewById(R.id.comment_item_ping);
         }
     }
 
@@ -162,9 +176,8 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
      *
      * @param commentDetailBean 新的评论数据
      */
-    public void addTheCommentData(CommentDetailBean commentDetailBean) {
+    public void addTheCommentData(DyCommentListBean.DataBean commentDetailBean) {
         if (commentDetailBean != null) {
-
             commentBeanList.add(commentDetailBean);
             notifyDataSetChanged();
         } else {
@@ -179,17 +192,17 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
      *
      * @param replyDetailBean 新的回复数据
      */
-    public void addTheReplyData(CommentsBean replyDetailBean, int groupPosition) {
+    public void addTheReplyData(DyCommentListBean.DataBean.SubBean replyDetailBean, int groupPosition) {
 
 
         if (replyDetailBean != null) {
             Log.e(TAG, "addTheReplyData: >>>>该刷新回复列表了:" + replyDetailBean.toString());
-            if (commentBeanList.get(groupPosition).getReplyList() != null) {
-                commentBeanList.get(groupPosition).getReplyList().add(replyDetailBean);
+            if (commentBeanList.get(groupPosition).getSub() != null) {
+                commentBeanList.get(groupPosition).getSub().add(replyDetailBean);
             } else {
-                List<CommentsBean> replyList = new ArrayList<>();
+                List<DyCommentListBean.DataBean.SubBean> replyList = new ArrayList<>();
                 replyList.add(replyDetailBean);
-                commentBeanList.get(groupPosition).setReplyList(replyList);
+                commentBeanList.get(groupPosition).setSub(replyList);
             }
             notifyDataSetChanged();
         } else {
@@ -206,15 +219,19 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
      * @param groupPosition 当前的评论
      */
     private void addReplyList(List<CommentsBean> replyBeanList, int groupPosition) {
-        if (commentBeanList.get(groupPosition).getReplyList() != null) {
+        /*if (commentBeanList.get(groupPosition).getReplyList() != null) {
             commentBeanList.get(groupPosition).getReplyList().clear();
             commentBeanList.get(groupPosition).getReplyList().addAll(replyBeanList);
         } else {
 
             commentBeanList.get(groupPosition).setReplyList(replyBeanList);
-        }
+        }*/
 
         notifyDataSetChanged();
+    }
+
+    public interface AddSecComment{
+        void addSec(String comId,int comUid,int pos);
     }
 
 }

@@ -1,20 +1,16 @@
-package com.kuwai.ysy.module.circle.business.DyDetail;
+package com.kuwai.ysy.module.circle.business.holedashang;
 
-import com.kuwai.ysy.bean.SimpleResponse;
-import com.kuwai.ysy.module.circle.bean.DyDetailBean;
-import com.kuwai.ysy.module.circle.bean.DyMainListBean;
+import com.kuwai.ysy.module.circle.bean.DyRewardlistBean;
 import com.rayhahah.rbase.base.IRBaseView;
 
-public class DyDetailContract {
+public class HoleDashangContract {
 
     public interface IHomeView extends IRBaseView {
 
         /**
          * 设置第一次请求的数据
          */
-        void setHomeData(DyDetailBean dyDetailBean);
-
-        void addFirCallBack(SimpleResponse response);
+        void setHomeData(DyRewardlistBean dyRewardlistBean);
 
         /**
          * 设置加载更多的数据
@@ -32,9 +28,8 @@ public class DyDetailContract {
         /**
          * 获取首页精选数据
          */
-        void requestHomeData(String d_id, String uid);
+        void requestHomeData(String d_id, int page);
 
-        void addFirComment(String d_id, String uid, String text);
-
+        void requestHoleData(String t_id, int page);
     }
 }

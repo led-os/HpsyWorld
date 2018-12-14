@@ -5,6 +5,15 @@ public class RightChooseBean {
     private String title;
     private String subTitle;
     private boolean isCheck;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title == null ? "" : title;
@@ -30,7 +39,8 @@ public class RightChooseBean {
         isCheck = check;
     }
 
-    public RightChooseBean(String title, String subTitle, boolean isCheck) {
+    public RightChooseBean(int id,String title, String subTitle, boolean isCheck) {
+        this.id = id;
         this.title = title;
         this.subTitle = subTitle;
         this.isCheck = isCheck;

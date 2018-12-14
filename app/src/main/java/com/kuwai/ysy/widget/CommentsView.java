@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kuwai.ysy.module.circle.bean.DyCommentListBean;
 import com.kuwai.ysy.module.circle.bean.second.CommentsBean;
 import com.kuwai.ysy.module.circle.bean.second.UserBean;
 import com.kuwai.ysy.utils.Utils;
@@ -22,7 +23,7 @@ import java.util.List;
 public class CommentsView extends LinearLayout {
 
     private Context mContext;
-    private List<CommentsBean> mDatas;
+    private List<DyCommentListBean.DataBean.SubBean> mDatas;
     private onItemClickListener listener;
 
     public CommentsView(Context context) {
@@ -44,7 +45,7 @@ public class CommentsView extends LinearLayout {
      *
      * @param list
      */
-    public void setList(List<CommentsBean> list) {
+    public void setList(List<DyCommentListBean.DataBean.SubBean> list) {
         mDatas = list;
     }
 
@@ -69,10 +70,9 @@ public class CommentsView extends LinearLayout {
     }
 
     private View getView(final int position) {
-        final CommentsBean item = mDatas.get(position);
-        UserBean replyUser = item.getReplyUser();
+        final DyCommentListBean.DataBean.SubBean item = mDatas.get(position);
         boolean hasReply = false; // 是否有回复
-        if (replyUser != null) {
+        if (item != null) {
             hasReply = true;
         }
         TextView textView = new TextView(mContext);
@@ -80,18 +80,16 @@ public class CommentsView extends LinearLayout {
         textView.setTextColor(0xff282828);
 
         SpannableStringBuilder builder = new SpannableStringBuilder();
-        UserBean comUser = item.getCommentsUser();
-        String name = comUser.getUserName();
         if (hasReply) {
-            builder.append(setClickableSpan(name, item.getCommentsUser()));
+            builder.append(setClickableSpan(item.getNickname(), item.getNickname()));
             builder.append(" 回复 ");
-            builder.append(setClickableSpan(replyUser.getUserName(), item.getReplyUser()));
+            builder.append(setClickableSpan(item.getOther_nickname(), item.getOther_nickname()));
 
         } else {
-            builder.append(setClickableSpan(name, item.getCommentsUser()));
+            builder.append(setClickableSpan(item.getNickname(), item.getNickname()));
         }
         builder.append(" : ");
-        builder.append(setClickableSpanContent(item.getContent(), position));
+        builder.append(setClickableSpanContent(item.getText(), position));
         textView.setText(builder);
         // 设置点击背景色
         textView.setHighlightColor(getResources().getColor(android.R.color.transparent));
@@ -143,16 +141,15 @@ public class CommentsView extends LinearLayout {
      * 设置评论用户名字点击事件
      *
      * @param item
-     * @param bean
      * @return
      */
-    public SpannableString setClickableSpan(final String item, final UserBean bean) {
+    public SpannableString setClickableSpan(final String item, final String name) {
         final SpannableString string = new SpannableString(item);
         ClickableSpan span = new ClickableSpan() {
             @Override
             public void onClick(View widget) {
                 // TODO: 2017/9/3 评论用户名字点击事件
-                Toast.makeText(mContext, bean.getUserName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, name, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -172,6 +169,6 @@ public class CommentsView extends LinearLayout {
      * 定义一个用于回调的接口
      */
     public interface onItemClickListener {
-        void onItemClick(int position, CommentsBean bean);
+        void onItemClick(int position, DyCommentListBean.DataBean.SubBean bean);
     }
 }

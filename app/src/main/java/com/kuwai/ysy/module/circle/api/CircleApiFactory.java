@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import retrofit2.http.Field;
 
 public class CircleApiFactory {
@@ -50,7 +51,7 @@ public class CircleApiFactory {
                 .compose(RxSchedulers.<DyDetailBean>ioMain());
     }
 
-    public static Observable<SimpleResponse> publishDy(HashMap<String, String> map) {
+    public static Observable<SimpleResponse> publishDy(HashMap<String, RequestBody> map) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(CircleService.class)
                 .publishDy(map)

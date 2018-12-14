@@ -40,6 +40,7 @@ public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, Ba
     protected void convert(BaseViewHolder helper, final DyMainListBean.DataBean item) {
         switch (item.getType()) {
             case C.DY_TXT:
+                helper.setText(R.id.tv_content, item.getText());
                 break;
             case C.DY_PIC:
                 helper.setText(R.id.tv_content, item.getText());
@@ -90,7 +91,7 @@ public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, Ba
         helper.setText(R.id.tv_time, DateTimeUitl.getStandardDate(String.valueOf(item.getUpdate_time())));
         SPManager.get().getStringValue("uid");
 
-        if (item.getUid() == (Integer.valueOf(SPManager.get().getStringValue("uid")))) {
+        if (item.getUid() == (Integer.valueOf(SPManager.getStringValue("uid","1")))) {
             helper.getView(R.id.tv_delete).setVisibility(View.VISIBLE);
         } else {
             helper.getView(R.id.tv_delete).setVisibility(View.GONE);

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.amap.api.services.core.PoiItem;
@@ -16,6 +17,7 @@ import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.module.circle.AddressChooseActivity;
 import com.kuwai.ysy.module.circle.aliyun.AlivcSvideoRecordActivity;
 import com.kuwai.ysy.module.circle.business.RightChooseActivity;
+import com.kuwai.ysy.utils.UploadHelper;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.kuwai.ysy.widget.exchange.BGASortableNinePhotoLayout;
 import com.luck.picture.lib.PictureSelector;
@@ -28,6 +30,7 @@ import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +49,6 @@ public class PublishDyActivity extends BaseActivity<PublishPresenter> implements
             "http://pic.chinahpsy.com/home/750/gl.jpg",
             "http://img.kaiyanapp.com/d7e21f93f4dcb6e78271d125a1f41a9e.png?imageMogr2/quality/60/format/jpg",
             "http://pic.chinahpsy.com/home/750/cq.jpg"};
-    private ArrayList<LocalMedia> mData = new ArrayList<>();
 
     private static final int REQUST_CODE_PICTURE = 1001;
     private static final int REQUST_CODE_VIDEO = 1002;
@@ -60,11 +62,13 @@ public class PublishDyActivity extends BaseActivity<PublishPresenter> implements
     private PoiItem poiItem;
     private TextView mInfoTv;
     private NavigationLayout navigationLayout;
+    private EditText et_content;
 
     private int selectType = PictureMimeType.ofAll();
     private int maxSelectNum = 9;
 
     private int type = DY_TXT;
+    private int publicId = 1;
 
     @Override
     protected PublishPresenter getPresenter() {
@@ -87,6 +91,7 @@ public class PublishDyActivity extends BaseActivity<PublishPresenter> implements
         type = getIntent().getIntExtra("type", DY_TXT);
 
         mPhotosSnpl = findViewById(R.id.snpl_moment_add_photos);
+        et_content = findViewById(R.id.et_content);
         navigationLayout = findViewById(R.id.navigation);
         navigationLayout.setLeftClick(new View.OnClickListener() {
             @Override
@@ -126,17 +131,23 @@ public class PublishDyActivity extends BaseActivity<PublishPresenter> implements
     }
 
     private void publishDy() {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("uid", SPManager.get().getStringValue("uid"));
-        map.put("night", "0");
-        map.put("night", "0");
-        map.put("night", "0");
-        map.put("night", "0");
-        map.put("night", "0");
-        map.put("night", "0");
-        map.put("night", "0");
-        map.put("night", "0");
-        mPresenter.publishDy(map);
+        UploadHelper helper = UploadHelper.getInstance();
+        helper.addParameter("uid", SPManager.get().getStringValue("uid"));
+        helper.addParameter("text", et_content.getText().toString());
+        helper.addParameter("type", "1");
+        helper.addParameter("visibility", String.valueOf(publicId));
+        if (poiItem != null) {
+            helper.addParameter("longitude", String.valueOf(poiItem.getLatLonPoint().getLongitude()));
+            helper.addParameter("latitude", String.valueOf(poiItem.getLatLonPoint().getLatitude()));
+            helper.addParameter("city", poiItem.getCityName());
+            helper.addParameter("address", mAddressTv.getText().toString());
+        }
+       /* for (int i = 0; i < selectList.size(); i++) {
+            File file = new File(selectList.get(i).getCompressPath());
+            helper.addParameter("pic", file);
+        }*/
+        //map.put("video_id", "0");
+        mPresenter.publishDy(helper.builder());
     }
 
     @Override
@@ -237,8 +248,8 @@ public class PublishDyActivity extends BaseActivity<PublishPresenter> implements
                         media.setPath(data.getStringExtra("imgpath"));
                     }
 
-                    mData.add(media);
-                    mPhotosSnpl.setData(mData);
+                    selectList.add(media);
+                    mPhotosSnpl.setData(selectList);
                     break;
                 case REQUST_CODE_ADDRESS:
                     if (data != null) {
@@ -251,6 +262,7 @@ public class PublishDyActivity extends BaseActivity<PublishPresenter> implements
                 case REQUST_CODE_RIGHT:
                     if (data != null) {
                         String title = data.getStringExtra("data");
+                        publicId = data.getIntExtra("id", 1);
                         mDetailTv.setText(title);
                     }
                     break;
@@ -261,7 +273,10 @@ public class PublishDyActivity extends BaseActivity<PublishPresenter> implements
 
     @Override
     public void setPublishCallBack(SimpleResponse dyDetailBean) {
-
+        if (dyDetailBean.code == 200) {
+            ToastUtils.showShort("发布成功");
+            finish();
+        }
     }
 
     @Override

@@ -26,7 +26,7 @@ public class SPManager {
     private static SPManager mInstance;
     private static ArrayMap<String, Object> valueMap;
 
-    private static String DEFAULT_STRING = "";
+    private static String DEFAULT_STRING = "1";
     private static float DEFAULT_FLOAT = 0;
     private static int DEFAULT_INT = 0;
     private static long DEFAULT_LONG = 0;
@@ -67,7 +67,7 @@ public class SPManager {
      * @return
      */
     public static SPManager get() {
-        return get(null);
+        return get(mPackageName);
     }
 
     /**

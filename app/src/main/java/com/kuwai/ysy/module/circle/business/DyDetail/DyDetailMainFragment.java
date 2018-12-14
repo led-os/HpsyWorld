@@ -23,11 +23,13 @@ import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.MessageEvent;
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.circle.bean.DyCommentListBean;
 import com.kuwai.ysy.module.circle.bean.DyDetailBean;
 import com.kuwai.ysy.module.circle.bean.second.CommentDetailBean;
 import com.kuwai.ysy.module.circle.business.DyDashang.DyDashangListFragment;
-import com.kuwai.ysy.module.circle.business.DySecFragment;
+import com.kuwai.ysy.module.circle.business.dycomment.DySecFragment;
 import com.kuwai.ysy.module.circle.business.DyZan.DyZanListFragment;
 import com.kuwai.ysy.others.NineImageAdapter;
 import com.kuwai.ysy.utils.EventBusUtil;
@@ -132,6 +134,7 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
 
 
         pager = mRootView.findViewById(R.id.vp_dy_detail);
+        pager.setOffscreenPageLimit(3);
         radioGroup = (RadioGroup) mRootView.findViewById(R.id.main_radiogroup);
         mBottomLay = mRootView.findViewById(R.id.bottom_lay);
         navigationLayout = mRootView.findViewById(R.id.navigation);
@@ -162,7 +165,8 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
 
         fragments = new ArrayList<Fragment>();
         Bundle bundle = new Bundle();
-        bundle.putString("did",did);
+        bundle.putString("did", did);
+        bundle.putString("type","1");
 
         fragments.add(DyDashangListFragment.newInstance(bundle));
         fragments.add(DySecFragment.newInstance(bundle));
@@ -252,8 +256,10 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
                 String commentContent = commentText.getText().toString().trim();
                 if (!TextUtils.isEmpty(commentContent)) {
                     dialog.dismiss();
-                    CommentDetailBean detailBean = new CommentDetailBean("小明", commentContent, "刚刚");
-                    EventBusUtil.sendEvent(new MessageEvent(0x00093, detailBean));
+                    mPresenter.addFirComment(did, "1", commentContent);
+                    /*DyCommentListBean.DataBean detailBean = new DyCommentListBean.DataBean();
+                    detailBean.setNickname("萨丁");*/
+                    EventBusUtil.sendEvent(new MessageEvent(0x00093));
                     //adapter.addTheCommentData(detailBean);
                     Toast.makeText(getActivity(), "评论成功", Toast.LENGTH_SHORT).show();
 
@@ -303,7 +309,7 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
 
         switch (dyDetailBean.getData().getType()) {
             case C.DY_TXT:
-
+                mTvContent.setText(mDyDetailBean.getData().getText());
                 break;
             case C.DY_PIC:
                 mTvContent.setText(mDyDetailBean.getData().getText());
@@ -324,6 +330,11 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
         mRadioDashang.setText("打赏（" + String.valueOf(dyDetailBean.getData().getReward()) + "）");
         mRadioReward.setText("评论（" + String.valueOf(dyDetailBean.getData().getComment()) + "）");
         mRadioZan.setText("点赞（" + String.valueOf(dyDetailBean.getData().getGood()) + "）");
+
+    }
+
+    @Override
+    public void addFirCallBack(SimpleResponse response) {
 
     }
 

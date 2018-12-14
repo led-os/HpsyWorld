@@ -6,6 +6,8 @@ import com.rayhahah.rbase.base.IRBaseView;
 
 import java.util.HashMap;
 
+import okhttp3.RequestBody;
+
 public class PublishDyContract {
 
     public interface IPublishView extends IRBaseView {
@@ -20,7 +22,7 @@ public class PublishDyContract {
 
     public interface IPublishPresenter {
 
-        void publishDy(HashMap<String, String> map);
+        void publishDy(HashMap<String, RequestBody> map);
 
     }
 }
