@@ -19,13 +19,13 @@ import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.HoleMainListBean;
 import com.kuwai.ysy.module.circle.business.PublishHoleActivity;
 import com.kuwai.ysy.module.home.business.HomeActivity;
-import com.kuwai.ysy.utils.SharedPreferencesUtils;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.utils.glide.GlideImageLoader;
 import com.kuwai.ysy.widget.MyRecycleViewDivider;
 import com.kuwai.ysy.widget.popwindow.YsyPopWindow;
 import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.useful.SPManager;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -112,7 +112,7 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.requestHomeData(page, (String) SharedPreferencesUtils.getParam(mContext, "uid", ""));
+        mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid","1"));
     }
 
     private void showPopListView() {

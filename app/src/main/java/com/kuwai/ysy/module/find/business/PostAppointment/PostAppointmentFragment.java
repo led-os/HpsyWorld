@@ -7,10 +7,10 @@ import android.widget.TextView;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.find.bean.BlindBean;
-import com.kuwai.ysy.utils.SharedPreferencesUtils;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.DateTimeUitl;
 import com.rayhahah.rbase.utils.base.ToastUtils;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.HashMap;
 
@@ -47,7 +47,7 @@ public class PostAppointmentFragment extends BaseFragment<PostAppointmentPresent
             case R.id.right_txt:
 
                 HashMap<String, Object> map = new HashMap<>(16);
-                map.put("uid", SharedPreferencesUtils.getParam(mContext, "uid", "1"));
+                map.put("uid", SPManager.get().getStringValue("uid"));
                 map.put("sincerity", 1);
                 map.put("release_time", DateTimeUitl.currentTimeMillis());
                 map.put("area", "1284");

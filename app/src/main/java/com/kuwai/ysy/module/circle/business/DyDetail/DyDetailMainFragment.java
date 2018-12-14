@@ -31,13 +31,13 @@ import com.kuwai.ysy.module.circle.business.DySecFragment;
 import com.kuwai.ysy.module.circle.business.DyZan.DyZanListFragment;
 import com.kuwai.ysy.others.NineImageAdapter;
 import com.kuwai.ysy.utils.EventBusUtil;
-import com.kuwai.ysy.utils.SharedPreferencesUtils;
 import com.kuwai.ysy.widget.MyViewPager;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.kuwai.ysy.widget.NiceImageView;
 import com.kuwai.ysy.widget.NineGridView;
 import com.rayhahah.rbase.utils.base.DateTimeUitl;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -269,7 +269,7 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
 
-        mPresenter.requestHomeData(did, (String) SharedPreferencesUtils.getParam(mContext, "uid", "1"));
+        mPresenter.requestHomeData(did, SPManager.get().getStringValue("uid"));
     }
 
     @Override

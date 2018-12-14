@@ -2,20 +2,15 @@ package com.kuwai.ysy.module.circle.business;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseActivity;
-import com.kuwai.ysy.common.BaseFragment;
-import com.kuwai.ysy.module.circle.AddressChooseActivity;
-import com.kuwai.ysy.module.circle.PublishDyActivity;
+import com.kuwai.ysy.module.circle.business.publishdy.PublishDyActivity;
 import com.kuwai.ysy.module.circle.adapter.RightChooseAdapter;
-import com.kuwai.ysy.module.circle.adapter.TreeHoleAdapter;
 import com.kuwai.ysy.module.circle.bean.RightChooseBean;
-import com.kuwai.ysy.module.home.business.HomeActivity;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 

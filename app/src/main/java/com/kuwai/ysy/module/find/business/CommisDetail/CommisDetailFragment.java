@@ -21,7 +21,6 @@ import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.find.adapter.DialogGiftAdapter;
 import com.kuwai.ysy.module.find.bean.BlindBean;
 import com.kuwai.ysy.module.find.bean.CommisDetailBean;
-import com.kuwai.ysy.utils.SharedPreferencesUtils;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.PileLayout;
 import com.kuwai.ysy.widget.shadow.ShadowConfig;
@@ -31,6 +30,7 @@ import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.DateTimeUitl;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -160,7 +160,7 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
                 break;
 
             case R.id.btn_commis:
-                mPresenter.getApply(rid, Integer.valueOf((String) SharedPreferencesUtils.getParam(mContext, "uid", "1")), getResources().getString(R.string.meetagree_text));
+                mPresenter.getApply(rid, Integer.valueOf(SPManager.get().getStringValue("uid","1")), getResources().getString(R.string.meetagree_text));
                 break;
         }
     }

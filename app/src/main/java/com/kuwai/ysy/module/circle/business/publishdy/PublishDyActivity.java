@@ -1,4 +1,4 @@
-package com.kuwai.ysy.module.circle;
+package com.kuwai.ysy.module.circle.business.publishdy;
 
 import android.Manifest;
 import android.content.Intent;
@@ -6,18 +6,17 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amap.api.services.core.PoiItem;
 import com.hjq.bar.TitleBar;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseActivity;
-import com.kuwai.ysy.module.chat.MyFriendFragment;
-import com.kuwai.ysy.module.chat.business.InvitePhoneBookFragment;
-import com.kuwai.ysy.module.circle.aliyun.AlivcRecorderActivity;
+import com.kuwai.ysy.module.circle.AddressChooseActivity;
 import com.kuwai.ysy.module.circle.aliyun.AlivcSvideoRecordActivity;
 import com.kuwai.ysy.module.circle.business.RightChooseActivity;
-import com.kuwai.ysy.module.circle.business.dongtai.DongtaiMainFragment;
+import com.kuwai.ysy.widget.NavigationLayout;
 import com.kuwai.ysy.widget.exchange.BGASortableNinePhotoLayout;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -26,11 +25,11 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.FileUtils;
 import com.rayhahah.rbase.utils.base.ToastUtils;
-import com.tbruyelle.rxpermissions2.Permission;
+import com.rayhahah.rbase.utils.useful.SPManager;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.functions.Consumer;
@@ -39,7 +38,7 @@ import static com.kuwai.ysy.app.C.DY_FILM;
 import static com.kuwai.ysy.app.C.DY_PIC;
 import static com.kuwai.ysy.app.C.DY_TXT;
 
-public class PublishDyActivity extends BaseActivity implements View.OnClickListener, BGASortableNinePhotoLayout.GridAdd {
+public class PublishDyActivity extends BaseActivity<PublishPresenter> implements View.OnClickListener, BGASortableNinePhotoLayout.GridAdd, PublishDyContract.IPublishView {
 
     private TitleBar mTitleBar;
     private BGASortableNinePhotoLayout mPhotosSnpl;
@@ -60,6 +59,7 @@ public class PublishDyActivity extends BaseActivity implements View.OnClickListe
     private TextView mRightTv, mDetailTv;
     private PoiItem poiItem;
     private TextView mInfoTv;
+    private NavigationLayout navigationLayout;
 
     private int selectType = PictureMimeType.ofAll();
     private int maxSelectNum = 9;
@@ -67,8 +67,8 @@ public class PublishDyActivity extends BaseActivity implements View.OnClickListe
     private int type = DY_TXT;
 
     @Override
-    protected RBasePresenter getPresenter() {
-        return null;
+    protected PublishPresenter getPresenter() {
+        return new PublishPresenter(this);
     }
 
     @Override
@@ -87,6 +87,19 @@ public class PublishDyActivity extends BaseActivity implements View.OnClickListe
         type = getIntent().getIntExtra("type", DY_TXT);
 
         mPhotosSnpl = findViewById(R.id.snpl_moment_add_photos);
+        navigationLayout = findViewById(R.id.navigation);
+        navigationLayout.setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        navigationLayout.setRightClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                publishDy();
+            }
+        });
         mAddressTv = findViewById(R.id.tv_address);
         mRightTv = findViewById(R.id.tv_right);
         mInfoTv = findViewById(R.id.tv_info);
@@ -110,11 +123,20 @@ public class PublishDyActivity extends BaseActivity implements View.OnClickListe
             default:
                 break;
         }
-        /*for (String img : imgList
-                ) {
-            mData.add(new LocalMedia(img, 10, 1, ""));
-        }
-        mPhotosSnpl.setData(mData);*/
+    }
+
+    private void publishDy() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("uid", SPManager.get().getStringValue("uid"));
+        map.put("night", "0");
+        map.put("night", "0");
+        map.put("night", "0");
+        map.put("night", "0");
+        map.put("night", "0");
+        map.put("night", "0");
+        map.put("night", "0");
+        map.put("night", "0");
+        mPresenter.publishDy(map);
     }
 
     @Override
@@ -235,5 +257,30 @@ public class PublishDyActivity extends BaseActivity implements View.OnClickListe
             }
 
         }
+    }
+
+    @Override
+    public void setPublishCallBack(SimpleResponse dyDetailBean) {
+
+    }
+
+    @Override
+    public void showError(int errorCode, String msg) {
+
+    }
+
+    @Override
+    public void showViewLoading() {
+
+    }
+
+    @Override
+    public void dismissLoading() {
+
+    }
+
+    @Override
+    public void showViewError(Throwable t) {
+
     }
 }

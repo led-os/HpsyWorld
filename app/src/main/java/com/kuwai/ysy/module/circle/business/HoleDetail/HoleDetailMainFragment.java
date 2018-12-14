@@ -26,7 +26,6 @@ import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.bean.HoleDetailBean;
 import com.kuwai.ysy.module.circle.business.DyDashang.DyDashangListFragment;
 import com.kuwai.ysy.module.circle.business.DySecFragment;
-import com.kuwai.ysy.utils.SharedPreferencesUtils;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NiceImageView;
 import com.kuwai.ysy.widget.ResetHeightViewpager;
@@ -35,6 +34,7 @@ import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.DateTimeUitl;
 import com.rayhahah.rbase.utils.base.StatusBarUtil;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -234,7 +234,7 @@ public class HoleDetailMainFragment extends BaseFragment<HoleDetailPresenter> im
         super.onLazyInitView(savedInstanceState);
         StatusBarUtil.setDarkMode(getActivity());
 
-        mPresenter.requestHomeData(tid, (String) SharedPreferencesUtils.getParam(mContext, "uid", ""));
+        mPresenter.requestHomeData(tid, SPManager.get().getStringValue("uid"));
     }
 
     @Override

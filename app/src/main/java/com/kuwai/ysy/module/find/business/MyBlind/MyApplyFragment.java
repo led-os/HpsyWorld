@@ -11,8 +11,8 @@ import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.find.adapter.MyApplyAdapter;
 import com.kuwai.ysy.module.find.bean.MyBlindBean;
-import com.kuwai.ysy.utils.SharedPreferencesUtils;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +61,7 @@ public class MyApplyFragment extends BaseFragment<MyblindPresenter> implements M
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.requestHomeData(page, Integer.valueOf((String) SharedPreferencesUtils.getParam(mContext, "uid", "1")));
+        mPresenter.requestHomeData(page, (Integer.valueOf(SPManager.get().getStringValue("uid","1"))));
     }
 
     @Override

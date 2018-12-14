@@ -60,7 +60,7 @@
         <activity android:name=".module.circle.business.PublishHoleActivity" />
         <activity android:name=".module.circle.business.RightChooseActivity" />
         <activity android:name=".module.circle.AddressChooseActivity" />
-        <activity android:name=".module.circle.PublishDyActivity" />
+        <activity android:name=".module.circle.business.publishdy.PublishDyActivity" />
         <activity android:name=".module.circle.aliyun.AlivcRecorderActivity" />
 
         //发现

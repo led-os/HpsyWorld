@@ -26,10 +26,10 @@ import com.kuwai.ysy.module.find.adapter.CityAdapter;
 import com.kuwai.ysy.module.find.adapter.CityMeetAdapter;
 import com.kuwai.ysy.module.find.adapter.TestParentAdapter;
 import com.kuwai.ysy.module.find.business.MyDateFragment;
-import com.kuwai.ysy.utils.SharedPreferencesUtils;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.kuwai.ysy.widget.popwindow.YsyPopWindow;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,7 +120,7 @@ public class CityMeetListFragment extends BaseFragment<CityMeetPresenter> implem
                 Bundle bundle = new Bundle();
                 bundle.putInt("rid", mcityMeetBean.getData().get(position).getR_id());
 
-                if (Integer.valueOf((String)SharedPreferencesUtils.getParam(mContext, "uid", "1")) == (mcityMeetBean.getData().get(position).getUid())) {
+                if (Integer.valueOf(SPManager.get().getStringValue("uid","1")) == (mcityMeetBean.getData().get(position).getUid())) {
                     start(CommicDetailMyFragment.newInstance(bundle));
                 } else {
                     start(CommisDetailFragment.newInstance(bundle));
