@@ -4,13 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="80dp">
 
-    <com.kuwai.ysy.widget.TextImageView
+    <com.allen.library.CircleImageView
         android:id="@+id/img_head"
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="14dp"
-        android:src="@drawable/icon_person" />
+        android:layout_marginLeft="14dp"/>
 
     <TextView
         android:id="@+id/tv_sign"
@@ -31,7 +30,6 @@
         android:layout_marginLeft="14dp"
         android:layout_marginTop="6dp"
         android:layout_toRightOf="@id/img_head"
-        android:text="晴空万里"
         android:textColor="@color/balck_28"
         android:textSize="14sp" />
 
@@ -40,10 +38,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/tv_nick"
-        android:layout_toRightOf="@id/tv_nick"
-        android:src="@drawable/ic_user_woman" />
+        android:layout_toRightOf="@id/tv_nick" />
 
     <ImageView
+        android:id="@+id/is_vip"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/tv_nick"
@@ -58,7 +57,6 @@
         android:layout_marginLeft="14dp"
         android:layout_marginTop="6dp"
         android:layout_toRightOf="@id/img_head"
-        android:text="2018-08-08 09:50"
         android:textColor="@color/grey_bd"
         android:textSize="12sp" />
 
@@ -69,7 +67,6 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="16dp"
-        android:text="×20"
         android:textColor="#99282828"
         android:textSize="15sp" />
 
@@ -80,16 +77,15 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:layout_toLeftOf="@id/tv_num"
-        android:scaleType="centerCrop"
-        android:src="@drawable/beau_girl" />
+        android:scaleType="centerCrop" />
 
     <TextView
+        android:id="@+id/gift_name"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/img_gift"
         android:layout_toLeftOf="@id/tv_num"
         android:gravity="center_horizontal"
-        android:text="一心一意"
         android:textColor="#ff282828"
         android:textSize="14sp" />
 

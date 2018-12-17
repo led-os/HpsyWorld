@@ -73,16 +73,11 @@ public class MineHomepageFragment extends BaseFragment implements View.OnClickLi
         mSubTitle = mRootView.findViewById(R.id.sub_title);
         mRlPic = mRootView.findViewById(R.id.rl_pic);
 
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRlPic.setLayoutManager(linearLayoutManager);
-        mDateAdapter = new PicAdapter(mDataList);
+        mDateAdapter = new PicAdapter();
         mRlPic.setAdapter(mDateAdapter);
 
         viewPager = mRootView.findViewById(R.id.vp);

@@ -12,16 +12,18 @@ import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.adapter.DyZanAdapter;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.mine.adapter.GiftAdapter;
+import com.kuwai.ysy.module.mine.bean.GiftAcceptBean;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GiftMyAcceptFragment extends BaseFragment implements View.OnClickListener {
+public class GiftMyAcceptFragment extends BaseFragment<GiftMyAcceptPresenter> implements GiftMyAcceptContract.IHomeView, View.OnClickListener {
 
     private GiftAdapter mDateAdapter;
     private RecyclerView mDongtaiList;
-    private List<CategoryBean> mDataList = new ArrayList<>();
+    private int page = 1;
 
     public static GiftMyAcceptFragment newInstance() {
         Bundle args = new Bundle();
@@ -36,8 +38,8 @@ public class GiftMyAcceptFragment extends BaseFragment implements View.OnClickLi
     }
 
     @Override
-    protected RBasePresenter getPresenter() {
-        return null;
+    protected GiftMyAcceptPresenter getPresenter() {
+        return new GiftMyAcceptPresenter(this);
     }
 
     @Override
@@ -49,18 +51,40 @@ public class GiftMyAcceptFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void initView(Bundle savedInstanceState) {
         mDongtaiList = mRootView.findViewById(R.id.recyclerView);
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
         mDongtaiList.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        mDateAdapter = new GiftAdapter(mDataList);
+        mDateAdapter = new GiftAdapter();
         mDongtaiList.setAdapter(mDateAdapter);
     }
 
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
+        mPresenter.requestHomeData(SPManager.getStringValue("uid", "1"), page);
+    }
+
+    @Override
+    public void setHomeData(GiftAcceptBean giftAcceptBean) {
+        mDateAdapter.addData(giftAcceptBean.getData().getGift());
+
+    }
+
+    @Override
+    public void showError(int errorCode, String msg) {
+
+    }
+
+    @Override
+    public void showViewLoading() {
+
+    }
+
+    @Override
+    public void dismissLoading() {
+
+    }
+
+    @Override
+    public void showViewError(Throwable t) {
+
     }
 }

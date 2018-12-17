@@ -15,26 +15,33 @@ import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.mine.adapter.PicAdapter;
 import com.kuwai.ysy.module.mine.adapter.homepage.PageGiftReceiveAdapter;
+import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.kuwai.ysy.widget.shadow.FlowLayout;
 import com.kuwai.ysy.widget.shadow.TagAdapter;
 import com.kuwai.ysy.widget.shadow.TagFlowLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class PageDetailFragment extends BaseFragment implements View.OnClickListener {
+public class PageDetailFragment extends BaseFragment<PageDetailPresenter> implements PageDetailContract.IHomeView, View.OnClickListener {
 
     private TagFlowLayout tagFlowLayout;
     private RecyclerView mRlGift;
-    private String[] mVals = new String[]{"苏州", "俄罗斯", "加利佛尼亚", "纽约", "北京", "日本", "澳大利亚", "泰国"};
+    private List<String> mVals;
     private PageGiftReceiveAdapter mDateAdapter;
     private List<CategoryBean> mDataList = new ArrayList<>();
+    private String otherid;
+    private TextView mIsName, mIsHouse, mIsEdu, mIsCar, mID, mAge, mTall, mSign;
+    private TagAdapter tagAdapter;
+    private LayoutInflater mInflater;
 
-    public static PageDetailFragment newInstance() {
-        Bundle args = new Bundle();
+    public static PageDetailFragment newInstance(Bundle bundle) {
         PageDetailFragment fragment = new PageDetailFragment();
-        fragment.setArguments(args);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -44,8 +51,8 @@ public class PageDetailFragment extends BaseFragment implements View.OnClickList
     }
 
     @Override
-    protected RBasePresenter getPresenter() {
-        return null;
+    protected PageDetailPresenter getPresenter() {
+        return new PageDetailPresenter(this);
     }
 
     @Override
@@ -55,22 +62,25 @@ public class PageDetailFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        final LayoutInflater mInflater = LayoutInflater.from(getActivity());
+        mIsName = mRootView.findViewById(R.id.tv_isname);
+        mIsHouse = mRootView.findViewById(R.id.tv_ishouse);
+        mIsEdu = mRootView.findViewById(R.id.tv_isedu);
+        mIsCar = mRootView.findViewById(R.id.tv_iscar);
+        mID = mRootView.findViewById(R.id.tv_id);
+        mAge = mRootView.findViewById(R.id.tv_age);
+        mTall = mRootView.findViewById(R.id.tv_tall);
+        mSign = mRootView.findViewById(R.id.tv_sign);
+
+
+        mInflater = LayoutInflater.from(getActivity());
         tagFlowLayout = mRootView.findViewById(R.id.tv_tag);
         mRlGift = mRootView.findViewById(R.id.rl_gift);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRlGift.setLayoutManager(linearLayoutManager);
 
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
 
-        mDateAdapter = new PageGiftReceiveAdapter(mDataList);
+        mDateAdapter = new PageGiftReceiveAdapter();
         mRlGift.setAdapter(mDateAdapter);
 
         tagFlowLayout.setOnClickListener(new View.OnClickListener() {
@@ -80,19 +90,82 @@ public class PageDetailFragment extends BaseFragment implements View.OnClickList
             }
         });
 
-        tagFlowLayout.setAdapter(new TagAdapter<String>(mVals) {
+    }
+
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+        otherid = getArguments().getString("id");
+        mPresenter.requestHomeData(SPManager.getStringValue("uid", ""), otherid);
+    }
+
+    @Override
+    public void setHomeData(PersolHomePageBean persolHomePageBean) {
+        if (persolHomePageBean.getData().getInfo().getIs_real() == 0) {
+            mIsName.setVisibility(View.GONE);
+        } else {
+            mIsName.setVisibility(View.VISIBLE);
+        }
+
+        if ("0".equals(persolHomePageBean.getData().getInfo().getBuy_house())) {
+            mIsHouse.setVisibility(View.GONE);
+        } else {
+            mIsHouse.setVisibility(View.VISIBLE);
+        }
+
+        if (persolHomePageBean.getData().getInfo().getIs_education() == 0) {
+            mIsEdu.setVisibility(View.GONE);
+        } else {
+            mIsEdu.setVisibility(View.VISIBLE);
+        }
+
+        if (persolHomePageBean.getData().getInfo().getIs_vehicle() == 0) {
+            mIsCar.setVisibility(View.GONE);
+        } else {
+            mIsCar.setVisibility(View.VISIBLE);
+        }
+
+        mSign.setText(persolHomePageBean.getData().getInfo().getSig());
+        mID.setText(String.valueOf(persolHomePageBean.getData().getInfo().getUid()));
+        mAge.setText(String.valueOf(persolHomePageBean.getData().getInfo().getAge()));
+        mTall.setText(String.valueOf(persolHomePageBean.getData().getInfo().getHeight()));
+
+        mDateAdapter.addData(persolHomePageBean.getData().getGift());
+
+        mVals = new ArrayList<>();
+        for (int i = 0; i < persolHomePageBean.getData().getFootprints().size(); i++) {
+            mVals.add(persolHomePageBean.getData().getFootprints().get(i).getRegion_name());
+        }
+
+        tagAdapter = new TagAdapter<String>(mVals) {
             @Override
             public View getView(FlowLayout parent, int position, String s) {
                 SuperButton tv = (SuperButton) mInflater.inflate(R.layout.item_text_address, tagFlowLayout, false);
                 tv.setText(s);
                 return tv;
             }
+        };
 
-        });
+        tagFlowLayout.setAdapter(tagAdapter);
     }
 
     @Override
-    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
-        super.onLazyInitView(savedInstanceState);
+    public void showError(int errorCode, String msg) {
+
+    }
+
+    @Override
+    public void showViewLoading() {
+
+    }
+
+    @Override
+    public void dismissLoading() {
+
+    }
+
+    @Override
+    public void showViewError(Throwable t) {
+
     }
 }

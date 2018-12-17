@@ -28,10 +28,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/tv_nick"
-        android:layout_toRightOf="@id/tv_nick"
-        android:src="@drawable/ic_user_woman" />
+        android:layout_toRightOf="@id/tv_nick" />
 
     <ImageView
+        android:id="@+id/is_vip"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/tv_nick"

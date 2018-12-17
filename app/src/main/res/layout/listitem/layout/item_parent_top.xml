@@ -10,20 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:text="今天"
         android:textColor="#ff282838"
         android:textSize="16sp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:drawableRight="@drawable/ic_list_arrow_down"
-        android:gravity="center_vertical"
-        android:text="20人被我喜欢"
-        android:textColor="#ff5415f9"
-        android:textSize="14sp" />
 
     <View
         style="@style/horizontal_line"
