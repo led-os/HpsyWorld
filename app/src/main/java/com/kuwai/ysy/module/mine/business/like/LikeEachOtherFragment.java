@@ -2,7 +2,6 @@ package com.kuwai.ysy.module.mine.business.like;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -10,24 +9,24 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.mine.adapter.ExpandableItemAdapter;
+import com.kuwai.ysy.module.mine.adapter.LikeEachOtherAdapter;
+import com.kuwai.ysy.module.mine.bean.TodayBean;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
-import com.kuwai.ysy.module.mine.bean.like.ChildLevel;
 import com.kuwai.ysy.module.mine.bean.like.ParentLevel;
-import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-public class LikeMeFragment extends BaseFragment<LikeMePresenter> implements LikeMeContract.IHomeView, View.OnClickListener {
+public class LikeEachOtherFragment extends BaseFragment<LikeEachOtherPresenter> implements LikeEachOtherContract.IHomeView, View.OnClickListener {
 
     RecyclerView mRecyclerView;
-    ExpandableItemAdapter adapter;
+    LikeEachOtherAdapter adapter;
     ArrayList<MultiItemEntity> list;
+    private int page = 1;
 
-    public static LikeMeFragment newInstance() {
+    public static LikeEachOtherFragment newInstance() {
         Bundle args = new Bundle();
-        LikeMeFragment fragment = new LikeMeFragment();
+        LikeEachOtherFragment fragment = new LikeEachOtherFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -38,8 +37,8 @@ public class LikeMeFragment extends BaseFragment<LikeMePresenter> implements Lik
     }
 
     @Override
-    protected LikeMePresenter getPresenter() {
-        return new LikeMePresenter(this);
+    protected LikeEachOtherPresenter getPresenter() {
+        return new LikeEachOtherPresenter(this);
     }
 
     @Override
@@ -51,7 +50,7 @@ public class LikeMeFragment extends BaseFragment<LikeMePresenter> implements Lik
     public void initView(Bundle savedInstanceState) {
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recyclerView);
 
-        adapter = new ExpandableItemAdapter(list);
+        adapter = new LikeEachOtherAdapter();
 
         mRecyclerView.setAdapter(adapter);
 
@@ -63,28 +62,13 @@ public class LikeMeFragment extends BaseFragment<LikeMePresenter> implements Lik
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.requestHomeData(SPManager.getStringValue("uid", "1"));
+        mPresenter.requestHomeData(SPManager.getStringValue("uid", "1"), page);
     }
 
     @Override
-    public void setHomeData(VisitorBean visitorBean) {
-        int earlyDataSize = visitorBean.getData().getEarlier().size();
-        int todayDataSize = visitorBean.getData().getToday().size();
+    public void setHomeData(TodayBean todayBean) {
 
-        ArrayList<MultiItemEntity> res = new ArrayList<>();
-        ParentLevel today = new ParentLevel("今天", "");
-        for (int i = 0; i < todayDataSize; i++) {
-            today.addSubItem(visitorBean.getData().getToday().get(i));
-        }
-        res.add(today);
-
-        ParentLevel lv0 = new ParentLevel("更早", "");
-        for (int j = 0; j < earlyDataSize; j++) {
-            lv0.addSubItem(visitorBean.getData().getEarlier().get(j));
-        }
-        res.add(lv0);
-
-        adapter.addData(res);
+        adapter.addData(todayBean);
     }
 
     @Override

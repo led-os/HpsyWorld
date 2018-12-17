@@ -69,8 +69,8 @@ public class MineLikeFragment extends BaseFragment implements View.OnClickListen
 
         fragments = new ArrayList<Fragment>();
         fragments.add(LikeMeFragment.newInstance());
-        fragments.add(LikeMeFragment.newInstance());
-        fragments.add(FindFriendChildFragment.newInstance());
+        fragments.add(ILikeFragment.newInstance());
+        fragments.add(LikeEachOtherFragment.newInstance());
 
         pager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
 

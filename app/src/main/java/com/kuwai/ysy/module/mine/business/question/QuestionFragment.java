@@ -12,17 +12,20 @@ import android.widget.ImageView;
 import com.allen.library.SuperButton;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.find.adapter.CustomThemeAdapter;
 import com.kuwai.ysy.module.find.bean.theme.DateTheme;
+import com.kuwai.ysy.module.mine.bean.MyAskBean;
 import com.kuwai.ysy.widget.MyEditText;
 import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.dialoglib.DialogInterface;
 import com.rayhahah.dialoglib.NormalAlertDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
-public class QuestionFragment extends BaseFragment implements View.OnClickListener {
+public class QuestionFragment extends BaseFragment<AskPresenter> implements AskContract.IHomeView, View.OnClickListener {
 
     private SuperButton btn_add_question, btn_add_answer;
     private CustomDialog askDialog;
@@ -40,8 +43,8 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
     }
 
     @Override
-    protected RBasePresenter getPresenter() {
-        return null;
+    protected AskPresenter getPresenter() {
+        return new AskPresenter(this);
     }
 
     @Override
@@ -84,6 +87,7 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
+        mPresenter.requestHomeData(SPManager.getStringValue("uid","1"));
     }
 
     private void popCustom() {
@@ -108,5 +112,45 @@ public class QuestionFragment extends BaseFragment implements View.OnClickListen
                     .build();
         }
         askDialog.show();
+    }
+
+    @Override
+    public void setHomeData(MyAskBean askBean) {
+
+    }
+
+    @Override
+    public void delAsk(SimpleResponse simpleResponse) {
+
+    }
+
+    @Override
+    public void UpdateProblem(SimpleResponse simpleResponse) {
+
+    }
+
+    @Override
+    public void setAddAsk(SimpleResponse simpleResponse) {
+
+    }
+
+    @Override
+    public void showError(int errorCode, String msg) {
+
+    }
+
+    @Override
+    public void showViewLoading() {
+
+    }
+
+    @Override
+    public void dismissLoading() {
+
+    }
+
+    @Override
+    public void showViewError(Throwable t) {
+
     }
 }

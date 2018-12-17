@@ -2,9 +2,15 @@ package com.kuwai.ysy.module.mine.api;
 
 
 import com.kuwai.ysy.bean.RResponse;
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.find.bean.appointment.MyAppointMent;
 import com.kuwai.ysy.module.mine.bean.GiftAcceptBean;
+import com.kuwai.ysy.module.mine.bean.GiftBoxBean;
+import com.kuwai.ysy.module.mine.bean.IntegralDetailBean;
+import com.kuwai.ysy.module.mine.bean.MyAskBean;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
+import com.kuwai.ysy.module.mine.bean.TaGiftBean;
+import com.kuwai.ysy.module.mine.bean.TodayBean;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
 import com.kuwai.ysy.module.mine.bean.user.UserInfo;
 
@@ -31,7 +37,7 @@ public interface MineService {
     //个人主页-资料-本人查看
     @FormUrlEncoded
     @POST("My/PersonalInfo")
-    Observable<UserInfo> getUsetInfoMine(@Field("uid") String uid);
+    Observable<PersolHomePageBean> getUsetInfoMine(@Field("uid") String uid);
 
     /**
      * 个人主页-资料-别人查看
@@ -50,7 +56,7 @@ public interface MineService {
                                                @Field("page") int page);
 
     /**
-     * 我收到的礼物列表
+     * 我发送的礼物列表
      */
     @FormUrlEncoded
     @POST("My/UserGiveGiftsnAllList")
@@ -75,8 +81,8 @@ public interface MineService {
     @FormUrlEncoded
     @POST("My/VisitorsRecordSeenMe")
     Observable<VisitorBean> getVisitorsEarlier(@Field("uid") String uid,
-                                                  @Field("type") int type,
-                                                  @Field("page") int page);
+                                               @Field("type") int type,
+                                               @Field("page") int page);
 
     /**
      * 我喜欢的
@@ -97,8 +103,61 @@ public interface MineService {
      */
     @FormUrlEncoded
     @POST("My/UserLikeEachOther")
-    Observable<VisitorBean> getLikeEach(@Field("uid") String uid,@Field("uid") int page);
+    Observable<TodayBean> getLikeEach(@Field("uid") String uid, @Field("uid") int page);
 
+    /**
+     * Ta 收到的礼物
+     */
+    @FormUrlEncoded
+    @POST("My/OtherGiftList")
+    Observable<TaGiftBean> getTaGift(@Field("uid") String uid,
+                                     @Field("page") int page);
+
+    /**
+     * 礼物箱
+     */
+    @FormUrlEncoded
+    @POST("My/GiftBox")
+    Observable<GiftBoxBean> getGiftBox(@Field("uid") String uid);
+
+    /**
+     * 我的想问-列表
+     */
+    @FormUrlEncoded
+    @POST("My/ProblemList")
+    Observable<MyAskBean> getAskList(@Field("uid") String uid);
+
+    /**
+     * 删除问题
+     */
+    @FormUrlEncoded
+    @POST("My/DelProblem")
+    Observable<SimpleResponse> getDelAsk(@Field("uid") String uid, @Field("p_id") int pid);
+
+    /**
+     * 添加问题
+     */
+    @FormUrlEncoded
+    @POST("My/AddProblem")
+    Observable<SimpleResponse> getAddAsk(@Field("uid") String uid, @Field("problem") String problem);
+
+    /**
+     * 修改 问题/回答/添加回答
+     */
+    @FormUrlEncoded
+    @POST("My/UpdateProblem")
+    Observable<SimpleResponse> getUpdateProblem(@Field("uid") String uid,
+                                                @Field("p_id") int pid,
+                                                @Field("problem") String pro,
+                                                @Field("answer") String answer);
+
+    /**
+     * 用户积分明细-列表
+     */
+    @FormUrlEncoded
+    @POST("My/UserIntegralDetails")
+    Observable<IntegralDetailBean> getUserIntegralDetails(@Field("uid") String uid,
+                                                          @Field("page") int page);
 
 
 

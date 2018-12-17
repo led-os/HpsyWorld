@@ -2,7 +2,6 @@ package com.kuwai.ysy.module.mine.business.like;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -11,23 +10,20 @@ import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.mine.adapter.ExpandableItemAdapter;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
-import com.kuwai.ysy.module.mine.bean.like.ChildLevel;
 import com.kuwai.ysy.module.mine.bean.like.ParentLevel;
-import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-public class LikeMeFragment extends BaseFragment<LikeMePresenter> implements LikeMeContract.IHomeView, View.OnClickListener {
+public class ILikeFragment extends BaseFragment<ILikePresenter> implements ILikeContract.IHomeView, View.OnClickListener {
 
     RecyclerView mRecyclerView;
     ExpandableItemAdapter adapter;
     ArrayList<MultiItemEntity> list;
 
-    public static LikeMeFragment newInstance() {
+    public static ILikeFragment newInstance() {
         Bundle args = new Bundle();
-        LikeMeFragment fragment = new LikeMeFragment();
+        ILikeFragment fragment = new ILikeFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -38,8 +34,8 @@ public class LikeMeFragment extends BaseFragment<LikeMePresenter> implements Lik
     }
 
     @Override
-    protected LikeMePresenter getPresenter() {
-        return new LikeMePresenter(this);
+    protected ILikePresenter getPresenter() {
+        return new ILikePresenter(this);
     }
 
     @Override

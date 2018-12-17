@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+
+    <com.allen.library.CircleImageView
+        android:id="@+id/img_head"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="14dp"/>
+
+    <TextView
+        android:id="@+id/tv_nick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_sign"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="13dp"
+        android:layout_toRightOf="@id/img_head"
+        android:textColor="@color/balck_28"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/img_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_nick"
+        android:layout_toRightOf="@id/tv_nick" />
+
+    <ImageView
+        android:id="@+id/is_vip"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_nick"
+        android:layout_toRightOf="@id/img_sex"
+        android:src="@drawable/ic_user_vip" />
+
+    <TextView
+        android:id="@+id/tv_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_nick"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="6dp"
+        android:layout_toRightOf="@id/img_head"
+        android:textColor="@color/grey_bd"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/img_gift"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@id/tv_num"
+        android:scaleType="centerCrop" />
+
+</RelativeLayout>

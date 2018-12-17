@@ -232,6 +232,7 @@
             android:layout_marginLeft="30dp" />
 
         <TextView
+            android:id="@+id/ta_gift"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:layout_marginLeft="16dp"

@@ -14,9 +14,9 @@ import io.reactivex.functions.Consumer;
  * @tips 这个类是Object的子类
  * @fuction
  */
-public class MineVisitorPresenter extends RBasePresenter<MineVisitorContract.IHomeView> implements MineVisitorContract.IHomePresenter {
+public class VisitorPresenter extends RBasePresenter<VisitorContract.IHomeView> implements VisitorContract.IHomePresenter {
     private static final String TAG ="LookMePresenter";
-    public MineVisitorPresenter(MineVisitorContract.IHomeView view) {
+    public VisitorPresenter(VisitorContract.IHomeView view) {
         super(view);
     }
 

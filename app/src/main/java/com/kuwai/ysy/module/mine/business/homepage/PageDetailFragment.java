@@ -38,6 +38,7 @@ public class PageDetailFragment extends BaseFragment<PageDetailPresenter> implem
     private TextView mIsName, mIsHouse, mIsEdu, mIsCar, mID, mAge, mTall, mSign;
     private TagAdapter tagAdapter;
     private LayoutInflater mInflater;
+    private TextView mGift;
 
     public static PageDetailFragment newInstance(Bundle bundle) {
         PageDetailFragment fragment = new PageDetailFragment();
@@ -57,7 +58,14 @@ public class PageDetailFragment extends BaseFragment<PageDetailPresenter> implem
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ta_gift:
+                Bundle bundle = new Bundle();
+                bundle.putString("uid", otherid);
 
+                ((BaseFragment) getParentFragment()).start(TaAcceptGiftFragment.newInstance(bundle));
+                break;
+        }
     }
 
     @Override
@@ -70,7 +78,9 @@ public class PageDetailFragment extends BaseFragment<PageDetailPresenter> implem
         mAge = mRootView.findViewById(R.id.tv_age);
         mTall = mRootView.findViewById(R.id.tv_tall);
         mSign = mRootView.findViewById(R.id.tv_sign);
+        mGift = mRootView.findViewById(R.id.ta_gift);
 
+        mGift.setOnClickListener(this);
 
         mInflater = LayoutInflater.from(getActivity());
         tagFlowLayout = mRootView.findViewById(R.id.tv_tag);
@@ -96,7 +106,7 @@ public class PageDetailFragment extends BaseFragment<PageDetailPresenter> implem
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         otherid = getArguments().getString("id");
-        mPresenter.requestHomeData(SPManager.getStringValue("uid", ""), otherid);
+        mPresenter.requestHomeData(SPManager.getStringValue("uid", "1"), otherid);
     }
 
     @Override

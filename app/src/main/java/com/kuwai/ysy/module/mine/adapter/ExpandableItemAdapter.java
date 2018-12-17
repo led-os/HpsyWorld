@@ -82,8 +82,7 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
                             break;
                     }
 
-                    holder.setText(R.id.tv_sign, DateTimeUitl.getStandardDate(String.valueOf(todayBean.getCreate_time()))
-                            + ((TodayBean) item).getText());
+                    holder.setText(R.id.tv_sign, "ID:"+ ((TodayBean) item).getUid());
                 }
 
 

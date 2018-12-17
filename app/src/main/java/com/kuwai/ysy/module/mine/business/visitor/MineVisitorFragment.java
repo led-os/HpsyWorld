@@ -68,7 +68,7 @@ public class MineVisitorFragment extends BaseFragment implements View.OnClickLis
 
         fragments = new ArrayList<Fragment>();
         fragments.add(LookMeFragment.newInstance());
-        fragments.add(LikeMeFragment.newInstance());
+        fragments.add(VisitorFragment.newInstance());
 
         pager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
 

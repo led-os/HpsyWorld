@@ -1,16 +1,16 @@
-package com.kuwai.ysy.module.mine.business.visitor;
+package com.kuwai.ysy.module.mine.business.homepage;
 
-import com.kuwai.ysy.module.mine.bean.VisitorBean;
+import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.rayhahah.rbase.base.IRBaseView;
 
-public class MineVisitorContract {
+public class MineHomepageContract {
 
     public interface IHomeView extends IRBaseView {
 
         /**
          * 设置第一次请求的数据
          */
-        void setHomeData(VisitorBean visitorBean);
+        void setHomeData(PersolHomePageBean persolHomePageBean);
 
         /**
          * 设置加载更多的数据
@@ -28,6 +28,6 @@ public class MineVisitorContract {
         /**
          * 获取首页精选数据
          */
-        void requestHomeData(String uid, int type);
+        void requestHomeData(String uid);
     }
 }

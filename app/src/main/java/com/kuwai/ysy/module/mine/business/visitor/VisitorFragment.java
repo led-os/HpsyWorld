@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.kuwai.ysy.R;
@@ -17,7 +16,7 @@ import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.ArrayList;
 
-public class VisitorFragment extends BaseFragment<MineVisitorPresenter> implements MineVisitorContract.IHomeView, View.OnClickListener {
+public class VisitorFragment extends BaseFragment<VisitorPresenter> implements VisitorContract.IHomeView, View.OnClickListener {
 
     RecyclerView mRecyclerView;
     ExpandableItemAdapter adapter;
@@ -36,8 +35,8 @@ public class VisitorFragment extends BaseFragment<MineVisitorPresenter> implemen
     }
 
     @Override
-    protected MineVisitorPresenter getPresenter() {
-        return new MineVisitorPresenter(this);
+    protected VisitorPresenter getPresenter() {
+        return new VisitorPresenter(this);
     }
 
     @Override
