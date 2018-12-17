@@ -61,6 +61,6 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         app:sCornersRadius="4dp"
-        app:sSolidColor="@color/theme" />
+        app:sSolidColor="@color/theme_light" />
 
 </RelativeLayout>

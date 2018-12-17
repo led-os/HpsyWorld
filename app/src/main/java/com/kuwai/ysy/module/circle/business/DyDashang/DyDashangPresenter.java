@@ -25,6 +25,7 @@ public class DyDashangPresenter extends RBasePresenter<DyDashangContract.IHomeVi
 
     @Override
     public void requestHomeData(String did, int page) {
+        mView.showViewLoading();
         addSubscription(CircleApiFactory.getDyRewardListData(did, page).subscribe(new Consumer<DyRewardlistBean>() {
             @Override
             public void accept(DyRewardlistBean dyRewardlistBean) throws Exception {

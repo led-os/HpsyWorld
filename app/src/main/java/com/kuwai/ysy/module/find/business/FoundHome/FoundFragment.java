@@ -79,6 +79,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
         mBanner = mRootView.findViewById(R.id.banner);
         mLocationTv = mRootView.findViewById(R.id.tv_location);
         mIvHuaban = mRootView.findViewById(R.id.iv_huaban);
@@ -98,7 +99,6 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
        /* mBanner.setImageLoader(new GlideImageLoader());
         mBanner.setImages(Arrays.asList(images));
         mBanner.start();*/
-
 
 
         Drawable drawable = getResources().getDrawable(R.mipmap.ic_launcher);
@@ -153,7 +153,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
 
     @Override
     public void showViewLoading() {
-
+        mLayoutStatusView.showLoading();
     }
 
     @Override
@@ -163,13 +163,13 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
 
     @Override
     public void showViewError(Throwable t) {
-
+        mLayoutStatusView.showError();
     }
 
     @Override
     public void setHomeData(FoundBean foundBean) {
-
-        WebBannerAdapter webBannerAdapter=new WebBannerAdapter(getActivity(),foundBean);
+        mLayoutStatusView.showContent();
+        WebBannerAdapter webBannerAdapter = new WebBannerAdapter(getActivity(), foundBean);
         mBanner.setAdapter(webBannerAdapter);
 
         mfoundCityAdapter.addData(foundBean.getData().getAppointment());
@@ -199,4 +199,8 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
 
     }
 
+    @Override
+    public void retry() {
+        mPresenter.requestHomeData();
+    }
 }

@@ -53,7 +53,7 @@
         android:layout_toRightOf="@+id/tv_tel"
         android:background="@null"
         android:gravity="bottom"
-        android:inputType="phone"
+        android:inputType="number"
         android:textColor="#ff282838"
         android:textSize="20sp"
         app:ic_delete="@drawable/sl_repa_ic_delete" />
@@ -142,10 +142,10 @@
         android:layout_marginTop="20dp"
         android:text="登录"
         app:sCornersRadius="4dp"
-        app:sSelectorNormalColor="@color/theme_light"
-        app:sUseSelector="true"
         android:enabled="false"
         android:textColor="@color/white"
+        app:sUseSelector="true"
+        app:sSelectorNormalColor="@color/theme_light"
         app:sSelectorDisableColor="@color/line_color"
         android:textSize="16sp"
         app:sSolidColor="@color/line_color" />

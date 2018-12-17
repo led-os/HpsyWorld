@@ -2,12 +2,15 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <RelativeLayout
+    <com.kuwai.ysy.widget.MultipleStatusView
+        android:id="@+id/multipleStatusView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:layout_height="match_parent"
+        app:loadingView="@layout/loading_view"
+        app:errorView="@layout/layout_error_view">
 
         <ImageView
             android:layout_width="match_parent"
@@ -217,5 +220,5 @@
 
         </android.support.v7.widget.RecyclerView>
 
-    </RelativeLayout>
+    </com.kuwai.ysy.widget.MultipleStatusView>
 </ScrollView>

@@ -22,6 +22,7 @@ public class FoundPresenter extends RBasePresenter<FoundContract.IHomeView> impl
 
     @Override
     public void requestHomeData() {
+        mView.showViewLoading();
         addSubscription(FoundApiFactory.getTeamList().subscribe(new Consumer<FoundBean>() {
             @Override
             public void accept(FoundBean foundBean) throws Exception {
@@ -31,6 +32,7 @@ public class FoundPresenter extends RBasePresenter<FoundContract.IHomeView> impl
             @Override
             public void accept(Throwable throwable) throws Exception {
                 Log.i(TAG, "accept: "+throwable);
+                mView.showViewError(throwable);
             }
         }));
     }

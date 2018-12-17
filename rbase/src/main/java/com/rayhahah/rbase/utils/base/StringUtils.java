@@ -1,6 +1,7 @@
 package com.rayhahah.rbase.utils.base;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -85,11 +86,11 @@ public class StringUtils {
         }
         /*
          * Pattern emailer=null; if(email!=null){ String check =
-		 * "^([a-z0-9A-Z]+[-|\\._]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$"
-		 * ; emailer = Pattern.compile(check); Matcher matcher =
-		 * emailer.matcher(email); return matcher.matches(); }else{ return
-		 * false; }
-		 */
+         * "^([a-z0-9A-Z]+[-|\\._]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$"
+         * ; emailer = Pattern.compile(check); Matcher matcher =
+         * emailer.matcher(email); return matcher.matches(); }else{ return
+         * false; }
+         */
     }
 
     /***
@@ -99,14 +100,37 @@ public class StringUtils {
      * @return true 合法手机号 ，false 不合法手机号
      */
     public static boolean isLegalPhone(String phone) {
-        boolean flag = false;
-        if (phone != null && phone.trim().length() == 11) {
-            String check = "1\\d{10}";
-            Pattern pattern = Pattern.compile(check);
-            Matcher matcher = pattern.matcher(phone);
-            flag = matcher.matches();
-        }
-        return flag;
+        // "[1]"代表第1位为数字1，"[358]"代表第二位可以为3、5、8中的一个，"\\d{9}"代表后面是可以是0～9的数字，有9位。
+        String regex = "^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\\d{8}$";
+        Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(phone);
+        return m.matches();
+    }
+
+    /**
+     * 正则：身份证号码18位
+     */
+    public static final String REGEX_IDCARD18 = "^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}([0-9Xx])$";
+
+    /**
+     * 验证身份证号码
+     *
+     * @param string 待验证文本
+     * @return {@code true}: 匹配<br>{@code false}: 不匹配
+     */
+    public static boolean isIDCard(String string) {
+        return isMatch(REGEX_IDCARD18, string);
+    }
+
+    /**
+     * string是否匹配regex正则表达式字符串
+     *
+     * @param regex  正则表达式字符串
+     * @param string 要匹配的字符串
+     * @return {@code true}: 匹配<br>{@code false}: 不匹配
+     */
+    public static boolean isMatch(String regex, String string) {
+        return !TextUtils.isEmpty(string) && Pattern.matches(regex, string);
     }
 
     /**
@@ -118,7 +142,7 @@ public class StringUtils {
     public static boolean strIsLetterOrNumer(String str) {
         boolean flag = false;
         if (isNotEmpty(str)) {
-            String check = "^[A-Za-z0-9]{1,}$";
+            String check = "^(?=.*[0-9])(?=.*[a-zA-Z])(.{6,})$";
             Pattern pattern = Pattern.compile(check);
             Matcher matcher = pattern.matcher(str);
             flag = matcher.matches();
@@ -484,6 +508,37 @@ public class StringUtils {
             }
         }
         return result;
+    }
+
+    /**
+     * 隐藏手机中间4位号码
+     * 130****0000
+     *
+     * @param mobile_phone 手机号码
+     * @return 130****0000
+     */
+    public static String hideMobilePhone4(String mobile_phone) {
+        return mobile_phone.substring(0, 3) + "****" + mobile_phone.substring(7, 11);
+    }
+
+    public static String hideName(String name) {
+        String card = "";
+        card = name.substring(name.length() - 1);
+        return "**" + card;
+    }
+
+    /**
+     * 格式化银行卡 加*
+     * 3749 **** **** 330
+     *
+     * @param cardNo 银行卡
+     * @return 3749 **** **** 330
+     */
+    public static String formatCard(String cardNo) {
+        String card = "";
+        card = cardNo.substring(0, 4) + " **** **** ";
+        card += cardNo.substring(cardNo.length() - 4);
+        return card;
     }
 
     /**
