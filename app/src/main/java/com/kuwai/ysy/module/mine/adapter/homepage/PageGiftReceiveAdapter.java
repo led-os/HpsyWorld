@@ -16,7 +16,6 @@ import java.util.List;
 
 public class PageGiftReceiveAdapter extends BaseQuickAdapter<PersolHomePageBean.DataBean.GiftBean, BaseViewHolder> {
 
-
     public PageGiftReceiveAdapter() {
         super(R.layout.item_page_gift_receive);
     }

@@ -91,6 +91,9 @@ public class C {
     public static final String TYPE_DY_ALL = "ALL_DY";//全部动态
     public static final String TYPE_DY_FRIEND = "FRIEND_DY";//好友动态
 
+    public static final int LOOK_ME = 1;//谁看过我
+    public static final int My_VISITOR = 2;//我看过谁
+
 
     //通知
     public static final int MSG_LOGIN = 0x0000010;

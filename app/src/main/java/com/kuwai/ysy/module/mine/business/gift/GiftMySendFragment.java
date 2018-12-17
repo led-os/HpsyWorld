@@ -12,18 +12,21 @@ import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.mine.adapter.GiftAdapter;
 import com.kuwai.ysy.module.mine.adapter.GiftSendAdapter;
+import com.kuwai.ysy.module.mine.bean.GiftAcceptBean;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.MyRecycleViewDivider;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GiftMySendFragment extends BaseFragment implements View.OnClickListener {
+public class GiftMySendFragment extends BaseFragment<GiftMySendPresenter> implements GiftMySendContract.IHomeView, View.OnClickListener {
 
     private GiftSendAdapter mDateAdapter;
     private RecyclerView mDongtaiList;
     private List<CategoryBean> mDataList = new ArrayList<>();
+    private int page = 1;
 
     public static GiftMySendFragment newInstance() {
         Bundle args = new Bundle();
@@ -38,8 +41,8 @@ public class GiftMySendFragment extends BaseFragment implements View.OnClickList
     }
 
     @Override
-    protected RBasePresenter getPresenter() {
-        return null;
+    protected GiftMySendPresenter getPresenter() {
+        return new GiftMySendPresenter(this);
     }
 
     @Override
@@ -51,12 +54,7 @@ public class GiftMySendFragment extends BaseFragment implements View.OnClickList
     @Override
     public void initView(Bundle savedInstanceState) {
         mDongtaiList = mRootView.findViewById(R.id.recyclerView);
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
-        mDateAdapter = new GiftSendAdapter(mDataList);
+        mDateAdapter = new GiftSendAdapter();
         mDongtaiList.setAdapter(mDateAdapter);
         mDongtaiList.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 0.5f), R.color.line_color));
     }
@@ -64,5 +62,33 @@ public class GiftMySendFragment extends BaseFragment implements View.OnClickList
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
+        mPresenter.requestHomeData(SPManager.getStringValue("uid", "1"), page);
+
+    }
+
+    @Override
+    public void setHomeData(GiftAcceptBean giftAcceptBean) {
+        mDateAdapter.addData(giftAcceptBean.getData().getGift());
+
+    }
+
+    @Override
+    public void showError(int errorCode, String msg) {
+
+    }
+
+    @Override
+    public void showViewLoading() {
+
+    }
+
+    @Override
+    public void dismissLoading() {
+
+    }
+
+    @Override
+    public void showViewError(Throwable t) {
+
     }
 }

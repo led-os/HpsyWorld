@@ -3,11 +3,12 @@ package com.kuwai.ysy.module.mine.bean.like;
 import com.chad.library.adapter.base.entity.AbstractExpandableItem;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.kuwai.ysy.module.mine.adapter.ExpandableItemAdapter;
+import com.kuwai.ysy.module.mine.bean.TodayBean;
 
 /**
  * Created by luoxw on 2016/8/10.
  */
-public class ParentLevel extends AbstractExpandableItem<ChildLevel> implements MultiItemEntity {
+public class ParentLevel extends AbstractExpandableItem<TodayBean> implements MultiItemEntity {
     public String title;
     public String subTitle;
 

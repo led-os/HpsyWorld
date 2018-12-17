@@ -68,14 +68,14 @@ public class GiftAllWithdrawFragment extends BaseFragment implements View.OnClic
         int lv1Count = 4;
 
         ArrayList<MultiItemEntity> res = new ArrayList<>();
-        for (int i = 0; i < lv0Count; i++) {
-            ParentLevel lv0 = new ParentLevel("This is " + i + "th item in Level 0", "subtitle of " + i);
-            for (int j = 0; j < lv1Count; j++) {
-                ChildLevel lv1 = new ChildLevel("Level 1 item: " + j, "(no animation)");
-                lv0.addSubItem(lv1);
-            }
-            res.add(lv0);
-        }
+//        for (int i = 0; i < lv0Count; i++) {
+//            ParentLevel lv0 = new ParentLevel("This is " + i + "th item in Level 0", "subtitle of " + i);
+//            for (int j = 0; j < lv1Count; j++) {
+//                ChildLevel lv1 = new ChildLevel("Level 1 item: " + j, "(no animation)");
+//                lv0.addSubItem(lv1);
+//            }
+//            res.add(lv0);
+//        }
         //res.add(new  ParentLevel("This is " + lv0Count + "th item in Level 0", "subtitle of " + lv0Count));
         return res;
     }
