@@ -77,13 +77,30 @@ public class C {
     public static final String FALSE = "false";
     public static final String NULL = "";
 
+    //约会
     public static final String AA = "AA";
     public static final String MYPAY = "我买单";
     public static final String YOUPAY = "你买单";
 
+    //性别
     public static final int Man = 1;
     public static final int Woman = 2;
 
+    //验证码类型
+    public static final String CODE_REGIST = "A";//注册
+    public static final String CODE_LOGIN = "B";//登录
+    public static final String CODE_CHANG_PSD = "C";//修改密码
+    public static final String CODE_CHANG_PHONE = "D";//修改手机
+    public static final String CODE_ACTIVITY = "E";//参加活动
+
+    //登陆类型
+    public static final String LOGIN_PHONE = "phone";//注册
+    public static final String LOGIN_CODE = "code";//登录
+    public static final String LOGIN_QQ = "qq_id";//修改密码
+    public static final String LOGIN_WECHAT = "wechat_id";//修改手机
+    public static final String LOGIN_SINA = "weibo_id";//参加活动
+
+    //动态类型
     public static final int DY_TXT = 0;//纯文本
     public static final int DY_PIC = 1;//图片
     public static final int DY_FILM = 2;//视频
@@ -97,4 +114,21 @@ public class C {
 
     //通知
     public static final int MSG_LOGIN = 0x0000010;
+
+    //注册参数
+    public static final String REGIST_NAME = "RE_NAME";//全部动态
+    public static final String REGIST_AVATAR = "RE_AVATAR";//全部动态
+    public static final String REGIST_PHONE = "RE_PHONE";//全部动态
+    public static final String REGIST_PSD = "RE_PSD";//全部动态
+    public static final String REGIST_CODE = "RE_CODE";//全部动态
+    public static final String REGIST_LATITUDE = "RE_LATITUDE";//全部动态
+    public static final String REGIST_LONGITUDE = "RE_LONGITUDE";//全部动态
+    public static final String REGIST_REFER = "RE_REFER";//全部动态
+    public static final String REGIST_CITY = "RE_CITY";//全部动态
+    public static final String REGIST_GENDER = "RE_GENDER";//全部动态
+    public static final String REGIST_BIRTHDAY = "RE_BIR";//全部动态
+    public static final String REGIST_HEIGHT = "RE_HEIGHT";//全部动态
+    public static final String REGIST_INCOME = "RE_INCOME";//全部动态
+    public static final String REGIST_EDUCATION = "RE_EDUCATION";//全部动态
+
 }

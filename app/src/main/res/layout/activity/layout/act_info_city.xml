@@ -32,7 +32,7 @@
         android:layout_below="@id/img_pos"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="14dp"
-        android:text="获取当前所在城市"
+        android:text="@string/get_city"
         android:textColor="#ff282838"
         android:textSize="18sp"
         app:sCornersRadius="24dp"

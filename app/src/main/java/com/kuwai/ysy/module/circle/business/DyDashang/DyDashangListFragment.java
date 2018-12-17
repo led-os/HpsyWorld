@@ -97,7 +97,7 @@ public class DyDashangListFragment extends BaseFragment<DyDashangPresenter> impl
 
     @Override
     public void showViewLoading() {
-
+        mLayoutStatusView.showLoading();
     }
 
     @Override

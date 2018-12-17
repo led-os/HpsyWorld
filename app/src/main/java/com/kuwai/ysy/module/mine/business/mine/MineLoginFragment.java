@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,7 +14,7 @@ import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseFragment;
-import com.kuwai.ysy.module.home.business.login.LoginActivity;
+import com.kuwai.ysy.module.home.business.loginmoudle.login.LoginActivity;
 import com.kuwai.ysy.module.mine.MyCreditActivity;
 import com.kuwai.ysy.module.mine.MyPointActivity;
 import com.kuwai.ysy.module.mine.MyWalletActivity;
@@ -29,11 +28,8 @@ import com.kuwai.ysy.module.mine.business.question.AskQuestionActivity;
 import com.kuwai.ysy.module.mine.business.visitor.VisitorActivity;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
-import com.rayhahah.rbase.base.RBasePresenter;
-import com.rayhahah.rbase.bean.MsgEvent;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
-import com.umeng.commonsdk.debug.E;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
