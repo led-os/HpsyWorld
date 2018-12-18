@@ -76,10 +76,10 @@ public class FoundApiFactory {
                 .compose(RxSchedulers.<MeetThemeBean>ioMain());
     }
 
-    public static Observable<CommisDetailBean> getCommisDetail(int rid) {
+    public static Observable<CommisDetailBean> getCommisDetail(int rid,String uid) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(FoundService.class)
-                .getCommisDetailData(rid)
+                .getCommisDetailData(rid,uid)
                 .compose(RxSchedulers.<CommisDetailBean>ioMain());
     }
 

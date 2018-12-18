@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,8 +9,8 @@
         android:id="@+id/multipleStatusView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:loadingView="@layout/loading_view"
-        app:errorView="@layout/layout_error_view">
+        app:errorView="@layout/layout_error_view"
+        app:loadingView="@layout/loading_view">
 
         <ImageView
             android:layout_width="match_parent"
@@ -131,8 +131,8 @@
                     android:id="@+id/iv_headicon"
                     android:layout_width="44dp"
                     android:layout_height="44dp"
-                    android:layout_marginEnd="2dp"
                     android:layout_marginTop="4.5dp"
+                    android:layout_marginEnd="2dp"
                     android:src="@drawable/icon" />
             </LinearLayout>
 
@@ -150,8 +150,8 @@
             android:id="@+id/tv_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/iv_huaban"
+            android:layout_alignParentStart="true"
             android:layout_marginStart="15dp"
             android:layout_marginTop="16dp"
             android:drawableStart="@drawable/ic_list_tab"
@@ -164,10 +164,10 @@
             android:id="@+id/tv_city_meet_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_below="@+id/iv_huaban"
-            android:layout_marginEnd="15dp"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="15dp"
             android:drawableEnd="@drawable/ic_list_jinru_pressed"
             android:gravity="center_vertical"
             android:text="更多"
@@ -179,8 +179,8 @@
             android:id="@+id/rv_city"
             android:layout_width="match_parent"
             android:layout_height="203dp"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/tv_city"
+            android:layout_alignParentStart="true"
             android:layout_marginTop="19dp">
 
         </android.support.v7.widget.RecyclerView>
@@ -189,8 +189,8 @@
             android:id="@+id/tv_activity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/rv_city"
+            android:layout_alignParentStart="true"
             android:layout_marginStart="15dp"
             android:drawableStart="@drawable/ic_list_tab"
             android:text="脱单活动"
@@ -202,8 +202,8 @@
             android:id="@+id/tv_tuodan_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_below="@+id/rv_city"
+            android:layout_alignParentEnd="true"
             android:layout_marginEnd="15dp"
             android:drawableEnd="@drawable/ic_list_jinru_pressed"
             android:gravity="center_vertical"
@@ -221,4 +221,4 @@
         </android.support.v7.widget.RecyclerView>
 
     </com.kuwai.ysy.widget.MultipleStatusView>
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>

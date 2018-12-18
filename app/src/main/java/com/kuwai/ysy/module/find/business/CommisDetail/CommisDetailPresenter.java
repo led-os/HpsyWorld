@@ -26,8 +26,8 @@ public class CommisDetailPresenter extends RBasePresenter<CommisDetailContract.I
 
 
     @Override
-    public void requestHomeData(int rid) {
-        addSubscription(FoundApiFactory.getCommisDetail(rid).subscribe(new Consumer<CommisDetailBean>() {
+    public void requestHomeData(int rid,String uid) {
+        addSubscription(FoundApiFactory.getCommisDetail(rid,uid).subscribe(new Consumer<CommisDetailBean>() {
             @Override
             public void accept(CommisDetailBean commisDetailBean) throws Exception {
                 mView.setHomeData(commisDetailBean);

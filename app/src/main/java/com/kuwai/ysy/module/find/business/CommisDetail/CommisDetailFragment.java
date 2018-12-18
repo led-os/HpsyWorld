@@ -116,6 +116,7 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
     private PileLayout pileLayout;
     private ImageView mCover;
     private int rid;
+    private String uid;
 
     public static CommisDetailFragment newInstance(Bundle bundle) {
         CommisDetailFragment fragment = new CommisDetailFragment();
@@ -160,7 +161,7 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
                 break;
 
             case R.id.btn_commis:
-                mPresenter.getApply(rid, Integer.valueOf(SPManager.get().getStringValue("uid","1")), getResources().getString(R.string.meetagree_text));
+                mPresenter.getApply(rid, Integer.valueOf(SPManager.get().getStringValue("uid", "1")), getResources().getString(R.string.meetagree_text));
                 break;
         }
     }
@@ -168,6 +169,7 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
     @Override
     public void initView(Bundle savedInstanceState) {
         rid = getArguments().getInt("rid");
+        uid = getArguments().getString("uid");
 
         mCover = mRootView.findViewById(R.id.iv_cover);
         mTvName = (TextView) mRootView.findViewById(R.id.tv_name);
@@ -223,7 +225,7 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.requestHomeData(rid);
+        mPresenter.requestHomeData(rid, uid);
     }
 
     @Override
@@ -245,7 +247,7 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
         } else {
             mBtnChengyi.setVisibility(View.VISIBLE);
         }
-        if (commisDetailBean.getData().getGift() != null) {
+        if (commisDetailBean.getData().getGift() != null && commisDetailBean.getData().getGift().size() != 0) {
             mBtnGift.setVisibility(View.VISIBLE);
         } else {
             mBtnGift.setVisibility(View.GONE);

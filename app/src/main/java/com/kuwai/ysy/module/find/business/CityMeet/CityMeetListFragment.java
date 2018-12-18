@@ -119,6 +119,7 @@ public class CityMeetListFragment extends BaseFragment<CityMeetPresenter> implem
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("rid", mcityMeetBean.getData().get(position).getR_id());
+                bundle.putString("uid",String.valueOf(mcityMeetBean.getData().get(position).getUid()));
 
                 if (Integer.valueOf(SPManager.get().getStringValue("uid","1")) == (mcityMeetBean.getData().get(position).getUid())) {
                     start(CommicDetailMyFragment.newInstance(bundle));

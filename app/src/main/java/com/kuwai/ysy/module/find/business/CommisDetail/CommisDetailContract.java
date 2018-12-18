@@ -33,7 +33,7 @@ public class CommisDetailContract {
         /**
          * 获取首页精选数据
          */
-        void requestHomeData(int rid);
+        void requestHomeData(int rid,String uid);
 
         void getApply(int rid,int uid,String text);
 
