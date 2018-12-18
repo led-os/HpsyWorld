@@ -101,7 +101,7 @@ public class MyPlugin implements IPluginModule, GiftClickCallback {
     }
 
     @Override
-    public void giftClick(int positon) {
+    public void giftClick(int gid,int nums) {
         sendMessage("");
     }
 }

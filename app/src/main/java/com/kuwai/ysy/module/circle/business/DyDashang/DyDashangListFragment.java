@@ -9,12 +9,19 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.adapter.message.DashangAdapter;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.DyRewardlistBean;
 import com.kuwai.ysy.module.circle.business.DyDetail.DyDetailContract;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.useful.SPManager;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +58,7 @@ public class DyDashangListFragment extends BaseFragment<DyDashangPresenter> impl
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        EventBusUtil.register(this);
         mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
         mDongtaiList = mRootView.findViewById(R.id.recyclerView);
         //mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -83,7 +91,7 @@ public class DyDashangListFragment extends BaseFragment<DyDashangPresenter> impl
     public void setHomeData(DyRewardlistBean dyRewardlistBean) {
         if (dyRewardlistBean.getData() != null) {
             mLayoutStatusView.showContent();
-            mDateAdapter.addData(dyRewardlistBean.getData());
+            mDateAdapter.replaceData(dyRewardlistBean.getData());
         } else {
             mLayoutStatusView.showEmpty();
         }
@@ -108,5 +116,20 @@ public class DyDashangListFragment extends BaseFragment<DyDashangPresenter> impl
     @Override
     public void showViewError(Throwable t) {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBusUtil.unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void isLogin(MessageEvent event) {
+        if (event.getCode() == C.MSG_REWARD_DY) {
+            mPresenter.requestHomeData(String.valueOf(did), page);
+        }else if(event.getCode() == C.MSG_REWARD_HOLE){
+            mPresenter.requestHomeData(String.valueOf(did), page);
+        }
     }
 }

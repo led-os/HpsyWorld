@@ -2,6 +2,7 @@ package com.kuwai.ysy.module.mine.business.homepage;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -42,6 +43,7 @@ public class GiftBoxFragment extends BaseFragment<GiftBoxPresenter> implements G
 
         mRVBox = mRootView.findViewById(R.id.rv_box);
         mAdapter = new GiftBoxAdapter();
+        mRVBox.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         mRVBox.setAdapter(mAdapter);
         mRVBox.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 0.5f), R.color.line_color));
 

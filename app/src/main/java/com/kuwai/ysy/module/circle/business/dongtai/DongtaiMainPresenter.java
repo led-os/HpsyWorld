@@ -62,7 +62,7 @@ public class DongtaiMainPresenter extends RBasePresenter<DongtaiMainContract.IHo
         addSubscription(CircleApiFactory.dyLikeOrNot(uid, otherid, did, status).subscribe(new Consumer<SimpleResponse>() {
             @Override
             public void accept(SimpleResponse simpleResponse) throws Exception {
-                mView.deteleDy(simpleResponse);
+                mView.dyListZan(simpleResponse);
             }
         }, new Consumer<Throwable>() {
             @Override

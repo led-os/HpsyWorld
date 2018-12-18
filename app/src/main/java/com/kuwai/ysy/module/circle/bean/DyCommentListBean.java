@@ -69,6 +69,15 @@ public class DyCommentListBean {
         private int wahtcommentgood;
         private int is_vip;
         private List<SubBean> sub;
+        private int t_c_id;
+
+        public int getT_c_id() {
+            return t_c_id;
+        }
+
+        public void setT_c_id(int t_c_id) {
+            this.t_c_id = t_c_id;
+        }
 
         public String getAvatar() {
             return avatar;

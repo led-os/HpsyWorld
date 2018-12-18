@@ -44,7 +44,7 @@ public class UploadHelper {
     public UploadHelper addParameter(String key, Object o) {
         RequestBody body = null;
         if (o instanceof String) {
-            body = RequestBody.create(MediaType.parse("text/plain;charset=UTF-8"), (String) o);
+            body = RequestBody.create(MediaType.parse("text/plain"), (String) o);
         } else if (o instanceof File) {
             body = RequestBody.create(MediaType.parse("multipart/form-data"), (File) o);
         }

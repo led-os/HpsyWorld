@@ -95,7 +95,7 @@ public class GiftPannelView extends RelativeLayout {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if (giftClickCallback != null) {
-                        giftClickCallback.giftClick(position);
+                        giftClickCallback.giftClick(mDataList.get((int) id).getG_id(), 1);
                     }
                     for (int i = 0; i < mDataList.size(); i++) {
                         GiftPopBean.DataBean model = mDataList.get(i);

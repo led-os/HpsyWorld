@@ -47,7 +47,7 @@ public class C {
     @Retention(RetentionPolicy.SOURCE)
     public @interface BaseURL {
         String TEST_URL = "http://baobab.kaiyanapp.com/api/";
-        String BASE_URL = "http://192.168.1.88/xxx/api/";
+        String BASE_URL = "http://192.168.1.88/api/";
     }
 
     /**
@@ -114,6 +114,11 @@ public class C {
 
     //通知
     public static final int MSG_LOGIN = 0x0000010;
+    public static final int MSG_ZAN_DY = 0x00000101;
+    public static final int MSG_COMMENT = 0x00000102;
+    public static final int MSG_REWARD_DY = 0x00000103;
+    public static final int MSG_COMMENT_HOLE = 0x00000104;
+    public static final int MSG_REWARD_HOLE = 0x00000105;
 
     //注册参数
     public static final String REGIST_NAME = "RE_NAME";//全部动态

@@ -2,6 +2,7 @@ package com.kuwai.ysy.module.mine.business.homepage;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -47,7 +48,7 @@ public class TaAcceptGiftFragment extends BaseFragment<TaAcceptGiftPresenter> im
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("uid",otherid);
+                bundle.putString("uid", otherid);
 
                 start(GiftBoxFragment.newInstance(bundle));
             }
@@ -56,6 +57,7 @@ public class TaAcceptGiftFragment extends BaseFragment<TaAcceptGiftPresenter> im
         mRvgift = mRootView.findViewById(R.id.rv_gift);
         mAdapter = new TaGiftAdapter();
         mRvgift.setAdapter(mAdapter);
+        mRvgift.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRvgift.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 0.5f), R.color.line_color));
 
     }
@@ -63,7 +65,7 @@ public class TaAcceptGiftFragment extends BaseFragment<TaAcceptGiftPresenter> im
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-         otherid = getArguments().getString("uid");
+        otherid = getArguments().getString("uid");
         mPresenter.requestHomeData(otherid, page);
     }
 

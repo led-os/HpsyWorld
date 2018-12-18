@@ -62,7 +62,6 @@ public class PageDetailFragment extends BaseFragment<PageDetailPresenter> implem
             case R.id.ta_gift:
                 Bundle bundle = new Bundle();
                 bundle.putString("uid", otherid);
-
                 ((BaseFragment) getParentFragment()).start(TaAcceptGiftFragment.newInstance(bundle));
                 break;
         }

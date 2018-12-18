@@ -218,7 +218,7 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.getAllTheme("1");
+        mPresenter.getAllTheme(SPManager.get().getStringValue("uid"));
         mPresenter.getAllGifts();
     }
 
@@ -239,7 +239,7 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
     }
 
     @Override
-    public void giftClick(int positon) {
+    public void giftClick(int gid,int nums) {
         mGiftData.add("");
         publishGiftAdapter.notifyDataSetChanged();
         customDialog.dismiss();

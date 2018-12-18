@@ -17,6 +17,7 @@ import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.module.circle.AddressChooseActivity;
 import com.kuwai.ysy.module.circle.aliyun.AlivcSvideoRecordActivity;
 import com.kuwai.ysy.module.circle.business.RightChooseActivity;
+import com.kuwai.ysy.utils.DialogUtil;
 import com.kuwai.ysy.utils.UploadHelper;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.kuwai.ysy.widget.exchange.BGASortableNinePhotoLayout;
@@ -142,11 +143,12 @@ public class PublishDyActivity extends BaseActivity<PublishPresenter> implements
             helper.addParameter("city", poiItem.getCityName());
             helper.addParameter("address", mAddressTv.getText().toString());
         }
-       /* for (int i = 0; i < selectList.size(); i++) {
+        for (int i = 0; i < selectList.size(); i++) {
             File file = new File(selectList.get(i).getCompressPath());
-            helper.addParameter("pic", file);
-        }*/
+            helper.addParameter("file" + i + "\";filename=\"" + selectList.get(i).getCompressPath(), file);
+        }
         //map.put("video_id", "0");
+        DialogUtil.showLoadingDialog(this, "", getResources().getColor(R.color.theme));
         mPresenter.publishDy(helper.builder());
     }
 
@@ -274,6 +276,7 @@ public class PublishDyActivity extends BaseActivity<PublishPresenter> implements
     @Override
     public void setPublishCallBack(SimpleResponse dyDetailBean) {
         if (dyDetailBean.code == 200) {
+            DialogUtil.dismissDialog(true);
             ToastUtils.showShort("发布成功");
             finish();
         }

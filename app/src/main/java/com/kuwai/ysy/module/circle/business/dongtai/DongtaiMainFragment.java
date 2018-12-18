@@ -33,6 +33,10 @@ import com.kuwai.ysy.widget.popwindow.YsyPopWindow;
 import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
@@ -56,6 +60,9 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
     private DyMainListBean mDyMainListBean;
     private int page = 1;
     private String type = TYPE_DY_ALL;
+    private SmartRefreshLayout mRefreshLayout;
+
+    private int mPosition = 0;
 
     public static DongtaiMainFragment newInstance(String type) {
         Bundle args = new Bundle();
@@ -93,6 +100,19 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
         mPublishTv = mRootView.findViewById(R.id.tv_edit);
         mImageWatcher = mRootView.findViewById(R.id.image_watcher);
 
+        mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
+        mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
+        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                if (TYPE_DY_ALL.equals(type)) {
+                    mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid", "1"));
+                } else if (C.TYPE_DY_FRIEND.equals(type)) {
+                    mPresenter.requestFriendData(page, SPManager.get().getStringValue("uid", "1"));
+                }
+            }
+        });
+
         mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mDongtaiAdapter = new DongtaiAdapter(mDataList, mImageWatcher);
         mDongtaiList.addOnScrollListener(new HomeActivity.ListScrollListener());
@@ -123,10 +143,11 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
                         break;
 
                     case R.id.ll_like:
+                        mPosition = position;
                         mPresenter.dyListZan(String.valueOf(mDyMainListBean.getData().get(position).getD_id()),
                                 SPManager.get().getStringValue("uid"),
                                 String.valueOf(mDyMainListBean.getData().get(position).getUid()),
-                                mDyMainListBean.getData().get(position).getWhatgood());
+                                mDyMainListBean.getData().get(position).getWhatgood() == 0 ? 1 : 2);
                         break;
                 }
             }
@@ -146,11 +167,10 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         if (TYPE_DY_ALL.equals(type)) {
-            mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid","1"));
+            mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid", "1"));
         } else if (C.TYPE_DY_FRIEND.equals(type)) {
-            mPresenter.requestFriendData(page, SPManager.get().getStringValue("uid","1"));
+            mPresenter.requestFriendData(page, SPManager.get().getStringValue("uid", "1"));
         }
-
     }
 
     private void requestCameraPermission(final int type) {
@@ -228,6 +248,7 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
 
     @Override
     public void setHomeData(DyMainListBean dyMainListBean) {
+        mRefreshLayout.finishRefresh();
         mDyMainListBean = dyMainListBean;
         mDongtaiAdapter.addData(dyMainListBean.getData());
     }
@@ -239,11 +260,12 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
 
     @Override
     public void dyListZan(SimpleResponse simpleResponse) {
-
+        //mDongtaiAdapter.getData().get(mPosition).setWhatgood();
     }
 
     @Override
     public void setFriendData(DyMainListBean dyMainListBean) {
+        mRefreshLayout.finishRefresh();
         mDyMainListBean = dyMainListBean;
         mDongtaiAdapter.addData(dyMainListBean.getData());
     }

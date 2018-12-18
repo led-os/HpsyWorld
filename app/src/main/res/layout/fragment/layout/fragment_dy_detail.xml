@@ -195,7 +195,7 @@
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         android:layout_below="@id/top"
-        android:text="提交"
+        android:text="打赏"
         android:textColor="@color/white"
         android:textSize="14sp"
         app:sGradientEndColor="#bfb5ea"

@@ -16,6 +16,7 @@ import com.rayhahah.rbase.utils.useful.RxSchedulers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
@@ -90,6 +91,13 @@ public class CircleApiFactory {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(CircleService.class)
                 .dyLikeOrNot(d_id, uid, other_id, status)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<SimpleResponse> dynamicReward(String uid, String type, String tid, int gid, int nums) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(CircleService.class)
+                .dynamicReward(uid, type, tid, gid, nums)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
@@ -205,14 +213,14 @@ public class CircleApiFactory {
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
-    public static Observable<HoleCommentListBean> getHoleCommentListData(String d_id, String uid, int page) {
+    public static Observable<DyCommentListBean> getHoleCommentListData(String d_id, String uid, int page) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(CircleService.class)
                 .getHoleCommentListData(d_id, uid, page)
-                .compose(RxSchedulers.<HoleCommentListBean>ioMain());
+                .compose(RxSchedulers.<DyCommentListBean>ioMain());
     }
 
-    public static Observable<SimpleResponse> holeLikeOrNot(HashMap<String, String> params) {
+    public static Observable<SimpleResponse> holeLikeOrNot(Map<String, Object> params) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(CircleService.class)
                 .holeLikeOrNot(params)

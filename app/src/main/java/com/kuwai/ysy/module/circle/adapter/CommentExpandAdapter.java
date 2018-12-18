@@ -40,7 +40,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         this.commentBeanList = commentBeanList;
     }
 
-    public void setAddSecCallback(AddSecComment callback){
+    public void setAddSecCallback(AddSecComment callback) {
         this.addSecComment = callback;
     }
 
@@ -86,8 +86,6 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-    boolean isLike = false;
-
     @Override
     public View getGroupView(final int groupPosition, boolean isExpand, View convertView, ViewGroup viewGroup) {
         final GroupHolder groupHolder;
@@ -99,26 +97,37 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         } else {
             groupHolder = (GroupHolder) convertView.getTag();
         }
-        GlideUtil.load(context, R.drawable.beau_girl, groupHolder.logo);
+        GlideUtil.load(context, commentBeanList.get(groupPosition).getAvatar(), groupHolder.logo);
         groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getNickname());
         groupHolder.tv_time.setText(DateTimeUitl.getStandardDate(String.valueOf(commentBeanList.get(groupPosition).getUpdate_time())));
         groupHolder.tv_content.setText(commentBeanList.get(groupPosition).getText());
         groupHolder.iv_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isLike) {
-                    isLike = false;
-                    groupHolder.iv_like.setColorFilter(Color.parseColor("#aaaaaa"));
-                } else {
-                    isLike = true;
-                    groupHolder.iv_like.setColorFilter(Color.parseColor("#FF5C5C"));
+                int t_id = commentBeanList.get(groupPosition).getD_c_id();
+                if (t_id == 0) {
+                    t_id = commentBeanList.get(groupPosition).getT_c_id();
                 }
+                addSecComment.commantZan(t_id, commentBeanList.get(groupPosition).getUid(), groupPosition,
+                        commentBeanList.get(groupPosition).getWahtcommentgood() == 0 ? 1 : 2);
             }
         });
+        switch (commentBeanList.get(groupPosition).getWahtcommentgood()) {
+            case 0:
+                GlideUtil.load(context, R.drawable.dyn_dc_ic_like_nor, groupHolder.iv_like);
+                break;
+            case 1:
+                GlideUtil.load(context, R.drawable.dyn_dc_ic_like_pre, groupHolder.iv_like);
+                break;
+        }
         groupHolder.iv_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addSecComment.addSec(String.valueOf(commentBeanList.get(groupPosition).getD_c_id()),commentBeanList.get(groupPosition).getUid(),groupPosition);
+                int d_id = commentBeanList.get(groupPosition).getD_c_id();
+                if (d_id == 0) {
+                    d_id = commentBeanList.get(groupPosition).getT_c_id();
+                }
+                addSecComment.addSec(String.valueOf(d_id), commentBeanList.get(groupPosition).getUid(), groupPosition);
             }
         });
 
@@ -149,7 +158,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     private class GroupHolder {
         private CircleImageView logo;
         private TextView tv_name, tv_content, tv_time;
-        private ImageView iv_like,iv_comment;
+        private ImageView iv_like, iv_comment;
 
         public GroupHolder(View view) {
             logo = (CircleImageView) view.findViewById(R.id.comment_item_logo);
@@ -230,8 +239,10 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         notifyDataSetChanged();
     }
 
-    public interface AddSecComment{
-        void addSec(String comId,int comUid,int pos);
+    public interface AddSecComment {
+        void addSec(String comId, int comUid, int pos);
+
+        void commantZan(int comId, int comUid, int pos, int state);
     }
 
 }

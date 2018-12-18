@@ -7,12 +7,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.adapter.DyZanAdapter;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.DyLikeListBean;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.useful.SPManager;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +55,9 @@ public class DyZanListFragment extends BaseFragment<DyZanPresenter> implements D
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        EventBusUtil.register(this);
         mDongtaiList = mRootView.findViewById(R.id.recyclerView);
         mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
-        //mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false) {
             @Override
             public boolean canScrollVertically() {
@@ -59,7 +65,6 @@ public class DyZanListFragment extends BaseFragment<DyZanPresenter> implements D
             }
         };
         mDongtaiList.setLayoutManager(linearLayoutManager);
-        //mDongtaiList.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 1), R.color.line_color));
         mDateAdapter = new DyZanAdapter();
         mDongtaiList.setAdapter(mDateAdapter);
     }
@@ -75,7 +80,7 @@ public class DyZanListFragment extends BaseFragment<DyZanPresenter> implements D
     public void setHomeData(DyLikeListBean dyLikeListBean) {
         if (dyLikeListBean.getData().getGood().size() > 0) {
             mLayoutStatusView.showContent();
-            mDateAdapter.addData(dyLikeListBean.getData().getGood());
+            mDateAdapter.replaceData(dyLikeListBean.getData().getGood());
         } else {
             mLayoutStatusView.showEmpty();
         }
@@ -99,5 +104,18 @@ public class DyZanListFragment extends BaseFragment<DyZanPresenter> implements D
     @Override
     public void showViewError(Throwable t) {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBusUtil.unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void isLogin(MessageEvent event) {
+        if (event.getCode() == C.MSG_ZAN_DY) {
+            mPresenter.requestHomeData(did, SPManager.get().getStringValue("uid", "1"), page);
+        }
     }
 }

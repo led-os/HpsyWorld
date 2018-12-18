@@ -2,26 +2,28 @@ package com.kuwai.ysy.module.circle.business.holecomment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.adapter.CommentExpandAdapter;
 import com.kuwai.ysy.module.circle.bean.DyCommentListBean;
 import com.kuwai.ysy.module.circle.bean.HoleCommentListBean;
+import com.kuwai.ysy.module.circle.business.dycomment.CommentContract;
+import com.kuwai.ysy.module.circle.business.dycomment.CommentPresenter;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.widget.CommentExpandableListView;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -29,21 +31,17 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HoleCommentFragment extends BaseFragment<HoleCommentPresenter> implements View.OnClickListener, HoleCommentContract.IPublishView {
+public class HoleComFragment extends BaseFragment<HoleCommentPresenter> implements View.OnClickListener, HoleCommentContract.IPublishView {
 
     private CommentExpandableListView expandableListView;
     private CommentExpandAdapter adapter;
     private List<DyCommentListBean.DataBean> commentsList = new ArrayList<>();
-    /*private List<CommentsBean> replyList = new ArrayList<>();
-    private List<CommentsBean> replyList1 = new ArrayList<>();
-    private List<CommentsBean> replyList2 = new ArrayList<>();*/
     private BottomSheetDialog dialog;
-    private TextView tvComment;
     private String did = "1";
 
 
-    public static HoleCommentFragment newInstance(Bundle bundle) {
-        HoleCommentFragment fragment = new HoleCommentFragment();
+    public static HoleComFragment newInstance(Bundle bundle) {
+        HoleComFragment fragment = new HoleComFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -61,9 +59,6 @@ public class HoleCommentFragment extends BaseFragment<HoleCommentPresenter> impl
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            /*case R.id.detail_page_do_comment:
-                showCommentDialog();
-                break;*/
         }
     }
 
@@ -74,25 +69,12 @@ public class HoleCommentFragment extends BaseFragment<HoleCommentPresenter> impl
         expandableListView = mRootView.findViewById(R.id.ex_comment);
         mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
         expandableListView.setGroupIndicator(null);
-        //默认展开所有回复
-        adapter = new CommentExpandAdapter(getActivity(), commentsList);
-        expandableListView.setAdapter(adapter);
-        initExpandableListView(commentsList);
-        adapter.setAddSecCallback(new CommentExpandAdapter.AddSecComment() {
-            @Override
-            public void addSec(String comId, int comUid, int groupPos) {
-                showReplyDialog(groupPos, comId, comUid);
-                //mPresenter.addSecComment(comId,"1","",comUid);
-            }
-        });
-        //tvComment = mRootView.findViewById(R.id.detail_page_do_comment);
-        //tvComment.setOnClickListener(this);
     }
 
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.getCommentList(did, "1", 1);
+        mPresenter.getCommentList(did, SPManager.get().getStringValue("uid"), 1);
     }
 
     /**
@@ -123,45 +105,11 @@ public class HoleCommentFragment extends BaseFragment<HoleCommentPresenter> impl
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int groupPosition) {
-               // Toast.makeText(getActivity(), "展开第" + groupPosition + "个分组", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getActivity(), "展开第" + groupPosition + "个分组", Toast.LENGTH_SHORT).show();
 
             }
         });
 
-    }
-
-    private void showCommentDialog() {
-        dialog = new BottomSheetDialog(getActivity());
-        View commentView = LayoutInflater.from(getActivity()).inflate(R.layout.comment_dialog_layout, null);
-        final EditText commentText = (EditText) commentView.findViewById(R.id.dialog_comment_et);
-        final SuperButton bt_comment = (SuperButton) commentView.findViewById(R.id.dialog_comment_bt);
-        dialog.setContentView(commentView);
-        /**
-         * 解决bsd显示不全的情况
-         */
-        View parent = (View) commentView.getParent();
-        BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
-        commentView.measure(0, 0);
-        behavior.setPeekHeight(commentView.getMeasuredHeight());
-
-        bt_comment.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                String commentContent = commentText.getText().toString().trim();
-                if (!TextUtils.isEmpty(commentContent)) {
-                    dialog.dismiss();
-                    DyCommentListBean.DataBean detailBean = new DyCommentListBean.DataBean();
-                    detailBean.setNickname("萨丁");
-                    adapter.addTheCommentData(detailBean);
-                    Toast.makeText(getActivity(), "评论成功", Toast.LENGTH_SHORT).show();
-
-                } else {
-                    Toast.makeText(getActivity(), "评论内容不能为空", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        dialog.show();
     }
 
     private void showReplyDialog(final int position, final String comId, final int comUid) {
@@ -176,13 +124,8 @@ public class HoleCommentFragment extends BaseFragment<HoleCommentPresenter> impl
             public void onClick(View view) {
                 String replyContent = commentText.getText().toString().trim();
                 if (!TextUtils.isEmpty(replyContent)) {
-
                     dialog.dismiss();
-                    mPresenter.addSecComment(comId, "1", replyContent, comUid);
-                    /*DyCommentListBean.DataBean.SubBean commentsBean1 = new DyCommentListBean.DataBean.SubBean();
-                    commentsBean1.setNickname("粟米艾米是");
-                    commentsBean1.setOther_nickname("朴素庄严");
-                    adapter.addTheReplyData(commentsBean1, position);*/
+                    mPresenter.addSecComment(comId, SPManager.get().getStringValue("uid"), replyContent, comUid);
                     expandableListView.expandGroup(position);
                 } else {
                     Toast.makeText(getActivity(), "回复内容不能为空", Toast.LENGTH_SHORT).show();
@@ -194,9 +137,8 @@ public class HoleCommentFragment extends BaseFragment<HoleCommentPresenter> impl
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void isLogin(MessageEvent event) {
-        if (event.getCode() == 0x00093) {
-            mPresenter.getCommentList(did, "1", 1);
-            //adapter.addTheCommentData((DyCommentListBean.DataBean) event.getData());
+        if (event.getCode() == C.MSG_COMMENT_HOLE) {
+            mPresenter.getCommentList(did, SPManager.get().getStringValue("uid"), 1);
         }
     }
 
@@ -207,11 +149,11 @@ public class HoleCommentFragment extends BaseFragment<HoleCommentPresenter> impl
     }
 
     @Override
-    public void setCommenList(HoleCommentListBean dyDetailBean) {
+    public void setCommenList(DyCommentListBean dyDetailBean) {
         if (dyDetailBean.getData() != null) {
             mLayoutStatusView.showContent();
             commentsList.clear();
-            //commentsList.addAll(dyDetailBean.getData());
+            commentsList.addAll(dyDetailBean.getData());
             adapter = new CommentExpandAdapter(getActivity(), commentsList);
             expandableListView.setAdapter(adapter);
             initExpandableListView(commentsList);
@@ -220,6 +162,11 @@ public class HoleCommentFragment extends BaseFragment<HoleCommentPresenter> impl
                 public void addSec(String comId, int comUid, int groupPos) {
                     showReplyDialog(groupPos, comId, comUid);
                     //mPresenter.addSecComment(comId,"1","",comUid);
+                }
+
+                @Override
+                public void commantZan(int comId, int comUid, int pos, int state) {
+                    mPresenter.commenZan(did, SPManager.get().getStringValue("uid"), state, comId, comUid);
                 }
             });
         } else {
@@ -230,7 +177,7 @@ public class HoleCommentFragment extends BaseFragment<HoleCommentPresenter> impl
     @Override
     public void addSecCallBack(SimpleResponse response) {
         if (response.code == 200) {
-            mPresenter.getCommentList(did, "1", 1);
+            mPresenter.getCommentList(did, SPManager.get().getStringValue("uid"), 1);
             Toast.makeText(getActivity(), "回复成功", Toast.LENGTH_SHORT).show();
         }
     }
@@ -238,6 +185,11 @@ public class HoleCommentFragment extends BaseFragment<HoleCommentPresenter> impl
     @Override
     public void showError(int errorCode, String msg) {
 
+    }
+
+    @Override
+    public void commantZanResult() {
+        mPresenter.getCommentList(did, SPManager.get().getStringValue("uid"), 1);
     }
 
     @Override

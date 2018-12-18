@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.home.business.loginmoudle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.method.HideReturnsTransformationMethod;
@@ -17,6 +18,7 @@ import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.home.api.HomeApiFactory;
 import com.kuwai.ysy.module.home.bean.login.CodeBean;
 import com.kuwai.ysy.module.home.bean.login.LoginBean;
+import com.kuwai.ysy.module.home.business.loginmoudle.login.LoginActivity;
 import com.kuwai.ysy.module.home.business.loginmoudle.login.LoginFragment;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.CountDownTextView;
@@ -159,7 +161,8 @@ public class ChongzhiPsdFragment extends BaseFragment implements View.OnClickLis
             public void accept(SimpleResponse loginBean) throws Exception {
                 if (loginBean.code == 200) {
                     ToastUtils.showShort("重置成功");
-                    popTo(LoginFragment.class, true);
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                    getActivity().finish();
                 } else {
                     ToastUtils.showShort(loginBean.msg);
                 }

@@ -2,29 +2,25 @@ package com.kuwai.ysy.module.circle.business.dycomment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.adapter.CommentExpandAdapter;
 import com.kuwai.ysy.module.circle.bean.DyCommentListBean;
-import com.kuwai.ysy.module.circle.bean.second.CommentDetailBean;
-import com.kuwai.ysy.module.circle.bean.second.CommentsBean;
-import com.kuwai.ysy.module.circle.bean.second.UserBean;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.widget.CommentExpandableListView;
-import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -37,11 +33,7 @@ public class DySecFragment extends BaseFragment<CommentPresenter> implements Vie
     private CommentExpandableListView expandableListView;
     private CommentExpandAdapter adapter;
     private List<DyCommentListBean.DataBean> commentsList = new ArrayList<>();
-    /*private List<CommentsBean> replyList = new ArrayList<>();
-    private List<CommentsBean> replyList1 = new ArrayList<>();
-    private List<CommentsBean> replyList2 = new ArrayList<>();*/
     private BottomSheetDialog dialog;
-    private TextView tvComment;
     private String did = "1";
 
 
@@ -64,9 +56,6 @@ public class DySecFragment extends BaseFragment<CommentPresenter> implements Vie
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            /*case R.id.detail_page_do_comment:
-                showCommentDialog();
-                break;*/
         }
     }
 
@@ -77,25 +66,12 @@ public class DySecFragment extends BaseFragment<CommentPresenter> implements Vie
         expandableListView = mRootView.findViewById(R.id.ex_comment);
         mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
         expandableListView.setGroupIndicator(null);
-        //默认展开所有回复
-        adapter = new CommentExpandAdapter(getActivity(), commentsList);
-        expandableListView.setAdapter(adapter);
-        initExpandableListView(commentsList);
-        adapter.setAddSecCallback(new CommentExpandAdapter.AddSecComment() {
-            @Override
-            public void addSec(String comId, int comUid, int groupPos) {
-                showReplyDialog(groupPos, comId, comUid);
-                //mPresenter.addSecComment(comId,"1","",comUid);
-            }
-        });
-        //tvComment = mRootView.findViewById(R.id.detail_page_do_comment);
-        //tvComment.setOnClickListener(this);
     }
 
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.getCommentList(did, "1", 1);
+        mPresenter.getCommentList(did, SPManager.get().getStringValue("uid"), 1);
     }
 
     /**
@@ -126,45 +102,11 @@ public class DySecFragment extends BaseFragment<CommentPresenter> implements Vie
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int groupPosition) {
-               // Toast.makeText(getActivity(), "展开第" + groupPosition + "个分组", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getActivity(), "展开第" + groupPosition + "个分组", Toast.LENGTH_SHORT).show();
 
             }
         });
 
-    }
-
-    private void showCommentDialog() {
-        dialog = new BottomSheetDialog(getActivity());
-        View commentView = LayoutInflater.from(getActivity()).inflate(R.layout.comment_dialog_layout, null);
-        final EditText commentText = (EditText) commentView.findViewById(R.id.dialog_comment_et);
-        final SuperButton bt_comment = (SuperButton) commentView.findViewById(R.id.dialog_comment_bt);
-        dialog.setContentView(commentView);
-        /**
-         * 解决bsd显示不全的情况
-         */
-        View parent = (View) commentView.getParent();
-        BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
-        commentView.measure(0, 0);
-        behavior.setPeekHeight(commentView.getMeasuredHeight());
-
-        bt_comment.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                String commentContent = commentText.getText().toString().trim();
-                if (!TextUtils.isEmpty(commentContent)) {
-                    dialog.dismiss();
-                    DyCommentListBean.DataBean detailBean = new DyCommentListBean.DataBean();
-                    detailBean.setNickname("萨丁");
-                    adapter.addTheCommentData(detailBean);
-                    Toast.makeText(getActivity(), "评论成功", Toast.LENGTH_SHORT).show();
-
-                } else {
-                    Toast.makeText(getActivity(), "评论内容不能为空", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        dialog.show();
     }
 
     private void showReplyDialog(final int position, final String comId, final int comUid) {
@@ -179,13 +121,8 @@ public class DySecFragment extends BaseFragment<CommentPresenter> implements Vie
             public void onClick(View view) {
                 String replyContent = commentText.getText().toString().trim();
                 if (!TextUtils.isEmpty(replyContent)) {
-
                     dialog.dismiss();
-                    mPresenter.addSecComment(comId, "1", replyContent, comUid);
-                    /*DyCommentListBean.DataBean.SubBean commentsBean1 = new DyCommentListBean.DataBean.SubBean();
-                    commentsBean1.setNickname("粟米艾米是");
-                    commentsBean1.setOther_nickname("朴素庄严");
-                    adapter.addTheReplyData(commentsBean1, position);*/
+                    mPresenter.addSecComment(comId, SPManager.get().getStringValue("uid"), replyContent, comUid);
                     expandableListView.expandGroup(position);
                 } else {
                     Toast.makeText(getActivity(), "回复内容不能为空", Toast.LENGTH_SHORT).show();
@@ -197,9 +134,8 @@ public class DySecFragment extends BaseFragment<CommentPresenter> implements Vie
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void isLogin(MessageEvent event) {
-        if (event.getCode() == 0x00093) {
-            mPresenter.getCommentList(did, "1", 1);
-            //adapter.addTheCommentData((DyCommentListBean.DataBean) event.getData());
+        if (event.getCode() == C.MSG_COMMENT) {
+            mPresenter.getCommentList(did, SPManager.get().getStringValue("uid"), 1);
         }
     }
 
@@ -224,6 +160,11 @@ public class DySecFragment extends BaseFragment<CommentPresenter> implements Vie
                     showReplyDialog(groupPos, comId, comUid);
                     //mPresenter.addSecComment(comId,"1","",comUid);
                 }
+
+                @Override
+                public void commantZan(int comId, int comUid, int pos, int state) {
+                    mPresenter.commenZan(did, SPManager.get().getStringValue("uid"), state, comId, comUid);
+                }
             });
         } else {
             mLayoutStatusView.showEmpty();
@@ -234,7 +175,7 @@ public class DySecFragment extends BaseFragment<CommentPresenter> implements Vie
     @Override
     public void addSecCallBack(SimpleResponse response) {
         if (response.code == 200) {
-            mPresenter.getCommentList(did, "1", 1);
+            mPresenter.getCommentList(did, SPManager.get().getStringValue("uid"), 1);
             Toast.makeText(getActivity(), "回复成功", Toast.LENGTH_SHORT).show();
         }
     }
@@ -242,6 +183,11 @@ public class DySecFragment extends BaseFragment<CommentPresenter> implements Vie
     @Override
     public void showError(int errorCode, String msg) {
 
+    }
+
+    @Override
+    public void commantZanResult() {
+        mPresenter.getCommentList(did, SPManager.get().getStringValue("uid"), 1);
     }
 
     @Override

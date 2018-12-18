@@ -98,6 +98,14 @@ public interface CircleService {
     Observable<SimpleResponse> dyLikeOrNot(@Field("d_id") String d_id, @Field("uid") String uid, @Field("other_uid") String other_uid, @Field("status") int status);
 
     /**
+     * 动态/树洞 打赏
+     * type 状态（1：动态，2：树洞。。。）
+     */
+    @FormUrlEncoded
+    @POST("Dynamic/DynamicReward")
+    Observable<SimpleResponse> dynamicReward(@Field("uid") String uid, @Field("type") String type, @Field("t_id") String tid, @Field("g_id") int gid, @Field("g_nums") int nums);
+
+    /**
      * 动态评论
      */
     @FormUrlEncoded
@@ -218,7 +226,7 @@ public interface CircleService {
      */
     @FormUrlEncoded
     @POST("Dynamic/TreeHoleCommentList")
-    Observable<HoleCommentListBean> getHoleCommentListData(@Field("t_id") String t_id, @Field("uid") String uid, @Field("page") int page);
+    Observable<DyCommentListBean> getHoleCommentListData(@Field("t_id") String t_id, @Field("uid") String uid, @Field("page") int page);
 
     /**
      * 树洞评论列表点赞
@@ -226,5 +234,5 @@ public interface CircleService {
      */
     @FormUrlEncoded
     @POST("Dynamic/TreeHoleCommentGood")
-    Observable<SimpleResponse> holeLikeOrNot(@FieldMap Map<String, String> map);
+    Observable<SimpleResponse> holeLikeOrNot(@FieldMap Map<String, Object> map);
 }
