@@ -1,21 +1,17 @@
-package com.kuwai.ysy.module.find.business.CommisDetail;
+package com.kuwai.ysy.module.mine.business.credit;
 
-import com.kuwai.ysy.module.find.bean.BlindBean;
-import com.kuwai.ysy.module.find.bean.CityMeetBean;
-import com.kuwai.ysy.module.find.bean.CommisDetailBean;
-import com.kuwai.ysy.module.find.bean.MeetThemeBean;
+import com.kuwai.ysy.module.mine.bean.CreditBean;
+import com.kuwai.ysy.module.mine.bean.IntegralDetailBean;
 import com.rayhahah.rbase.base.IRBaseView;
 
-public class CommisDetailContract {
+public class MyCreditContract {
 
     public interface IHomeView extends IRBaseView {
 
         /**
          * 设置第一次请求的数据
          */
-        void setHomeData(CommisDetailBean commisDetailBean);
-
-        void setApply(BlindBean blindBean);
+        void setHomeData(CreditBean creditBean);
 
         /**
          * 设置加载更多的数据
@@ -33,9 +29,6 @@ public class CommisDetailContract {
         /**
          * 获取首页精选数据
          */
-        void requestHomeData(int rid,String uid);
-
-        void getApply(int rid,int uid,String text);
-
+        void requestHomeData(String uid);
     }
 }

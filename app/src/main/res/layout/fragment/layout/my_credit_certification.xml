@@ -12,7 +12,10 @@
         android:layout_height="wrap_content"
         app:rightTxt="实名作用？"
         app:rightColor="@color/theme"
-        app:title1="信用认证"></com.kuwai.ysy.widget.NavigationLayout>
+        app:title1="信用认证">
+
+    </com.kuwai.ysy.widget.NavigationLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -27,6 +30,7 @@
     </TextView>
 
     <com.allen.library.SuperTextView
+        android:id="@+id/st_headicon"
         android:layout_marginTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -39,6 +43,7 @@
         app:sRightTextString="已认证" />
 
     <com.allen.library.SuperTextView
+        android:id="@+id/st_phone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:paddingStart="6dp"
@@ -65,6 +70,7 @@
         app:sRightTextString="去认证" />
 
     <com.allen.library.SuperTextView
+        android:id="@+id/st_edu"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:paddingStart="6dp"
@@ -93,6 +99,7 @@
     </TextView>
 
     <com.allen.library.SuperTextView
+        android:id="@+id/st_house"
         android:layout_width="match_parent"
         android:layout_marginTop="1dp"
         android:layout_height="50dp"
@@ -107,6 +114,7 @@
         app:sRightTextString="去认证" />
 
     <com.allen.library.SuperTextView
+        android:id="@+id/st_car"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:paddingStart="6dp"

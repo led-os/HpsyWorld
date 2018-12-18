@@ -44,13 +44,6 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
     private TextBannerView mTextBannerView;
     private TextView mLocationTv;
     private RecyclerView mRvActivity;
-    String[] images = new String[]{
-            "http://img.zcool.cn/community/0166c756e1427432f875520f7cc838.jpg",
-            "http://img.zcool.cn/community/018fdb56e1428632f875520f7b67cb.jpg",
-            "http://img.zcool.cn/community/01c8dc56e1428e6ac72531cbaa5f2c.jpg",
-            "http://img.zcool.cn/community/01fda356640b706ac725b2c8b99b08.jpg",
-            "http://img.zcool.cn/community/01fd2756e142716ac72531cbf8bbbf.jpg",
-            "http://img.zcool.cn/community/0114a856640b6d32f87545731c076a.jpg"};
     private List<String> tvbannerList = new ArrayList<>();
     private FoundCityAdapter mfoundCityAdapter;
     private FoundActivityAdapter mfoundActivityAdapter;
@@ -120,6 +113,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
         });
 
         mRvCity.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mRvCity.setNestedScrollingEnabled(false);
         mRvActivity.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         mfoundCityAdapter = new FoundCityAdapter(R.layout.item_found_city);

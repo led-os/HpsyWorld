@@ -6,6 +6,7 @@ import android.content.ComponentCallbacks;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.os.Process;
 import android.support.multidex.MultiDex;
 import android.util.DisplayMetrics;
 
@@ -74,6 +75,7 @@ public class MyApp extends BaseApplication {
         //initBugly();
 
         UMConfigure.init(this, "5a12384aa40fa3551f0001d1", "umeng", UMConfigure.DEVICE_TYPE_PHONE, "");
+
         loadLibs();
         com.aliyun.vod.common.httpfinal.QupaiHttpFinal.getInstance().initOkHttpFinal();
     }
@@ -186,5 +188,16 @@ public class MyApp extends BaseApplication {
         activityDisplayMetrics.density = targetDensity;
         activityDisplayMetrics.scaledDensity = targetScaleDensity;
         activityDisplayMetrics.densityDpi = targetDensityDpi;
+    }
+
+    public static void initThirdService(){
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                //设置线程的优先级，不与主线程抢资源
+                Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+            }
+        }.start();
     }
 }

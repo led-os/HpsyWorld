@@ -59,7 +59,7 @@ public interface FoundService {
 
     //约会详情页（对方看到）
     @POST("Appointment/OtherAppointmentDetails")
-    Observable<CommisDetailBean> getCommisDetailData(@Query("r_id") int rid);
+    Observable<CommisDetailBean> getCommisDetailData(@Query("r_id") int rid,@Query("uid") String uid);
 
     //约会详情页（自己）
     @POST("Appointment/MyAppointmentDetails")
