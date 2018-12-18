@@ -4,6 +4,7 @@ package com.kuwai.ysy.module.mine.api;
 import com.kuwai.ysy.bean.RResponse;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.find.bean.appointment.MyAppointMent;
+import com.kuwai.ysy.module.mine.bean.CreditBean;
 import com.kuwai.ysy.module.mine.bean.GiftAcceptBean;
 import com.kuwai.ysy.module.mine.bean.GiftBoxBean;
 import com.kuwai.ysy.module.mine.bean.IntegralDetailBean;
@@ -158,6 +159,15 @@ public interface MineService {
     @POST("My/UserIntegralDetails")
     Observable<IntegralDetailBean> getUserIntegralDetails(@Field("uid") String uid,
                                                           @Field("page") int page);
+
+    /**
+     * 信用认证-列表
+     */
+    @FormUrlEncoded
+    @POST("My/MyAuthenticationList")
+    Observable<CreditBean> getMyAuthenticationList(@Field("uid") String uid);
+
+
 
 
 

@@ -5,6 +5,7 @@ import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.bean.TeamListBean;
 import com.kuwai.ysy.module.find.api.AppointService;
 import com.kuwai.ysy.module.find.bean.appointment.MyAppointMent;
+import com.kuwai.ysy.module.mine.bean.CreditBean;
 import com.kuwai.ysy.module.mine.bean.ESUser;
 import com.kuwai.ysy.module.mine.bean.GiftAcceptBean;
 import com.kuwai.ysy.module.mine.bean.GiftBoxBean;
@@ -145,5 +146,12 @@ public class MineApiFactory {
                 .create(MineService.class)
                 .getUserIntegralDetails(uid, page)
                 .compose(RxSchedulers.<IntegralDetailBean>ioMain());
+    }
+
+    public static Observable<CreditBean> getMyAuthenticationList(String uid) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getMyAuthenticationList(uid)
+                .compose(RxSchedulers.<CreditBean>ioMain());
     }
 }
