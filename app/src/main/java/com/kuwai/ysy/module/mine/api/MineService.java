@@ -4,17 +4,23 @@ package com.kuwai.ysy.module.mine.api;
 import com.kuwai.ysy.bean.RResponse;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.find.bean.appointment.MyAppointMent;
+import com.kuwai.ysy.module.mine.bean.BlackListBean;
 import com.kuwai.ysy.module.mine.bean.CreditBean;
 import com.kuwai.ysy.module.mine.bean.GiftAcceptBean;
 import com.kuwai.ysy.module.mine.bean.GiftBoxBean;
+import com.kuwai.ysy.module.mine.bean.GiftExchangeBean;
+import com.kuwai.ysy.module.mine.bean.GiftWithdrawalsBean;
 import com.kuwai.ysy.module.mine.bean.IntegralDetailBean;
 import com.kuwai.ysy.module.mine.bean.MyAskBean;
+import com.kuwai.ysy.module.mine.bean.MyWalletBean;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
+import com.kuwai.ysy.module.mine.bean.ShieldAndBlackListBean;
 import com.kuwai.ysy.module.mine.bean.TaGiftBean;
 import com.kuwai.ysy.module.mine.bean.TodayBean;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
 import com.kuwai.ysy.module.mine.bean.user.UserInfo;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -84,6 +90,17 @@ public interface MineService {
     Observable<VisitorBean> getVisitorsEarlier(@Field("uid") String uid,
                                                @Field("type") int type,
                                                @Field("page") int page);
+
+    /**
+     * 我喜欢的
+     *
+     * @param type 1:谁看过我，2:是我看过谁
+     */
+    @FormUrlEncoded
+    @POST("My/DelVisitorsRecord")
+    Observable<VisitorBean> getDelVisitorsRecord(@Field("uid") String uid,
+                                                 @Field("v)id") String vid,
+                                                 @Field("type") String type);
 
     /**
      * 我喜欢的
@@ -167,9 +184,120 @@ public interface MineService {
     @POST("My/MyAuthenticationList")
     Observable<CreditBean> getMyAuthenticationList(@Field("uid") String uid);
 
+    /**
+     * 实名认证
+     */
+    @FormUrlEncoded
+    @POST("My/AddRealnameAuthentication")
+    Observable<SimpleResponse> getRealnameAuthentication(@Field("uid") String uid,
+                                                         @Field("full_name") String name,
+                                                         @Field("id_number") String number);
+
+    /**
+     * 学历认证
+     */
+    @FormUrlEncoded
+    @POST("My/AddEducationAuthentication")
+    Observable<SimpleResponse> getEducationAuthentication(@Field("uid") String uid,
+                                                          @Field("full_name") String name,
+                                                          @Field("education") String education,
+                                                          @Field("school") String school);
+
+    /**
+     * 车辆认证
+     */
+    @FormUrlEncoded
+    @POST("My/AddVehicleAuthentication")
+    Observable<SimpleResponse> getVehicleAuthentication(@Field("uid") String uid);
+
+    /**
+     * 房产认证(不动产认证)
+     */
+    @FormUrlEncoded
+    @POST("My/AddHouseAuthentication")
+    Observable<SimpleResponse> getHouseAuthentication(@Field("uid") String uid);
+
+    /**
+     * 屏蔽与黑名单-列表
+     */
+    @FormUrlEncoded
+    @POST("My/ShieldAndBlacklistList")
+    Observable<ShieldAndBlackListBean> getShieldAndBlackList(@Field("uid") String uid);
+
+    /**
+     * 黑名单-列表
+     */
+    @FormUrlEncoded
+    @POST("My/BlacklistList")
+    Observable<BlackListBean> getBlackList(@Field("uid") String uid,
+                                           @Field("page") int page);
+
+    /**
+     * 积分兑换桃花币
+     */
+    @FormUrlEncoded
+    @POST("My/UserExchange")
+    Observable<SimpleResponse> getUserExchange(@Field("uid") String uid,
+                                               @Field("integral_exchange") int ex);
+
+    /**
+     * 礼物单条兑换
+     */
+    @FormUrlEncoded
+    @POST("My/GiftExchangePeachCoin")
+    Observable<SimpleResponse> getGiftExchangePeachCoin(@Field("uid") String uid,
+                                                        @Field("g_g_id") int gid,
+                                                        @Field("type") int type,
+                                                        @Field("g_nums") int nums);
+
+    /**
+     * 礼物全部提现-列表
+     */
+    @FormUrlEncoded
+    @POST("My/UserWithdrawalsAllList")
+    Observable<GiftWithdrawalsBean> getUserWithdrawalsAllList(@Field("uid") String uid);
+
+    /**
+     * 礼物多条提现
+     */
+    @FormUrlEncoded
+    @POST("My/GiftExchangePeachCoinAll")
+    Observable<SimpleResponse> getGiftExchangePeachCoinAll(@Field("uid") String uid,
+                                                           @Field("type_1") int type1,
+                                                           @Field("type_2") int type2);
+
+    /**
+     * 礼物兑换实物-信息展示
+     */
+    @FormUrlEncoded
+    @POST("My/GiftExchangeEntityInfo")
+    Observable<GiftExchangeBean> getGiftExchangeEntityInfo(@Field("uid") String uid,
+                                                           @Field("g_g_id") int gid,
+                                                           @Field("type") int type,
+                                                           @Field("g_nums") int nums);
+
+    /**
+     * 礼物兑换实物-信息展示
+     */
+    @FormUrlEncoded
+    @POST("My/GiftExchangeEntity")
+    Observable<SimpleResponse> getGiftExchangeEntity(@FieldMap HashMap<String, String> infos);
 
 
+    /**
+     * 我的钱包
+     */
+    @FormUrlEncoded
+    @POST("My/MyWallet")
+    Observable<MyWalletBean> getMyWallet(@Field("uid") String uid);
 
+    /**
+     * 钱包明细
+     */
+    @FormUrlEncoded
+    @POST("My/WalletList")
+    Observable<MyWalletBean> getWalletList(@Field("uid") String uid,
+                                           @Field("page") int page);
 
 
 }
