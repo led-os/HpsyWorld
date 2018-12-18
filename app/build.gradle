@@ -1,16 +1,22 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion rootProject.compileSdkVersion
     defaultConfig {
         applicationId "com.kuwai.ysy"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
 
-        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        flavorDimensions "versionCode"
+        multiDexEnabled true                    //添加多 dex分包支持
+
+//        minifyEnabled true                      //是否混淆
+//        zipAlignEnabled true                    //是否设置zip对齐优化
+//        shrinkResources true                    // 移除无用的resource文件
+
         ndk {
             ndk {
                 abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
@@ -66,6 +72,28 @@ android {
                     ]
         }
     }
+
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def fileName = outputFile.name.replace(".apk", "-${defaultConfig.versionName}.apk")
+                outputFileName = fileName
+            }
+        }
+    }
+    productFlavors {
+        yingyongbao {}
+        xiaomi {}
+        huawei {}
+        oppo {}
+    }
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
+
 }
 
 dependencies {
@@ -94,7 +122,7 @@ dependencies {
     implementation 'com.hjq:titlebar:3.2'
     implementation 'ch.ielse:imagewatcher:1.0.3'
     api project(":UMLibrary")
-    implementation  project(':IMKit')
+    implementation project(':IMKit')
     compile('com.github.gzu-liyujiang.AndroidPicker:WheelPicker:1.5.6') {
         exclude group: 'com.android.support'
     }
