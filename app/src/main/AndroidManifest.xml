@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.kuwai.ysy">
 
     <!-- 允许联网 -->
@@ -29,8 +30,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".module.home.business.loginmoudle.StartupPageActivity" >
+        <activity android:name=".module.home.business.loginmoudle.StartupPageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,8 +39,9 @@
         </activity>
 
         //首页
-        <activity android:name=".module.home.business.HomeActivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".module.home.business.HomeActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".module.home.business.loginmoudle.login.LoginActivity" />
 
         //聊天
@@ -149,6 +150,14 @@
 
         </activity>
 
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            tools:replace="android:configChanges"></activity>
+
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -160,9 +169,9 @@
                 android:resource="@xml/rc_file_path" />
         </provider>
 
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="${UMENG_CHANNEL_VALUE}" />
+        <!--<meta-data-->
+        <!--android:name="UMENG_CHANNEL"-->
+        <!--android:value="${UMENG_CHANNEL_VALUE}" />-->
 
         <!-- 高德地图定位key -->
         <meta-data

@@ -1,6 +1,7 @@
 package com.kuwai.ysy.module.mine.api;
 
 
+import com.kuwai.ysy.bean.AliOrderInfoBean;
 import com.kuwai.ysy.bean.RResponse;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.find.bean.appointment.MyAppointMent;
@@ -28,6 +29,7 @@ import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface MineService {
@@ -299,5 +301,11 @@ public interface MineService {
     Observable<MyWalletBean> getWalletList(@Field("uid") String uid,
                                            @Field("page") int page);
 
+
+    /**
+     * zfb订单获取
+     */
+    @GET("Payment/pagePay")
+    Observable<AliOrderInfoBean> getAliOrderInfo();
 
 }
