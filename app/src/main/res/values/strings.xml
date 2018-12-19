@@ -1,4 +1,6 @@
-<resources>
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">鱼水缘</string>
 
     <string name="tab_home">首页</string>
@@ -64,4 +66,7 @@
 3.注意事项：兑换的礼物真是有效，将会通过快递送达（江浙沪包邮，其他地区邮费自理）。\n
 4.自兑换起，48小时内为您发货，如遇特殊情况可能会有延迟。\n
 5.快递寄出礼物非质量问题，暂不支持退换。</string>
+
+    <string name="pay_success">支付成功:</string>
+    <string name="pay_failed">支付失败:</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.kuwai.ysy.module.mine.api;
 
 import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.AliOrderInfoBean;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.bean.TeamListBean;
 import com.kuwai.ysy.module.find.api.AppointService;
@@ -161,5 +162,12 @@ public class MineApiFactory {
                 .create(MineService.class)
                 .getVipList()
                 .compose(RxSchedulers.<VipBean>ioMain());
+    }
+
+    public static Observable<AliOrderInfoBean> getAliOrderInfo() {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getAliOrderInfo()
+                .compose(RxSchedulers.<AliOrderInfoBean>ioMain());
     }
 }

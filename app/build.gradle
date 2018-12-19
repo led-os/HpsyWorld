@@ -129,4 +129,8 @@ dependencies {
 
     implementation project(':AliyunSdk-RCE')
     implementation files('libs/commons-lang3-3.8.1.jar')
+
+    compile (name: 'alipaySdk-15.5.9-20181123210657-noUtdid', ext: 'aar')
+
+
 }

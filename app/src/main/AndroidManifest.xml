@@ -29,8 +29,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".module.home.business.loginmoudle.StartupPageActivity" >
+        <activity android:name=".module.home.business.loginmoudle.StartupPageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,8 +38,9 @@
         </activity>
 
         //首页
-        <activity android:name=".module.home.business.HomeActivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".module.home.business.HomeActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".module.home.business.loginmoudle.login.LoginActivity" />
 
         //聊天
@@ -148,6 +148,14 @@
             </intent-filter>
 
         </activity>
+
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            tools:replace="android:configChanges"></activity>
 
 
         <provider

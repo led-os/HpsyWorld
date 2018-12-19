@@ -1,6 +1,7 @@
 package com.kuwai.ysy.module.mine.api;
 
 
+import com.kuwai.ysy.bean.AliOrderInfoBean;
 import com.kuwai.ysy.bean.RResponse;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.find.bean.appointment.MyAppointMent;
@@ -307,4 +308,10 @@ public interface MineService {
      */
     @GET("My/AndroidFirstClassMember")
     Observable<VipBean> getVipList();
+    /**
+     * zfb订单获取
+     */
+    @GET("Payment/pagePay")
+    Observable<AliOrderInfoBean> getAliOrderInfo();
+
 }
