@@ -119,6 +119,7 @@ public class C {
     public static final int MSG_REWARD_DY = 0x00000103;
     public static final int MSG_COMMENT_HOLE = 0x00000104;
     public static final int MSG_REWARD_HOLE = 0x00000105;
+    public static final int MSG_FIND_TEXT_RUN = 0x00000106;
 
     //注册参数
     public static final String REGIST_NAME = "RE_NAME";//全部动态

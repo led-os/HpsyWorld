@@ -141,16 +141,11 @@ public class MineLoginFragment extends BaseFragment<MinePresenter> implements Vi
 
     private void initData() {
         if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
-            mPresenter.requestUserData("1");
+            mPresenter.requestUserData(SPManager.get().getStringValue("uid"));
         } else {
             mLayoutStatusView.showError();
-            SuperButton button = mRootView.findViewById(R.id.no_login);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ToastUtils.showShort("登陆");
-                }
-            });
+            //SuperButton button = mRootView.findViewById(R.id.no_login);
+
         }
     }
 

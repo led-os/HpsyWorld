@@ -26,7 +26,7 @@ public abstract class BaseFragment<T extends RBasePresenter>
         super.onViewCreated(view, savedInstanceState);
         initView(savedInstanceState);
         if (mLayoutStatusView != null) {
-            mLayoutStatusView.setOnClickListener(new View.OnClickListener() {
+            mLayoutStatusView.setOnRetryClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //onLazyInitView(savedInstanceState);
@@ -39,9 +39,11 @@ public abstract class BaseFragment<T extends RBasePresenter>
     /**
      * 获取数据
      */
-    public void retry(){
+    public void retry() {
 
-    };
+    }
+
+    ;
 
     public abstract void initView(Bundle savedInstanceState);
 }

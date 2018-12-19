@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.module.find.bean.GiftPopBean;
+import com.rayhahah.rbase.utils.useful.GlideUtil;
 
 import java.util.List;
 
@@ -16,11 +18,11 @@ public class PublishGiftAdapter extends RecyclerView.Adapter<PublishGiftAdapter.
 
     private static final int TYPE_ADD = 1;
     private static final int TYPE_PIC = 2;
-    private final List<String> mList;
+    private final List<GiftPopBean.DataBean> mList;
     private Context context;
     private static final int MAX_SIZE = 8;
 
-    public PublishGiftAdapter(List<String> mList, OnAddItemClickListener itemClickListener) {
+    public PublishGiftAdapter(List<GiftPopBean.DataBean> mList, OnAddItemClickListener itemClickListener) {
         this.mList = mList;
         this.itemClickListener = itemClickListener;
     }
@@ -64,7 +66,8 @@ public class PublishGiftAdapter extends RecyclerView.Adapter<PublishGiftAdapter.
             holder.ivAdd.setVisibility(View.GONE);
             holder.ivPhoto.setVisibility(View.VISIBLE);
             holder.nameTv.setVisibility(View.VISIBLE);
-            holder.ivPhoto.setImageResource(R.drawable.rc_img_camera);
+            holder.nameTv.setText(mList.get(position).getGirft_name());
+            GlideUtil.load(context, mList.get(position).getGirft_img_url(), holder.ivPhoto);
             //holder.ivPhoto.setImageBitmap(BitmapFactory.decodeFile(mList.get(position)));
         }
         if (mList.size() >= MAX_SIZE) {

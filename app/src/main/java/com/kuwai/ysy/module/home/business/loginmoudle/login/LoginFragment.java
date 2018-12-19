@@ -123,7 +123,6 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
                     param.put("password", Utils.encrypt32(mEtCode.getText().toString()));
                     mPresenter.login(param);
                 }
-
                 break;
             case R.id.img_qq:
                 SPManager.get().putString("uid", "1");
@@ -132,7 +131,8 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
                 getActivity().finish();
                 break;
             case R.id.img_sina:
-
+                startActivity(new Intent(getActivity(), HomeActivity.class));
+                getActivity().finish();
                 break;
         }
     }

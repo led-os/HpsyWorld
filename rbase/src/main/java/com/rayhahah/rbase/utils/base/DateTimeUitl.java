@@ -4,6 +4,7 @@ package com.rayhahah.rbase.utils.base;
 import com.rayhahah.rbase.utils.useful.RLog;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -231,6 +232,24 @@ public class DateTimeUitl {
                 break;
         }
         return formatDateFromInt(year, month, day);
+    }
+
+    /**
+     * 将字符串转为时间戳
+     * @param dateString
+     * @param pattern
+     * @return
+     */
+    public static long getStringToDate(String dateString, String pattern) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+        Date date = new Date();
+        try{
+            date = dateFormat.parse(dateString);
+        } catch(ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return date.getTime();
     }
 
     /**

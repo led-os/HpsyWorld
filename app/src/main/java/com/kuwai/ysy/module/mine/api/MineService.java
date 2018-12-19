@@ -19,6 +19,7 @@ import com.kuwai.ysy.module.mine.bean.TaGiftBean;
 import com.kuwai.ysy.module.mine.bean.TodayBean;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
 import com.kuwai.ysy.module.mine.bean.user.UserInfo;
+import com.kuwai.ysy.module.mine.bean.vip.VipBean;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +29,7 @@ import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface MineService {
@@ -300,4 +302,9 @@ public interface MineService {
                                            @Field("page") int page);
 
 
+    /**
+     * 会员列表
+     */
+    @GET("My/AndroidFirstClassMember")
+    Observable<VipBean> getVipList();
 }

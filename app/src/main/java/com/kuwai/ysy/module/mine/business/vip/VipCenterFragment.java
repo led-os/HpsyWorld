@@ -9,13 +9,19 @@ import android.view.View;
 
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.find.api.FoundApiFactory;
+import com.kuwai.ysy.module.find.bean.BlindBean;
 import com.kuwai.ysy.module.mine.adapter.vip.VipPagerAdapter;
+import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.module.mine.bean.vip.VipBannerBean;
+import com.kuwai.ysy.module.mine.bean.vip.VipBean;
 import com.kuwai.ysy.utils.BaseLinkPageChangeListener;
 import com.rayhahah.rbase.base.RBasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.functions.Consumer;
 
 public class VipCenterFragment extends BaseFragment implements View.OnClickListener {
 
@@ -27,6 +33,8 @@ public class VipCenterFragment extends BaseFragment implements View.OnClickListe
     private ViewPager headerVp;
     private ViewPager bodyVp;
     private List<Fragment> fragments;
+    private VipBean mVipBean;
+    private VipPagerAdapter vipbannerAdapter = null;
 
     public static VipCenterFragment newInstance() {
         Bundle args = new Bundle();
@@ -54,12 +62,9 @@ public class VipCenterFragment extends BaseFragment implements View.OnClickListe
     public void initView(Bundle savedInstanceState) {
         headerVp = (ViewPager) mRootView.findViewById(R.id.viewPager);
         bodyVp = (ViewPager) mRootView.findViewById(R.id.viewPager1);
-        //设置适配器
-        for (int i = 0; i < mPics.length; i++) {
-            mBannerList.add(new VipBannerBean(mTitles[i], mPics[i], mImgs[i]));
-        }
 
-        headerVp.setAdapter(new VipPagerAdapter(getActivity(), mBannerList));
+        vipbannerAdapter = new VipPagerAdapter(getActivity(), mBannerList);
+        headerVp.setAdapter(vipbannerAdapter);
         headerVp.setPageMargin(30);
         headerVp.setOffscreenPageLimit(mPics.length);
         bodyVp.setOffscreenPageLimit(mPics.length);
@@ -109,6 +114,28 @@ public class VipCenterFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
+        getVipList();
+    }
+
+    private void getVipList() {
+        addSubscription(MineApiFactory.getVipList().subscribe(new Consumer<VipBean>() {
+            @Override
+            public void accept(VipBean vipBean) throws Exception {
+                mVipBean = vipBean;
+                //设置适配器
+                for (int i = 0; i < mPics.length; i++) {
+                    VipBannerBean vipBannerBean = new VipBannerBean(mTitles[i], mPics[i], mImgs[i]);
+                    vipBannerBean.tequan = mVipBean.getData().get(i).getPrivilege().size();
+                    mBannerList.add(vipBannerBean);
+                    vipbannerAdapter.notifyDataSetChanged();
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: " + throwable);
+            }
+        }));
     }
 
 

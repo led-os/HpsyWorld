@@ -160,9 +160,9 @@
                 android:resource="@xml/rc_file_path" />
         </provider>
 
-        <meta-data
+       <!-- <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="${UMENG_CHANNEL_VALUE}" />
+            android:value="${UMENG_CHANNEL_VALUE}" />-->
 
         <!-- 高德地图定位key -->
         <meta-data

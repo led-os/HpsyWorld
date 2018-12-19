@@ -11,6 +11,7 @@ import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.mine.business.SecurityFragment;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 public class SettingFragment extends BaseFragment implements View.OnClickListener {
 
@@ -45,7 +46,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.st_security:
                 start(SecurityFragment.newInstance());
                 break;
@@ -71,7 +72,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
                 //start(MsgNoticeFragment.newInstance());
                 break;
             case R.id.st_exit:
-                //start(MsgNoticeFragment.newInstance());
+                SPManager.clear();
                 break;
 
         }
@@ -91,8 +92,10 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
         mStScore = mRootView.findViewById(R.id.st_score);
         mStClear = mRootView.findViewById(R.id.st_clear);
         mStExit = mRootView.findViewById(R.id.st_exit);
+
         mStMessage.setOnClickListener(this);
         mStSecurity.setOnClickListener(this);
+        mStExit.setOnClickListener(this);
     }
 
     @Override

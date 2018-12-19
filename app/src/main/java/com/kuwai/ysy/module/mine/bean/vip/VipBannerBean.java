@@ -5,6 +5,7 @@ public class VipBannerBean {
     private String title;
     private int bg;
     private int img;
+    public int tequan;
 
     public String getTitle() {
         return title == null ? "" : title;

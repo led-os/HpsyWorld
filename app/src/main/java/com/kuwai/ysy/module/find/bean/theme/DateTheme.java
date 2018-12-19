@@ -1,5 +1,7 @@
 package com.kuwai.ysy.module.find.bean.theme;
 
+import android.graphics.drawable.Drawable;
+
 import java.util.List;
 
 public class DateTheme {
@@ -78,6 +80,7 @@ public class DateTheme {
             private int s_id;
             private String name;
             private String img;
+            public Drawable drawable;
             public boolean isCheck;
 
             public int getS_id() {

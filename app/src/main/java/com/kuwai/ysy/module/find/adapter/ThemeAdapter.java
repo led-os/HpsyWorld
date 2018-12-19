@@ -14,6 +14,7 @@ import com.kuwai.ysy.R;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.find.bean.ThemeBean;
 import com.kuwai.ysy.module.find.bean.theme.DateTheme;
+import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.TextImageView;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
 
@@ -34,20 +35,18 @@ public class ThemeAdapter extends BaseQuickAdapter<DateTheme.DataBean.SincerityB
         helper.setText(R.id.tv_theme, item.getName());
         helper.addOnClickListener(R.id.ic_del);
         //themeImg.setTag(getParentPosition(item));
-        //helper.addOnLongClickListener(R.id.ic_theme);
-        GlideUtil.load(mContext, item.getImg(), themeImg);
+        if (!Utils.isNullString(item.getImg())) {
+            GlideUtil.load(mContext, item.getImg(), themeImg);
+        } else if (item.drawable != null) {
+            GlideUtil.load(mContext, item.drawable, themeImg);
+        }
+
         if (item.isCheck) {
             selectImg.setVisibility(View.VISIBLE);
             titleTv.setTextColor(mContext.getResources().getColor(R.color.theme));
         } else {
             selectImg.setVisibility(View.GONE);
             titleTv.setTextColor(mContext.getResources().getColor(R.color.balck_28));
-        }
-        if (item.getS_id() > 100) {
-            delImg.setVisibility(View.VISIBLE);
-            //startShakeByProperty(themeImg, 0.5f, 1.5f, 10, 1000);
-        } else {
-            delImg.setVisibility(View.GONE);
         }
     }
 

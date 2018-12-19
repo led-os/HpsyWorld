@@ -24,14 +24,18 @@ import com.kuwai.ysy.module.find.bean.HomeAppUavBean;
 import com.kuwai.ysy.module.find.bean.ThemeBean;
 import com.kuwai.ysy.module.find.bean.theme.DateTheme;
 import com.kuwai.ysy.module.find.business.PostAppointment.PostAppointmentFragment;
+import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.GiftPannelView;
 import com.kuwai.ysy.widget.MyEditText;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.dialoglib.CustomDialog;
+import com.rayhahah.dialoglib.DialogInterface;
+import com.rayhahah.dialoglib.NormalAlertDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,14 +47,16 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
     private RecyclerView mThemeRl, mMoneyRl, mGiftRl;
     private List<DateTheme.DataBean.SincerityBean> mDataList = new ArrayList<>();
     private List<ThemeBean> mChengyiList = new ArrayList<>();
-    private List<String> mGiftData = new ArrayList<>();
+    private List<GiftPopBean.DataBean> mGiftData = new ArrayList<>();
     private NavigationLayout navigationLayout;
 
     private CustomDialog customDialog;
     private CustomDialog themeDialog;
     private List<DateTheme.DataBean.CustomHotBean> mThemeList = new ArrayList<>();
-    private int mPos;
+    private int mPos = -1;
+    private int mChengyiPos = -1;
     private SuperButton btnNext;
+    private int mDeletePos = 0;
 
     private GiftPopBean giftPopBean;
 
@@ -75,7 +81,19 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_commit:
-                start(PostAppointmentFragment.newInstance());
+                Bundle bundle = new Bundle();
+                if (mPos >= 0) {
+                    bundle.putString("sincerity", String.valueOf(mDataList.get(mPos).getS_id()));
+                    bundle.putString("name", mDataList.get(mPos).getName());
+                } else {
+                    ToastUtils.showShort("请选择约会主题");
+                    return;
+                }
+                if (mChengyiPos >= 0) {
+                    bundle.putString("earnest_money", mChengyiList.get(mChengyiPos).getTitle().replace("鱼币", ""));
+                }
+                bundle.putSerializable("gift", (Serializable) mGiftData);
+                start(PostAppointmentFragment.newInstance(bundle));
                 break;
         }
     }
@@ -111,8 +129,6 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
         mMoneyRl.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         mMoneyRl.setAdapter(chengyiAdapter);
 
-        mGiftData.add("");
-        mGiftData.add("");
         mGiftRl.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         publishGiftAdapter = new PublishGiftAdapter(mGiftData, this);
         mGiftRl.setAdapter(publishGiftAdapter);
@@ -120,6 +136,7 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
         chengyiAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                mChengyiPos = position;
                 for (ThemeBean theme : mChengyiList) {
                     theme.setChecked(false);
                 }
@@ -131,10 +148,11 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
         themeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                mPos = position;
                 for (DateTheme.DataBean.SincerityBean theme : mDataList) {
                     theme.isCheck = false;
                 }
-                if (mDataList.get(position).getS_id() < 100) {
+                if (mDataList.get(position).getS_id() != 100) {
                     mDataList.get(position).isCheck = true;
                 }
                 if (mDataList.get(position).getS_id() == 100) {
@@ -146,31 +164,57 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
 
         });
 
-        themeAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        themeAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (view.getId()) {
-                    case R.id.ic_del:
-                        mPos = position;
-                        mPresenter.delCustomTheme(SPManager.get().getStringValue("uid"), mDataList.get(position).getS_id());
-                        break;
-                }
-            }
-        });
+            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, final int position) {
+                mDeletePos = position;
+                if (mDataList.get(position).getS_id() < 0) {
+                    new NormalAlertDialog.Builder(getActivity())
+                            .setTitleVisible(false)
+                            .setContentText("删除该自定义主题？")
+                            .setLeftButtonText("确定")
+                            .setRightButtonText("取消")
+                            .setOnclickListener(new DialogInterface.OnLeftAndRightClickListener<NormalAlertDialog>() {
+                                @Override
+                                public void clickLeftButton(NormalAlertDialog dialog, View view) {
+                                    dialog.dismiss();
+                                    mDataList.remove(position);
+                                    themeAdapter.notifyItemRemoved(position);
+                                    //mPresenter.delCustomTheme(SPManager.get().getStringValue("uid"), mDataList.get(position).getS_id());
+                                }
 
-        themeAdapter.setOnItemChildLongClickListener(new BaseQuickAdapter.OnItemChildLongClickListener() {
-            @Override
-            public boolean onItemChildLongClick(BaseQuickAdapter adapter, View view, int position) {
-                //ImageView imageView = view.findViewById(R.id.ic_theme);
-                //if (mDataList.get(position).isCustom()) {
-               /* for (DateTheme.DataBean.SincerityBean bean : mDataList) {
-                    //bean.setCanDelete(true);
+                                @Override
+                                public void clickRightButton(NormalAlertDialog dialog, View view) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setCanceledOnTouchOutside(true)
+                            .build().show();
+                } else if (mDataList.get(position).getS_id() > 100) {
+                    new NormalAlertDialog.Builder(getActivity())
+                            .setTitleVisible(false)
+                            .setContentText("删除该自定义主题？")
+                            .setLeftButtonText("确定")
+                            .setRightButtonText("取消")
+                            .setOnclickListener(new DialogInterface.OnLeftAndRightClickListener<NormalAlertDialog>() {
+                                @Override
+                                public void clickLeftButton(NormalAlertDialog dialog, View view) {
+                                    dialog.dismiss();
+                                    mPresenter.delCustomTheme(SPManager.get().getStringValue("uid"), mDataList.get(position).getS_id());
+                                }
+
+                                @Override
+                                public void clickRightButton(NormalAlertDialog dialog, View view) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setCanceledOnTouchOutside(true)
+                            .build().show();
                 }
-                themeAdapter.notifyDataSetChanged();*/
-                //}
                 return false;
             }
         });
+
     }
 
     private void popCustom() {
@@ -179,6 +223,7 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
             View pannel = View.inflate(getActivity(), R.layout.dialog_custom_theme, null);
             RecyclerView recyclerView = pannel.findViewById(R.id.rl_theme);
             ImageView imageDel = pannel.findViewById(R.id.top_del);
+            SuperButton submit = pannel.findViewById(R.id.submit);
             final MyEditText et_search = pannel.findViewById(R.id.et_search);
             GridLayoutManager linearLayoutManager = new GridLayoutManager(getActivity(), 3);
             recyclerView.setLayoutManager(linearLayoutManager);
@@ -192,6 +237,22 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
                     }
                 }
             });
+
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!Utils.isNullString(et_search.getText().toString())) {
+                        DateTheme.DataBean.SincerityBean bean = new DateTheme.DataBean.SincerityBean();
+                        bean.setName(et_search.getText().toString());
+                        bean.setS_id(-1);
+                        bean.drawable = getResources().getDrawable(R.drawable.ic_sel_other);
+                        mDataList.add(bean);
+                        themeAdapter.notifyDataSetChanged();
+                        themeDialog.dismiss();
+                    }
+                }
+            });
+
             adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
                 @Override
                 public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -225,7 +286,7 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
     @Override
     public void onItemAddClick() {
         GiftPannelView pannelView = new GiftPannelView(getActivity());
-        pannelView.setData(giftPopBean.getData(),getActivity());
+        pannelView.setData(giftPopBean.getData(), getActivity());
         pannelView.setGiftClickCallBack(this);
         if (customDialog == null) {
             customDialog = new CustomDialog.Builder(getActivity())
@@ -239,8 +300,13 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
     }
 
     @Override
-    public void giftClick(int gid,int nums) {
-        mGiftData.add("");
+    public void giftClick(int gid, int nums) {
+        GiftPopBean.DataBean bean = new GiftPopBean.DataBean();
+        bean.setGirft_img_url(giftPopBean.getData().get(gid).getGirft_img_url());
+        bean.setGirft_name(giftPopBean.getData().get(gid).getGirft_name());
+        bean.setG_id(giftPopBean.getData().get(gid).getG_id());
+        bean.num = nums;
+        mGiftData.add(bean);
         publishGiftAdapter.notifyDataSetChanged();
         customDialog.dismiss();
     }
@@ -260,10 +326,10 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
 
     @Override
     public void delSuccess() {
-        mDataList.remove(mPos);
-        themeAdapter.notifyItemRemoved(mPos);
-        themeAdapter.notifyItemRangeChanged(mPos, mDataList.size());
         ToastUtils.showShort("删除成功");
+        mDataList.remove(mDeletePos);
+        themeAdapter.notifyItemRemoved(mDeletePos);
+        themeAdapter.notifyItemRangeChanged(mDeletePos, mDataList.size());
     }
 
     @Override
