@@ -1,6 +1,7 @@
 package com.kuwai.ysy.module.find.api;
 
 import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.find.bean.BlindBean;
 import com.kuwai.ysy.module.find.bean.CityMeetBean;
 import com.kuwai.ysy.module.find.bean.CommisDetailBean;
@@ -88,6 +89,13 @@ public class FoundApiFactory {
                 .create(FoundService.class)
                 .getMyCommisDetailData(rid)
                 .compose(RxSchedulers.<MyCommisDetailBean>ioMain());
+    }
+
+    public static Observable<SimpleResponse> deleteAppoint(int rid) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(FoundService.class)
+                .deleteAppoint(rid)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
     public static Observable<TuoDanBean> getTuoDanList(int page) {

@@ -1,0 +1,72 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_elevation_radius"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发送给："
+        android:textColor="#ff000000"
+        android:textSize="20sp" />
+
+    <com.allen.library.CircleImageView
+        android:id="@+id/img_head"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/title"
+        android:layout_marginTop="14dp"
+        android:src="@drawable/beau_girl" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="30dp"
+        android:layout_toRightOf="@id/img_head"
+        android:text="徐璐"
+        android:textColor="#ff282838"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/dialog_comment_et"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/img_head"
+        android:background="#fff4f4f4"
+        android:layout_marginTop="16dp"
+        android:paddingLeft="12dp"
+        android:gravity="center_vertical"
+        android:text="我发布了一个约会，快来应约吧！"
+        android:textColor="#ff7b7b7b"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/dialog_comment_et"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="22dp"
+        android:text="发送"
+        android:textColor="#ff5415f9"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_send"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@id/tv_send"
+        android:text="取消"
+        android:textColor="#ffbdbdbd"
+        android:textSize="18sp" />
+
+</RelativeLayout>

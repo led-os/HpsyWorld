@@ -32,7 +32,7 @@ public class MyFriendActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initView() {
-        loadRootFragment(R.id.container, MyFriendFragment.newInstance(),false,true);
+        loadRootFragment(R.id.container, MyFriendFragment.newInstance(2),false,true);
     }
 
     @Override

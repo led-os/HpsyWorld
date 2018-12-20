@@ -30,6 +30,7 @@ import com.kuwai.ysy.module.mine.adapter.GiftAdapter;
 import com.kuwai.ysy.module.mine.adapter.vip.HuangjinVipFeeAdapter;
 import com.kuwai.ysy.module.mine.adapter.vip.TequanAdapter;
 import com.kuwai.ysy.module.mine.bean.user.UserInfo;
+import com.kuwai.ysy.module.mine.bean.vip.VipBean;
 import com.kuwai.ysy.module.mine.bean.vip.VipPayBean;
 import com.kuwai.ysy.utils.PayResult;
 import com.kuwai.ysy.widget.layoutmanager.MyGridLayoutManager;
@@ -48,10 +49,12 @@ public class VipHuangjinFragment extends BaseFragment<VipHuangjinPresenter> impl
     private TequanAdapter mActAdapter;
     private List<VipPayBean> mDataList = new ArrayList<>();
     private RecyclerView rl_fee, rlContent, rlAuth, rlAct;
-    private List<CategoryBean> mContentDataList = new ArrayList<>();
-    private List<CategoryBean> mAuthDataList = new ArrayList<>();
-    private List<CategoryBean> mActDataList = new ArrayList<>();
+    private List<VipBean.DataBean.PrivilegeBean.ArrBean> mContentDataList = new ArrayList<>();
+    private List<VipBean.DataBean.PrivilegeBean.ArrBean> mAuthDataList = new ArrayList<>();
+    private List<VipBean.DataBean.PrivilegeBean.ArrBean> mActDataList = new ArrayList<>();
     private SuperButton mSubmitBtn;
+
+    private VipBean.DataBean mVipdata = null;
 
     private static final int SDK_PAY_FLAG = 1;
 
@@ -84,10 +87,9 @@ public class VipHuangjinFragment extends BaseFragment<VipHuangjinPresenter> impl
         }
     };
 
-    public static VipHuangjinFragment newInstance() {
-        Bundle args = new Bundle();
+    public static VipHuangjinFragment newInstance(Bundle bundle) {
         VipHuangjinFragment fragment = new VipHuangjinFragment();
-        fragment.setArguments(args);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -98,7 +100,7 @@ public class VipHuangjinFragment extends BaseFragment<VipHuangjinPresenter> impl
 
     @Override
     protected VipHuangjinPresenter getPresenter() {
-        return  new VipHuangjinPresenter(this);
+        return new VipHuangjinPresenter(this);
     }
 
     @Override
@@ -113,6 +115,7 @@ public class VipHuangjinFragment extends BaseFragment<VipHuangjinPresenter> impl
 
     @Override
     public void initView(Bundle savedInstanceState) {
+
         rl_fee = mRootView.findViewById(R.id.rl_fee);
         mSubmitBtn = mRootView.findViewById(R.id.btn_submit);
         mSubmitBtn.setOnClickListener(this);
@@ -120,23 +123,23 @@ public class VipHuangjinFragment extends BaseFragment<VipHuangjinPresenter> impl
         rlAuth = mRootView.findViewById(R.id.rl_auth);
         rlAct = mRootView.findViewById(R.id.rl_activity);
 
-        mDataList.add(new VipPayBean("连续包月", "19", "每月自动续费，可随时关闭", true));
-        mDataList.add(new VipPayBean("连续包季", "57", "每季自动续费，可随时关闭", false));
-        mDataList.add(new VipPayBean("一个月", "20", "20元/月", false));
-        mDataList.add(new VipPayBean("年费", "199", "199元/年", false));
+        mVipdata = (VipBean.DataBean) getArguments().getSerializable("data");
+        mDataList.add(new VipPayBean(1, "月度VIP", String.valueOf(mVipdata.getMonthly_card()), mVipdata.getMonthly_card() + "元/每月", true));
+        mDataList.add(new VipPayBean(1, "季度VIP", String.valueOf(mVipdata.getSeason_card()), mVipdata.getSeason_card() + "元/每季", false));
+        mDataList.add(new VipPayBean(1, "年度VIP", String.valueOf(mVipdata.getYear_card()), mVipdata.getYear_card() + "元/每年", false));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
 
         mContentDataList.clear();
         mAuthDataList.clear();
         mActDataList.clear();
-        for (int i = 0; i < 6; i++) {
-            mContentDataList.add(new CategoryBean());
+        for (int i = 0; i < mVipdata.getPrivilege().get(0).getArr().size(); i++) {
+            mContentDataList.add(mVipdata.getPrivilege().get(0).getArr().get(i));
         }
-        for (int i = 0; i < 2; i++) {
-            mActDataList.add(new CategoryBean());
+        for (int i = 0; i < mVipdata.getPrivilege().get(1).getArr().size(); i++) {
+            mActDataList.add(mVipdata.getPrivilege().get(1).getArr().get(i));
         }
-        for (int i = 0; i < 3; i++) {
-            mAuthDataList.add(new CategoryBean());
+        for (int i = 0; i < mVipdata.getPrivilege().get(2).getArr().size(); i++) {
+            mAuthDataList.add(mVipdata.getPrivilege().get(2).getArr().get(i));
         }
 
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);

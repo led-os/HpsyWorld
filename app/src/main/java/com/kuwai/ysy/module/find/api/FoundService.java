@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.find.api;
 
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.find.bean.BlindBean;
 import com.kuwai.ysy.module.find.bean.CityMeetBean;
 import com.kuwai.ysy.module.find.bean.CommisDetailBean;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -59,11 +61,16 @@ public interface FoundService {
 
     //约会详情页（对方看到）
     @POST("Appointment/OtherAppointmentDetails")
-    Observable<CommisDetailBean> getCommisDetailData(@Query("r_id") int rid,@Query("uid") String uid);
+    Observable<CommisDetailBean> getCommisDetailData(@Query("r_id") int rid, @Query("uid") String uid);
 
     //约会详情页（自己）
     @POST("Appointment/MyAppointmentDetails")
     Observable<MyCommisDetailBean> getMyCommisDetailData(@Query("r_id") int rid);
+
+    //删除约会（自己）
+    @FormUrlEncoded
+    @POST("Appointment/DeleteAppointment")
+    Observable<SimpleResponse> deleteAppoint(@Field("r_id") int rid);
 
     //相亲活动列表
     @POST("Appointment/EnrollActivityList")

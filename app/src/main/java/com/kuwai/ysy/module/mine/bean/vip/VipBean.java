@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.mine.bean.vip;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class VipBean {
@@ -38,7 +39,7 @@ public class VipBean {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * v_id : 1
          * vip_name : 黄金会员
@@ -103,7 +104,7 @@ public class VipBean {
             this.privilege = privilege;
         }
 
-        public static class PrivilegeBean {
+        public static class PrivilegeBean implements Serializable{
             /**
              * classification : 内容特权
              * arr : [{"p_id":1,"privilege_name":"优质用户推荐","privilege_img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"p_id":2,"privilege_name":"访客记录查看","privilege_img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"p_id":3,"privilege_name":"精准筛选","privilege_img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"p_id":4,"privilege_name":"信用查看","privilege_img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"p_id":5,"privilege_name":"免费详细资料","privilege_img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"p_id":6,"privilege_name":"喜欢人数提升","privilege_img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"}]

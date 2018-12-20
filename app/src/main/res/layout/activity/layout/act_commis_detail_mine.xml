@@ -13,6 +13,7 @@
         android:orientation="vertical">
 
         <com.kuwai.ysy.widget.NavigationLayout
+            android:id="@+id/navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:rightImg="@drawable/ic_chat_nav_more"
@@ -22,6 +23,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="14dp">
+
+            <View
+                android:id="@+id/top_view"
+                android:layout_width="60dp"
+                android:layout_height="10dp"
+                android:layout_alignParentRight="true"/>
 
             <com.kuwai.ysy.widget.NiceImageView
                 android:id="@+id/img_head"

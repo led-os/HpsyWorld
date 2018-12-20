@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.find.business.MyCommicDetail;
 
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.find.bean.BlindBean;
 import com.kuwai.ysy.module.find.bean.CommisDetailBean;
 import com.kuwai.ysy.module.find.bean.MyCommisDetailBean;
@@ -24,6 +25,8 @@ public class MyCommisDetailContract {
          * 显示错误信息
          */
         void showError(int errorCode, String msg);
+
+        void deleteResult(SimpleResponse response);
     }
 
     public interface IHomePresenter {
@@ -34,5 +37,7 @@ public class MyCommisDetailContract {
         void requestHomeData(int rid);
 
         void getAgree(int rdid ,int status);
+
+        void deleteAppoint(int rid);
     }
 }

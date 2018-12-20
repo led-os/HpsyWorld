@@ -121,7 +121,7 @@ public class CityMeetListFragment extends BaseFragment<CityMeetPresenter> implem
                 bundle.putInt("rid", mcityMeetBean.getData().get(position).getR_id());
                 bundle.putString("uid",String.valueOf(mcityMeetBean.getData().get(position).getUid()));
 
-                if (Integer.valueOf(SPManager.get().getStringValue("uid","1")) == (mcityMeetBean.getData().get(position).getUid())) {
+                if (Integer.valueOf(SPManager.get().getStringValue("uid")) == (mcityMeetBean.getData().get(position).getUid())) {
                     start(CommicDetailMyFragment.newInstance(bundle));
                 } else {
                     start(CommisDetailFragment.newInstance(bundle));

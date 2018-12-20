@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,14 +15,18 @@ import com.allen.library.SuperButton;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.chat.MyFriendFragment;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.find.adapter.YingyueListAdapter;
 import com.kuwai.ysy.module.find.bean.BlindBean;
 import com.kuwai.ysy.module.find.bean.MyCommisDetailBean;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.MyRecycleViewDivider;
+import com.kuwai.ysy.widget.NavigationLayout;
 import com.kuwai.ysy.widget.NiceImageView;
+import com.kuwai.ysy.widget.popwindow.YsyPopWindow;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.DateTimeUitl;
 import com.rayhahah.rbase.utils.base.ToastUtils;
@@ -32,6 +38,7 @@ import java.util.List;
 public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter> implements MyCommisDetailContract.IHomeView, View.OnClickListener {
 
     private NiceImageView mImgHead;
+    private NavigationLayout navigationLayout;
     /**
      * 徐璐
      */
@@ -100,6 +107,10 @@ public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter
     private RecyclerView mDongtaiList;
     private List<CategoryBean> mDataList = new ArrayList<>();
     private MyCommisDetailBean mMyCommisDetailBean;
+    private YsyPopWindow mListPopWindow;
+    private View topView;
+
+    private int rid;
 
     public static CommicDetailMyFragment newInstance(Bundle bundle) {
         CommicDetailMyFragment fragment = new CommicDetailMyFragment();
@@ -124,7 +135,24 @@ public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter
 
     @Override
     public void initView(Bundle savedInstanceState) {
+
+        rid = getArguments().getInt("rid");
+
         mImgHead = (NiceImageView) mRootView.findViewById(R.id.img_head);
+        topView = mRootView.findViewById(R.id.top_view);
+        navigationLayout = mRootView.findViewById(R.id.navigation);
+        navigationLayout.setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
+        navigationLayout.setRightClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopListView();
+            }
+        });
         mTvNick = (TextView) mRootView.findViewById(R.id.tv_nick);
         mTvAge = (TextView) mRootView.findViewById(R.id.tv_age);
         mImgSex = (ImageView) mRootView.findViewById(R.id.img_sex);
@@ -148,9 +176,6 @@ public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter
         mTvYinYueNum = mRootView.findViewById(R.id.tv_yinyue_num);
 
         mDongtaiList = mRootView.findViewById(R.id.rl_yingyue);
-//        mDataList.add(new CategoryBean());
-//        mDataList.add(new CategoryBean());
-//        mDataList.add(new CategoryBean());
         mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mDongtaiList.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 0.5f), R.color.line_color));
         mDateAdapter = new YingyueListAdapter();
@@ -168,10 +193,44 @@ public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter
         });
     }
 
+    private void showPopListView() {
+        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_share_friend, null);
+
+        //处理popWindow 显示内容
+        handleListView(contentView);
+        //创建并显示popWindow
+        mListPopWindow = new YsyPopWindow.PopupWindowBuilder(getActivity())
+                .setView(contentView)
+                .enableBackgroundDark(true)
+                .size(Utils.dp2px(180), ViewGroup.LayoutParams.WRAP_CONTENT)//显示大小
+                .create()
+                .showAsDropDown(topView, (Utils.dp2px(-120)), (Utils.dp2px(-20)));
+
+    }
+
+    private void handleListView(View contentView) {
+        TextView delete = contentView.findViewById(R.id.tv_delete_date);
+        TextView share = contentView.findViewById(R.id.tv_share);
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                start(MyFriendFragment.newInstance(1));
+                mListPopWindow.dissmiss();
+            }
+        });
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.deleteAppoint(rid);
+                mListPopWindow.dissmiss();
+            }
+        });
+    }
+
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.requestHomeData(1);
+        mPresenter.requestHomeData(rid);
     }
 
     @Override
@@ -230,10 +289,6 @@ public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter
 
         mDateAdapter.addData(myCommisDetailBean.getData().getSign());
 
-//        for (int i = 0; i < myCommisDetailBean.getData().getSign().size(); i++) {
-//            approveList.add(myCommisDetailBean.getData().getSign().get(i).getAvatar());
-//        }
-
     }
 
     @Override
@@ -244,6 +299,16 @@ public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter
     @Override
     public void showError(int errorCode, String msg) {
 
+    }
+
+    @Override
+    public void deleteResult(SimpleResponse response) {
+        if (response.code == 200) {
+            ToastUtils.showShort("删除成功");
+            pop();
+        } else {
+            ToastUtils.showShort(response.msg);
+        }
     }
 
     @Override

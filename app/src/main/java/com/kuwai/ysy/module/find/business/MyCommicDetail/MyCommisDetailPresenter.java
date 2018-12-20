@@ -2,12 +2,14 @@ package com.kuwai.ysy.module.find.business.MyCommicDetail;
 
 import android.util.Log;
 
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.find.api.FoundApiFactory;
 import com.kuwai.ysy.module.find.bean.BlindBean;
 import com.kuwai.ysy.module.find.bean.CommisDetailBean;
 import com.kuwai.ysy.module.find.bean.MyCommisDetailBean;
 import com.kuwai.ysy.module.find.business.CommisDetail.CommisDetailContract;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 
 import io.reactivex.functions.Consumer;
 
@@ -18,7 +20,8 @@ import io.reactivex.functions.Consumer;
  * @fuction
  */
 public class MyCommisDetailPresenter extends RBasePresenter<MyCommisDetailContract.IHomeView> implements MyCommisDetailContract.IHomePresenter {
-    private static final String TAG ="MyCommisDetailPresenter";
+    private static final String TAG = "MyCommisDetailPresenter";
+
     public MyCommisDetailPresenter(MyCommisDetailContract.IHomeView view) {
         super(view);
     }
@@ -34,14 +37,14 @@ public class MyCommisDetailPresenter extends RBasePresenter<MyCommisDetailContra
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                Log.i(TAG, "accept: "+throwable);
+                Log.i(TAG, "accept: " + throwable);
             }
         }));
     }
 
     @Override
     public void getAgree(int rdid, int status) {
-        addSubscription(FoundApiFactory.sendMeetAgree(rdid,status).subscribe(new Consumer<BlindBean>() {
+        addSubscription(FoundApiFactory.sendMeetAgree(rdid, status).subscribe(new Consumer<BlindBean>() {
             @Override
             public void accept(BlindBean blindBean) throws Exception {
                 mView.setAgree(blindBean);
@@ -49,7 +52,22 @@ public class MyCommisDetailPresenter extends RBasePresenter<MyCommisDetailContra
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                Log.i(TAG, "accept: "+throwable);
+                Log.i(TAG, "accept: " + throwable);
+            }
+        }));
+    }
+
+    @Override
+    public void deleteAppoint(int rid) {
+        addSubscription(FoundApiFactory.deleteAppoint(rid).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse myCommisDetailBean) throws Exception {
+                mView.deleteResult(myCommisDetailBean);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                ToastUtils.showShort("网络错误");
             }
         }));
     }
