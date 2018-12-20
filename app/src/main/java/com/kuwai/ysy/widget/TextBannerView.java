@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.AnimRes;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,10 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.listener.ITextBannerItemClickListener;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.rayhahah.dialoglib.utils.UiUtils;
 
@@ -264,12 +268,13 @@ public class TextBannerView extends RelativeLayout {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
+                Log.e("","");
+                EventBusUtil.sendEvent(new MessageEvent(C.MSG_FIND_TEXT_RUN,mViewFlipper.getDisplayedChild()));
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
+                Log.e("","");
             }
         });
         mViewFlipper.setInAnimation(inAnim);

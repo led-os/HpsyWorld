@@ -21,6 +21,7 @@ import com.kuwai.ysy.module.mine.bean.TodayBean;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
 import com.kuwai.ysy.module.mine.bean.WalletDetailsBean;
 import com.kuwai.ysy.module.mine.bean.user.UserInfo;
+import com.kuwai.ysy.module.mine.bean.vip.VipBean;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -303,6 +304,11 @@ public interface MineService {
                                                 @Field("page") int page);
 
 
+    /**
+     * 会员列表
+     */
+    @GET("My/AndroidFirstClassMember")
+    Observable<VipBean> getVipList();
     /**
      * zfb订单获取
      */

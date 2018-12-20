@@ -1,8 +1,9 @@
 package com.kuwai.ysy.module.find.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class GiftPopBean {
+public class GiftPopBean implements Serializable {
 
     /**
      * code : 200
@@ -38,7 +39,7 @@ public class GiftPopBean {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         /**
          * g_id : 2
          * girft_name : 热辣似火
@@ -55,6 +56,7 @@ public class GiftPopBean {
         private String girft_info;
         private int exchange_goods;
         public boolean isSelected;
+        public int num = 0;
 
         public boolean isSelected() {
             return isSelected;

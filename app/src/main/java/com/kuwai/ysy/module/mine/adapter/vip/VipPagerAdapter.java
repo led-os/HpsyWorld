@@ -36,6 +36,7 @@ public class VipPagerAdapter extends PagerAdapter {
         RelativeLayout imageView = view.findViewById(R.id.content);
         TextView title = view.findViewById(R.id.title);
         TextView tequan = view.findViewById(R.id.tequan);
+        tequan.setText(mData.get(position).tequan + "种特权");
         ImageView img = view.findViewById(R.id.img);
         imageView.setBackgroundResource(mData.get(position).getBg());
         img.setImageResource(mData.get(position).getImg());

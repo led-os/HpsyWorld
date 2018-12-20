@@ -23,7 +23,7 @@
         android:textColor="@color/color_gray" />
 
     <com.allen.library.SuperButton
-        android:id="@+id/no_login"
+        android:id="@id/error_retry_view"
         android:layout_width="80dp"
         android:layout_height="32dp"
         android:layout_gravity="center_horizontal"

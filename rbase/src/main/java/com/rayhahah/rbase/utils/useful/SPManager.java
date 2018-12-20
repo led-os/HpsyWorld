@@ -26,7 +26,7 @@ public class SPManager {
     private static SPManager mInstance;
     private static ArrayMap<String, Object> valueMap;
 
-    private static String DEFAULT_STRING = "1";
+    private static String DEFAULT_STRING = "";
     private static float DEFAULT_FLOAT = 0;
     private static int DEFAULT_INT = 0;
     private static long DEFAULT_LONG = 0;
@@ -246,11 +246,13 @@ public class SPManager {
      *
      * @return
      */
-    public static SPManager clear() {
+    public static void clear() {
         if (currentSP == null) {
-            return mInstance;
+            return;
         }
-        currentEditor.clear().apply();
-        return mInstance;
+        spMap.clear();
+        final SharedPreferences.Editor editor = currentSP.edit();
+        editor.clear();
+        editor.apply();
     }
 }

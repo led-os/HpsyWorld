@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.allen.library.CircleImageView;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.listener.ITextBannerItemClickListener;
 import com.kuwai.ysy.module.find.CityMeetActivity;
@@ -23,8 +25,14 @@ import com.kuwai.ysy.module.find.adapter.WebBannerAdapter;
 import com.kuwai.ysy.module.find.adapter.FoundActivityAdapter;
 import com.kuwai.ysy.module.find.bean.FoundHome.FoundBean;
 import com.kuwai.ysy.module.find.adapter.FoundCityAdapter;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.widget.BannerLayout;
 import com.kuwai.ysy.widget.TextBannerView;
+import com.rayhahah.rbase.utils.useful.GlideUtil;
+import com.rayhahah.rbase.utils.useful.SPManager;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +57,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
     private FoundActivityAdapter mfoundActivityAdapter;
 
     private TextView mCitymeetMore, mTuodanMore;
+    private FoundBean mFoundBean;
 
     @Override
     protected int setFragmentLayoutRes() {
@@ -72,6 +81,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        EventBusUtil.register(this);
         mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
         mBanner = mRootView.findViewById(R.id.banner);
         mLocationTv = mRootView.findViewById(R.id.tv_location);
@@ -101,7 +111,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
          第三参数:drawable尺寸。
          第四参数:图标位置仅支持Gravity.LEFT、Gravity.TOP、Gravity.RIGHT、Gravity.BOTTOM
          */
-        mTextBannerView.setDatasWithDrawableIcon(tvbannerList, drawable, 18, Gravity.LEFT);
+        //mTextBannerView.setDatasWithDrawableIcon(tvbannerList, drawable, 18, Gravity.LEFT);
         mTextBannerView.setImageCallback(this);
 
         //设置TextBannerView点击监听事件，返回点击的data数据, 和position位置
@@ -113,8 +123,13 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
         });
 
         mRvCity.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        mRvCity.setNestedScrollingEnabled(false);
-        mRvActivity.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //mRvCity.setNestedScrollingEnabled(false);
+        mRvActivity.setLayoutManager(new LinearLayoutManager(getActivity()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
 
         mfoundCityAdapter = new FoundCityAdapter(R.layout.item_found_city);
         mfoundActivityAdapter = new FoundActivityAdapter(R.layout.item_found_activity);
@@ -162,13 +177,14 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
 
     @Override
     public void setHomeData(FoundBean foundBean) {
+        mFoundBean = foundBean;
         mLayoutStatusView.showContent();
         WebBannerAdapter webBannerAdapter = new WebBannerAdapter(getActivity(), foundBean);
         mBanner.setAdapter(webBannerAdapter);
 
-        mfoundCityAdapter.addData(foundBean.getData().getAppointment());
-        mfoundActivityAdapter.addData(foundBean.getData().getActivity());
-
+        mfoundCityAdapter.replaceData(foundBean.getData().getAppointment());
+        mfoundActivityAdapter.replaceData(foundBean.getData().getActivity());
+        tvbannerList.clear();
         for (int i = 0; i < foundBean.getData().getNews().size(); i++) {
             tvbannerList.add(foundBean.getData().getNews().get(i).getNickname() + ":我刚刚发布了一个新约会哦");
         }
@@ -194,7 +210,23 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBusUtil.unregister(this);
+    }
+
+    @Override
     public void retry() {
         mPresenter.requestHomeData();
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void isLogin(MessageEvent event) {
+        if (event.getCode() == C.MSG_FIND_TEXT_RUN) {
+            int pos = (int) event.getData();
+            GlideUtil.load(getActivity(), mFoundBean.getData().getNews().get(pos).getAvatar(), mIvHeadicon);
+            //mPresenter.getCommentList(did, SPManager.get().getStringValue("uid"), 1);
+        }
+    }
+
 }

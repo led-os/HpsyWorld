@@ -19,6 +19,7 @@ import com.kuwai.ysy.module.mine.bean.TodayBean;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
 import com.kuwai.ysy.module.mine.bean.WalletDetailsBean;
 import com.kuwai.ysy.module.mine.bean.user.UserInfo;
+import com.kuwai.ysy.module.mine.bean.vip.VipBean;
 import com.kuwai.ysy.net.ApiClient;
 import com.kuwai.ysy.utils.HuPuHelper;
 import com.kuwai.ysy.utils.security.MD5;
@@ -156,6 +157,13 @@ public class MineApiFactory {
                 .create(MineService.class)
                 .getMyAuthenticationList(uid)
                 .compose(RxSchedulers.<CreditBean>ioMain());
+    }
+
+    public static Observable<VipBean> getVipList() {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getVipList()
+                .compose(RxSchedulers.<VipBean>ioMain());
     }
 
     public static Observable<AliOrderInfoBean> getAliOrderInfo() {

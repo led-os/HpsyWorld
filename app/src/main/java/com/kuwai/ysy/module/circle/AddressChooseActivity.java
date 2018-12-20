@@ -42,6 +42,7 @@ import com.kuwai.ysy.R;
 import com.kuwai.ysy.module.circle.adapter.SearchAddressAdapter;
 import com.kuwai.ysy.module.circle.business.publishdy.PublishDyActivity;
 import com.kuwai.ysy.widget.SegmentedGroup;
+import com.rayhahah.rbase.utils.base.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +94,9 @@ public class AddressChooseActivity extends AppCompatActivity implements Location
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_address);
+
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.transparent), 0);
+        StatusBarUtil.setLightMode(this);
 
         mapView = (MapView) findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);

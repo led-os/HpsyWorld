@@ -35,6 +35,7 @@ public class PostAppointmentPresenter extends RBasePresenter<PostAppointmentCont
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
+                mView.showViewError(throwable);
                 Log.i(TAG, "accept: "+throwable);
             }
         }));
