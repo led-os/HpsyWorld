@@ -12,10 +12,12 @@ import com.kuwai.ysy.module.mine.bean.GiftAcceptBean;
 import com.kuwai.ysy.module.mine.bean.GiftBoxBean;
 import com.kuwai.ysy.module.mine.bean.IntegralDetailBean;
 import com.kuwai.ysy.module.mine.bean.MyAskBean;
+import com.kuwai.ysy.module.mine.bean.MyWalletBean;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.kuwai.ysy.module.mine.bean.TaGiftBean;
 import com.kuwai.ysy.module.mine.bean.TodayBean;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
+import com.kuwai.ysy.module.mine.bean.WalletDetailsBean;
 import com.kuwai.ysy.module.mine.bean.user.UserInfo;
 import com.kuwai.ysy.net.ApiClient;
 import com.kuwai.ysy.utils.HuPuHelper;
@@ -161,5 +163,19 @@ public class MineApiFactory {
                 .create(MineService.class)
                 .getAliOrderInfo()
                 .compose(RxSchedulers.<AliOrderInfoBean>ioMain());
+    }
+
+    public static Observable<MyWalletBean> getWallet(String uid) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getMyWallet(uid)
+                .compose(RxSchedulers.<MyWalletBean>ioMain());
+    }
+
+    public static Observable<WalletDetailsBean> getWalletDetails(String uid,int page) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getWalletList(uid,page)
+                .compose(RxSchedulers.<WalletDetailsBean>ioMain());
     }
 }

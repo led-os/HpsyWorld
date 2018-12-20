@@ -19,6 +19,7 @@ import com.kuwai.ysy.module.mine.bean.ShieldAndBlackListBean;
 import com.kuwai.ysy.module.mine.bean.TaGiftBean;
 import com.kuwai.ysy.module.mine.bean.TodayBean;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
+import com.kuwai.ysy.module.mine.bean.WalletDetailsBean;
 import com.kuwai.ysy.module.mine.bean.user.UserInfo;
 
 import java.util.HashMap;
@@ -298,8 +299,8 @@ public interface MineService {
      */
     @FormUrlEncoded
     @POST("My/WalletList")
-    Observable<MyWalletBean> getWalletList(@Field("uid") String uid,
-                                           @Field("page") int page);
+    Observable<WalletDetailsBean> getWalletList(@Field("uid") String uid,
+                                                @Field("page") int page);
 
 
     /**

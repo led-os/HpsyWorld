@@ -12,9 +12,12 @@ import android.widget.TextView;
 import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.mine.bean.MyWalletBean;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
-public class MyWalletFragment extends BaseFragment implements View.OnClickListener {
+public class MyWalletFragment extends BaseFragment<MyWalletPresenter> implements MyWalletContract.IHomeView, View.OnClickListener {
 
     private Toolbar mToolbar;
     private TextView mTitle;
@@ -22,7 +25,7 @@ public class MyWalletFragment extends BaseFragment implements View.OnClickListen
     private LinearLayout mMyYubi;
     private TextView mTvYubi;
     private LinearLayout mMyCash;
-    private TextView mTvCash;
+    private TextView mTvCash, mTvCashWithDrawal;
     private SuperButton mSbRecharge;
     private Button mBtnCash;
 
@@ -39,13 +42,16 @@ public class MyWalletFragment extends BaseFragment implements View.OnClickListen
     }
 
     @Override
-    protected RBasePresenter getPresenter() {
-        return null;
+    protected MyWalletPresenter getPresenter() {
+        return new MyWalletPresenter(this);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
+            case R.id.right_btn:
+                start(WalletDetailsFragment.newInstance());
+                break;
             case R.id.sb_recharge:
                 start(RechargeFragment.newInstance());
                 break;
@@ -67,9 +73,11 @@ public class MyWalletFragment extends BaseFragment implements View.OnClickListen
         mTvYubi = mRootView.findViewById(R.id.tv_yubi);
         mMyCash = mRootView.findViewById(R.id.my_cash);
         mTvCash = mRootView.findViewById(R.id.tv_cash);
+        mTvCashWithDrawal = mRootView.findViewById(R.id.tv_cash_withdrawal);
         mSbRecharge = mRootView.findViewById(R.id.sb_recharge);
         mBtnCash = mRootView.findViewById(R.id.btn_cash);
 
+        mRootView.findViewById(R.id.right_btn).setOnClickListener(this);
         mSbRecharge.setOnClickListener(this);
         mBtnCash.setOnClickListener(this);
     }
@@ -77,5 +85,32 @@ public class MyWalletFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
+        mPresenter.requestHomeData(SPManager.getStringValue("uid", "1"));
+    }
+
+    @Override
+    public void setHomeData(MyWalletBean walletBean) {
+        mTvCash.setText(walletBean.getData().getAmount());
+        mTvCashWithDrawal.setText(walletBean.getData().getForward_amount());
+    }
+
+    @Override
+    public void showError(int errorCode, String msg) {
+
+    }
+
+    @Override
+    public void showViewLoading() {
+
+    }
+
+    @Override
+    public void dismissLoading() {
+
+    }
+
+    @Override
+    public void showViewError(Throwable t) {
+
     }
 }
