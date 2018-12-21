@@ -6,6 +6,8 @@ import com.kuwai.ysy.module.find.api.FoundApiFactory;
 import com.kuwai.ysy.module.find.bean.FoundHome.FoundBean;
 import com.rayhahah.rbase.base.RBasePresenter;
 
+import java.util.Map;
+
 import io.reactivex.functions.Consumer;
 
 /**
@@ -15,15 +17,16 @@ import io.reactivex.functions.Consumer;
  * @fuction
  */
 public class FoundPresenter extends RBasePresenter<FoundContract.IHomeView> implements FoundContract.IHomePresenter {
-    private static final String TAG ="FoundPresenter";
+    private static final String TAG = "FoundPresenter";
+
     public FoundPresenter(FoundContract.IHomeView view) {
         super(view);
     }
 
     @Override
-    public void requestHomeData() {
+    public void requestHomeData(Map<String, Object> map) {
         mView.showViewLoading();
-        addSubscription(FoundApiFactory.getTeamList().subscribe(new Consumer<FoundBean>() {
+        addSubscription(FoundApiFactory.getTeamList(map).subscribe(new Consumer<FoundBean>() {
             @Override
             public void accept(FoundBean foundBean) throws Exception {
                 mView.setHomeData(foundBean);
@@ -31,7 +34,7 @@ public class FoundPresenter extends RBasePresenter<FoundContract.IHomeView> impl
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                Log.i(TAG, "accept: "+throwable);
+                Log.i(TAG, "accept: " + throwable);
                 mView.showViewError(throwable);
             }
         }));

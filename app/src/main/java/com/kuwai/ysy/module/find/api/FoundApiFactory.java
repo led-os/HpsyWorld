@@ -16,15 +16,16 @@ import com.kuwai.ysy.net.ApiClient;
 import com.rayhahah.rbase.utils.useful.RxSchedulers;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.Observable;
 
 public class FoundApiFactory {
 
-    public static Observable<FoundBean> getTeamList() {
+    public static Observable<FoundBean> getTeamList(Map<String, Object> map) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(FoundService.class)
-                .getFirstHomeData()
+                .getFirstHomeData(map)
                 .compose(RxSchedulers.<FoundBean>ioMain());
     }
 

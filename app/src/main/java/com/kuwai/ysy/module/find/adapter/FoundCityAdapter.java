@@ -27,7 +27,7 @@ public class FoundCityAdapter extends BaseQuickAdapter<FoundBean.DataBean.Appoin
     protected void convert(BaseViewHolder helper, FoundBean.DataBean.AppointmentBean item) {
 
         Glide.with(mContext).load(item.getAvatar()).into((NiceImageView) helper.getView(R.id.iv_userpic));
-        helper.setText(R.id.sb_distance, item.getDistance());
+        helper.setText(R.id.sb_distance, "距你"+ item.getDistance() +"km");
         helper.setText(R.id.tv_theme, item.getName());
         switch (item.getConsumption_type()) {
             case 0:
