@@ -43,6 +43,7 @@
             android:name=".module.home.business.HomeActivity"
             android:launchMode="singleTask" />
         <activity android:name=".module.home.business.loginmoudle.login.LoginActivity" />
+        <activity android:name=".module.home.WebviewH5Activity" />
 
         //聊天
         <activity android:name=".module.chat.MyFriendActivity" />

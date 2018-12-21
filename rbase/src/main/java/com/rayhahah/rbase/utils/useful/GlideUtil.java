@@ -124,7 +124,8 @@ public class GlideUtil {
         });
     }
 
-    *//**
+    */
+    /**
      * 清除内存缓存
      * 可以在UI线程执行
      *//*
@@ -193,6 +194,20 @@ public class GlideUtil {
                 .error(R.color.white)       //错误图
                 // .priority(Priority.HIGH)
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
+        Glide.with(context).load(url).apply(options).into(imageView);
+
+    }
+
+    public static void loadRound(Context context, String url, ImageView imageView) {
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(placeholderSoWhite) //占位图
+                .error(R.color.white)       //错误图
+                // .priority(Priority.HIGH)
+                .circleCropTransform()
+                .diskCacheStrategy(DiskCacheStrategy.ALL);
+        //options = RequestOptions.circleCropTransform();
+
         Glide.with(context).load(url).apply(options).into(imageView);
 
     }

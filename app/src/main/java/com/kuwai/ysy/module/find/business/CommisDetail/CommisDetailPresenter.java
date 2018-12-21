@@ -1,7 +1,9 @@
 package com.kuwai.ysy.module.find.business.CommisDetail;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.find.api.FoundApiFactory;
 import com.kuwai.ysy.module.find.bean.BlindBean;
 import com.kuwai.ysy.module.find.bean.CityMeetBean;
@@ -27,6 +29,7 @@ public class CommisDetailPresenter extends RBasePresenter<CommisDetailContract.I
 
     @Override
     public void requestHomeData(int rid,String uid) {
+        mView.showViewLoading();
         addSubscription(FoundApiFactory.getCommisDetail(rid,uid).subscribe(new Consumer<CommisDetailBean>() {
             @Override
             public void accept(CommisDetailBean commisDetailBean) throws Exception {
@@ -35,6 +38,7 @@ public class CommisDetailPresenter extends RBasePresenter<CommisDetailContract.I
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
+                mView.showViewError(throwable);
                 Log.i(TAG, "accept: "+throwable);
             }
         }));
@@ -52,5 +56,21 @@ public class CommisDetailPresenter extends RBasePresenter<CommisDetailContract.I
                 Log.i(TAG, "accept: " + throwable);
             }
         }));
+    }
+
+    @Override
+    public void cancelApply(int rdid, int uid) {
+        addSubscription(FoundApiFactory.sendCancelApply(rdid, uid)
+                .subscribe(new Consumer<SimpleResponse>() {
+                    @Override
+                    public void accept(@NonNull SimpleResponse blindBean) throws Exception {
+                        mView.cancelResult(blindBean);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        mView.showViewError(throwable);
+                    }
+                }));
     }
 }

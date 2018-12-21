@@ -4,28 +4,29 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="@dimen/dp_8"
-    android:layout_marginStart="@dimen/dp_8"
-    android:foreground="?attr/selectableItemBackground"
-    app:cardCornerRadius="15dp"
-    app:cardElevation="@dimen/dp_8">
+    android:layout_marginStart="10dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="@dimen/dp_4">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rl"
         android:layout_width="134dp"
         android:layout_height="170dp">
 
-        <ImageView
+        <com.kuwai.ysy.widget.NiceImageView
             android:id="@+id/iv_userpic"
             android:layout_width="match_parent"
             android:layout_height="105dp"
-            android:background="@color/color_gray" />
+            android:scaleType="centerCrop"
+            app:corner_top_left_radius="10dp"
+            app:corner_top_right_radius="10dp" />
 
         <ImageView
             android:id="@+id/iv_sex"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="7dp"
-            android:layout_marginTop="82dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="80dp"
             android:src="@drawable/ic_user_man" />
 
         <com.allen.library.SuperButton

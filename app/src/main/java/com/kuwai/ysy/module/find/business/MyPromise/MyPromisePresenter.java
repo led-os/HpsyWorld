@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.find.business.MyPromise;
 
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.find.api.AppointApiFactory;
 import com.kuwai.ysy.module.find.api.FoundApiFactory;
 import com.kuwai.ysy.module.find.bean.BlindBean;
@@ -46,9 +47,9 @@ public class MyPromisePresenter extends RBasePresenter<MyPromiseContract.MyCommi
     @Override
     public void getCancelApply(int rdid, int uid) {
         addSubscription(FoundApiFactory.sendCancelApply(rdid, uid)
-                .subscribe(new Consumer<BlindBean>() {
+                .subscribe(new Consumer<SimpleResponse>() {
                     @Override
-                    public void accept(@NonNull BlindBean blindBean) throws Exception {
+                    public void accept(@NonNull SimpleResponse blindBean) throws Exception {
                         mView.sedCancelApply(blindBean);
                     }
                 }, new Consumer<Throwable>() {

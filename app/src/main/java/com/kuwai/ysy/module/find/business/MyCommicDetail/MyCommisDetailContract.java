@@ -5,6 +5,7 @@ import com.kuwai.ysy.module.find.bean.BlindBean;
 import com.kuwai.ysy.module.find.bean.CommisDetailBean;
 import com.kuwai.ysy.module.find.bean.MyCommisDetailBean;
 import com.rayhahah.rbase.base.IRBaseView;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 public class MyCommisDetailContract {
 
@@ -27,6 +28,8 @@ public class MyCommisDetailContract {
         void showError(int errorCode, String msg);
 
         void deleteResult(SimpleResponse response);
+
+        void addChengyiResult(SimpleResponse response);
     }
 
     public interface IHomePresenter {
@@ -39,5 +42,7 @@ public class MyCommisDetailContract {
         void getAgree(int rdid ,int status);
 
         void deleteAppoint(int rid);
+
+        void addChengyi(String uid,String rid,String money);
     }
 }

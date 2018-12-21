@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +37,7 @@ import com.rayhahah.rbase.utils.useful.SPManager;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -105,10 +107,22 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                page = 1;
                 if (TYPE_DY_ALL.equals(type)) {
-                    mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid", "1"));
+                    mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid"));
                 } else if (C.TYPE_DY_FRIEND.equals(type)) {
-                    mPresenter.requestFriendData(page, SPManager.get().getStringValue("uid", "1"));
+                    mPresenter.requestFriendData(page, SPManager.get().getStringValue("uid"));
+                }
+            }
+        });
+
+        mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                if (TYPE_DY_ALL.equals(type)) {
+                    mPresenter.requestMore(page + 1, SPManager.get().getStringValue("uid"));
+                } else if (C.TYPE_DY_FRIEND.equals(type)) {
+                    mPresenter.requestMoreFriend(page + 1, SPManager.get().getStringValue("uid"));
                 }
             }
         });
@@ -250,7 +264,7 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
     public void setHomeData(DyMainListBean dyMainListBean) {
         mRefreshLayout.finishRefresh();
         mDyMainListBean = dyMainListBean;
-        mDongtaiAdapter.addData(dyMainListBean.getData());
+        mDongtaiAdapter.replaceData(dyMainListBean.getData());
     }
 
     @Override
@@ -267,6 +281,26 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
     public void setFriendData(DyMainListBean dyMainListBean) {
         mRefreshLayout.finishRefresh();
         mDyMainListBean = dyMainListBean;
+        mDongtaiAdapter.replaceData(dyMainListBean.getData());
+    }
+
+    @Override
+    public void setMoreFriendData(DyMainListBean dyMainListBean) {
+        if (dyMainListBean.getData() != null) {
+            page++;
+        }
+        mRefreshLayout.finishLoadmore();
+        mDyMainListBean.getData().addAll(dyMainListBean.getData());
+        mDongtaiAdapter.addData(dyMainListBean.getData());
+    }
+
+    @Override
+    public void setMoreData(DyMainListBean dyMainListBean) {
+        if (dyMainListBean.getData() != null) {
+            page++;
+        }
+        mRefreshLayout.finishLoadmore();
+        mDyMainListBean.getData().addAll(dyMainListBean.getData());
         mDongtaiAdapter.addData(dyMainListBean.getData());
     }
 

@@ -136,7 +136,7 @@ public class CircleApiFactory {
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
-    public static Observable<SimpleResponse> publishHole(HashMap<String, String> map) {
+    public static Observable<SimpleResponse> publishHole(Map<String, String> map) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(CircleService.class)
                 .publishHole(map)

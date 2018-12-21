@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.find.business.MyPromise;
 
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.find.bean.BlindBean;
 import com.kuwai.ysy.module.find.bean.appointment.MyCommis;
 import com.rayhahah.rbase.base.IRBaseView;
@@ -12,7 +13,7 @@ public class MyPromiseContract {
     public interface MyCommisListView extends IRBaseView {
         void getMyCommis(MyCommis myCommis);
 
-        void sedCancelApply(BlindBean blindBean);
+        void sedCancelApply(SimpleResponse blindBean);
 
     }
 

@@ -71,4 +71,19 @@ public class MyCommisDetailPresenter extends RBasePresenter<MyCommisDetailContra
             }
         }));
     }
+
+    @Override
+    public void addChengyi(String uid, String rid, String money) {
+        addSubscription(FoundApiFactory.addChengyi(uid, rid, money).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse blindBean) throws Exception {
+                mView.addChengyiResult(blindBean);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.i(TAG, "accept: " + throwable);
+            }
+        }));
+    }
 }

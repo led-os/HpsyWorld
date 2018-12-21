@@ -16,6 +16,7 @@ import com.allen.library.CircleImageView;
 import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.find.adapter.DialogGiftAdapter;
@@ -118,6 +119,8 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
     private int rid;
     private String uid;
 
+    private CommisDetailBean mcCommisDetailBean;
+
     public static CommisDetailFragment newInstance(Bundle bundle) {
         CommisDetailFragment fragment = new CommisDetailFragment();
         fragment.setArguments(bundle);
@@ -161,7 +164,11 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
                 break;
 
             case R.id.btn_commis:
-                mPresenter.getApply(rid, Integer.valueOf(SPManager.get().getStringValue("uid", "1")), getResources().getString(R.string.meetagree_text));
+                if ("应约".equals(mBtnCommis.getText().toString())) {
+                    mPresenter.getApply(rid, Integer.valueOf(SPManager.get().getStringValue("uid")), getResources().getString(R.string.meetagree_text));
+                } else {
+                    mPresenter.cancelApply(mcCommisDetailBean.getData().getR_id(), Integer.parseInt(SPManager.get().getStringValue("uid")));
+                }
                 break;
         }
     }
@@ -171,6 +178,7 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
         rid = getArguments().getInt("rid");
         uid = getArguments().getString("uid");
 
+        mLayoutStatusView = mRootView.findViewById(R.id.mLayoutStatusView);
         mCover = mRootView.findViewById(R.id.iv_cover);
         mTvName = (TextView) mRootView.findViewById(R.id.tv_name);
         mTvAge = (TextView) mRootView.findViewById(R.id.tv_age);
@@ -211,28 +219,30 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
                 .setRadius(mRadius)//圆角
                 .setOffsetX(mOffsetX)//横向偏移
                 .setOffsetY(mOffsetY);//纵向偏移
-
         ShadowHelper.setShadowBgForView(mTopLay, config);
 
         pileLayout = mRootView.findViewById(R.id.round_head);
-//        approveList.add("http://img.kaiyanapp.com/d7e21f93f4dcb6e78271d125a1f41a9e.png?imageMogr2/quality/60/format/jpg");
-//        approveList.add("http://img.kaiyanapp.com/5ae529b018ada5073d486242afc855b7.jpeg?imageMogr2/quality/60/format/jpg");
-//        approveList.add("http://img.kaiyanapp.com/4631818cd092e281dc2c93b250684d9f.jpeg?imageMogr2/quality/60/format/jpg");
-//        pileLayout.setUrls(approveList);
 
     }
 
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.requestHomeData(rid, uid);
+        mPresenter.requestHomeData(rid, SPManager.get().getStringValue("uid"));
     }
 
     @Override
     public void setHomeData(CommisDetailBean commisDetailBean) {
+        mLayoutStatusView.showContent();
+        mcCommisDetailBean = commisDetailBean;
         GlideUtil.load(mContext, commisDetailBean.getData().getR_img(), mCover);
         mTvName.setText(commisDetailBean.getData().getNickname());
         mTvAge.setText(commisDetailBean.getData().getAge() + "岁");
+
+        if (commisDetailBean.getData().getType() == 1) {
+            mBtnCommis.setText("取消应约");
+        }
+
         switch (commisDetailBean.getData().getGender()) {
             case C.Man:
                 GlideUtil.load(mContext, R.drawable.ic_user_man, mSex);
@@ -274,6 +284,9 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
             case 2:
                 mApOb.setText("女生");
                 break;
+            case 0:
+                mApOb.setText("不限");
+                break;
         }
         mApNum.setText("1位");
         if (commisDetailBean.getData().getGift() == null || commisDetailBean.getData().getGift().size() == 0) {
@@ -298,6 +311,9 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
 
     @Override
     public void setApply(BlindBean blindBean) {
+        if (blindBean.getCode() == 200) {
+            mBtnCommis.setText("取消应约");
+        }
         ToastUtils.showShort(blindBean.getMsg());
     }
 
@@ -307,8 +323,16 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
     }
 
     @Override
-    public void showViewLoading() {
+    public void cancelResult(SimpleResponse response) {
+        if (response.code == 200) {
+            mBtnCommis.setText("应约");
+        }
+        ToastUtils.showShort(response.msg);
+    }
 
+    @Override
+    public void showViewLoading() {
+        mLayoutStatusView.showLoading();
     }
 
     @Override
@@ -318,6 +342,6 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
 
     @Override
     public void showViewError(Throwable t) {
-
+        mLayoutStatusView.showError();
     }
 }

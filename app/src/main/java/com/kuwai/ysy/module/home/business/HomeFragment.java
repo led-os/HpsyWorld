@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.home.business;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.home.WebviewH5Activity;
 import com.kuwai.ysy.module.home.adapter.HomeAdapter;
 import com.kuwai.ysy.module.home.bean.HomeBean;
 import com.kuwai.ysy.module.home.bean.HomeMutiBean;
@@ -92,7 +94,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         mHomeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                start(AskFragment.newInstance());
+                startActivity(new Intent(getActivity(), WebviewH5Activity.class));
             }
         });
     }

@@ -132,5 +132,6 @@ dependencies {
 
     compile (name: 'alipaySdk-15.5.9-20181123210657-noUtdid', ext: 'aar')
 
-
+    //腾讯x5
+    implementation files('libs/tbs_sdk_thirdapp_v3.5.0.1004_43500_sharewithdownload_withoutGame_obfs_20170801_113025.jar')
 }

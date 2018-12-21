@@ -1,6 +1,7 @@
 package com.kuwai.ysy.module.find.adapter;
 
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -8,6 +9,10 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.module.find.bean.FoundHome.FoundBean;
+import com.kuwai.ysy.utils.Utils;
+import com.kuwai.ysy.widget.NiceImageView;
+import com.kuwai.ysy.widget.shadow.ShadowConfig;
+import com.kuwai.ysy.widget.shadow.ShadowHelper;
 
 /**
  * Created by sunnysa on 2018/11/22.
@@ -20,7 +25,8 @@ public class FoundCityAdapter extends BaseQuickAdapter<FoundBean.DataBean.Appoin
 
     @Override
     protected void convert(BaseViewHolder helper, FoundBean.DataBean.AppointmentBean item) {
-        Glide.with(mContext).load(item.getAvatar()).into((ImageView) helper.getView(R.id.iv_userpic));
+
+        Glide.with(mContext).load(item.getAvatar()).into((NiceImageView) helper.getView(R.id.iv_userpic));
         helper.setText(R.id.sb_distance, item.getDistance());
         helper.setText(R.id.tv_theme, item.getName());
         switch (item.getConsumption_type()) {
@@ -36,7 +42,7 @@ public class FoundCityAdapter extends BaseQuickAdapter<FoundBean.DataBean.Appoin
             default:
                 break;
         }
-        switch (item.getGender()){
+        switch (item.getGender()) {
             case C.Man:
                 Glide.with(mContext).load(R.drawable.ic_user_man).into((ImageView) helper.getView(R.id.iv_sex));
                 break;
