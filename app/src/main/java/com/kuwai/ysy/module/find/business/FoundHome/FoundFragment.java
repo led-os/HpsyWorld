@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.allen.library.CircleImageView;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.MessageEvent;
@@ -20,6 +21,8 @@ import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.listener.ITextBannerItemClickListener;
 import com.kuwai.ysy.module.find.CityMeetActivity;
 import com.kuwai.ysy.module.find.FoundLocationActivity;
+import com.kuwai.ysy.module.find.business.CommisDetail.CommisDetailFragment;
+import com.kuwai.ysy.module.find.business.MyCommicDetail.CommicDetailMyFragment;
 import com.kuwai.ysy.module.find.business.TuoDan.TuodanActivity;
 import com.kuwai.ysy.module.find.adapter.WebBannerAdapter;
 import com.kuwai.ysy.module.find.adapter.FoundActivityAdapter;
@@ -136,6 +139,21 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
 
         mRvCity.setAdapter(mfoundCityAdapter);
         mRvActivity.setAdapter(mfoundActivityAdapter);
+
+        mfoundCityAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("rid", mFoundBean.getData().getAppointment().get(position).getR_id());
+                bundle.putString("uid", String.valueOf(mFoundBean.getData().getAppointment().get(position).getUid()));
+
+                if (Integer.valueOf(SPManager.get().getStringValue("uid")) == (mFoundBean.getData().getAppointment().get(position).getUid())) {
+                    start(CommicDetailMyFragment.newInstance(bundle));
+                } else {
+                    start(CommisDetailFragment.newInstance(bundle));
+                }
+            }
+        });
     }
 
     @Override
