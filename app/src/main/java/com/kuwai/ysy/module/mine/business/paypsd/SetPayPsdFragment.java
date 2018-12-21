@@ -6,9 +6,13 @@ import android.view.View;
 
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.widget.PasswordInputView;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 
 public class SetPayPsdFragment extends BaseFragment implements View.OnClickListener {
+
+    private PasswordInputView passwordInputView;
 
     public static SetPayPsdFragment newInstance() {
         Bundle args = new Bundle();
@@ -34,6 +38,15 @@ public class SetPayPsdFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        passwordInputView = mRootView.findViewById(R.id.sure_password);
+        passwordInputView.setOnFinishListener(new PasswordInputView.OnFinishListener() {
+            @Override
+            public void setOnPasswordFinished(String text) {
+                if(text.length()==6){
+                    ToastUtils.showShort("结束");
+                }
+            }
+        });
     }
 
     @Override

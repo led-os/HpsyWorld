@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
     <com.kuwai.ysy.widget.NavigationLayout
         android:id="@+id/navigation"
@@ -11,27 +11,69 @@
         android:layout_height="wrap_content"
         app:title1="设置支付密码"></com.kuwai.ysy.widget.NavigationLayout>
 
-    <com.allen.library.SuperTextView
-        android:id="@+id/st_set_psd"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:paddingStart="6dp"
-        android:paddingEnd="6dp"
-        app:sCenterTextString="sdasfafagagag"
-        app:sLeftTextColor="#282828"
-        app:sLeftTextSize="16sp"
-        app:sLeftTextString="设置密码" />
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
 
-    <com.allen.library.SuperTextView
-        android:id="@+id/st_sure_psd"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="设置密码"
+            android:textColor="@color/balck_28"
+            android:textSize="16sp" />
+
+        <com.kuwai.ysy.widget.PasswordInputView
+            android:id="@+id/password_view"
+            android:layout_width="180dp"
+            android:layout_height="30dp"
+            android:background="@null"
+            android:cursorVisible="false"
+            android:inputType="number"
+            android:maxLength="6"
+            app:borderWidth="2dp"
+            app:passwordColor="@color/black"
+            app:passwordLength="6"
+            app:passwordWidth="6dp" />
+
+    </LinearLayout>
+
+    <View style="@style/horizontal_line" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:paddingStart="6dp"
-        android:paddingEnd="6dp"
-        app:sCenterTextString="sdasfafagagag"
-        app:sLeftTextColor="#282828"
-        app:sLeftTextSize="16sp"
-        app:sLeftTextString="确认密码" />
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="确认密码"
+            android:textColor="@color/balck_28"
+            android:textSize="16sp" />
+
+        <com.kuwai.ysy.widget.PasswordInputView
+            android:id="@+id/sure_password"
+            android:layout_width="180dp"
+            android:layout_height="30dp"
+            android:background="@null"
+            android:cursorVisible="false"
+            android:inputType="number"
+            android:maxLength="6"
+            app:borderWidth="1dp"
+            app:passwordColor="@color/black"
+            app:passwordLength="6"
+            app:passwordWidth="6dp" />
+
+    </LinearLayout>
 
 
 </LinearLayout>

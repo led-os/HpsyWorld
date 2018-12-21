@@ -18,6 +18,7 @@ import com.kuwai.ysy.widget.CountDownTextView;
 import com.kuwai.ysy.widget.MyEditText;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.StringUtils;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
@@ -57,9 +58,11 @@ public class ChangePhoneFragment extends BaseFragment<ChangePhonePresenter> impl
             case R.id.tv_count_down:
                 mnewphone = mtvNewPhone.getText().toString();
 
-                if (TextUtils.isEmpty(mnewphone)) {
+                if (StringUtils.isLegalPhone(mnewphone)) {
                     mTvCountDown.start();
                     getCode(mnewphone, C.CODE_REGIST);
+                }else {
+                    ToastUtils.showShort("手机号不合法");
                 }
                 break;
         }
@@ -72,8 +75,8 @@ public class ChangePhoneFragment extends BaseFragment<ChangePhonePresenter> impl
         navigationLayout = mRootView.findViewById(R.id.navigation);
         TextView mtip = mRootView.findViewById(R.id.tv_tip);
         mtip.setText("更换手机后，下次登录可使用新手机号登录。当前手机号为："
-                + SPManager.getStringValue("phone","12345678901").substring(0, 3) + "****"
-                + SPManager.getStringValue("phone","12345678901").substring(7, 11));
+                + SPManager.getStringValue("phone", "12345678901").substring(0, 3) + "****"
+                + SPManager.getStringValue("phone", "12345678901").substring(7, 11));
         mTvPhone = mRootView.findViewById(R.id.tv_phone);
         mtvNewPhone = mRootView.findViewById(R.id.tv_newphone);
         vcode = mRootView.findViewById(R.id.et_code);
