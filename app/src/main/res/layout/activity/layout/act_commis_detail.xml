@@ -3,11 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:background="@color/white">
 
-    <RelativeLayout
+    <com.kuwai.ysy.widget.MultipleStatusView
+        android:id="@+id/mLayoutStatusView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:loadingView="@layout/loading_view"
+        app:errorView="@layout/layout_error_view">
 
         <ImageView
             android:id="@+id/iv_cover"
@@ -83,7 +87,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="36dp"
                 android:layout_below="@id/tv_sign"
                 android:layout_marginBottom="14dp">
 
@@ -171,7 +175,7 @@
             android:id="@+id/line1"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_below="@id/grid1"
+            android:layout_below="@+id/grid1"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@color/line_color" />
@@ -218,7 +222,7 @@
             android:id="@+id/line2"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_below="@id/grid2"
+            android:layout_below="@+id/grid2"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@color/line_color" />
@@ -243,6 +247,7 @@
                 android:layout_height="50dp"
                 android:layout_below="@id/tv_nick"
                 android:layout_toRightOf="@id/round_head"
+                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:textColor="@color/balck_28"
@@ -269,5 +274,5 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/lay_center"
             android:background="@color/line_color" />
-    </RelativeLayout>
+    </com.kuwai.ysy.widget.MultipleStatusView>
 </ScrollView>

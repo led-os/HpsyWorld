@@ -2,8 +2,10 @@ package com.kuwai.ysy.module.find.business.MyCommicDetail;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,18 +21,28 @@ import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.chat.MyFriendFragment;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
+import com.kuwai.ysy.module.find.adapter.CustomThemeAdapter;
+import com.kuwai.ysy.module.find.adapter.DialogGiftAdapter;
+import com.kuwai.ysy.module.find.adapter.MoneyAdapter;
 import com.kuwai.ysy.module.find.adapter.YingyueListAdapter;
 import com.kuwai.ysy.module.find.bean.BlindBean;
+import com.kuwai.ysy.module.find.bean.GiftPopBean;
 import com.kuwai.ysy.module.find.bean.MyCommisDetailBean;
+import com.kuwai.ysy.module.find.bean.ThemeBean;
+import com.kuwai.ysy.module.find.bean.theme.DateTheme;
+import com.kuwai.ysy.module.find.business.GiftAddFragment;
 import com.kuwai.ysy.utils.Utils;
+import com.kuwai.ysy.widget.MyEditText;
 import com.kuwai.ysy.widget.MyRecycleViewDivider;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.kuwai.ysy.widget.NiceImageView;
 import com.kuwai.ysy.widget.popwindow.YsyPopWindow;
+import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.DateTimeUitl;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,8 +121,16 @@ public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter
     private MyCommisDetailBean mMyCommisDetailBean;
     private YsyPopWindow mListPopWindow;
     private View topView;
+    private List<ThemeBean> mChengyiList = new ArrayList<>();
 
     private int rid;
+    private CustomDialog themeDialog, costDialog, giftDialog;
+    private TextView tv_chengyi;
+    private int mChengyiPos;
+    private List<MyCommisDetailBean.DataBean.GiftBean> mGiftList = new ArrayList<>();
+
+    private LinearLayout mGiftLay;
+    private View giftLine;
 
     public static CommicDetailMyFragment newInstance(Bundle bundle) {
         CommicDetailMyFragment fragment = new CommicDetailMyFragment();
@@ -130,7 +150,34 @@ public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.sb_ad_chengyi:
+                if ("补充诚意金".equals(mSbAdChengyi.getText().toString())) {
+                    popCustom();
+                }
+                break;
+            case R.id.sb_ad_gift:
+                start(GiftAddFragment.newInstance(rid));
+                break;
+            case R.id.tv_more:
+                if (giftDialog == null) {
+                    View pannel = View.inflate(getActivity(), R.layout.dialog_more_gift, null);
+                    RecyclerView recyclerView = pannel.findViewById(R.id.rl_gift);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+                    linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                    recyclerView.setLayoutManager(linearLayoutManager);
+                    DialogGiftAdapter adapter = new DialogGiftAdapter(mMyCommisDetailBean.getData().getGift());
+                    recyclerView.setAdapter(adapter);
+                    giftDialog = new CustomDialog.Builder(getActivity())
+                            .setView(pannel)
+                            .setTouchOutside(true)
+                            .setItemHeight(0.2f)
+                            .setDialogGravity(Gravity.CENTER)
+                            .build();
+                }
+                giftDialog.show();
+                break;
+        }
     }
 
     @Override
@@ -140,6 +187,9 @@ public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter
 
         mImgHead = (NiceImageView) mRootView.findViewById(R.id.img_head);
         topView = mRootView.findViewById(R.id.top_view);
+        tv_chengyi = mRootView.findViewById(R.id.tv_chengyi);
+        mGiftLay = mRootView.findViewById(R.id.lay_gift);
+        giftLine = mRootView.findViewById(R.id.line_gift);
         navigationLayout = mRootView.findViewById(R.id.navigation);
         navigationLayout.setLeftClick(new View.OnClickListener() {
             @Override
@@ -174,6 +224,10 @@ public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter
         mTvInfo = (TextView) mRootView.findViewById(R.id.tv_info);
         mLayCenter = (LinearLayout) mRootView.findViewById(R.id.lay_center);
         mTvYinYueNum = mRootView.findViewById(R.id.tv_yinyue_num);
+
+        mSbAdChengyi.setOnClickListener(this);
+        mSbAdGift.setOnClickListener(this);
+        mTvMore.setOnClickListener(this);
 
         mDongtaiList = mRootView.findViewById(R.id.rl_yingyue);
         mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -240,6 +294,10 @@ public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter
         GlideUtil.load(mContext, myCommisDetailBean.getData().getAvatar(), mImgHead);
         mTvNick.setText(myCommisDetailBean.getData().getNickname());
         mTvAge.setText(myCommisDetailBean.getData().getAge() + "岁");
+        if (myCommisDetailBean.getData().getEarnest_money() != 0) {
+            tv_chengyi.setVisibility(View.INVISIBLE);
+            mSbAdChengyi.setText(myCommisDetailBean.getData().getEarnest_money() + "桃花币");
+        }
         switch (myCommisDetailBean.getData().getGender()) {
             case C.Man:
                 GlideUtil.load(mContext, R.drawable.ic_user_man, mImgSex);
@@ -264,6 +322,9 @@ public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter
                 break;
         }
         switch (myCommisDetailBean.getData().getGirl_friend()) {
+            case 0:
+                mTvSex.setText("不限");
+                break;
             case 1:
                 mTvSex.setText("男生");
                 break;
@@ -280,9 +341,13 @@ public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter
             mTvGifts.setText(myCommisDetailBean.getData().getGift().get(0).getGirft_name()
                     + "*" + myCommisDetailBean.getData().getGift().get(0).getG_nums());
             mTvMore.setVisibility(View.INVISIBLE);
+            mGiftLay.setVisibility(View.GONE);
+            giftLine.setVisibility(View.GONE);
         } else if (myCommisDetailBean.getData().getGift().size() > 1) {
             mTvGifts.setText(myCommisDetailBean.getData().getGift().get(0).getGirft_name()
                     + "*" + myCommisDetailBean.getData().getGift().get(0).getG_nums());
+            mGiftLay.setVisibility(View.GONE);
+            giftLine.setVisibility(View.GONE);
         }
 
         mTvYinYueNum.setText(String.valueOf(myCommisDetailBean.getData().getSign().size()) + "人");
@@ -312,6 +377,11 @@ public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter
     }
 
     @Override
+    public void addChengyiResult(SimpleResponse response) {
+        ToastUtils.showShort(response.msg);
+    }
+
+    @Override
     public void showViewLoading() {
 
     }
@@ -324,5 +394,98 @@ public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter
     @Override
     public void showViewError(Throwable t) {
 
+    }
+
+    private void popCustom() {
+        if (themeDialog == null) {
+
+            View pannel = View.inflate(getActivity(), R.layout.dialog_bujiao_chengyi, null);
+            RecyclerView recyclerView = pannel.findViewById(R.id.rl_cheng);
+            ImageView imageDel = pannel.findViewById(R.id.top_del);
+            SuperButton submit = pannel.findViewById(R.id.submit);
+
+            mChengyiList.add(new ThemeBean(false, "10鱼币", R.drawable.ic_sel_other, false));
+            mChengyiList.add(new ThemeBean(false, "20鱼币", R.drawable.ic_sel_other, false));
+            mChengyiList.add(new ThemeBean(false, "50鱼币", R.drawable.ic_sel_other, false));
+            mChengyiList.add(new ThemeBean(false, "80鱼币", R.drawable.ic_sel_other, false));
+            mChengyiList.add(new ThemeBean(false, "200鱼币", R.drawable.ic_sel_other, false));
+            mChengyiList.add(new ThemeBean(false, "500鱼币", R.drawable.ic_sel_other, false));
+
+            final MoneyAdapter chengyiAdapter = new MoneyAdapter(mChengyiList);
+            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+            recyclerView.setAdapter(chengyiAdapter);
+            imageDel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (themeDialog != null) {
+                        themeDialog.dismiss();
+                    }
+                }
+            });
+
+            chengyiAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    mChengyiPos = position;
+                    for (ThemeBean theme : mChengyiList) {
+                        theme.setChecked(false);
+                    }
+                    mChengyiList.get(position).setChecked(true);
+                    chengyiAdapter.notifyDataSetChanged();
+                }
+            });
+
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    popCostCustom(mChengyiList.get(mChengyiPos).getTitle().replace("鱼币", ""));
+                    themeDialog.dismiss();
+                }
+            });
+
+            themeDialog = new CustomDialog.Builder(getActivity())
+                    .setView(pannel)
+                    .setTouchOutside(true)
+                    .setItemHeight(0.4f)
+                    .setDialogGravity(Gravity.BOTTOM)
+                    .build();
+        }
+        themeDialog.show();
+    }
+
+    private void popCostCustom(final String money) {
+        if (costDialog == null) {
+
+            View pannel = View.inflate(getActivity(), R.layout.dialog_fee_cost, null);
+            ImageView imageDel = pannel.findViewById(R.id.top_del);
+            TextView tvMoney = pannel.findViewById(R.id.tv_money);
+            tvMoney.setText("-" + money);
+            SuperButton submit = pannel.findViewById(R.id.btn_submit);
+
+            imageDel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (costDialog != null) {
+                        costDialog.dismiss();
+                    }
+                }
+            });
+
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    costDialog.dismiss();
+                    mPresenter.addChengyi(SPManager.get().getStringValue("uid"), String.valueOf(rid), money);
+                }
+            });
+
+            costDialog = new CustomDialog.Builder(getActivity())
+                    .setView(pannel)
+                    .setTouchOutside(true)
+                    .setItemHeight(0.4f)
+                    .setDialogGravity(Gravity.BOTTOM)
+                    .build();
+        }
+        costDialog.show();
     }
 }

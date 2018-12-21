@@ -129,7 +129,7 @@ public class VipBean {
                 this.arr = arr;
             }
 
-            public static class ArrBean {
+            public static class ArrBean implements Serializable{
                 /**
                  * p_id : 1
                  * privilege_name : 优质用户推荐

@@ -19,7 +19,6 @@
         android:layout_marginLeft="14dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@id/img_head"
-        android:text="晴空万里"
         android:textColor="@color/balck_28"
         android:textSize="14sp" />
 
@@ -27,16 +26,19 @@
         android:id="@+id/img_sex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:layout_toRightOf="@id/tv_nick"
-        android:src="@drawable/ic_user_woman" />
+        android:layout_alignBottom="@id/tv_nick"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@id/tv_nick" />
 
     <ImageView
+        android:id="@+id/img_vip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_alignBottom="@id/tv_nick"
+        android:layout_marginLeft="8dp"
         android:layout_toRightOf="@id/img_sex"
-        android:src="@drawable/ic_user_vip" />
+        android:src="@drawable/ic_user_vip"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_info"

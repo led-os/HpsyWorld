@@ -75,7 +75,7 @@ public class HomeActivity extends BaseActivity {
         viewPager.setOffscreenPageLimit(5);
         mNavigationController.setupWithViewPager(viewPager);
 
-        connectRongYun(user1);
+       // connectRongYun(user1);
     }
 
     @Override
@@ -137,27 +137,6 @@ public class HomeActivity extends BaseActivity {
         Intent intent = new Intent(context, HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
-    }
-
-    private void connectRongYun(String token) {
-
-        RongIMClient.connect(token, new RongIMClient.ConnectCallback() {
-            @Override
-            public void onTokenIncorrect() {
-                Log.i("xxx", "onTokenIncorrect: ");
-            }
-
-            @Override
-            public void onSuccess(String s) {
-                Log.i("xxx", "onTokenIncorrect: ");
-                //RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.PRIVATE, "237", "测试");
-            }
-
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-                Log.i("xxx", "onTokenIncorrect: ");
-            }
-        });
     }
 
     private long firstTime = 0;

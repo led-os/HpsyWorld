@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.TransformationMethod;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -43,6 +44,7 @@ import cn.qqtheme.framework.entity.County;
 import cn.qqtheme.framework.entity.Province;
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.picker.DateTimePicker;
+import io.rong.imlib.RongIMClient;
 
 import static com.kuwai.ysy.app.C.MSG_LOGIN;
 
@@ -231,6 +233,7 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
         if (loginBean.getCode() == 200) {
             SPManager.get().putString("uid", String.valueOf(loginBean.getData().getUid()));
             SPManager.get().putString("rongyun_token", String.valueOf(loginBean.getData().getRongyun_token()));
+            connectRongYun(loginBean.getData().getRongyun_token());
             startActivity(new Intent(getActivity(), HomeActivity.class));
             getActivity().finish();
         } else {
@@ -256,5 +259,26 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
     @Override
     public void showViewError(Throwable t) {
 
+    }
+
+    private void connectRongYun(String token) {
+
+        RongIMClient.connect(token, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onTokenIncorrect() {
+                Log.i("xxx", "onTokenIncorrect: ");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                Log.i("xxx", "onTokenIncorrect: ");
+                //RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.PRIVATE, "237", "测试");
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.i("xxx", "onTokenIncorrect: ");
+            }
+        });
     }
 }

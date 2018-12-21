@@ -56,11 +56,11 @@ public class FoundApiFactory {
                 .compose(RxSchedulers.<BlindBean>ioMain());
     }
 
-    public static Observable<BlindBean> sendCancelApply(int rid, int uid) {
+    public static Observable<SimpleResponse> sendCancelApply(int rid, int uid) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(FoundService.class)
                 .sendCancelApply(rid, uid)
-                .compose(RxSchedulers.<BlindBean>ioMain());
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
     public static Observable<BlindBean> sendMeetAgree(int rdid, int status) {
@@ -70,6 +70,20 @@ public class FoundApiFactory {
                 .compose(RxSchedulers.<BlindBean>ioMain());
     }
 
+    public static Observable<SimpleResponse> addChengyi(String uid, String rid, String money) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(FoundService.class)
+                .addChengyi(uid, rid, money)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<SimpleResponse> addGift(String uid, String rid, String gift) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(FoundService.class)
+                .addGift(uid, rid, gift)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
     public static Observable<MeetThemeBean> getMeetFilter() {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(FoundService.class)
@@ -77,10 +91,10 @@ public class FoundApiFactory {
                 .compose(RxSchedulers.<MeetThemeBean>ioMain());
     }
 
-    public static Observable<CommisDetailBean> getCommisDetail(int rid,String uid) {
+    public static Observable<CommisDetailBean> getCommisDetail(int rid, String uid) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(FoundService.class)
-                .getCommisDetailData(rid,uid)
+                .getCommisDetailData(rid, uid)
                 .compose(RxSchedulers.<CommisDetailBean>ioMain());
     }
 

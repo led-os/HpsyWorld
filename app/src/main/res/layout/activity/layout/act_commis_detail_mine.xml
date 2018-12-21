@@ -91,6 +91,7 @@
                 android:text="诚意金" />
 
             <TextView
+                android:id="@+id/tv_chengyi"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="14dp"
@@ -113,6 +114,7 @@
         <View style="@style/horizontal_line" />
 
         <LinearLayout
+            android:id="@+id/lay_gift"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="horizontal"
@@ -144,7 +146,8 @@
                 app:sSolidColor="#b3ff6161" />
         </LinearLayout>
 
-        <View style="@style/horizontal_line" />
+        <View style="@style/horizontal_line"
+            android:id="@+id/line_gift"/>
 
         <LinearLayout
             android:id="@+id/grid1"

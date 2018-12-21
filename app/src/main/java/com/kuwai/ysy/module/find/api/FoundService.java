@@ -49,11 +49,21 @@ public interface FoundService {
 
     //约会-申请方-取消应约
     @POST("Appointment/CancelTheContract")
-    Observable<BlindBean> sendCancelApply(@Query("r_d_id") int rid, @Query("uid") int uid);
+    Observable<SimpleResponse> sendCancelApply(@Query("r_id") int rid, @Query("uid") int uid);
 
     //约会-发布方-同意应约
     @POST("Appointment/agreeInvi")
     Observable<BlindBean> sendMeetAgree(@Query("r_d_id") int rid, @Query("status") int status);
+
+    //约会-补交诚意金
+    @FormUrlEncoded
+    @POST("Appointment/fund")
+    Observable<SimpleResponse> addChengyi(@Field("uid") String uid, @Field("r_id") String rid, @Field("money") String money);
+
+    //约会-补交礼物
+    @FormUrlEncoded
+    @POST("Appointment/addgift")
+    Observable<SimpleResponse> addGift(@Field("uid") String uid, @Field("r_id") String rid, @Field("gift") String gift);
 
     //约会主题列表&数量
     @POST("Appointment/SearchAppointmentSincerity")

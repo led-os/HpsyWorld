@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.find.adapter.MyComissAdapter;
 import com.kuwai.ysy.module.find.bean.BlindBean;
@@ -84,7 +85,7 @@ public class MyCommisMainFragment extends BaseFragment<MyPromisePresenter> imple
                 if (view.getId()==R.id.sb_status){
                     if (mMyCommis.getData().get(position).getStatus() == 0) {
                         mPresenter.getCancelApply(mMyCommis.getData().get(position).getR_id(),
-                                (Integer.valueOf(SPManager.get().getStringValue("uid","1"))));
+                                (Integer.valueOf(SPManager.get().getStringValue("uid"))));
                     }
                 }
             }
@@ -105,8 +106,8 @@ public class MyCommisMainFragment extends BaseFragment<MyPromisePresenter> imple
     }
 
     @Override
-    public void sedCancelApply(BlindBean blindBean) {
-        ToastUtils.showShort(blindBean.getMsg());
+    public void sedCancelApply(SimpleResponse blindBean) {
+        ToastUtils.showShort(blindBean.msg);
     }
 
     @Override

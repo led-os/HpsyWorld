@@ -85,7 +85,7 @@ public class ChongzhiPsdFragment extends BaseFragment implements View.OnClickLis
                 break;
             case R.id.btn_login:
                 if (checkNull()) {
-                    chongzhiPsd(mEtTel.getText().toString(), mEtPsd.getText().toString(), mEtCode.getText().toString());
+                    chongzhiPsd(mEtTel.getText().toString(), Utils.encrypt32(mEtPsd.getText().toString()), mEtCode.getText().toString());
                 }
                 break;
             case R.id.tv_count_down:
