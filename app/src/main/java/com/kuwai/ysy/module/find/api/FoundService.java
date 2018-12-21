@@ -20,6 +20,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -28,8 +29,9 @@ public interface FoundService {
     /**
      * 获取发现首页
      */
+    @FormUrlEncoded
     @POST("Appointment/find")
-    Observable<FoundBean> getFirstHomeData();
+    Observable<FoundBean> getFirstHomeData(@FieldMap Map<String,Object> map);
 
     //获取省市的全部信息
     @GET("Currency/getProvincesAndCitiesInfoList")

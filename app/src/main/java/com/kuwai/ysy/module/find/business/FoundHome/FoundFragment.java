@@ -38,7 +38,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by sunnysa on 2018/11/21.
@@ -58,6 +60,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
     private List<String> tvbannerList = new ArrayList<>();
     private FoundCityAdapter mfoundCityAdapter;
     private FoundActivityAdapter mfoundActivityAdapter;
+    private String city ="苏州";
 
     private TextView mCitymeetMore, mTuodanMore;
     private FoundBean mFoundBean;
@@ -219,7 +222,16 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.requestHomeData();
+        getData();
+    }
+
+    private void getData() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("city", city);
+        map.put("longitude",113);
+        map.put("latitude",23);
+
+        mPresenter.requestHomeData(map);
     }
 
     @Override
@@ -235,7 +247,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
 
     @Override
     public void retry() {
-        mPresenter.requestHomeData();
+        getData();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
