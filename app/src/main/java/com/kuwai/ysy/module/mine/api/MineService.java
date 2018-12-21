@@ -6,7 +6,9 @@ import com.kuwai.ysy.bean.RResponse;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.find.bean.appointment.MyAppointMent;
 import com.kuwai.ysy.module.mine.bean.BlackListBean;
+import com.kuwai.ysy.module.mine.bean.CheckInBean;
 import com.kuwai.ysy.module.mine.bean.CreditBean;
+import com.kuwai.ysy.module.mine.bean.EarlierBean;
 import com.kuwai.ysy.module.mine.bean.GiftAcceptBean;
 import com.kuwai.ysy.module.mine.bean.GiftBoxBean;
 import com.kuwai.ysy.module.mine.bean.GiftExchangeBean;
@@ -15,11 +17,15 @@ import com.kuwai.ysy.module.mine.bean.IntegralDetailBean;
 import com.kuwai.ysy.module.mine.bean.MyAskBean;
 import com.kuwai.ysy.module.mine.bean.MyWalletBean;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
+import com.kuwai.ysy.module.mine.bean.PersonalDyBean;
+import com.kuwai.ysy.module.mine.bean.RechargeRecordBean;
 import com.kuwai.ysy.module.mine.bean.ShieldAndBlackListBean;
 import com.kuwai.ysy.module.mine.bean.TaGiftBean;
 import com.kuwai.ysy.module.mine.bean.TodayBean;
+import com.kuwai.ysy.module.mine.bean.TodayIntegral;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
 import com.kuwai.ysy.module.mine.bean.WalletDetailsBean;
+import com.kuwai.ysy.module.mine.bean.WithdrawalsRecordBean;
 import com.kuwai.ysy.module.mine.bean.user.UserInfo;
 import com.kuwai.ysy.module.mine.bean.vip.VipBean;
 
@@ -27,12 +33,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PartMap;
 
 public interface MineService {
 
@@ -51,12 +60,63 @@ public interface MineService {
     Observable<PersolHomePageBean> getUsetInfoMine(@Field("uid") String uid);
 
     /**
+     * 个人主页-动态-本人查看
+     */
+    @FormUrlEncoded
+    @POST("My/PersonalDynamic")
+    Observable<PersonalDyBean> getPersonalDynamic(@Field("uid") String uid,
+                                                  @Field("page") int page);
+
+    /**
+     * 个人主页-树洞-本人查看
+     */
+    @FormUrlEncoded
+    @POST("My/PersonalTreeHole")
+    Observable<PersolHomePageBean> getPersonalTreeHole(@Field("uid") String uid,
+                                                       @Field("page") int page);
+
+    /**
      * 个人主页-资料-别人查看
      */
     @FormUrlEncoded
     @POST("My/OtherPersonalInfo")
     Observable<PersolHomePageBean> getOtherPersonalInfo(@Field("uid") String uid,
                                                         @Field("other_uid") String otherid);
+
+    /**
+     * 购买查看素颜的特权
+     */
+    @FormUrlEncoded
+    @POST("My/PurchaseViewPlainFace")
+    Observable<SimpleResponse> getPurchaseViewPlainFace(@Field("uid") String uid,
+                                                        @Field("other_uid") String otherid);
+
+    /**
+     * 设置上线提醒
+     */
+    @FormUrlEncoded
+    @POST("My/Reminder")
+    Observable<SimpleResponse> getReminder(@Field("uid") String uid,
+                                           @Field("other_uid") String otherid);
+
+    /**
+     * 取消上线提醒
+     */
+    @FormUrlEncoded
+    @POST("My/CancelReminder")
+    Observable<SimpleResponse> getCancelReminder(@Field("uid") String uid,
+                                                 @Field("other_uid") String otherid);
+
+    /**
+     * 喜欢/取消喜欢
+     *
+     * @param type 1：喜欢，2：取消喜欢
+     */
+    @FormUrlEncoded
+    @POST("My/UserLike")
+    Observable<SimpleResponse> getUserLike(@Field("uid") String uid,
+                                           @Field("other_uid") String otherid,
+                                           @Field("type") int type);
 
     /**
      * 我收到的礼物列表
@@ -96,14 +156,14 @@ public interface MineService {
                                                @Field("page") int page);
 
     /**
-     * 我喜欢的
+     * 访客记录-删除
      *
      * @param type 1:谁看过我，2:是我看过谁
      */
     @FormUrlEncoded
     @POST("My/DelVisitorsRecord")
     Observable<VisitorBean> getDelVisitorsRecord(@Field("uid") String uid,
-                                                 @Field("v)id") String vid,
+                                                 @Field("v_id") String vid,
                                                  @Field("type") String type);
 
     /**
@@ -114,6 +174,14 @@ public interface MineService {
     Observable<VisitorBean> getIlike(@Field("uid") String uid);
 
     /**
+     * 我喜欢的-更早-分页
+     */
+    @FormUrlEncoded
+    @POST("My/UserLoveMeEarlier")
+    Observable<EarlierBean> getUserLoveMeEarlier(@Field("uid") String uid,
+                                                 @Field("page") int page);
+
+    /**
      * 喜欢我的
      */
     @FormUrlEncoded
@@ -121,11 +189,67 @@ public interface MineService {
     Observable<VisitorBean> getLikeMe(@Field("uid") String uid);
 
     /**
+     * 喜欢我的-更早-分页
+     */
+    @FormUrlEncoded
+    @POST("My/UserILikeItEarlier")
+    Observable<EarlierBean> getUserILikeItEarlier(@Field("uid") String uid,
+                                                  @Field("page") int page);
+
+    /**
      * 互相喜欢的（好友）
      */
     @FormUrlEncoded
     @POST("My/UserLikeEachOther")
     Observable<TodayBean> getLikeEach(@Field("uid") String uid, @Field("uid") int page);
+
+    /**
+     * 修改昵称
+     */
+    @FormUrlEncoded
+    @POST("Modify/UpdateUserNickname")
+    Observable<SimpleResponse> getUpdateUserNickname(@Field("uid") String uid, @Field("new_nickname") String nickname);
+
+    /**
+     * 设置支付密码
+     */
+    @FormUrlEncoded
+    @POST("Modify/AddParmentPassword")
+    Observable<SimpleResponse> getAddParmentPassword(@Field("uid") String uid,
+                                                     @Field("password") String psd,
+                                                     @Field("parment_password") String pay_psd,
+                                                     @Field("repeat_password") String re_pay_psd);
+
+    /**
+     * 修改 登录密码/支付密码
+     *
+     * @param type 1：登录密码，2：支付密码
+     */
+    @FormUrlEncoded
+    @POST("Modify/UpdatePasswordOrParmentPassword")
+    Observable<SimpleResponse> updatePasswordOrParmentPassword(@Field("uid") String uid,
+                                                               @Field("password") String psd,
+                                                               @Field("new_password") String pay_psd,
+                                                               @Field("repeat_password") String re_pay_psd,
+                                                               @Field("type") int type);
+
+    /**
+     * 修改手机号
+     */
+    @FormUrlEncoded
+    @POST("Modify/UpdateUserPhone")
+    Observable<SimpleResponse> updateUserPhone(@Field("uid") String uid,
+                                               @Field("phone") String phone,
+                                               @Field("new_phone") String newPhone,
+                                               @Field("new_check_code") String newVcode);
+
+    /**
+     * 修改个性签名
+     */
+    @FormUrlEncoded
+    @POST("Modify/UpdateUserSig")
+    Observable<SimpleResponse> updateUserSig(@Field("uid") String uid,
+                                             @Field("new_sig") String sig);
 
     /**
      * Ta 收到的礼物
@@ -182,6 +306,29 @@ public interface MineService {
                                                           @Field("page") int page);
 
     /**
+     * 今日-用户积分明细-列表
+     */
+    @FormUrlEncoded
+    @POST("My/UserTodayIntegralDetails")
+    Observable<TodayIntegral> getUserTodayIntegralDetails(@Field("uid") String uid,
+                                                          @Field("page") int page);
+
+    /**
+     * 签到列表
+     */
+    @FormUrlEncoded
+    @POST("My/UserIntegralCheckInList")
+    Observable<CheckInBean> getUserIntegralCheckInList(@Field("uid") String uid);
+
+    /**
+     * 点击签到
+     */
+    @FormUrlEncoded
+    @POST("My/UserIntegralCheckIn")
+    Observable<SimpleResponse> getUserIntegralCheckIn(@Field("uid") String uid);
+
+
+    /**
      * 信用认证-列表
      */
     @FormUrlEncoded
@@ -191,11 +338,9 @@ public interface MineService {
     /**
      * 实名认证
      */
-    @FormUrlEncoded
+    @Multipart
     @POST("My/AddRealnameAuthentication")
-    Observable<SimpleResponse> getRealnameAuthentication(@Field("uid") String uid,
-                                                         @Field("full_name") String name,
-                                                         @Field("id_number") String number);
+    Observable<SimpleResponse> getRealnameAuthentication(@PartMap Map<String, RequestBody> map);
 
     /**
      * 学历认证
@@ -287,7 +432,6 @@ public interface MineService {
     @POST("My/GiftExchangeEntity")
     Observable<SimpleResponse> getGiftExchangeEntity(@FieldMap HashMap<String, String> infos);
 
-
     /**
      * 我的钱包
      */
@@ -303,12 +447,38 @@ public interface MineService {
     Observable<WalletDetailsBean> getWalletList(@Field("uid") String uid,
                                                 @Field("page") int page);
 
+    /**
+     * 钱包提现
+     */
+    @FormUrlEncoded
+    @POST("My/WalletWithdrawals")
+    Observable<WalletDetailsBean> walletWithdrawals(@Field("uid") String uid,
+                                                    @Field("forward_amount") float money,
+                                                    @Field("alipay_id") String payid,
+                                                    @Field("alipay_name") String payName);
+
+    /**
+     * 钱包-充值记录
+     */
+    @FormUrlEncoded
+    @POST("My/WalletRechargeRecord")
+    Observable<RechargeRecordBean> walletRechargeRecord(@Field("uid") String uid,
+                                                        @Field("page") int page);
+
+    /**
+     * 钱包-提现记录
+     */
+    @FormUrlEncoded
+    @POST("My/WalletWithdrawalsRecord")
+    Observable<WithdrawalsRecordBean> walletWithdrawalsRecord(@Field("uid") String uid,
+                                                              @Field("page") int page);
 
     /**
      * 会员列表
      */
     @GET("My/AndroidFirstClassMember")
     Observable<VipBean> getVipList();
+
     /**
      * zfb订单获取
      */

@@ -23,8 +23,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class Login2Activity extends BaseActivity<LoginPresenter>
-        implements LoginContract.ILoginView, View.OnClickListener {
+public class Login2Activity extends BaseActivity<LoginPresenter> implements LoginContract.ILoginView, View.OnClickListener {
 
     private EditText et_mine_login_username, et_mine_login_password;
     private Button btn_mine_login;

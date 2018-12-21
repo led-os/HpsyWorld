@@ -73,7 +73,9 @@
         <activity android:name=".module.mine.MyPointActivity" />
         <activity android:name=".module.mine.MyWalletActivity" />
         <activity android:name="com.kuwai.ysy.module.mine.business.teamplayer.SingleListActivity" />
-        <activity android:name=".module.mine.MyCreditActivity" />
+        <activity
+            android:name=".module.mine.MyCreditActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".module.mine.SettingActivity" />
         <activity android:name=".module.mine.VipCenterActivity" />
         <activity android:name=".module.mine.business.like.StLikeActivity" />
@@ -169,9 +171,9 @@
                 android:resource="@xml/rc_file_path" />
         </provider>
 
-       <!-- <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="${UMENG_CHANNEL_VALUE}" />-->
+        <!-- <meta-data
+             android:name="UMENG_CHANNEL"
+             android:value="${UMENG_CHANNEL_VALUE}" />-->
 
         <!-- 高德地图定位key -->
         <meta-data

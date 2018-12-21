@@ -26,9 +26,12 @@ import com.kuwai.ysy.utils.security.MD5;
 import com.rayhahah.rbase.utils.useful.RxSchedulers;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.http.Field;
 
 
 public class MineApiFactory {
@@ -180,10 +183,31 @@ public class MineApiFactory {
                 .compose(RxSchedulers.<MyWalletBean>ioMain());
     }
 
-    public static Observable<WalletDetailsBean> getWalletDetails(String uid,int page) {
+    public static Observable<WalletDetailsBean> getWalletDetails(String uid, int page) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)
-                .getWalletList(uid,page)
+                .getWalletList(uid, page)
                 .compose(RxSchedulers.<WalletDetailsBean>ioMain());
+    }
+
+    public static Observable<SimpleResponse> getRealnameAuthentication(Map<String, RequestBody> map) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getRealnameAuthentication(map)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<SimpleResponse> updatePasswordOrParmentPassword(String uid, String psd, String newPsd, String reNewPsd, int type) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .updatePasswordOrParmentPassword(uid, psd, newPsd, reNewPsd, type)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<SimpleResponse> updateUserPhone(String uid, String phone, String newPhone, String newVcode) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .updateUserPhone(uid, phone, newPhone, newVcode)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 }

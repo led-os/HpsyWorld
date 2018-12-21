@@ -111,6 +111,9 @@ public class C {
     public static final int LOOK_ME = 1;//谁看过我
     public static final int My_VISITOR = 2;//我看过谁
 
+    public static final int CHANGE_LOGIN_PSD = 1;//登录密码
+    public static final int CHANGE_PAY_PSD = 2;//支付密码
+
 
     //通知
     public static final int MSG_LOGIN = 0x0000010;

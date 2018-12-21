@@ -9,41 +9,87 @@
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:rightTxt="保存"
         app:rightColor="@color/theme"
-        app:title1="修改密码"></com.kuwai.ysy.widget.NavigationLayout>
+        app:rightTxt="保存"
+        app:title1="修改密码" />
 
-    <com.allen.library.SuperTextView
-        android:id="@+id/st_current_psd"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:paddingStart="6dp"
-        android:paddingEnd="6dp"
-        app:sCenterTextString="sdasfafagagag"
-        app:sLeftTextColor="#282828"
-        app:sLeftTextSize="16sp"
-        app:sLeftTextString="当前密码" />
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
 
-    <com.allen.library.SuperTextView
-        android:id="@+id/st_new_psd"
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:text="当前密码"
+            android:textColor="@color/balck_28"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/current_psd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="48dp"
+            android:background="@color/white"
+            android:inputType="textPassword" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:paddingStart="6dp"
-        android:paddingEnd="6dp"
-        app:sCenterTextString="sdasfafagagag"
-        app:sLeftTextColor="#282828"
-        app:sLeftTextSize="16sp"
-        app:sLeftTextString="新密码" />
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
 
-    <com.allen.library.SuperTextView
-        android:id="@+id/st_renew_psd"
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:text="新密码"
+            android:textColor="@color/balck_28"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/new_psd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="48dp"
+            android:background="@color/white"
+            android:inputType="textPassword" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:paddingStart="6dp"
-        android:paddingEnd="6dp"
-        app:sCenterTextString="sdasfafagagag"
-        app:sLeftTextColor="#282828"
-        app:sLeftTextSize="16sp"
-        app:sLeftTextString="确认新密码" />
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:text="确认新密码"
+            android:textColor="@color/balck_28"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/renew_psd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="48dp"
+            android:background="@color/white"
+            android:inputType="textPassword" />
+
+    </LinearLayout>
+
 
 </LinearLayout>
