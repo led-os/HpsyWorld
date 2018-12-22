@@ -44,16 +44,29 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.st_headicon:
+                break;
+            case R.id.st_phone:
+                break;
             case R.id.tv_auth:
+
                 start(AuthFragment.newInstance());
+                break;
+            case R.id.st_edu:
+                start(EduFragment.newInstance());
+                break;
+            case R.id.st_house:
+
+                start(HouseFragment.newInstance());
+                break;
+            case R.id.st_car:
+                start(CarFragment.newInstance());
                 break;
         }
     }
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        mAuthTv = mRootView.findViewById(R.id.tv_auth);
-        mAuthTv.setOnClickListener(this);
 
         mNavigation = (NavigationLayout) mRootView.findViewById(R.id.navigation);
         mStHeadicon = (SuperTextView) mRootView.findViewById(R.id.st_headicon);
@@ -62,6 +75,7 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
         mStEdu = (SuperTextView) mRootView.findViewById(R.id.st_edu);
         mStHouse = (SuperTextView) mRootView.findViewById(R.id.st_house);
         mStCar = (SuperTextView) mRootView.findViewById(R.id.st_car);
+
 
     }
 
@@ -82,6 +96,7 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
             mStHeadicon.setRightString("去认证")
                     .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
                     .setRightTextColor(Color.parseColor("#ff6161"));
+            mStHeadicon.setOnClickListener(this);
         }
 
         if (creditBean.getData().get(0).getIs_phone() == 1) {
@@ -92,6 +107,7 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
             mStPhone.setRightString("去认证")
                     .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
                     .setRightTextColor(Color.parseColor("#ff6161"));
+            mStPhone.setOnClickListener(this);
         }
 
         if (creditBean.getData().get(0).getIs_real() == 1) {
@@ -102,6 +118,7 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
             mTvAuth.setRightString("去认证")
                     .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
                     .setRightTextColor(Color.parseColor("#ff6161"));
+            mTvAuth.setOnClickListener(this);
         }
 
         if (creditBean.getData().get(0).getIs_education() == 1) {
@@ -112,6 +129,7 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
             mStEdu.setRightString("去认证")
                     .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
                     .setRightTextColor(Color.parseColor("#ff6161"));
+            mStEdu.setOnClickListener(this);
         }
 
         if (creditBean.getData().get(0).getIs_house() == 1) {
@@ -122,6 +140,7 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
             mStHouse.setRightString("去认证")
                     .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
                     .setRightTextColor(Color.parseColor("#ff6161"));
+            mStHouse.setOnClickListener(this);
         }
 
         if (creditBean.getData().get(0).getIs_vehicle() == 1) {
@@ -132,6 +151,7 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
             mStCar.setRightString("去认证")
                     .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
                     .setRightTextColor(Color.parseColor("#ff6161"));
+            mStCar.setOnClickListener(this);
         }
 
     }

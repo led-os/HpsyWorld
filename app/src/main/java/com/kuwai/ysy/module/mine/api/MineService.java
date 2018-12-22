@@ -345,26 +345,23 @@ public interface MineService {
     /**
      * 学历认证
      */
-    @FormUrlEncoded
+    @Multipart
     @POST("My/AddEducationAuthentication")
-    Observable<SimpleResponse> getEducationAuthentication(@Field("uid") String uid,
-                                                          @Field("full_name") String name,
-                                                          @Field("education") String education,
-                                                          @Field("school") String school);
+    Observable<SimpleResponse> getEducationAuthentication(@PartMap Map<String, RequestBody> map);
 
     /**
      * 车辆认证
      */
-    @FormUrlEncoded
+    @Multipart
     @POST("My/AddVehicleAuthentication")
-    Observable<SimpleResponse> getVehicleAuthentication(@Field("uid") String uid);
+    Observable<SimpleResponse> getVehicleAuthentication(@PartMap Map<String, RequestBody> map);
 
     /**
      * 房产认证(不动产认证)
      */
-    @FormUrlEncoded
+    @Multipart
     @POST("My/AddHouseAuthentication")
-    Observable<SimpleResponse> getHouseAuthentication(@Field("uid") String uid);
+    Observable<SimpleResponse> getHouseAuthentication(@PartMap Map<String, RequestBody> map);
 
     /**
      * 屏蔽与黑名单-列表
