@@ -2,13 +2,25 @@ package com.kuwai.ysy.module.mine.business.paypsd;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.widget.NavigationLayout;
+import com.kuwai.ysy.widget.PasswordInputView;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
-public class ChangePayPsdFragment extends BaseFragment implements View.OnClickListener {
+public class ChangePayPsdFragment extends BaseFragment<ChangePayPsdPresenter> implements ChangePayPsdContract.IHomeView, View.OnClickListener {
+
+
+    private PasswordInputView mCurretPsd, mPsdView, mSurePsd;
+    private NavigationLayout navigationLayout;
+    private String mCPsd, mPsd, mRePsd;
 
     public static ChangePayPsdFragment newInstance() {
         Bundle args = new Bundle();
@@ -23,8 +35,8 @@ public class ChangePayPsdFragment extends BaseFragment implements View.OnClickLi
     }
 
     @Override
-    protected RBasePresenter getPresenter() {
-        return null;
+    protected ChangePayPsdPresenter getPresenter() {
+        return new ChangePayPsdPresenter(this);
     }
 
     @Override
@@ -34,10 +46,86 @@ public class ChangePayPsdFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        navigationLayout = mRootView.findViewById(R.id.navigation);
+        navigationLayout.setRightClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!TextUtils.isEmpty(mCPsd) && !TextUtils.isEmpty(mPsd) && !TextUtils.isEmpty(mRePsd)) {
+                    if (mPsd.equals(mRePsd)) {
+                        mPresenter.requestHomeData(SPManager.getStringValue("uid"), mCPsd, mPsd, mRePsd, C.CHANGE_PAY_PSD);
+                    } else {
+                        ToastUtils.showShort("两次输入的新密码不一致");
+                    }
+                } else {
+                    ToastUtils.showShort("密码不能为空");
+                }
+            }
+        });
+
+        mPsdView = mRootView.findViewById(R.id.current_psd);
+        mPsdView.setOnFinishListener(new PasswordInputView.OnFinishListener() {
+            @Override
+            public void setOnPasswordFinished(String text) {
+                if (text.length() == 6) {
+                    mCPsd = text;
+                } else {
+                    mCPsd = "";
+                }
+            }
+        });
+
+        mSurePsd = mRootView.findViewById(R.id.new_psd);
+        mSurePsd.setOnFinishListener(new PasswordInputView.OnFinishListener() {
+            @Override
+            public void setOnPasswordFinished(String text) {
+                if (text.length() == 6) {
+                    mPsd = text;
+                } else {
+                    mPsd = "";
+                }
+            }
+        });
+
+        mSurePsd = mRootView.findViewById(R.id.sure_new_psd);
+        mSurePsd.setOnFinishListener(new PasswordInputView.OnFinishListener() {
+            @Override
+            public void setOnPasswordFinished(String text) {
+                if (text.length() == 6) {
+                    mRePsd = text;
+                } else {
+                    mRePsd = "";
+                }
+            }
+        });
     }
 
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
+    }
+
+    @Override
+    public void setHomeData(SimpleResponse response) {
+        ToastUtils.showShort(response.msg);
+    }
+
+    @Override
+    public void showError(int errorCode, String msg) {
+
+    }
+
+    @Override
+    public void showViewLoading() {
+
+    }
+
+    @Override
+    public void dismissLoading() {
+
+    }
+
+    @Override
+    public void showViewError(Throwable t) {
+
     }
 }

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.kuwai.ysy.widget.NavigationLayout
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:rightColor="@color/theme"
+            app:title1="房产认证" />
+
+        <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--android:src="@drawable/center_aut_img_banner_1" />-->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#0d4E05FF"
+            android:padding="4dp"
+            android:paddingStart="16dp"
+            android:text="请拍摄并上传你的房产证"
+            android:textColor="#ff5415f9"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingTop="13dp"
+            android:paddingBottom="13dp">
+
+            <RelativeLayout
+                android:id="@+id/rl_house"
+                android:layout_width="300dp"
+                android:layout_height="450dp"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:id="@+id/iv_house"
+                    android:layout_width="300dp"
+                    android:layout_height="450dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/center_aut_house_2" />
+
+                <TextView
+                    android:id="@+id/tv_house"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="58dp"
+                    android:text="上传学历证书正面照"
+                    android:textColor="@color/baoyin"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#0d4E05FF"
+            android:padding="4dp"
+            android:paddingStart="16dp"
+            android:text="以上信息仅供此次认证使用，将严格保密"
+            android:textColor="#ff5415f9"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_cash"
+            android:layout_width="300dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="38dp"
+            android:layout_marginBottom="35dp"
+            android:background="@drawable/money_cash_btn"
+            android:text="完成提交"
+            android:textColor="#ffffffff"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</ScrollView>

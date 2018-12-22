@@ -14,8 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:rightColor="@color/theme"
-            app:rightTxt="实名作用？"
-            app:title1="实名认证" />
+            app:rightTxt="学历作用？"
+            app:title1="学历认证" />
 
         <!--<ImageView-->
         <!--android:layout_width="match_parent"-->
@@ -29,7 +29,7 @@
             android:background="#0d4E05FF"
             android:padding="4dp"
             android:paddingStart="16dp"
-            android:text="请拍摄并上传你的身份证"
+            android:text="请拍摄并上传你的最高学历证书"
             android:textColor="#ff5415f9"
             android:textSize="14sp" />
 
@@ -43,23 +43,23 @@
             android:paddingBottom="13dp">
 
             <RelativeLayout
-                android:id="@+id/rl_ID"
+                android:id="@+id/rl_edu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/iv_ID"
+                    android:id="@+id/iv_edu"
                     android:layout_width="150dp"
                     android:layout_height="100dp"
                     android:src="@drawable/center_aut_add" />
 
                 <TextView
-                    android:id="@+id/tv_ID"
+                    android:id="@+id/tv_edu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="58dp"
-                    android:text="上传身份证正面照"
+                    android:text="上传学历证书正面照"
                     android:textColor="@color/baoyin"
                     android:textSize="12sp" />
             </RelativeLayout>
@@ -68,38 +68,9 @@
                 android:layout_width="150dp"
                 android:layout_height="100dp"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/center_aut_img_1" />
+                android:src="@drawable/center_aut2_img" />
 
-            <RelativeLayout
-                android:id="@+id/rl_hand_ID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rl_ID"
-                android:layout_marginTop="27dp">
 
-                <ImageView
-                    android:id="@+id/iv_hand_ID"
-                    android:layout_width="150dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/center_aut_add" />
-
-                <TextView
-                    android:id="@+id/tv_hand_ID"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="58dp"
-                    android:text="上传手持身份证正面照"
-                    android:textColor="@color/baoyin"
-                    android:textSize="12sp" />
-            </RelativeLayout>
-
-            <ImageView
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:layout_alignTop="@+id/rl_hand_ID"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/center_aut_img_2" />
         </RelativeLayout>
 
         <TextView
@@ -118,17 +89,29 @@
             android:layout_height="50dp"
             android:layout_marginTop="15dp"
             android:background="@color/white"
-            android:padding="16dp"
             android:hint="输入你的真实姓名"
+            android:padding="16dp"
             android:textColorHint="@color/baoyin"
             android:textSize="16sp" />
 
+        <View style="@style/horizontal_line" />
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/my_edu"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            app:sLeftTextColor="@color/baoyin"
+            app:sLeftTextSize="16sp"
+            app:sRightTvDrawableRight="@drawable/center_ic_list_arrow"
+            app:sLeftTextString="选择你的最高学历" />
+
         <EditText
-            android:id="@+id/my_number"
+            android:id="@+id/my_school"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/white"
-            android:hint="输入你的身份证号码"
+            android:hint="输入毕业院校的完整名称"
             android:padding="16dp"
             android:textColorHint="@color/baoyin"
             android:textSize="16sp" />

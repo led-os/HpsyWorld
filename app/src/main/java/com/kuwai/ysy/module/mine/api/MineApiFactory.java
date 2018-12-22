@@ -197,6 +197,27 @@ public class MineApiFactory {
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
+    public static Observable<SimpleResponse> getEducationAuthentication(Map<String, RequestBody> map) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getEducationAuthentication(map)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<SimpleResponse> getHouseAuthentication(Map<String, RequestBody> map) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getHouseAuthentication(map)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<SimpleResponse> getVehicleAuthentication(Map<String, RequestBody> map) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getVehicleAuthentication(map)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
     public static Observable<SimpleResponse> updatePasswordOrParmentPassword(String uid, String psd, String newPsd, String reNewPsd, int type) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)
@@ -208,6 +229,13 @@ public class MineApiFactory {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)
                 .updateUserPhone(uid, phone, newPhone, newVcode)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<SimpleResponse> getAddParmentPassword(String uid, String psd, String pay_psd, String re_pay_psd) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getAddParmentPassword(uid, psd, pay_psd, re_pay_psd)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 }
