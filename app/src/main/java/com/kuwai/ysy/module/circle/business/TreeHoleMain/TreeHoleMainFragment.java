@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.DyDetailActivity;
 import com.kuwai.ysy.module.circle.HoleDetailActivity;
@@ -26,6 +27,11 @@ import com.kuwai.ysy.widget.popwindow.YsyPopWindow;
 import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.useful.SPManager;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -45,6 +51,8 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
     private Banner mBanner;
     private CustomDialog customDialog;
     private HoleMainListBean mHoleMainListBean;
+
+    private SmartRefreshLayout mRefreshLayout;
 
     public static TreeHoleMainFragment newInstance() {
         Bundle args = new Bundle();
@@ -75,6 +83,10 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
     @Override
     public void initView(Bundle savedInstanceState) {
         mDongtaiList = mRootView.findViewById(R.id.rl_tree_hole);
+
+        mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
+        mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
+
         mPublishTv = mRootView.findViewById(R.id.tv_edit);
         mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mDongtaiList.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 4), R.color.black));
@@ -82,6 +94,21 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
         mDongtaiList.addOnScrollListener(new HomeActivity.ListScrollListener());
         mDongtaiList.setAdapter(mDongtaiAdapter);
         mPublishTv.setOnClickListener(this);
+
+        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                page = 1;
+                mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid"));
+            }
+        });
+
+     /*   mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                mPresenter.requestMore(page + 1, SPManager.get().getStringValue("uid"));
+            }
+        });*/
 
         mDongtaiAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -92,6 +119,12 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
                 startActivity(intent);
             }
         });
+        mDongtaiAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                mPresenter.requestMore(page + 1, SPManager.get().getStringValue("uid"));
+            }
+        }, mDongtaiList);
 
         mDongtaiAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -112,7 +145,7 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid","1"));
+        mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid"));
     }
 
     private void showPopListView() {
@@ -129,13 +162,25 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
 
     @Override
     public void setHomeData(HoleMainListBean holeMainListBean) {
+        mRefreshLayout.finishRefresh();
         mHoleMainListBean = holeMainListBean;
-        mDongtaiAdapter.addData(holeMainListBean.getData().getTreeHoleList());
+        mDongtaiAdapter.replaceData(holeMainListBean.getData().getTreeHoleList());
+        imgList.clear();
         for (int i = 0; i < holeMainListBean.getData().getBanner().size(); i++) {
             imgList.add(holeMainListBean.getData().getBanner().get(i).getImg());
         }
         mBanner.setImages(imgList);
         mBanner.start();
+    }
+
+    @Override
+    public void setMoreData(HoleMainListBean dyMainListBean) {
+        mDongtaiAdapter.loadMoreEnd();
+        if (dyMainListBean.getData().getTreeHoleList().size() > 0) {
+            page++;
+            mHoleMainListBean.getData().getTreeHoleList().addAll(dyMainListBean.getData().getTreeHoleList());
+            mDongtaiAdapter.addData(dyMainListBean.getData().getTreeHoleList());
+        }
     }
 
     @Override

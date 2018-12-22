@@ -14,6 +14,8 @@ public class TreeHoleMainContract {
          */
         void setHomeData(HoleMainListBean holeMainListBean);
 
+        void setMoreData(HoleMainListBean dyMainListBean);
+
         /**
          * 设置加载更多的数据
          */
@@ -32,5 +34,6 @@ public class TreeHoleMainContract {
          */
         void requestHomeData(int page, String uid);
 
+        void requestMore(int page, String uid);
     }
 }

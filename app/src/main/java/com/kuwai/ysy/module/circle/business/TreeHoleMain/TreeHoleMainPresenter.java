@@ -39,4 +39,19 @@ public class TreeHoleMainPresenter extends RBasePresenter<TreeHoleMainContract.I
         }));
     }
 
+    @Override
+    public void requestMore(int page, String uid) {
+        addSubscription(CircleApiFactory.getHoleMainListData(page, uid).subscribe(new Consumer<HoleMainListBean>() {
+            @Override
+            public void accept(HoleMainListBean holeMainListBean) throws Exception {
+                mView.setMoreData(holeMainListBean);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.i(TAG, "accept: " + throwable);
+            }
+        }));
+    }
+
 }

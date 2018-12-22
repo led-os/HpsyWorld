@@ -422,7 +422,7 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
     }
 
     @Override
-    public void giftClick(int gid, int nums) {
-        mPresenter.dyReward(SPManager.get().getStringValue("uid"), "1", did, gid, nums);
+    public void giftClick(GiftPopBean.DataBean giftBean) {
+        mPresenter.dyReward(SPManager.get().getStringValue("uid"), "1", did, giftBean.getG_id(), giftBean.num);
     }
 }

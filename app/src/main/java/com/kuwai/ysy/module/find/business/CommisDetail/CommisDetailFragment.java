@@ -142,17 +142,15 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_more:
-                View pannel = View.inflate(getActivity(), R.layout.dialog_more_gift, null);
-                for (int i = 0; i < 7; i++) {
-                    mGiftList.add(new CategoryBean());
-                }
-                RecyclerView recyclerView = pannel.findViewById(R.id.rl_gift);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-                linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                recyclerView.setLayoutManager(linearLayoutManager);
-                DialogGiftAdapter adapter = new DialogGiftAdapter(mGiftList);
-                recyclerView.setAdapter(adapter);
+
                 if (customDialog == null) {
+                    View pannel = View.inflate(getActivity(), R.layout.dialog_more_gift, null);
+                    RecyclerView recyclerView = pannel.findViewById(R.id.rl_gift);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+                    linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                    recyclerView.setLayoutManager(linearLayoutManager);
+                    DialogGiftAdapter adapter = new DialogGiftAdapter(mcCommisDetailBean.getData().getGift());
+                    recyclerView.setAdapter(adapter);
                     customDialog = new CustomDialog.Builder(getActivity())
                             .setView(pannel)
                             .setTouchOutside(true)
@@ -228,6 +226,7 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
+        mLayoutStatusView.showLoading();
         mPresenter.requestHomeData(rid, SPManager.get().getStringValue("uid"));
     }
 
@@ -301,6 +300,7 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
                     + "*" + commisDetailBean.getData().getGift().get(0).getG_nums());
         }
 
+        approveList.clear();
         for (int i = 0; i < commisDetailBean.getData().getSign().size(); i++) {
             approveList.add(commisDetailBean.getData().getSign().get(i).getAvatar());
         }
@@ -312,7 +312,8 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
     @Override
     public void setApply(BlindBean blindBean) {
         if (blindBean.getCode() == 200) {
-            mBtnCommis.setText("取消应约");
+            //mBtnCommis.setText("取消应约");
+            mPresenter.requestHomeData(rid, SPManager.get().getStringValue("uid"));
         }
         ToastUtils.showShort(blindBean.getMsg());
     }
@@ -326,13 +327,14 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
     public void cancelResult(SimpleResponse response) {
         if (response.code == 200) {
             mBtnCommis.setText("应约");
+            mPresenter.requestHomeData(rid, SPManager.get().getStringValue("uid"));
         }
         ToastUtils.showShort(response.msg);
     }
 
     @Override
     public void showViewLoading() {
-        mLayoutStatusView.showLoading();
+        // mLayoutStatusView.showLoading();
     }
 
     @Override

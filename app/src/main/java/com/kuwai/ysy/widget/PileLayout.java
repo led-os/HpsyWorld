@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.allen.library.CircleImageView;
 import com.bumptech.glide.Glide;
 import com.kuwai.ysy.R;
+import com.rayhahah.rbase.utils.useful.GlideUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -211,10 +212,7 @@ public class PileLayout extends ViewGroup {
 
             CircleImageView imageView = (CircleImageView) LayoutInflater.from(context).inflate(R.layout.item_round_head, this, false);
 
-            Glide.with(context)
-                    .load(allUrls.get(i))
-                    //.placeholder(R.mipmap.ic_launcher)
-                    .into(imageView);
+            GlideUtil.load(context,allUrls.get(i),imageView);
             this.addView(imageView);
         }
         postInvalidate();

@@ -12,7 +12,7 @@
         android:layout_width="54dp"
         android:layout_height="54dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_btn_add" />
+        android:src="@drawable/ic_btn_gift_add" />
 
     <ImageView
         android:id="@+id/iv_photo"
@@ -25,9 +25,9 @@
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="甜蜜爱莲"
+        android:layout_marginTop="8dp"
+        android:text=""
         android:textColor="@color/balck_28"
-        android:textSize="16sp" />
+        android:textSize="12sp" />
 
 </LinearLayout>

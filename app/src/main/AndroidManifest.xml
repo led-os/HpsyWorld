@@ -69,6 +69,8 @@
         <activity android:name=".module.find.FoundLocationActivity" />
         <activity android:name=".module.find.business.TuoDan.TuodanActivity" />
         <activity android:name=".module.find.CityMeetActivity" />
+        <activity android:name=".module.find.CommisDetailOtherActivity" />
+        <activity android:name=".module.find.business.CommisDetailMyActivity" />
 
         //我的
         <activity android:name=".module.mine.MyPointActivity" />

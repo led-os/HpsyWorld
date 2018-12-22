@@ -191,7 +191,7 @@ public class GlideUtil {
         RequestOptions options = new RequestOptions()
                 .centerCrop()
                 .placeholder(placeholderSoWhite) //占位图
-                .error(R.color.white)       //错误图
+                .error(context.getResources().getDrawable(R.drawable.center_img_user_default))       //错误图
                 // .priority(Priority.HIGH)
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
         Glide.with(context).load(url).apply(options).into(imageView);

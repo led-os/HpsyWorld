@@ -379,7 +379,7 @@ public class HoleDetailMainFragment extends BaseFragment<HoleDetailPresenter> im
     }
 
     @Override
-    public void giftClick(int gid, int nums) {
-        mPresenter.dyReward(SPManager.get().getStringValue("uid"), "2", tid, gid, nums);
+    public void giftClick(GiftPopBean.DataBean giftBean) {
+        mPresenter.dyReward(SPManager.get().getStringValue("uid"), "2", tid, giftBean.getG_id(), giftBean.num);
     }
 }

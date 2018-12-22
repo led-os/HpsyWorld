@@ -300,12 +300,12 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
     }
 
     @Override
-    public void giftClick(int gid, int nums) {
+    public void giftClick(GiftPopBean.DataBean giftBean) {
         GiftPopBean.DataBean bean = new GiftPopBean.DataBean();
-        bean.setGirft_img_url(giftPopBean.getData().get(gid).getGirft_img_url());
-        bean.setGirft_name(giftPopBean.getData().get(gid).getGirft_name());
-        bean.setG_id(giftPopBean.getData().get(gid).getG_id());
-        bean.num = nums;
+        bean.setGirft_img_url(giftBean.getGirft_img_url());
+        bean.setGirft_name(giftBean.getGirft_name());
+        bean.setG_id(giftBean.getG_id());
+        bean.num = giftBean.num;
         mGiftData.add(bean);
         publishGiftAdapter.notifyDataSetChanged();
         customDialog.dismiss();

@@ -2,6 +2,7 @@ package com.kuwai.ysy.module.find.adapter;
 
 import android.widget.ImageView;
 
+import com.allen.library.SuperButton;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.kuwai.ysy.R;
@@ -25,6 +26,7 @@ public class YingyueListAdapter extends BaseQuickAdapter<MyCommisDetailBean.Data
         GlideUtil.load(mContext, item.getAvatar(), (ImageView) helper.getView(R.id.img_head));
         helper.setText(R.id.tv_nick, item.getNickname());
         helper.setText(R.id.tv_sign, item.getAge() + "岁");
+        SuperButton agree = helper.getView(R.id.btn_agree);
 
         switch (item.getGender()) {
             case C.Man:
@@ -33,6 +35,14 @@ public class YingyueListAdapter extends BaseQuickAdapter<MyCommisDetailBean.Data
             case C.Woman:
                 GlideUtil.load(mContext, R.drawable.ic_user_woman, (ImageView) helper.getView(R.id.img_sex));
                 break;
+        }
+
+        if (item.getStatus() == 1) {
+            agree.setText("已同意");
+            agree.setEnabled(false);
+        } else {
+            agree.setText("同意");
+            agree.setEnabled(true);
         }
 
         helper.addOnClickListener(R.id.btn_agree);

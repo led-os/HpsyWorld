@@ -240,7 +240,7 @@ public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.btn_agree:
-                        mPresenter.getAgree(mMyCommisDetailBean.getData().getR_id(), 1);
+                        mPresenter.getAgree(mMyCommisDetailBean.getData().getSign().get(position).getR_d_id(), 1);
                         break;
                 }
             }
@@ -352,12 +352,13 @@ public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter
 
         mTvYinYueNum.setText(String.valueOf(myCommisDetailBean.getData().getSign().size()) + "人");
 
-        mDateAdapter.addData(myCommisDetailBean.getData().getSign());
+        mDateAdapter.replaceData(myCommisDetailBean.getData().getSign());
 
     }
 
     @Override
     public void setAgree(BlindBean blindBean) {
+        mPresenter.requestHomeData(rid);
         ToastUtils.showShort(blindBean.getMsg());
     }
 

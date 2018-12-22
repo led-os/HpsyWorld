@@ -8,7 +8,7 @@ public class MyCommisDetailBean {
     /**
      * code : 200
      * msg : 获取成功
-     * data : {"r_id":1,"name":"美食","other":"","release_time":1541829029,"Message":"一起约会吧","earnest_money":10,"girl_friend":2,"consumption_type":0,"uid":1,"nickname":"我是一号","avatar":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","gender":1,"age":"25","region_name":"吴中区","sign":[{"r_d_id":2,"nickname":"李四","avatar":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","uid":3,"age":"25","gender":1},{"r_d_id":1,"nickname":"222","avatar":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","uid":2,"age":"25","gender":1}],"gift":[{"girft_name":"甜蜜暗恋","girft_img_url":"public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","g_nums":5},{"girft_name":"hi,你好","girft_img_url":"public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","g_nums":1}]}
+     * data : {"r_id":22,"name":"密室逃脱","other":"","release_time":1514736000,"Message":"","earnest_money":20,"girl_friend":0,"consumption_type":0,"uid":1,"nickname":"张三","avatar":"http://192.168.1.88/public/static/img/avatar/201812/19/1159e6106c38a19e6dd82d12de770cb5.jpg","gender":1,"age":"25","region_name":"吴中区","sign":[{"r_d_id":34,"status":0,"nickname":"qq888","avatar":"http://192.168.1.88/public/static/img/avatar/201812/18/830416362eae8d1809627e65298fe445.jpg","uid":105,"age":"22","gender":1}],"gift":[{"girft_name":"hi,你好","girft_img_url":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","g_nums":3},{"girft_name":"缘分抱抱","girft_img_url":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","g_nums":2},{"girft_name":"hi,你好","girft_img_url":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","g_nums":3},{"girft_name":"缘分抱抱","girft_img_url":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","g_nums":2}]}
      */
 
     private int code;
@@ -41,22 +41,22 @@ public class MyCommisDetailBean {
 
     public static class DataBean {
         /**
-         * r_id : 1
-         * name : 美食
+         * r_id : 22
+         * name : 密室逃脱
          * other :
-         * release_time : 1541829029
-         * Message : 一起约会吧
-         * earnest_money : 10
-         * girl_friend : 2
+         * release_time : 1514736000
+         * Message :
+         * earnest_money : 20
+         * girl_friend : 0
          * consumption_type : 0
          * uid : 1
-         * nickname : 我是一号
-         * avatar : http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg
+         * nickname : 张三
+         * avatar : http://192.168.1.88/public/static/img/avatar/201812/19/1159e6106c38a19e6dd82d12de770cb5.jpg
          * gender : 1
          * age : 25
          * region_name : 吴中区
-         * sign : [{"r_d_id":2,"nickname":"李四","avatar":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","uid":3,"age":"25","gender":1},{"r_d_id":1,"nickname":"222","avatar":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","uid":2,"age":"25","gender":1}]
-         * gift : [{"girft_name":"甜蜜暗恋","girft_img_url":"public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","g_nums":5},{"girft_name":"hi,你好","girft_img_url":"public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","g_nums":1}]
+         * sign : [{"r_d_id":34,"status":0,"nickname":"qq888","avatar":"http://192.168.1.88/public/static/img/avatar/201812/18/830416362eae8d1809627e65298fe445.jpg","uid":105,"age":"22","gender":1}]
+         * gift : [{"girft_name":"hi,你好","girft_img_url":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","g_nums":3},{"girft_name":"缘分抱抱","girft_img_url":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","g_nums":2},{"girft_name":"hi,你好","girft_img_url":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","g_nums":3},{"girft_name":"缘分抱抱","girft_img_url":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","g_nums":2}]
          */
 
         private int r_id;
@@ -206,15 +206,17 @@ public class MyCommisDetailBean {
 
         public static class SignBean {
             /**
-             * r_d_id : 2
-             * nickname : 李四
-             * avatar : http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg
-             * uid : 3
-             * age : 25
+             * r_d_id : 34
+             * status : 0
+             * nickname : qq888
+             * avatar : http://192.168.1.88/public/static/img/avatar/201812/18/830416362eae8d1809627e65298fe445.jpg
+             * uid : 105
+             * age : 22
              * gender : 1
              */
 
             private int r_d_id;
+            private int status;
             private String nickname;
             private String avatar;
             private int uid;
@@ -227,6 +229,14 @@ public class MyCommisDetailBean {
 
             public void setR_d_id(int r_d_id) {
                 this.r_d_id = r_d_id;
+            }
+
+            public int getStatus() {
+                return status;
+            }
+
+            public void setStatus(int status) {
+                this.status = status;
             }
 
             public String getNickname() {
@@ -272,9 +282,9 @@ public class MyCommisDetailBean {
 
         public static class GiftBean {
             /**
-             * girft_name : 甜蜜暗恋
-             * girft_img_url : public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg
-             * g_nums : 5
+             * girft_name : hi,你好
+             * girft_img_url : http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg
+             * g_nums : 3
              */
 
             private String girft_name;

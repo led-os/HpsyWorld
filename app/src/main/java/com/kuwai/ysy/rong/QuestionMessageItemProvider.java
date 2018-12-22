@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,11 @@ import android.widget.TextView;
 
 
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.listener.OnRedPacketDialogClickListener;
 import com.kuwai.ysy.module.chat.business.QuestionActivity;
+import com.kuwai.ysy.rong.bean.RedPacketEntity;
+import com.rayhahah.dialoglib.CustomDialog;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
@@ -39,6 +44,10 @@ import io.rong.imlib.model.Message;
 )
 public class QuestionMessageItemProvider extends IContainerItemProvider.MessageProvider<QuestionMessage> {
     private static final String TAG = "QuestionMessageItemProvider";
+
+    private View mRedPacketDialogView;
+    private RedPacketViewHolder mRedPacketViewHolder;
+    private CustomDialog mRedPacketDialog;
 
     private static class ViewHolder {
         TextView message;
@@ -77,7 +86,40 @@ public class QuestionMessageItemProvider extends IContainerItemProvider.MessageP
 
     @Override
     public void onItemClick(View view, int position, QuestionMessage content, UIMessage message) {
-        view.getContext().startActivity(new Intent(view.getContext(), QuestionActivity.class));
+        RedPacketEntity entity = new RedPacketEntity("萨顶顶", "http://192.168.1.88/public/static/img/avatar/201812/19/1159e6106c38a19e6dd82d12de770cb5.jpg", "大吉大利，今晚吃鸡");
+        showRedPacketDialog(entity, view.getContext());
+        //view.getContext().startActivity(new Intent(view.getContext(), QuestionActivity.class));
+    }
+
+    public void showRedPacketDialog(RedPacketEntity entity, Context mContext) {
+        if (mRedPacketDialogView == null) {
+            mRedPacketDialogView = View.inflate(mContext, R.layout.dialog_red_packet, null);
+            mRedPacketViewHolder = new RedPacketViewHolder(mContext, mRedPacketDialogView);
+            if (mRedPacketDialog == null) {
+                mRedPacketDialog = new CustomDialog.Builder(mContext)
+                        .setView(mRedPacketDialogView)
+                        .setTouchOutside(true)
+                        .setDialogGravity(Gravity.CENTER)
+                        .build();
+            }
+        }
+
+        mRedPacketViewHolder.setData(entity);
+        mRedPacketViewHolder.setOnRedPacketDialogClickListener(new OnRedPacketDialogClickListener() {
+            @Override
+            public void onCloseClick() {
+                mRedPacketDialog.dismiss();
+            }
+
+            @Override
+            public void onOpenClick() {
+                //领取红包,调用接口
+                ToastUtils.showShort("萨顶顶中了五百万大奖");
+                mRedPacketDialog.dismiss();
+            }
+        });
+
+        mRedPacketDialog.show();
     }
 
     @Override

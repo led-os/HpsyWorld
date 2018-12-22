@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
@@ -23,12 +24,15 @@ import com.kuwai.ysy.bean.Model;
 import com.kuwai.ysy.callback.GiftClickCallback;
 import com.kuwai.ysy.module.chat.adapter.GridViewAdapter;
 import com.kuwai.ysy.module.chat.adapter.ViewPagerAdapter;
+import com.kuwai.ysy.module.find.api.AppointApiFactory;
+import com.kuwai.ysy.module.find.bean.GiftPopBean;
 import com.kuwai.ysy.widget.GiftPannelView;
 import com.rayhahah.dialoglib.CustomDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.functions.Consumer;
 import io.rong.imkit.MainActivity;
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.RongIM;
@@ -54,8 +58,7 @@ public class MyPlugin implements IPluginModule, GiftClickCallback {
 
     @Override
     public void onClick(Fragment fragment, RongExtension rongExtension) {
-        customDialog = createDialog(fragment.getActivity());
-        customDialog.show();
+        createDialog(fragment.getActivity());
         rongExtension.collapseExtension();
         //ToastUtil.getInstance()._short(fragment.getActivity(), "萨顶顶发红包了");
     }
@@ -65,17 +68,29 @@ public class MyPlugin implements IPluginModule, GiftClickCallback {
 
     }
 
-    private CustomDialog createDialog(Context context) {
+    private void createDialog(final Context context) {
+        AppointApiFactory.getAllGifts()
+                .subscribe(new Consumer<GiftPopBean>() {
+                    @Override
+                    public void accept(@NonNull GiftPopBean dateTheme) throws Exception {
+                        GiftPannelView pannelView = new GiftPannelView(context);
+                        pannelView.setData(dateTheme.getData(), context);
+                        pannelView.setGiftClickCallBack(MyPlugin.this);
+                        customDialog = new CustomDialog.Builder(context)
+                                .setView(pannelView)
+                                .setTouchOutside(true)
+                                .setItemHeight(0.4f)
+                                .setDialogGravity(Gravity.BOTTOM)
+                                .build();
+                        customDialog.show();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        //mView.showViewError(throwable);
+                    }
+                });
         //View root = View.inflate(context, R.layout.dialog_gift, null);
-        GiftPannelView pannelView = new GiftPannelView(context);
-        pannelView.setGiftClickCallBack(this);
-        CustomDialog customDialog = new CustomDialog.Builder(context)
-                .setView(pannelView)
-                .setTouchOutside(true)
-                .setItemHeight(0.4f)
-                .setDialogGravity(Gravity.BOTTOM)
-                .build();
-        return customDialog;
     }
 
     private void sendMessage(String msg) {
@@ -101,7 +116,7 @@ public class MyPlugin implements IPluginModule, GiftClickCallback {
     }
 
     @Override
-    public void giftClick(int gid,int nums) {
+    public void giftClick(GiftPopBean.DataBean giftBean) {
         sendMessage("");
     }
 }

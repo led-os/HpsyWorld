@@ -20,8 +20,10 @@ import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.listener.ITextBannerItemClickListener;
 import com.kuwai.ysy.module.find.CityMeetActivity;
+import com.kuwai.ysy.module.find.CommisDetailOtherActivity;
 import com.kuwai.ysy.module.find.FoundLocationActivity;
 import com.kuwai.ysy.module.find.business.CommisDetail.CommisDetailFragment;
+import com.kuwai.ysy.module.find.business.CommisDetailMyActivity;
 import com.kuwai.ysy.module.find.business.MyCommicDetail.CommicDetailMyFragment;
 import com.kuwai.ysy.module.find.business.TuoDan.TuodanActivity;
 import com.kuwai.ysy.module.find.adapter.WebBannerAdapter;
@@ -151,9 +153,13 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
                 bundle.putString("uid", String.valueOf(mFoundBean.getData().getAppointment().get(position).getUid()));
 
                 if (Integer.valueOf(SPManager.get().getStringValue("uid")) == (mFoundBean.getData().getAppointment().get(position).getUid())) {
-                    start(CommicDetailMyFragment.newInstance(bundle));
+                    Intent intent = new Intent(getActivity(), CommisDetailMyActivity.class);
+                    intent.putExtra("data",bundle);
+                    startActivity(intent);
                 } else {
-                    start(CommisDetailFragment.newInstance(bundle));
+                    Intent intent = new Intent(getActivity(), CommisDetailOtherActivity.class);
+                    intent.putExtra("data",bundle);
+                    startActivity(intent);
                 }
             }
         });
