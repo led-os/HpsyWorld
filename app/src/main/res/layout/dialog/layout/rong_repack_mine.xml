@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="80dp"
+    android:layout_gravity="center_horizontal"
+    android:background="#f74d31">
+
+    <ImageView
+        android:id="@+id/img_red"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/chat_cd_ic_re" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/img_red"
+        android:text="恭喜发财，大吉大利"
+        android:textColor="#ffffffff"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/sub_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/img_red"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@id/img_red"
+        android:text="点击领取"
+        android:textColor="#ffffffff"
+        android:textSize="10sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:paddingBottom="4dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="4dp"
+        android:text="鱼水缘红包"
+        android:textColor="#ff7b7b7b"
+        android:textSize="11sp" />
+
+</RelativeLayout>
+

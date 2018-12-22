@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseActivity;
@@ -109,6 +111,19 @@ public class HomeActivity extends BaseActivity {
             if (dy > 8) {//列表向上滑动
                 mNavigationController.hideBottomLayout();
             } else if (dy < -8) {//列表向下滑动
+                mNavigationController.showBottomLayout();
+            }
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public static class  ScroolListener implements View.OnScrollChangeListener {
+
+        @Override
+        public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            if (scrollY > oldScrollY) {//列表向上滑动
+                mNavigationController.hideBottomLayout();
+            } else if (scrollY < oldScrollY) {//列表向下滑动
                 mNavigationController.showBottomLayout();
             }
         }

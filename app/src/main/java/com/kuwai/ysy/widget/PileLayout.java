@@ -211,8 +211,14 @@ public class PileLayout extends ViewGroup {
             //清空重新绘制
 
             CircleImageView imageView = (CircleImageView) LayoutInflater.from(context).inflate(R.layout.item_round_head, this, false);
-
-            GlideUtil.load(context,allUrls.get(i),imageView);
+            GlideUtil.load(context, allUrls.get(i), imageView);
+            if (i >= 2) {
+                CircleTextView circleTextView = new CircleTextView(context);
+                circleTextView.setText("+7");
+                circleTextView.setBackgroundColor(context.getResources().getColor(R.color.theme_light));
+                this.addView(circleTextView);
+                break;
+            }
             this.addView(imageView);
         }
         postInvalidate();

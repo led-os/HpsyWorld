@@ -2,8 +2,11 @@ package com.kuwai.ysy.module.find.business.FoundHome;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -30,6 +33,7 @@ import com.kuwai.ysy.module.find.adapter.WebBannerAdapter;
 import com.kuwai.ysy.module.find.adapter.FoundActivityAdapter;
 import com.kuwai.ysy.module.find.bean.FoundHome.FoundBean;
 import com.kuwai.ysy.module.find.adapter.FoundCityAdapter;
+import com.kuwai.ysy.module.home.business.HomeActivity;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.widget.BannerLayout;
 import com.kuwai.ysy.widget.TextBannerView;
@@ -49,6 +53,8 @@ import java.util.Map;
  */
 
 public class FoundFragment extends BaseFragment<FoundPresenter> implements FoundContract.IHomeView, TextBannerView.SetImageCallback, View.OnClickListener {
+
+    private NestedScrollView scrollView;
 
     private BannerLayout mBanner;
     private RelativeLayout mIvHuaban;
@@ -87,11 +93,13 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void initView(Bundle savedInstanceState) {
         EventBusUtil.register(this);
         mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
         mBanner = mRootView.findViewById(R.id.banner);
+        scrollView = mRootView.findViewById(R.id.scrool);
         mLocationTv = mRootView.findViewById(R.id.tv_location);
         mIvHuaban = mRootView.findViewById(R.id.iv_huaban);
         mIvHeadicon = mRootView.findViewById(R.id.iv_headicon);
@@ -102,6 +110,9 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
         mTextBannerView = mRootView.findViewById(R.id.tv_banner);
         mTvActivity = mRootView.findViewById(R.id.tv_activity);
         mRvActivity = mRootView.findViewById(R.id.rv_activity);
+
+
+        scrollView.setOnScrollChangeListener(new HomeActivity.ScroolListener());
 
         mCitymeetMore.setOnClickListener(this);
         mTuodanMore.setOnClickListener(this);
