@@ -19,7 +19,7 @@ public class PasswordInputView extends AppCompatEditText{
     private int passwordLength = 6;
     private int borderWidth = 8; //px
     private int borderRadius = 6; //边框四个角的角度px
-    private int borderColor = 0xff333333;
+    private int borderColor = 0xffeeeeee;
     private int passwordWidth = 12; //px
     private int passwordColor = 0x7b7b7b;
     private int defaultSplitLineWidth = 2; //px

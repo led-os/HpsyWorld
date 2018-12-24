@@ -49,6 +49,8 @@
         <activity android:name=".module.chat.MyFriendActivity" />
         <activity android:name=".module.chat.business.ChatSettingActivity" />
         <activity android:name=".module.chat.business.QuestionActivity" />
+        <activity android:name=".module.chat.business.act.SendRedActivity" />
+        <activity android:name=".module.chat.business.act.RedRecordActivity" />
 
         //动态
         <activity

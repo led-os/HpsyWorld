@@ -8,18 +8,22 @@ import android.widget.TextView;
 
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.mine.api.MineApiFactory;
+import com.kuwai.ysy.module.mine.bean.IntegralDetailBean;
 import com.kuwai.ysy.widget.shadow.StepBean;
 import com.kuwai.ysy.widget.shadow.StepsView;
 import com.rayhahah.rbase.base.RBasePresenter;
 
 import java.util.ArrayList;
 
+import io.reactivex.functions.Consumer;
+
 public class MinePointFragment extends BaseFragment implements View.OnClickListener {
 
     private RelativeLayout mSignRl;
     private StepsView mStepView;
     private ArrayList<StepBean> mStepBeans = new ArrayList<>();
-    private int positon = 2;
+    private int positon =1;
 
     public static MinePointFragment newInstance() {
         Bundle args = new Bundle();
@@ -62,14 +66,28 @@ public class MinePointFragment extends BaseFragment implements View.OnClickListe
     }
 
     private void initData() {
-        mStepBeans.add(new StepBean(StepBean.STEP_COMPLETED, "今天"));
-        mStepBeans.add(new StepBean(StepBean.STEP_COMPLETED, "9.10"));
-        mStepBeans.add(new StepBean(StepBean.STEP_UNDO, "9.11"));
-        mStepBeans.add(new StepBean(StepBean.STEP_UNDO, "9.12"));
-        mStepBeans.add(new StepBean(StepBean.STEP_UNDO, "9.13"));
-        mStepBeans.add(new StepBean(StepBean.STEP_UNDO, "9.14"));
-        mStepBeans.add(new StepBean(StepBean.STEP_CURRENT, "9.15"));
+        mStepBeans.add(new StepBean(StepBean.STEP_COMPLETED, "星期一"));
+        mStepBeans.add(new StepBean(StepBean.STEP_COMPLETED, "星期二"));
+        mStepBeans.add(new StepBean(StepBean.STEP_UNDO, "星期三"));
+        mStepBeans.add(new StepBean(StepBean.STEP_UNDO, "星期四"));
+        mStepBeans.add(new StepBean(StepBean.STEP_COMPLETED, "星期五"));
+        mStepBeans.add(new StepBean(StepBean.STEP_UNDO, "星期六"));
+        mStepBeans.add(new StepBean(StepBean.STEP_CURRENT, "星期日"));
 
-        mStepView.setStepNum(mStepBeans);
+        mStepView.setStepNum(mStepBeans, positon);
+    }
+
+    private void getPointToday(){
+        /*addSubscription(MineApiFactory.getUserIntegralDetails(uid, page).subscribe(new Consumer<IntegralDetailBean>() {
+            @Override
+            public void accept(IntegralDetailBean integralDetailBean) throws Exception {
+                mView.setHomeData(integralDetailBean);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: " + throwable);
+            }
+        }));*/
     }
 }

@@ -7,27 +7,29 @@ import android.graphics.Paint;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
+import com.kuwai.ysy.R;
+
 public class CircleTextView extends AppCompatTextView {
 
     private Paint mBgPaint = new Paint();
 
     public CircleTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        initPaint();
+        initPaint(context);
     }
 
     public CircleTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initPaint();
+        initPaint(context);
     }
 
     public CircleTextView(Context context) {
         super(context);
-        initPaint();
+        initPaint(context);
     }
 
-    private void initPaint(){
-        mBgPaint.setColor(Color.BLACK);
+    private void initPaint(Context context){
+        mBgPaint.setColor(context.getResources().getColor(R.color.theme_light));
         mBgPaint.setStyle(Paint.Style.FILL);
         mBgPaint.setAntiAlias(true);
     }

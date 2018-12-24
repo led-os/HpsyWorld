@@ -62,7 +62,7 @@ public class StepsView extends View {
     /**
      * 线段长度
      */
-    private float mLineWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24,  getResources().getDisplayMetrics());
+    private float mLineWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics());
 
     /**
      * 已经完成的图标
@@ -254,7 +254,7 @@ public class StepsView extends View {
             float preComplectedXPosition = mCircleCenterPointPositionList.get(i) + mIconWidth / 2;
             if (i != mCircleCenterPointPositionList.size() - 1) {
                 //最后一条不需要绘制
-                if (mStepBeanList.get(i + 1).getState() == StepBean.STEP_COMPLETED) {
+                if (i + 1 < mPosition) {
                     //下一个是已完成，当前才需要绘制绿色
                     canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWidth,
                             mRightY, mCompletedPaint);
@@ -262,14 +262,14 @@ public class StepsView extends View {
                     //其余绘制灰色
 
                     //当前位置执行动画
-                    if (i <= mPosition - 1) {
+                    if (i == mPosition - 1) {
                         //绿色开始绘制的地方,
                         float endX = preComplectedXPosition + mAnimationWidth * (mCount / ANIMATION_INTERVAL);
                         //绘制绿色
-                        canvas.drawRect(preComplectedXPosition, mLeftY, endX, mRightY, mCompletedPaint);
+                        canvas.drawRect(preComplectedXPosition, mLeftY, endX+33, mRightY, mCompletedPaint);
                         //绘制灰色
-                        canvas.drawRect(endX, mLeftY, preComplectedXPosition + mLineWidth,
-                                mRightY, mUnCompletedPaint);
+                       /* canvas.drawRect(endX, mLeftY, preComplectedXPosition + mLineWidth,
+                                mRightY, mUnCompletedPaint);*/
                     } else {
                         canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWidth,
                                 mRightY, mUnCompletedPaint);
@@ -284,9 +284,9 @@ public class StepsView extends View {
                     (int) (currentComplectedXPosition + mIconWidth / 2),
                     (int) (mCenterY + mIconHeight / 2));
 
-            if(i == mCircleCenterPointPositionList.size() - 1){
-                rect = new Rect((int) (currentComplectedXPosition - mIconWidth / 2 -  CalcUtils.dp2px(getContext(), 6f)),
-                        (int) (mCenterY - mIconHeight / 2 -  CalcUtils.dp2px(getContext(), 4f)),
+            if (i == mCircleCenterPointPositionList.size() - 1) {
+                rect = new Rect((int) (currentComplectedXPosition - mIconWidth / 2 - CalcUtils.dp2px(getContext(), 6f)),
+                        (int) (mCenterY - mIconHeight / 2 - CalcUtils.dp2px(getContext(), 4f)),
                         (int) (currentComplectedXPosition + mIconWidth / 2 + CalcUtils.dp2px(getContext(), 4f)),
                         (int) (mCenterY + mIconHeight / 2));
             }
@@ -340,7 +340,17 @@ public class StepsView extends View {
             float preComplectedXPosition = mCircleCenterPointPositionList.get(i) + mIconWidth / 2;
             if (i != mCircleCenterPointPositionList.size() - 1) {
                 //最后一条不需要绘制
-                if (mStepBeanList.get(i + 1).getState() == StepBean.STEP_COMPLETED) {
+               /* if (mStepBeanList.get(i + 1).getState() == StepBean.STEP_COMPLETED) {
+                    //下一个是已完成，当前才需要绘制绿色
+                    canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWidth,
+                            mRightY, mCompletedPaint);
+                } else {
+                    //其余绘制灰色
+                    canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWidth,
+                            mRightY, mUnCompletedPaint);
+                }*/
+
+                if (i + 1 < mPosition) {
                     //下一个是已完成，当前才需要绘制绿色
                     canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWidth,
                             mRightY, mCompletedPaint);
@@ -358,9 +368,9 @@ public class StepsView extends View {
                     (int) (currentComplectedXPosition + mIconWidth / 2),
                     (int) (mCenterY + mIconHeight / 2));
 
-            if(i == mCircleCenterPointPositionList.size() - 1){
-                rect = new Rect((int) (currentComplectedXPosition - mIconWidth / 2 -  CalcUtils.dp2px(getContext(), 6f)),
-                        (int) (mCenterY - mIconHeight / 2 -  CalcUtils.dp2px(getContext(), 4f)),
+            if (i == mCircleCenterPointPositionList.size() - 1) {
+                rect = new Rect((int) (currentComplectedXPosition - mIconWidth / 2 - CalcUtils.dp2px(getContext(), 6f)),
+                        (int) (mCenterY - mIconHeight / 2 - CalcUtils.dp2px(getContext(), 4f)),
                         (int) (currentComplectedXPosition + mIconWidth / 2 + CalcUtils.dp2px(getContext(), 4f)),
                         (int) (mCenterY + mIconHeight / 2));
             }
@@ -392,10 +402,11 @@ public class StepsView extends View {
      *
      * @param stepsBeanList 流程步数
      */
-    public void setStepNum(List<StepBean> stepsBeanList) {
+    public void setStepNum(List<StepBean> stepsBeanList, int position) {
         if (stepsBeanList == null) {
             return;
         }
+        mPosition = position;
         mStepBeanList = stepsBeanList;
         mStepNum = mStepBeanList.size();
         //找出最大的两个值的位置
