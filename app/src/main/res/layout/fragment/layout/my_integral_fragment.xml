@@ -40,8 +40,8 @@
             android:id="@+id/rl_sign"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="79dp"
             android:background="@drawable/center_btn_checkin">
 
@@ -64,8 +64,8 @@
             <com.kuwai.ysy.widget.shadow.StepsView
                 android:id="@+id/step_view"
                 android:layout_width="match_parent"
-                android:layout_centerInParent="true"
-                android:layout_height="70dp" />
+                android:layout_height="70dp"
+                android:layout_centerInParent="true" />
         </RelativeLayout>
 
     </RelativeLayout>
@@ -100,6 +100,7 @@
             android:background="#eeeeee" />
 
         <LinearLayout
+            android:id="@+id/ll_rule"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"

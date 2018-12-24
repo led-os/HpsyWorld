@@ -87,71 +87,118 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
 
     @Override
     public void setHomeData(CreditBean creditBean) {
-
-        if (creditBean.getData().get(0).getIs_avatar() == 1) {
-            mStHeadicon.setRightString("已认证")
-                    .setRightTvDrawableRight(null)
-                    .setRightTextColor(Color.parseColor("#bdbdbd"));
-        } else {
-            mStHeadicon.setRightString("去认证")
-                    .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
-                    .setRightTextColor(Color.parseColor("#ff6161"));
-            mStHeadicon.setOnClickListener(this);
+        switch (creditBean.getData().get(0).getIs_avatar()) {
+            case 0:
+                mStHeadicon.setRightString("去认证")
+                        .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
+                        .setRightTextColor(Color.parseColor("#ff6161"));
+                mStHeadicon.setOnClickListener(this);
+                break;
+            case 1:
+                mStHeadicon.setRightString("已认证")
+                        .setRightTvDrawableRight(null)
+                        .setRightTextColor(Color.parseColor("#bdbdbd"));
+                break;
+            case 2:
+                mStHeadicon.setRightString("审核中")
+                        .setRightTvDrawableRight(null)
+                        .setRightTextColor(Color.parseColor("#bdbdbd"));
+                break;
         }
 
-        if (creditBean.getData().get(0).getIs_phone() == 1) {
-            mStPhone.setRightString("已认证")
-                    .setRightTvDrawableRight(null)
-                    .setRightTextColor(Color.parseColor("#bdbdbd"));
-        } else {
-            mStPhone.setRightString("去认证")
-                    .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
-                    .setRightTextColor(Color.parseColor("#ff6161"));
-            mStPhone.setOnClickListener(this);
+        switch (creditBean.getData().get(0).getIs_phone()) {
+            case 0:
+                mStPhone.setRightString("去认证")
+                        .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
+                        .setRightTextColor(Color.parseColor("#ff6161"));
+                mStPhone.setOnClickListener(this);
+                break;
+            case 1:
+                mStPhone.setRightString("已认证")
+                        .setRightTvDrawableRight(null)
+                        .setRightTextColor(Color.parseColor("#bdbdbd"));
+                break;
+            case 2:
+                mStPhone.setRightString("审核中")
+                        .setRightTvDrawableRight(null)
+                        .setRightTextColor(Color.parseColor("#bdbdbd"));
+                break;
         }
 
-        if (creditBean.getData().get(0).getIs_real() == 1) {
-            mTvAuth.setRightString("已认证")
-                    .setRightTvDrawableRight(null)
-                    .setRightTextColor(Color.parseColor("#bdbdbd"));
-        } else {
-            mTvAuth.setRightString("去认证")
-                    .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
-                    .setRightTextColor(Color.parseColor("#ff6161"));
-            mTvAuth.setOnClickListener(this);
+        switch (creditBean.getData().get(0).getIs_real()) {
+            case 0:
+                mTvAuth.setRightString("去认证")
+                        .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
+                        .setRightTextColor(Color.parseColor("#ff6161"));
+                mTvAuth.setOnClickListener(this);
+                break;
+            case 1:
+                mTvAuth.setRightString("已认证")
+                        .setRightTvDrawableRight(null)
+                        .setRightTextColor(Color.parseColor("#bdbdbd"));
+                break;
+            case 2:
+                mTvAuth.setRightString("审核中")
+                        .setRightTvDrawableRight(null)
+                        .setRightTextColor(Color.parseColor("#bdbdbd"));
+                break;
         }
 
-        if (creditBean.getData().get(0).getIs_education() == 1) {
-            mStEdu.setRightString("已认证")
-                    .setRightTvDrawableRight(null)
-                    .setRightTextColor(Color.parseColor("#bdbdbd"));
-        } else {
-            mStEdu.setRightString("去认证")
-                    .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
-                    .setRightTextColor(Color.parseColor("#ff6161"));
-            mStEdu.setOnClickListener(this);
+        switch (creditBean.getData().get(0).getIs_education()) {
+            case 0:
+                mStEdu.setRightString("去认证")
+                        .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
+                        .setRightTextColor(Color.parseColor("#ff6161"));
+                mStEdu.setOnClickListener(this);
+                break;
+            case 1:
+                mStEdu.setRightString("已认证")
+                        .setRightTvDrawableRight(null)
+                        .setRightTextColor(Color.parseColor("#bdbdbd"));
+                break;
+            case 2:
+                mStEdu.setRightString("审核中")
+                        .setRightTvDrawableRight(null)
+                        .setRightTextColor(Color.parseColor("#bdbdbd"));
+                break;
         }
 
-        if (creditBean.getData().get(0).getIs_house() == 1) {
-            mStHouse.setRightString("已认证")
-                    .setRightTvDrawableRight(null)
-                    .setRightTextColor(Color.parseColor("#bdbdbd"));
-        } else {
-            mStHouse.setRightString("去认证")
-                    .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
-                    .setRightTextColor(Color.parseColor("#ff6161"));
-            mStHouse.setOnClickListener(this);
+        switch (creditBean.getData().get(0).getIs_house()) {
+            case 0:
+                mStHouse.setRightString("去认证")
+                        .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
+                        .setRightTextColor(Color.parseColor("#ff6161"));
+                mStHouse.setOnClickListener(this);
+                break;
+            case 1:
+                mStHouse.setRightString("已认证")
+                        .setRightTvDrawableRight(null)
+                        .setRightTextColor(Color.parseColor("#bdbdbd"));
+                break;
+            case 2:
+                mStHouse.setRightString("审核中")
+                        .setRightTvDrawableRight(null)
+                        .setRightTextColor(Color.parseColor("#bdbdbd"));
+                break;
         }
 
-        if (creditBean.getData().get(0).getIs_vehicle() == 1) {
-            mStCar.setRightString("已认证")
-                    .setRightTvDrawableRight(null)
-                    .setRightTextColor(Color.parseColor("#bdbdbd"));
-        } else {
-            mStCar.setRightString("去认证")
-                    .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
-                    .setRightTextColor(Color.parseColor("#ff6161"));
-            mStCar.setOnClickListener(this);
+        switch (creditBean.getData().get(0).getIs_vehicle()) {
+            case 0:
+                mStCar.setRightString("去认证")
+                        .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
+                        .setRightTextColor(Color.parseColor("#ff6161"));
+                mStCar.setOnClickListener(this);
+                break;
+            case 1:
+                mStCar.setRightString("已认证")
+                        .setRightTvDrawableRight(null)
+                        .setRightTextColor(Color.parseColor("#bdbdbd"));
+                break;
+            case 2:
+                mStCar.setRightString("审核中")
+                        .setRightTvDrawableRight(null)
+                        .setRightTextColor(Color.parseColor("#bdbdbd"));
+                break;
         }
 
     }

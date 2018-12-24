@@ -6,11 +6,12 @@
     android:orientation="vertical">
 
     <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title1="充值中心"
+        app:rightColor="@color/theme"
         app:rightTxt="常见问题"
-        app:rightColor="@color/theme"></com.kuwai.ysy.widget.NavigationLayout>
+        app:title1="充值中心" />
 
     <com.allen.library.SuperTextView
         android:layout_width="match_parent"

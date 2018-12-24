@@ -10,6 +10,8 @@ import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.widget.shadow.StepBean;
 import com.kuwai.ysy.widget.shadow.StepsView;
+import com.rayhahah.dialoglib.DialogInterface;
+import com.rayhahah.dialoglib.NormalAlertDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
 
 import java.util.ArrayList;
@@ -45,6 +47,10 @@ public class MinePointFragment extends BaseFragment implements View.OnClickListe
                 mStepView.startSignAnimation(positon);
                 positon++;
                 break;
+            case R.id.ll_rule:
+                NormalAlertDialog dialog = initCleanDialog();
+                dialog.show();
+                break;
         }
     }
 
@@ -53,6 +59,8 @@ public class MinePointFragment extends BaseFragment implements View.OnClickListe
         mSignRl = mRootView.findViewById(R.id.rl_sign);
         mSignRl.setOnClickListener(this);
         mStepView = mRootView.findViewById(R.id.step_view);
+
+        mRootView.findViewById(R.id.ll_rule).setOnClickListener(this);
         initData();
     }
 
@@ -71,5 +79,21 @@ public class MinePointFragment extends BaseFragment implements View.OnClickListe
         mStepBeans.add(new StepBean(StepBean.STEP_CURRENT, "9.15"));
 
         mStepView.setStepNum(mStepBeans);
+    }
+
+    private NormalAlertDialog initCleanDialog() {
+        return new NormalAlertDialog.Builder(getActivity())
+                .setTitleText("积分怎么兑换鱼币？")
+                .setContentText(getResources().getString(R.string.integ_exchange))
+                .setSingleButtonText("好的，知道了")
+                .setSingleMode(true)
+                .setSingleListener(new DialogInterface.OnSingleClickListener<NormalAlertDialog>() {
+                    @Override
+                    public void clickSingleButton(NormalAlertDialog dialog, View view) {
+                        dialog.dismiss();
+                    }
+                })
+                .setCanceledOnTouchOutside(true)
+                .build();
     }
 }
