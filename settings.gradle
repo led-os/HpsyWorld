@@ -1,1 +1,1 @@
-include ':app', ':rbase', ':dialoglib', ':UMLibrary',":IMKit",":IMLib",'AliyunSdk-RCE'
+include ':app', ':rbase', ':dialoglib', ':UMLibrary', ":IMKit", ":IMLib", 'AliyunSdk-RCE'
