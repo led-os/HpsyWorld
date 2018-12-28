@@ -8,6 +8,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
 import android.util.TypedValue;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.kuwai.ysy.utils.language.HanziToPinyin;
 import com.rayhahah.rbase.BaseApplication;
@@ -33,6 +35,13 @@ public class Utils {
         }
         return false;
     }
+
+    public static void showOrHide(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        //  imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);//SHOW_FORCED表示强制显示
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0); //强制隐藏键盘
+    }
+
 
     /**
      * encrypt32

@@ -15,6 +15,8 @@ import com.kuwai.ysy.rong.ExtensionModule;
 import com.kuwai.ysy.rong.MyTextMessageItemProvider;
 import com.kuwai.ysy.rong.QuestionMessage;
 import com.kuwai.ysy.rong.QuestionMessageItemProvider;
+import com.kuwai.ysy.rong.RedSendMessage;
+import com.kuwai.ysy.rong.RedSendMessageItemProvider;
 import com.kuwai.ysy.utils.language.LocalManageUtil;
 import com.rayhahah.rbase.BaseApplication;
 import com.rayhahah.rbase.net.OkHttpManager;
@@ -66,6 +68,8 @@ public class MyApp extends BaseApplication {
         RongIM.getInstance().registerMessageTemplate(new MyTextMessageItemProvider());
         RongIM.registerMessageType(QuestionMessage.class);
         RongIM.getInstance().registerMessageTemplate(new QuestionMessageItemProvider());
+        RongIM.registerMessageType(RedSendMessage.class);
+        RongIM.getInstance().registerMessageTemplate(new RedSendMessageItemProvider());
         setMyExtensionModule();
     }
 
@@ -206,8 +210,8 @@ public class MyApp extends BaseApplication {
         activityDisplayMetrics.densityDpi = targetDensityDpi;
     }
 
-    public static void initThirdService(){
-        new Thread(){
+    public static void initThirdService() {
+        new Thread() {
             @Override
             public void run() {
                 super.run();

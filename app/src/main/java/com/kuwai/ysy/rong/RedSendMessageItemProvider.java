@@ -2,7 +2,6 @@ package com.kuwai.ysy.rong;
 
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.text.Selection;
 import android.text.Spannable;
@@ -13,37 +12,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.listener.OnRedPacketDialogClickListener;
-import com.kuwai.ysy.module.chat.business.QuestionActivity;
-import com.kuwai.ysy.module.chat.business.act.SendRedActivity;
 import com.kuwai.ysy.rong.bean.RedPacketEntity;
 import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.RongKitIntent;
 import io.rong.imkit.emoticon.AndroidEmoji;
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
 import io.rong.imkit.utilities.OptionsPopupDialog;
-import io.rong.imkit.widget.ILinkClickListener;
-import io.rong.imkit.widget.LinkTextViewMovementMethod;
 import io.rong.imkit.widget.provider.IContainerItemProvider;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 
 @ProviderTag(
-        messageContent = QuestionMessage.class,
+        messageContent = RedSendMessage.class,
         showPortrait = false,
         showProgress = false,
         showWarning = false,
         centerInHorizontal = true,
         showSummaryWithName = false
 )
-public class QuestionMessageItemProvider extends IContainerItemProvider.MessageProvider<QuestionMessage> {
+public class RedSendMessageItemProvider extends IContainerItemProvider.MessageProvider<RedSendMessage> {
     private static final String TAG = "QuestionMessageItemProvider";
 
     private View mRedPacketDialogView;
@@ -59,19 +52,19 @@ public class QuestionMessageItemProvider extends IContainerItemProvider.MessageP
     public View newView(Context context, ViewGroup group) {
         View view = LayoutInflater.from(context).inflate(R.layout.rong_question, null);
 
-        QuestionMessageItemProvider.ViewHolder holder = new QuestionMessageItemProvider.ViewHolder();
+        RedSendMessageItemProvider.ViewHolder holder = new RedSendMessageItemProvider.ViewHolder();
         //holder.message = (TextView) view.findViewById(R.id.message);
         view.setTag(holder);
         return view;
     }
 
     @Override
-    public Spannable getContentSummary(QuestionMessage data) {
+    public Spannable getContentSummary(RedSendMessage data) {
         return null;
     }
 
     @Override
-    public Spannable getContentSummary(Context context, QuestionMessage data) {
+    public Spannable getContentSummary(Context context, RedSendMessage data) {
         if (data == null)
             return null;
 
@@ -86,10 +79,12 @@ public class QuestionMessageItemProvider extends IContainerItemProvider.MessageP
     }
 
     @Override
-    public void onItemClick(View view, int position, QuestionMessage content, UIMessage message) {
-        //RedPacketEntity entity = new RedPacketEntity("萨顶顶", "http://192.168.1.88/public/static/img/avatar/201812/19/1159e6106c38a19e6dd82d12de770cb5.jpg", "大吉大利，今晚吃鸡");
-        //showRedPacketDialog(entity, view.getContext());
-        view.getContext().startActivity(new Intent(view.getContext(), SendRedActivity.class));
+    public void onItemClick(View view, int position, RedSendMessage content, UIMessage message) {
+        if(message.getMessageDirection() == Message.MessageDirection.SEND){
+
+        }
+        RedPacketEntity entity = new RedPacketEntity("萨顶顶", "http://192.168.1.88/public/static/img/avatar/201812/19/1159e6106c38a19e6dd82d12de770cb5.jpg", "大吉大利，今晚吃鸡");
+        showRedPacketDialog(entity, view.getContext());
         //view.getContext().startActivity(new Intent(view.getContext(), QuestionActivity.class));
     }
 
@@ -125,9 +120,9 @@ public class QuestionMessageItemProvider extends IContainerItemProvider.MessageP
     }
 
     @Override
-    public void onItemLongClick(final View view, int position, final QuestionMessage content, final UIMessage message) {
+    public void onItemLongClick(final View view, int position, final RedSendMessage content, final UIMessage message) {
 
-        QuestionMessageItemProvider.ViewHolder holder = (QuestionMessageItemProvider.ViewHolder) view.getTag();
+        RedSendMessageItemProvider.ViewHolder holder = (RedSendMessageItemProvider.ViewHolder) view.getTag();
         holder.longClick = true;
         if (view instanceof TextView) {
             CharSequence text = ((TextView) view).getText();
@@ -169,7 +164,7 @@ public class QuestionMessageItemProvider extends IContainerItemProvider.MessageP
                 if (which == 0) {
                     @SuppressWarnings("deprecation")
                     ClipboardManager clipboard = (ClipboardManager) view.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                    clipboard.setText(((QuestionMessage) content).getContent());
+                    clipboard.setText(((RedSendMessage) content).getContent());
                 } else if (which == 1) {
                     RongIM.getInstance().deleteMessages(new int[]{message.getMessageId()}, null);
                 } else if (which == 2) {
@@ -180,8 +175,8 @@ public class QuestionMessageItemProvider extends IContainerItemProvider.MessageP
     }
 
     @Override
-    public void bindView(final View v, int position, final QuestionMessage content, final UIMessage data) {
-        QuestionMessageItemProvider.ViewHolder holder = (QuestionMessageItemProvider.ViewHolder) v.getTag();
+    public void bindView(final View v, int position, final RedSendMessage content, final UIMessage data) {
+        RedSendMessageItemProvider.ViewHolder holder = (RedSendMessageItemProvider.ViewHolder) v.getTag();
 
         /*if (data.getMessageDirection() == Message.MessageDirection.SEND) {
             holder.message.setBackgroundResource(io.rong.imkit.R.drawable.rc_ic_bubble_right);
