@@ -64,7 +64,7 @@ public class LookMeFragment extends BaseFragment<LookMePresenter> implements Loo
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.requestHomeData(SPManager.getStringValue("uid", "1"), C.LOOK_ME);
+        mPresenter.requestHomeData(SPManager.get().getStringValue("uid", "1"), C.LOOK_ME);
     }
 
     @Override

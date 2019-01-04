@@ -51,8 +51,8 @@
         android:layout_marginRight="32dp"
         android:layout_marginTop="20dp"
         android:text="继续"
-        android:textColor="@color/gray_7b"
+        android:textColor="@color/white"
         android:textSize="16sp"
-        app:sSolidColor="@color/line_color" />
+        app:sSolidColor="@color/theme_light" />
 
 </RelativeLayout>

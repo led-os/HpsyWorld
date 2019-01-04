@@ -31,7 +31,7 @@ public class ChatSettingActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void initView() {
-        loadRootFragment(R.id.container, ChatSettingFragment.newInstance(),false,true);
+        loadRootFragment(R.id.container, ChatSettingFragment.newInstance(getIntent().getExtras()),false,true);
     }
 
     @Override

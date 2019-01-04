@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,8 @@ import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.DyDetailActivity;
+import com.kuwai.ysy.module.circle.FriendsVideoFragment;
+import com.kuwai.ysy.module.circle.VideoPlayActivity;
 import com.kuwai.ysy.module.circle.business.publishdy.PublishDyActivity;
 import com.kuwai.ysy.module.circle.adapter.DongtaiAdapter;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
@@ -53,7 +56,6 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
 
     private DongtaiAdapter mDongtaiAdapter;
     private RecyclerView mDongtaiList;
-    private List<CategoryBean> mDataList = new ArrayList<>();
     private DragFloatActionButton mPublishTv;
 
     private YsyPopWindow mListPopWindow;
@@ -128,9 +130,10 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
         });
 
         mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        mDongtaiAdapter = new DongtaiAdapter(mDataList, mImageWatcher);
+        mDongtaiAdapter = new DongtaiAdapter(mImageWatcher);
         mDongtaiList.addOnScrollListener(new HomeActivity.ListScrollListener());
         mDongtaiList.setAdapter(mDongtaiAdapter);
+        ((SimpleItemAnimator) mDongtaiList.getItemAnimator()).setSupportsChangeAnimations(false);
         mPublishTv.setOnClickListener(this);
         mImageWatcher.setTranslucentStatus(Utils.calcStatusBarHeight(getActivity()) + Utils.dp2px(54));
         mImageWatcher.setErrorImageRes(R.mipmap.error_picture);
@@ -149,10 +152,17 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
                     case R.id.tv_more:
                         showMore();
                         break;
+                    case R.id.iv_playimg:
+                        Intent intent = new Intent(getActivity(), VideoPlayActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("vid", mDyMainListBean.getData().get(position).getVideo_id());
+                        bundle.putString("imgurl", mDyMainListBean.getData().get(position).getAttach().get(0));
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        break;
                     case R.id.tv_delete:
                         mPresenter.dyDetelt(String.valueOf(mDyMainListBean.getData().get(position).getD_id()),
                                 SPManager.get().getStringValue("uid"));
-
                         mDongtaiAdapter.remove(position);
                         break;
 
@@ -181,9 +191,9 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         if (TYPE_DY_ALL.equals(type)) {
-            mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid", "1"));
+            mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid"));
         } else if (C.TYPE_DY_FRIEND.equals(type)) {
-            mPresenter.requestFriendData(page, SPManager.get().getStringValue("uid", "1"));
+            mPresenter.requestFriendData(page, SPManager.get().getStringValue("uid"));
         }
     }
 
@@ -274,7 +284,20 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
 
     @Override
     public void dyListZan(SimpleResponse simpleResponse) {
-        //mDongtaiAdapter.getData().get(mPosition).setWhatgood();
+        if (simpleResponse.code == 200) {
+            DyMainListBean.DataBean dataBean = mDongtaiAdapter.getData().get(mPosition);
+            if (dataBean.getWhatgood() == 0) {
+                dataBean.setWhatgood(1);
+                dataBean.setGood(dataBean.getGood() + 1);
+            } else {
+                dataBean.setGood(dataBean.getGood() - 1);
+                dataBean.setWhatgood(0);
+            }
+            mDongtaiAdapter.notifyItemChanged(mPosition);
+        } else {
+            ToastUtils.showShort(simpleResponse.msg);
+        }
+
     }
 
     @Override

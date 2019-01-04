@@ -5,6 +5,7 @@ import android.util.Log;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 
 import java.util.Map;
 
@@ -34,6 +35,7 @@ public class HousePresenter extends RBasePresenter<HouseContract.IHomeView> impl
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
+                ToastUtils.showShort("网络错误");
                 Log.i(TAG, "accept: " + throwable);
             }
         }));

@@ -44,7 +44,30 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/line_color"/>
+        android:background="@color/line_color" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="新朋友"
+        android:textColor="@color/balck_28" />
+
+    <View style="@style/horizontal_line" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rl_new_friend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="好友"
+        android:textColor="@color/balck_28" />
+
+    <View style="@style/horizontal_line" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rl_my_friend"

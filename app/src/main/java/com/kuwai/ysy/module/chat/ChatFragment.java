@@ -12,18 +12,26 @@ import android.widget.TextView;
 
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.chat.api.ChatApiFactory;
+import com.kuwai.ysy.module.chat.bean.MyFriends;
+import com.kuwai.ysy.module.chat.bean.UserInfoBean;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.StatusBartext;
+import com.rayhahah.rbase.utils.base.ToastUtils;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
+import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 
 
 public class ChatFragment extends BaseFragment implements View.OnClickListener{
 
     private ImageView imgChat;
     private TextView mNoticeTv;
+    private UserInfo userInfo;
 
     public static ChatFragment newInstance() {
         Bundle args = new Bundle();
@@ -51,11 +59,41 @@ public class ChatFragment extends BaseFragment implements View.OnClickListener{
                 .build();
         conversationListFragment.setUri(uri);
 
-        FragmentManager fragmentManager = getChildFragmentManager();
+        /*FragmentManager fragmentManager = getChildFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.conversationlist, conversationListFragment);
-        transaction.commit();
+        transaction.commit();*/
 
+        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+
+            @Override
+            public UserInfo getUserInfo(String userId) {
+
+                return findUserById(userId);//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。SDK
+            }
+
+        }, true);
+    }
+
+    private UserInfo findUserById(String userId) {
+        addSubscription(ChatApiFactory.getUserInfo(userId).subscribe(new Consumer<UserInfoBean>() {
+            @Override
+            public void accept(UserInfoBean userInfoBean) throws Exception {
+                if (userInfoBean.getCode() == 200) {
+                    userInfo = new UserInfo(String.valueOf(userInfoBean.getData().getUid()),userInfoBean.getData().getNickname(), Uri.parse(userInfoBean.getData().getAvatar()));
+                    RongIM.getInstance().refreshUserInfoCache(userInfo);
+                } else {
+                    //ToastUtils.showShort(myBlindBean.getMsg());
+                }
+
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                ToastUtils.showShort("网络错误");
+            }
+        }));
+        return userInfo;
     }
 
     @Override
@@ -82,10 +120,11 @@ public class ChatFragment extends BaseFragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tv_notice:
-                startActivity(new Intent(getActivity(),MyFriendActivity.class));
+                //RongIM.getInstance().setMessageAttachedUserInfo(true);
+                RongIM.getInstance().startPrivateChat(getActivity(), "2", "交易进行中");
                 break;
             case R.id.chat:
-                RongIM.getInstance().startPrivateChat(getActivity(), "2", "交易进行中");
+                startActivity(new Intent(getActivity(),MyFriendActivity.class));
                 break;
         }
     }

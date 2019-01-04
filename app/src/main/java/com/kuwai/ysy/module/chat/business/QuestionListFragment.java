@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.widget.NavigationLayout;
 import com.kuwai.ysy.widget.QuestionLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 
@@ -37,6 +38,12 @@ public class QuestionListFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        ((NavigationLayout) mRootView.findViewById(R.id.navigation)).setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
         questionLayout1 = mRootView.findViewById(R.id.question1);
         questionLayout2 = mRootView.findViewById(R.id.question2);
         questionLayout3 = mRootView.findViewById(R.id.question3);

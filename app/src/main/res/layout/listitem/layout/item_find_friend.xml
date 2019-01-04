@@ -27,6 +27,7 @@
         android:id="@+id/img_sex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
         android:layout_alignBottom="@id/tv_nick"
         android:layout_toRightOf="@id/tv_nick" />
 
@@ -37,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/tv_nick"
         android:layout_toRightOf="@id/img_sex"
+        android:layout_marginLeft="6dp"
         android:src="@drawable/ic_user_vip" />
 
     <TextView
@@ -51,15 +53,8 @@
         android:textColor="@color/grey_bd"
         android:textSize="12sp" />
 
-    <com.kuwai.ysy.widget.PileLayout
-        android:id="@+id/round_head"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="12dp"></com.kuwai.ysy.widget.PileLayout>
-
     <com.allen.library.SuperButton
+        android:id="@+id/btn_add_friend"
         android:layout_width="65dp"
         android:layout_height="28dp"
         android:layout_alignParentRight="true"
@@ -68,7 +63,6 @@
         android:text="加好友"
         android:textColor="@color/theme"
         android:textSize="13sp"
-        android:visibility="gone"
         app:sCornersRadius="20dp"
         app:sSolidColor="@color/white"
         app:sStrokeColor="@color/theme"

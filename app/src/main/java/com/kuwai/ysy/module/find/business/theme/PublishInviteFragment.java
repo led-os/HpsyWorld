@@ -90,7 +90,7 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
                     return;
                 }
                 if (mChengyiPos >= 0) {
-                    bundle.putString("earnest_money", mChengyiList.get(mChengyiPos).getTitle().replace("鱼币", ""));
+                    bundle.putString("earnest_money", mChengyiList.get(mChengyiPos).getTitle().replace("桃花币", ""));
                 }
                 bundle.putSerializable("gift", (Serializable) mGiftData);
                 start(PostAppointmentFragment.newInstance(bundle));
@@ -119,12 +119,12 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
         mThemeRl.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         mThemeRl.setAdapter(themeAdapter);
 
-        mChengyiList.add(new ThemeBean(false, "10鱼币", R.drawable.ic_sel_other, false));
-        mChengyiList.add(new ThemeBean(false, "20鱼币", R.drawable.ic_sel_other, false));
-        mChengyiList.add(new ThemeBean(false, "50鱼币", R.drawable.ic_sel_other, false));
-        mChengyiList.add(new ThemeBean(false, "80鱼币", R.drawable.ic_sel_other, false));
-        mChengyiList.add(new ThemeBean(false, "100鱼币", R.drawable.ic_sel_other, false));
-        mChengyiList.add(new ThemeBean(false, "200鱼币", R.drawable.ic_sel_other, false));
+        mChengyiList.add(new ThemeBean(false, "10桃花币", R.drawable.ic_sel_other, false));
+        mChengyiList.add(new ThemeBean(false, "20桃花币", R.drawable.ic_sel_other, false));
+        mChengyiList.add(new ThemeBean(false, "50桃花币", R.drawable.ic_sel_other, false));
+        mChengyiList.add(new ThemeBean(false, "80桃花币", R.drawable.ic_sel_other, false));
+        mChengyiList.add(new ThemeBean(false, "100桃花币", R.drawable.ic_sel_other, false));
+        mChengyiList.add(new ThemeBean(false, "200桃花币", R.drawable.ic_sel_other, false));
         chengyiAdapter = new MoneyAdapter(mChengyiList);
         mMoneyRl.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         mMoneyRl.setAdapter(chengyiAdapter);

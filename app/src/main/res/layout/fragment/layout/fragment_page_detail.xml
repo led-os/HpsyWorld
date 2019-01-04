@@ -231,6 +231,18 @@
             style="@style/horizontal_line"
             android:layout_marginLeft="30dp" />
 
+        <com.kuwai.ysy.widget.shadow.TagFlowLayout
+            android:id="@+id/tv_tag_zeou"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"></com.kuwai.ysy.widget.shadow.TagFlowLayout>
+
+        <View
+            style="@style/horizontal_line"
+            android:layout_marginLeft="30dp" />
+
         <TextView
             android:id="@+id/ta_gift"
             android:layout_width="match_parent"

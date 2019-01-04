@@ -56,6 +56,12 @@ public class FoundLocationFragment extends BaseFragment<FoundLocationPresenter> 
         mRvProvince.setAdapter(provinceAdapter);
         mRvCity.setAdapter(cityAdapter);
         mRvArea.setAdapter(areaAdapter);
+        areaAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                getActivity().finish();
+            }
+        });
 
         provinceAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override

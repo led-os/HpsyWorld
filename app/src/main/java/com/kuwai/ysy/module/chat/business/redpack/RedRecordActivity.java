@@ -1,27 +1,20 @@
-package com.kuwai.ysy.module.chat.business.act;
+package com.kuwai.ysy.module.chat.business.redpack;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.allen.library.CircleImageView;
-import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseActivity;
-import com.kuwai.ysy.module.chat.adapter.MyFriendsAdapter;
 import com.kuwai.ysy.module.chat.adapter.RedRecordAdapter;
 import com.kuwai.ysy.module.chat.bean.MyFriends;
-import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.CustomFontTextview;
-import com.kuwai.ysy.widget.NavigationLayout;
-import com.kuwai.ysy.widget.PasswordInputView;
 import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
-import com.rayhahah.rbase.utils.base.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;

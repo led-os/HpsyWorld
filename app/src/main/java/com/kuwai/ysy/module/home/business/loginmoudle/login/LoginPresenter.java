@@ -28,11 +28,11 @@ public class LoginPresenter extends RBasePresenter<LoginContract.ILoginView> imp
     }
 
     @Override
-    public void login(Map<String, String> param) {
+    public void login(Map<String, String> param, final String type) {
         addSubscription(HomeApiFactory.login(param).subscribe(new Consumer<LoginBean>() {
             @Override
             public void accept(LoginBean loginBean) throws Exception {
-                mView.loginResult(loginBean);
+                mView.loginResult(loginBean,type);
             }
         }, new Consumer<Throwable>() {
             @Override

@@ -13,6 +13,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.bean.Model;
 import com.kuwai.ysy.callback.GiftClickCallback;
@@ -40,7 +41,10 @@ public class GiftPannelView extends RelativeLayout {
     private List<GridViewAdapter> arr = new ArrayList<>();
 
     private View mRootView;
+    private AmountView amountView;
+    private SuperButton mSendBtn;
     private GiftClickCallback giftClickCallback;
+    private int selectId = -10;
 
     public GiftPannelView(Context context) {
         this(context, null);
@@ -58,8 +62,22 @@ public class GiftPannelView extends RelativeLayout {
     private void init(Context context) {
         mRootView = LayoutInflater.from(context).inflate(
                 R.layout.dialog_gift, this, true);
+        mSendBtn = mRootView.findViewById(R.id.btn_send);
         viewPager = (ViewPager) mRootView.findViewById(R.id.viewpager);
         idotLayout = (LinearLayout) mRootView.findViewById(R.id.ll_dot);
+        amountView = mRootView.findViewById(R.id.amount);
+        mSendBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (selectId != -10) {
+                    if (giftClickCallback != null) {
+                        mDataList.get(selectId).num = amountView.getAmount();
+                        giftClickCallback.giftClick(mDataList.get(selectId));
+                    }
+                }
+
+            }
+        });
         initValues(context);
     }
 
@@ -94,9 +112,7 @@ public class GiftPannelView extends RelativeLayout {
                 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if (giftClickCallback != null) {
-                        giftClickCallback.giftClick(mDataList.get((int) id));
-                    }
+                    selectId = (int) id;
                     for (int i = 0; i < mDataList.size(); i++) {
                         GiftPopBean.DataBean model = mDataList.get(i);
                         if (i == id) {

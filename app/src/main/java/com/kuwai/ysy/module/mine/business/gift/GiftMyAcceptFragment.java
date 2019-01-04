@@ -59,7 +59,7 @@ public class GiftMyAcceptFragment extends BaseFragment<GiftMyAcceptPresenter> im
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.requestHomeData(SPManager.getStringValue("uid", "1"), page);
+        mPresenter.requestHomeData(SPManager.get().getStringValue("uid", "1"), page);
     }
 
     @Override

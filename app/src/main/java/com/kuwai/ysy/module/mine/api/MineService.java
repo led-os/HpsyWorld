@@ -4,6 +4,7 @@ package com.kuwai.ysy.module.mine.api;
 import com.kuwai.ysy.bean.AliOrderInfoBean;
 import com.kuwai.ysy.bean.RResponse;
 import com.kuwai.ysy.bean.SimpleResponse;
+import com.kuwai.ysy.module.circle.bean.DyMainListBean;
 import com.kuwai.ysy.module.find.bean.appointment.MyAppointMent;
 import com.kuwai.ysy.module.mine.bean.BlackListBean;
 import com.kuwai.ysy.module.mine.bean.CheckInBean;
@@ -17,15 +18,17 @@ import com.kuwai.ysy.module.mine.bean.IntegralDetailBean;
 import com.kuwai.ysy.module.mine.bean.MyAskBean;
 import com.kuwai.ysy.module.mine.bean.MyWalletBean;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
-import com.kuwai.ysy.module.mine.bean.PersonalDyBean;
+import com.kuwai.ysy.module.mine.bean.PersonalTreeHole;
 import com.kuwai.ysy.module.mine.bean.RechargeRecordBean;
 import com.kuwai.ysy.module.mine.bean.ShieldAndBlackListBean;
 import com.kuwai.ysy.module.mine.bean.TaGiftBean;
 import com.kuwai.ysy.module.mine.bean.TodayBean;
 import com.kuwai.ysy.module.mine.bean.TodayIntegral;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
+import com.kuwai.ysy.module.mine.bean.WallBean;
 import com.kuwai.ysy.module.mine.bean.WalletDetailsBean;
 import com.kuwai.ysy.module.mine.bean.WithdrawalsRecordBean;
+import com.kuwai.ysy.module.mine.bean.place.LatestPlace;
 import com.kuwai.ysy.module.mine.bean.user.UserInfo;
 import com.kuwai.ysy.module.mine.bean.vip.VipBean;
 
@@ -64,7 +67,7 @@ public interface MineService {
      */
     @FormUrlEncoded
     @POST("My/PersonalDynamic")
-    Observable<PersonalDyBean> getPersonalDynamic(@Field("uid") String uid,
+    Observable<DyMainListBean> getPersonalDynamic(@Field("uid") String uid,
                                                   @Field("page") int page);
 
     /**
@@ -72,8 +75,8 @@ public interface MineService {
      */
     @FormUrlEncoded
     @POST("My/PersonalTreeHole")
-    Observable<PersolHomePageBean> getPersonalTreeHole(@Field("uid") String uid,
-                                                       @Field("page") int page);
+    Observable<PersonalTreeHole> getPersonalTreeHole(@Field("uid") String uid,
+                                                     @Field("page") int page);
 
     /**
      * 个人主页-资料-别人查看
@@ -133,6 +136,13 @@ public interface MineService {
     @POST("My/UserGiveGiftsnAllList")
     Observable<GiftAcceptBean> getGiftMySend(@Field("uid") String uid,
                                              @Field("page") int page);
+
+    /**
+     * 背景墙
+     */
+    @FormUrlEncoded
+    @POST("My/UserPhotoWallList")
+    Observable<WallBean> getWall(@Field("uid") String uid);
 
     /**
      * 访客记录-谁看过我/我看过谁-所有
@@ -371,11 +381,26 @@ public interface MineService {
     Observable<ShieldAndBlackListBean> getShieldAndBlackList(@Field("uid") String uid);
 
     /**
+     * 删除足迹
+     */
+    @FormUrlEncoded
+    @POST("My/DelFootprints")
+    Observable<SimpleResponse> deleteFoot(@Field("uid") String uid,@Field("f_id") String fid);
+
+    /**
      * 黑名单-列表
      */
     @FormUrlEncoded
     @POST("My/BlacklistList")
     Observable<BlackListBean> getBlackList(@Field("uid") String uid,
+                                           @Field("page") int page);
+
+    /**
+     * 黑名单-列表
+     */
+    @FormUrlEncoded
+    @POST("My/ShieldList")
+    Observable<BlackListBean> getPingList(@Field("uid") String uid,
                                            @Field("page") int page);
 
     /**
@@ -449,8 +474,8 @@ public interface MineService {
      */
     @FormUrlEncoded
     @POST("My/WalletWithdrawals")
-    Observable<WalletDetailsBean> walletWithdrawals(@Field("uid") String uid,
-                                                    @Field("forward_amount") float money,
+    Observable<SimpleResponse> walletWithdrawals(@Field("uid") String uid,
+                                                    @Field("forward_amount") String money,
                                                     @Field("alipay_id") String payid,
                                                     @Field("alipay_name") String payName);
 
@@ -481,5 +506,34 @@ public interface MineService {
      */
     @GET("Payment/pagePay")
     Observable<AliOrderInfoBean> getAliOrderInfo();
+
+    /**
+     * 最近足迹
+     */
+    @FormUrlEncoded
+    @POST("My/RecentFootprints")
+    Observable<LatestPlace> getLatestPlace(@Field("uid") String uid,
+                                           @Field("page") int page);
+
+    /**
+     * 修改个人资料
+     */
+    @FormUrlEncoded
+    @POST("My/EditingMaterials")
+    Observable<SimpleResponse> changeInfo(@FieldMap Map<String, Object> infos);
+
+    /**
+     * 照片墙添加视频
+     */
+    @Multipart
+    @POST("My/AddUserPhotoWall")
+    Observable<SimpleResponse> addVideoWall(@PartMap Map<String, RequestBody> map);
+
+    /**
+     * 照片墙添加图片
+     */
+    @Multipart
+    @POST("My/AddUserImgae")
+    Observable<SimpleResponse> addPhotoWall(@PartMap Map<String, RequestBody> map);
 
 }

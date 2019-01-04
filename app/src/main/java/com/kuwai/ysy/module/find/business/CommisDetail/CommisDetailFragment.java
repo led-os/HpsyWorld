@@ -22,7 +22,9 @@ import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.find.adapter.DialogGiftAdapter;
 import com.kuwai.ysy.module.find.bean.BlindBean;
 import com.kuwai.ysy.module.find.bean.CommisDetailBean;
+import com.kuwai.ysy.module.mine.business.homepage.OtherHomepageFragment;
 import com.kuwai.ysy.utils.Utils;
+import com.kuwai.ysy.widget.NavigationLayout;
 import com.kuwai.ysy.widget.PileLayout;
 import com.kuwai.ysy.widget.shadow.ShadowConfig;
 import com.kuwai.ysy.widget.shadow.ShadowHelper;
@@ -168,6 +170,9 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
                     mPresenter.cancelApply(mcCommisDetailBean.getData().getR_id(), Integer.parseInt(SPManager.get().getStringValue("uid")));
                 }
                 break;
+            case R.id.tv_name:
+                start(OtherHomepageFragment.newInstance(uid));
+                break;
         }
     }
 
@@ -203,7 +208,15 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
         mBtnCommis = (SuperButton) mRootView.findViewById(R.id.btn_commis);
         mLayCenter = (LinearLayout) mRootView.findViewById(R.id.lay_center);
 
+        ((ImageView) mRootView.findViewById(R.id.navigation)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+
         mTopLay.setOnClickListener(this);
+        mTvName.setOnClickListener(this);
         mTvMore.setOnClickListener(this);
         mBtnCommis.setOnClickListener(this);
 

@@ -28,7 +28,7 @@ public class HomeAdapter extends BaseMultiItemQuickAdapter<HomeMutiBean, BaseVie
     public HomeAdapter(List data) {
         super(data);
         addItemType(HomeMutiBean.TEXT, R.layout.item_banner);
-        addItemType(HomeMutiBean.IMG, R.layout.item_home_content);
+        addItemType(HomeMutiBean.VIDEO, R.layout.item_home_content);
         addItemType(HomeMutiBean.IMG_TEXT, R.layout.item_home_header);
         /*setMultiTypeDelegate(new MultiTypeDelegate<HomeBean.IssueListBean.ItemListBean>() {
             @Override
@@ -51,7 +51,7 @@ public class HomeAdapter extends BaseMultiItemQuickAdapter<HomeMutiBean, BaseVie
             case HomeMutiBean.IMG_TEXT:
 
                 break;
-            case HomeMutiBean.IMG:
+            case HomeMutiBean.VIDEO:
                 break;
         }
     }

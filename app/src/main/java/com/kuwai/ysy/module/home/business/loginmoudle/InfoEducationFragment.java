@@ -104,7 +104,7 @@ public class InfoEducationFragment extends BaseFragment implements View.OnClickL
             data.add(new GoodsCategory(4, "硕士"));
             data.add(new GoodsCategory(5, "博士"));
             data.add(new GoodsCategory(6, "海外留学"));
-            SinglePicker<GoodsCategory> picker = new SinglePicker<>(getActivity(), data);
+            final SinglePicker<GoodsCategory> picker = new SinglePicker<>(getActivity(), data);
             picker.setCanceledOnTouchOutside(false);
             picker.setSelectedIndex(1);
             picker.setOffset(2);
@@ -127,7 +127,7 @@ public class InfoEducationFragment extends BaseFragment implements View.OnClickL
                 public void onClick(View v) {
                     if (eduDialog != null) {
                         eduDialog.dismiss();
-                        mTvEducation.setText(eduTv);
+                        mTvEducation.setText(picker.getSelectedItem().getName());
                     }
                 }
             });

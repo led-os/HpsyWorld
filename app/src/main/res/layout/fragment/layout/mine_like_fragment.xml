@@ -27,7 +27,7 @@
             android:button="@null"
             android:checked="true"
             android:gravity="center"
-            android:text="喜欢我的(150)"
+            android:text="喜欢我的"
             android:textColor="@color/radio_color_like"
             android:textSize="22sp" />
 

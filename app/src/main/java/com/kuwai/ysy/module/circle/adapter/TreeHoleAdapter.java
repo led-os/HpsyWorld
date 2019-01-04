@@ -17,15 +17,6 @@ import java.util.List;
 
 public class TreeHoleAdapter extends BaseQuickAdapter<HoleMainListBean.DataBean.TreeHoleListBean, BaseViewHolder> {
 
-//    private String[] imgList = new String[]{"http://img.kaiyanapp.com/fa978756b844c4facbc08656a9916415.jpeg?imageMogr2/quality/60/format/jpg",
-//            "http://pic.chinahpsy.com/home/750/gl.jpg",
-//            "http://img.kaiyanapp.com/d7e21f93f4dcb6e78271d125a1f41a9e.png?imageMogr2/quality/60/format/jpg",
-//            "http://pic.chinahpsy.com/home/750/cq.jpg",
-//            "http://img.kaiyanapp.com/5ae529b018ada5073d486242afc855b7.jpeg?imageMogr2/quality/60/format/jpg",
-//            "http://img.kaiyanapp.com/4631818cd092e281dc2c93b250684d9f.jpeg?imageMogr2/quality/60/format/jpg",
-//            "http://pic.chinahpsy.com/home/750/yddm.jpg",
-//            "http://img.kaiyanapp.com/bc2479c09cd15cb93b69d82e5f21c3fc.png?imageMogr2/quality/60/format/jpg",};
-
     public TreeHoleAdapter() {
         super(R.layout.item_tree_hole);
     }

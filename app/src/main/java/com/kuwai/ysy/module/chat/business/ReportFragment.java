@@ -13,6 +13,7 @@ import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.chat.adapter.ImgReportAdapter;
 import com.kuwai.ysy.module.chat.adapter.ReportAdapter;
 import com.kuwai.ysy.module.chat.bean.ReportBean;
+import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 
 import java.util.ArrayList;
@@ -52,6 +53,12 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        ((NavigationLayout) mRootView.findViewById(R.id.navigation)).setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
         recyclerView = mRootView.findViewById(R.id.reason_list);
         rl_img = mRootView.findViewById(R.id.rl_img);
 

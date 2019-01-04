@@ -63,6 +63,12 @@ public class ChangePsdFragment extends BaseFragment<ChangePsdPresenter> implemen
 
             }
         });
+        navigationLayout.setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
 
 
     }
@@ -97,7 +103,7 @@ public class ChangePsdFragment extends BaseFragment<ChangePsdPresenter> implemen
         }
 
         if (isComp) {
-            mPresenter.requestHomeData(SPManager.getStringValue("uid"),
+            mPresenter.requestHomeData(SPManager.get().getStringValue("uid"),
                     Utils.encrypt32(cpsd), Utils.encrypt32(newpsd), Utils.encrypt32(mrenewpsd), C.CHANGE_LOGIN_PSD);
         }
     }

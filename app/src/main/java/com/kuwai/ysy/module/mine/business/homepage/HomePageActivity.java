@@ -30,10 +30,8 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initView() {
-        bundle = new Bundle();
-        bundle.putString("id", "1");
 
-        loadRootFragment(R.id.container, OtherHomepageFragment.newInstance(bundle), false, true);
+        loadRootFragment(R.id.container, MineHomepageFragment.newInstance(), false, true);
     }
 
     @Override

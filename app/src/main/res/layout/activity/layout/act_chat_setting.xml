@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         stv:title1="聊天设置"></com.kuwai.ysy.widget.NavigationLayout>
@@ -26,7 +27,6 @@
         stv:sLeftTextSize="16sp"
         stv:sLeftTextString="胡大大"
         stv:sLeftTvDrawableHeight="20dp"
-        stv:sLeftTvDrawableRight="@drawable/ic_user_woman"
         stv:sLeftTvDrawableWidth="20dp"
         stv:sLeftViewGravity="left_center"
         stv:sRightIconRes="@drawable/ic_arrow_right" />
@@ -69,6 +69,7 @@
             android:textColor="@color/gray_7b" />
 
         <Switch
+            android:id="@+id/switch_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

@@ -13,11 +13,11 @@ import com.kuwai.ysy.module.mine.business.paypsd.ChangePhoneFragment;
 import com.kuwai.ysy.module.mine.business.paypsd.ChangePsdFragment;
 import com.kuwai.ysy.module.mine.business.paypsd.MsgNoticeFragment;
 import com.kuwai.ysy.module.mine.business.paypsd.PayPsdFragment;
+import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 
 public class SecurityFragment extends BaseFragment implements View.OnClickListener {
 
-    private Toolbar mToolbar;
     private TextView mTitle;
     private SuperTextView mStChangePsd;
     private SuperTextView mStChangePhone;
@@ -64,7 +64,12 @@ public class SecurityFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void initView(Bundle savedInstanceState) {
 
-        mToolbar = mRootView.findViewById(R.id.toolbar);
+        ((NavigationLayout) mRootView.findViewById(R.id.navigation)).setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
         mTitle = mRootView.findViewById(R.id.title);
         mStChangePsd = mRootView.findViewById(R.id.st_change_psd);
         mStChangePhone = mRootView.findViewById(R.id.st_change_phone);

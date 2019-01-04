@@ -36,14 +36,16 @@
             android:textColor="#ff282828"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/tv_cash_money"
+        <EditText
+            android:id="@+id/et_cash_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginEnd="21dp"
             android:layout_toStartOf="@+id/tv_all"
-            android:text="13789.0"
+            android:background="@null"
+            android:text="0.00"
+            android:inputType="number|numberDecimal"
             android:textColor="#ff282828"
             android:textSize="18sp" />
 
@@ -58,29 +60,65 @@
             android:textSize="14sp" />
     </RelativeLayout>
 
-    <com.allen.library.SuperTextView
-        android:id="@+id/st_zfb_name"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="53dp"
-        android:paddingStart="5dp"
-        app:sLeftTextColor="#282828"
-        app:sLeftTextSize="15sp"
-        app:sLeftTextString="支付宝姓名"
-        app:sRightTextColor="#bdbdbd"
-        app:sRightTextSize="14sp"
-        app:sRightTextString="请输入您的支付宝真实姓名" />
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
 
-    <com.allen.library.SuperTextView
-        android:id="@+id/st_zfb_id"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="支付宝姓名"
+            android:textColor="#ff282828"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/et_zhi_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/tv_all"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="right"
+            android:hint="请输入您的支付宝真实姓名"
+            android:textColor="#ff282828"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="53dp"
-        android:paddingStart="5dp"
-        app:sLeftTextColor="#282828"
-        app:sLeftTextSize="15sp"
-        app:sLeftTextString="支付宝账号"
-        app:sRightTextColor="#bdbdbd"
-        app:sRightTextSize="14sp"
-        app:sRightTextString="请输入您的支付宝真实账号" />
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="支付宝账号"
+            android:textColor="#ff282828"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/et_zhi_num"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/tv_all"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="right"
+            android:hint="请输入您的支付宝真实账号"
+            android:textColor="#ff282828"
+            android:textSize="14sp" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_cash"

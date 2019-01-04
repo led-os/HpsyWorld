@@ -76,12 +76,12 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         for (int i = 0; i < 10; i++) {
             list.add(new HomeMutiBean(HomeMutiBean.TEXT));
             list.add(new HomeMutiBean(HomeMutiBean.IMG_TEXT));
-            list.add(new HomeMutiBean(HomeMutiBean.IMG));
-            list.add(new HomeMutiBean(HomeMutiBean.IMG));
-            list.add(new HomeMutiBean(HomeMutiBean.IMG));
+            list.add(new HomeMutiBean(HomeMutiBean.VIDEO));
+            list.add(new HomeMutiBean(HomeMutiBean.VIDEO));
+            list.add(new HomeMutiBean(HomeMutiBean.VIDEO));
             list.add(new HomeMutiBean(HomeMutiBean.IMG_TEXT));
-            list.add(new HomeMutiBean(HomeMutiBean.IMG));
-            list.add(new HomeMutiBean(HomeMutiBean.IMG));
+            list.add(new HomeMutiBean(HomeMutiBean.VIDEO));
+            list.add(new HomeMutiBean(HomeMutiBean.VIDEO));
             list.add(new HomeMutiBean(HomeMutiBean.TEXT));
             list.add(new HomeMutiBean(HomeMutiBean.TEXT));
             list.add(new HomeMutiBean(HomeMutiBean.IMG_TEXT));

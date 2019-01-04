@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingBottom="14dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="16dp"
+    android:paddingTop="14dp">
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发布动态"
+        android:textColor="#ff282828"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_jifen"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_weight="1"
+        android:text="+20积分"
+        android:textColor="#ffff6161"
+        android:textSize="15sp" />
+
+    <com.allen.library.SuperButton
+        android:id="@+id/btn_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="已完成"
+        android:textColor="@color/gray_7b"
+        android:textSize="14dp"
+        app:sCornersRadius="20dp"
+        app:sSolidColor="@color/white"
+        app:sStrokeColor="@color/gray_7b"
+        app:sStrokeWidth="1px" />
+</LinearLayout>

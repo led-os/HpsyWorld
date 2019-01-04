@@ -20,6 +20,8 @@ import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.business.dongtai.DongtaiMainFragment;
@@ -27,14 +29,19 @@ import com.kuwai.ysy.module.mine.adapter.PicAdapter;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.kuwai.ysy.module.mine.bean.TabEntity;
 import com.kuwai.ysy.module.mine.bean.vip.GallaryBean;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
 import org.apache.commons.lang3.StringUtils;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.rong.imkit.RongIM;
 
 public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> implements OtherHomepageContract.IHomeView, View.OnClickListener {
 
@@ -70,7 +77,9 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
 
     private List<GallaryBean> gallaryBeanList = new ArrayList<>();
 
-    public static OtherHomepageFragment newInstance(Bundle bundle) {
+    public static OtherHomepageFragment newInstance(String id) {
+        Bundle bundle = new Bundle();
+        bundle.putString("id", id);
         OtherHomepageFragment fragment = new OtherHomepageFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -90,12 +99,19 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_chat:
+                //RongIM.getInstance().setMessageAttachedUserInfo(true);
+                RongIM.getInstance().startPrivateChat(getActivity(), otherid, mTvNick.getText().toString());
                 //私聊
                 break;
             case R.id.tv_xinyong:
                 //信用度
                 break;
             case R.id.btn_like:
+                if ("喜欢".equals(mBtnLike.getText().toString())) {
+                    mPresenter.like(SPManager.get().getStringValue("uid"), otherid, 1);
+                } else {
+                    mPresenter.like(SPManager.get().getStringValue("uid"), otherid, 2);
+                }
                 //喜欢
                 break;
             case R.id.btn_send_gift:
@@ -108,8 +124,13 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
     public void initView(Bundle savedInstanceState) {
 
         otherid = getArguments().getString("id");
-
         mLeft = mRootView.findViewById(R.id.left);
+        mLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
         mTitle = mRootView.findViewById(R.id.title);
         mSubTitle = mRootView.findViewById(R.id.sub_title);
         mRight = mRootView.findViewById(R.id.right);
@@ -148,10 +169,10 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
         }
 
         Bundle bundle = new Bundle();
-        bundle.putString("id",otherid);
+        bundle.putString("id", otherid);
 
         mFragments.add(PageDetailFragment.newInstance(bundle));
-        mFragments.add(DongtaiMainFragment.newInstance(C.TYPE_DY_ALL));
+        mFragments.add(DongtaiOtherFragment.newInstance(otherid));
         mAdapter = new MyPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(mAdapter);
         //slidingTabLayout.setViewPager(viewPager);\
@@ -192,8 +213,7 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
 
-        mPresenter.requestHomeData(SPManager.getStringValue("uid", "1"), otherid);
-        //slidingTabLayout.setTabWidth(Utils.getScreenWidth() / 2);
+        mPresenter.requestHomeData(otherid, SPManager.get().getStringValue("uid"));
     }
 
     @Override
@@ -201,6 +221,9 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
         mPersolHomePageBean = persolHomePageBean;
 
         mTitle.setText(persolHomePageBean.getData().getInfo().getNickname());
+        if (persolHomePageBean.getData().getLove() == 1) {
+            mBtnLike.setText("取消喜欢");
+        }
         List<String> subtitle = new ArrayList<>();
         if (!TextUtils.isEmpty(persolHomePageBean.getData().getInfo().getAge())) {
             subtitle.add(persolHomePageBean.getData().getInfo().getAge() + "岁");
@@ -241,10 +264,10 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
 
 
         //mDateAdapter.addData(persolHomePageBean.getData().getInfo().getAttach());
-        for (int i=0;i<persolHomePageBean.getData().getInfo().getAttach().size();i++) {
-            gallaryBeanList.add(new GallaryBean(persolHomePageBean.getData().getInfo().getAttach().get(i),
-                    persolHomePageBean.getData().getInfo().getIs_vip()==1?true:false,
-                    persolHomePageBean.getData().getView_face()==1?true:false));
+        for (int i = 0; i < persolHomePageBean.getData().getInfo().getVideo().size(); i++) {
+            gallaryBeanList.add(new GallaryBean(persolHomePageBean.getData().getInfo().getVideo().get(i).getAttach(),
+                    persolHomePageBean.getData().getInfo().getIs_vip() == 1 ? true : false,
+                    persolHomePageBean.getData().getView_face() == 1 ? true : false));
         }
         mDateAdapter.addData(gallaryBeanList);
     }
@@ -252,6 +275,17 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
     @Override
     public void showError(int errorCode, String msg) {
 
+    }
+
+    @Override
+    public void likeResult(SimpleResponse response) {
+        if (response.code == 200) {
+            if ("喜欢".equals(mBtnLike.getText().toString())) {
+                mBtnLike.setText("取消喜欢");
+            } else {
+                mBtnLike.setText("喜欢");
+            }
+        }
     }
 
     @Override

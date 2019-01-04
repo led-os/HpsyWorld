@@ -80,14 +80,14 @@ public class MineMyGiftFragment extends BaseFragment implements View.OnClickList
         fragments.add(GiftMyAcceptFragment.newInstance());
         fragments.add(GiftMySendFragment.newInstance());
 
-        SpannableString spanString = new SpannableString("我收到的(150)");
+        /*SpannableString spanString = new SpannableString("我收到的");
         AbsoluteSizeSpan span = new AbsoluteSizeSpan(26);
         spanString.setSpan(span, 4, spanString.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         radioButtonLookme.setText(spanString);
-        SpannableString spanString1 = new SpannableString("我送出的(150)");
+        SpannableString spanString1 = new SpannableString("我送出的");
         AbsoluteSizeSpan span1 = new AbsoluteSizeSpan(26);
         spanString1.setSpan(span1, 4, spanString1.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        radioButtonMylook.setText(spanString1);
+        radioButtonMylook.setText(spanString1);*/
 
         pager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
 

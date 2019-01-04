@@ -4,8 +4,11 @@ import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.AliOrderInfoBean;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.bean.TeamListBean;
+import com.kuwai.ysy.module.circle.bean.DyMainListBean;
 import com.kuwai.ysy.module.find.api.AppointService;
 import com.kuwai.ysy.module.find.bean.appointment.MyAppointMent;
+import com.kuwai.ysy.module.mine.bean.BlackListBean;
+import com.kuwai.ysy.module.mine.bean.CheckInBean;
 import com.kuwai.ysy.module.mine.bean.CreditBean;
 import com.kuwai.ysy.module.mine.bean.ESUser;
 import com.kuwai.ysy.module.mine.bean.GiftAcceptBean;
@@ -14,10 +17,13 @@ import com.kuwai.ysy.module.mine.bean.IntegralDetailBean;
 import com.kuwai.ysy.module.mine.bean.MyAskBean;
 import com.kuwai.ysy.module.mine.bean.MyWalletBean;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
+import com.kuwai.ysy.module.mine.bean.PersonalTreeHole;
 import com.kuwai.ysy.module.mine.bean.TaGiftBean;
 import com.kuwai.ysy.module.mine.bean.TodayBean;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
+import com.kuwai.ysy.module.mine.bean.WallBean;
 import com.kuwai.ysy.module.mine.bean.WalletDetailsBean;
+import com.kuwai.ysy.module.mine.bean.place.LatestPlace;
 import com.kuwai.ysy.module.mine.bean.user.UserInfo;
 import com.kuwai.ysy.module.mine.bean.vip.VipBean;
 import com.kuwai.ysy.net.ApiClient;
@@ -57,11 +63,46 @@ public class MineApiFactory {
                 .compose(RxSchedulers.<PersolHomePageBean>ioMain());
     }
 
+    public static Observable<WallBean> getWall(String uid) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getWall(uid)
+                .compose(RxSchedulers.<WallBean>ioMain());
+    }
+
+    public static Observable<DyMainListBean> getPersonalDynamic(String uid, int page) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getPersonalDynamic(uid, page)
+                .compose(RxSchedulers.<DyMainListBean>ioMain());
+    }
+
+    public static Observable<PersonalTreeHole> getPersonalTreeHole(String uid, int page) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getPersonalTreeHole(uid, page)
+                .compose(RxSchedulers.<PersonalTreeHole>ioMain());
+    }
+
     public static Observable<GiftAcceptBean> getGiftAccept(String uid, int page) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)
                 .getGiftMyAccept(uid, page)
                 .compose(RxSchedulers.<GiftAcceptBean>ioMain());
+    }
+
+    public static Observable<SimpleResponse> getUserLike(String uid, String otherid, int type) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getUserLike(uid, otherid, type)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<SimpleResponse> updateUserSig(String uid, String newSign) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .updateUserSig(uid, newSign)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
     public static Observable<GiftAcceptBean> getGiftSend(String uid, int page) {
@@ -190,6 +231,13 @@ public class MineApiFactory {
                 .compose(RxSchedulers.<WalletDetailsBean>ioMain());
     }
 
+    public static Observable<SimpleResponse> walletWithdrawals(String uid, String money, String pid, String pname) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .walletWithdrawals(uid, money, pid, pname)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
     public static Observable<SimpleResponse> getRealnameAuthentication(Map<String, RequestBody> map) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)
@@ -236,6 +284,76 @@ public class MineApiFactory {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)
                 .getAddParmentPassword(uid, psd, pay_psd, re_pay_psd)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<CheckInBean> getUserIntegralCheckInList(String uid) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getUserIntegralCheckInList(uid)
+                .compose(RxSchedulers.<CheckInBean>ioMain());
+    }
+
+    public static Observable<SimpleResponse> getUserIntegralCheckIn(String uid) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getUserIntegralCheckIn(uid)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<SimpleResponse> getUserExchange(String uid, int exchange) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getUserExchange(uid, exchange)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<LatestPlace> getLatestPlace(String uid, int page) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getLatestPlace(uid, page)
+                .compose(RxSchedulers.<LatestPlace>ioMain());
+    }
+
+    public static Observable<SimpleResponse> deleteFoot(String uid, String fid) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .deleteFoot(uid, fid)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<SimpleResponse> changeInfo(Map<String, Object> param) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .changeInfo(param)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<BlackListBean> getBlackList(String uid, int page) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getBlackList(uid, page)
+                .compose(RxSchedulers.<BlackListBean>ioMain());
+    }
+
+    public static Observable<BlackListBean> getPingList(String uid, int page) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getPingList(uid, page)
+                .compose(RxSchedulers.<BlackListBean>ioMain());
+    }
+
+    public static Observable<SimpleResponse> addPhotoWall(Map<String, RequestBody> params) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .addPhotoWall(params)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<SimpleResponse> addVideoWall(Map<String, RequestBody> params) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .addVideoWall(params)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 }

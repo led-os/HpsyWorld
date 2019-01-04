@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_page2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_pic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:background="@color/line"
+        android:layout_marginTop="64dp"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/tv_filter"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/home_home_ic_filter" />
+
+    <ImageView
+        android:id="@+id/tv_date"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="18dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/home_home_ic_date" />
+
+    <RadioGroup
+        android:id="@+id/main_radiogroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/tv_tui"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="推荐"
+            android:button="@null"
+            android:layout_marginRight="8dp"
+            android:textColor="#fffffeff"
+            android:textSize="18sp" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="1px"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
+
+        <RadioButton
+            android:id="@+id/tv_near"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:text="附近"
+            android:layout_marginLeft="8dp"
+            android:textColor="#fffffeff"
+            android:textSize="16sp"/>
+
+    </RadioGroup>
+
+</RelativeLayout>

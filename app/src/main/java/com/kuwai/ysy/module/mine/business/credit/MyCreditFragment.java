@@ -10,6 +10,8 @@ import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.mine.bean.CreditBean;
 import com.kuwai.ysy.widget.NavigationLayout;
+import com.rayhahah.dialoglib.DialogInterface;
+import com.rayhahah.dialoglib.NormalAlertDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
@@ -75,14 +77,37 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
         mStEdu = (SuperTextView) mRootView.findViewById(R.id.st_edu);
         mStHouse = (SuperTextView) mRootView.findViewById(R.id.st_house);
         mStCar = (SuperTextView) mRootView.findViewById(R.id.st_car);
-
+        mNavigation.setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
+        mNavigation.setRightClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new NormalAlertDialog.Builder(getActivity())
+                        .setTitleText("认证作用")
+                        .setContentText(getResources().getString(R.string.renzheng))
+                        .setSingleButtonText("好的，知道了")
+                        .setSingleMode(true)
+                        .setSingleListener(new DialogInterface.OnSingleClickListener<NormalAlertDialog>() {
+                            @Override
+                            public void clickSingleButton(NormalAlertDialog dialog, View view) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setCanceledOnTouchOutside(true)
+                        .build().show();
+            }
+        });
 
     }
 
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.requestHomeData(SPManager.getStringValue("uid", "1"));
+        mPresenter.requestHomeData(SPManager.get().getStringValue("uid"));
     }
 
     @Override

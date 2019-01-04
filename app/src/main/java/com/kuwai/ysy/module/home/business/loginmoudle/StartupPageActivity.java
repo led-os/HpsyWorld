@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.home.business.loginmoudle;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.Animation;
@@ -9,8 +10,14 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseActivity;
+import com.kuwai.ysy.module.circle.AddressChooseActivity;
+import com.kuwai.ysy.module.circle.business.publishdy.PublishDyActivity;
 import com.kuwai.ysy.module.home.business.loginmoudle.login.LoginActivity;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
+import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by Administrator on 2017/11/8 0008.
@@ -64,10 +71,25 @@ public class StartupPageActivity extends BaseActivity implements Animation.Anima
 
     @Override
     public void onAnimationEnd(Animation animation) {
-        Intent i = new Intent(StartupPageActivity.this, LoginActivity.class);
-        startActivity(i);
-        finish();
+        requestLocationPermission();
     }
+
+    private void requestLocationPermission() {
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        Intent i = new Intent(StartupPageActivity.this, LoginActivity.class);
+                        startActivity(i);
+                        finish();
+                        if (aBoolean) {
+                        } else {
+                        }
+                    }
+                });
+    }
+
 
     @Override
     public void onAnimationRepeat(Animation animation) {

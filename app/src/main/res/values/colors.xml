@@ -12,6 +12,8 @@
     <color name="backgroundColor">#EEEEEE</color>
     <color name="base_DCDCDC">#DCDCDC</color>
 
+    <color name="line_fd">#fdf294</color>
+
     <color name="colorPrimaryDay">#C01E2F</color>
     <color name="colorPrimaryDayDark">#A82828</color>
     <color name="colorPrimaryDayAccent">#F65663</color>
@@ -38,6 +40,7 @@
 
     <color name="gray_7b">#7b7b7b</color>
     <color name="gray_f2">#f2f2f2</color>
+    <color name="gray_d2">#d2d2d2</color>
     <color name="gray_68">#686868</color>
     <color name="gray_e6">#e6e6e6</color>
     <color name="balck_28">#282828</color>

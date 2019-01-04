@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title1="我的想问"></com.kuwai.ysy.widget.NavigationLayout>
@@ -53,48 +54,10 @@
         app:sCornersRadius="2dp"
         app:sSolidColor="@color/white" />
 
-
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rl_question"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"></android.support.v7.widget.RecyclerView>
 
-        <ImageView
-            android:id="@+id/img_select"
-            android:layout_width="24dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="12dp"
-            android:src="@drawable/ic_list_select" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="不知道您如何看待异地恋的问题呢？"
-            android:textColor="#ff875bf0"
-            android:textSize="15sp" />
-
-        <ImageView
-            android:id="@+id/img_arrow"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="12dp"
-            android:src="@drawable/ic_chat_nav_more" />
-    </LinearLayout>
-
-    <com.allen.library.SuperButton
-        android:id="@+id/btn_add_answer"
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_margin="10dp"
-        android:text="+ 点击添加我的回答"
-        android:textColor="#ff7b7b7b"
-        android:textSize="15sp"
-        app:sCornersRadius="2dp"
-        app:sSolidColor="@color/white" />
 </LinearLayout>

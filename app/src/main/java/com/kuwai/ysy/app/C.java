@@ -13,12 +13,32 @@ public class C {
 
     public static final int RESPONSE_SUCCESS = 0;
     public static final int RESPONSE_FAILED = 1;
-    public static final String APP_NAME = "HPAerial";
+    public static final String APP_NAME = "鱼水缘";
+    public static final String H5_URL = "http://api.yushuiyuan.cn/h5/";
+
 
     // 简体中文
     public static final String SIMPLIFIED_CHINESE = "zh";
+    public static final String H5_FLAG = "H5flag";
     // 英文
     public static final String ENGLISH = "en";
+
+    public static final String YUNSHI = "today-fate.html?uid=";
+    public static final String HUODONGXIANGQING = "activity-detail.html?";
+    public static final String BAOMING = "join-activity.html?uid=";
+    public static final String ABOUTUS = "about-us.html";
+    public static final String CONTACTUS = "contact-us.html?uid=";
+    //level:会员等级
+    //			part:会员特权（内容特权，身份特权等依次为1,2,3,4）
+    public static final String VIPDETAIL = "vip-detail.html?level=1&part=1";
+    public static final String XIEYI = "user-agreement.html";
+    public static final String HONGBAOXUZHI = "redbag-tips-list.html";
+    public static final String HUIYUANTIOAKUAN = "vip-service.html";
+    public static final String BAOHUZHENGCE = "secret-protect.html";
+    public static final String MEILILEVEL = "charm-level.html";
+    public static final String TISHENGMEILI = "up-charm-level.html";
+    public static final String YUYUE = "order-fortune-tell.html?uid=";
+
 
     public interface DIR {
         String PIC_DIR = FileUtils.getRootFilePath() + "Ysy/images";
@@ -35,9 +55,13 @@ public class C {
 
     public static final String DEVICE_ID = "Android";
 
+    public static final String ALI_ACID = "ALI_ACID";
+    public static final String ALI_SECRET = "ALI_SECRET";
+    public static final String ALI_TOKEN = "ALI_TOKEN";
+
     @Retention(RetentionPolicy.SOURCE)
     public @interface BUGLY {
-        String APP_ID = "63d7bf2793";
+        String APP_ID = "aaf3ddaf24";
         String APP_KEY = "7ec93ff3-c1a1-4be6-a8ff-37d2bb2bd256";
     }
 
@@ -85,6 +109,7 @@ public class C {
     //性别
     public static final int Man = 1;
     public static final int Woman = 2;
+    public static final String HAS_THIRD_PASS = "HAS_THIRD_PASS";//三方短信
 
     //验证码类型
     public static final String CODE_REGIST = "A";//注册
@@ -92,6 +117,7 @@ public class C {
     public static final String CODE_CHANG_PSD = "C";//修改密码
     public static final String CODE_CHANG_PHONE = "D";//修改手机
     public static final String CODE_ACTIVITY = "E";//参加活动
+    public static final String CODE_SANFANG = "F";//三方短信
 
     //登陆类型
     public static final String LOGIN_PHONE = "phone";//注册
@@ -99,6 +125,8 @@ public class C {
     public static final String LOGIN_QQ = "qq_id";//修改密码
     public static final String LOGIN_WECHAT = "wechat_id";//修改手机
     public static final String LOGIN_SINA = "weibo_id";//参加活动
+    public static final String SAN_FANG = "sanfang";//参加活动
+    public static final String SAN_FANG_ID = "sanfangId";//参加活动
 
     //动态类型
     public static final int DY_TXT = 0;//纯文本
@@ -117,12 +145,15 @@ public class C {
 
     //通知
     public static final int MSG_LOGIN = 0x0000010;
+
     public static final int MSG_ZAN_DY = 0x00000101;
     public static final int MSG_COMMENT = 0x00000102;
     public static final int MSG_REWARD_DY = 0x00000103;
     public static final int MSG_COMMENT_HOLE = 0x00000104;
     public static final int MSG_REWARD_HOLE = 0x00000105;
     public static final int MSG_FIND_TEXT_RUN = 0x00000106;
+
+    public static final int MSG_CHANGE_INFO = 0x000001001;
 
     //注册参数
     public static final String REGIST_NAME = "RE_NAME";//全部动态

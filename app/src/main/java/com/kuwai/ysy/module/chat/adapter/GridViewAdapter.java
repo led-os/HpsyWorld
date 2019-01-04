@@ -65,6 +65,7 @@ public class GridViewAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.item_gift_grid, parent, false);
             viewHolder = new ViewHolder();
+            viewHolder.price = convertView.findViewById(R.id.price);
             viewHolder.tv = (TextView) convertView.findViewById(R.id.textView);
             viewHolder.iv = (ImageView) convertView.findViewById(R.id.imageView);
             viewHolder.item_layout = (RelativeLayout) convertView.findViewById(R.id.item_layout);
@@ -76,12 +77,13 @@ public class GridViewAdapter extends BaseAdapter {
          * 在给View绑定显示的数据时，计算正确的position = position + curIndex * pageSize，
          */
         GiftPopBean.DataBean model = getItem(position);
-        viewHolder.tv.setText(model.getPrice());
-        GlideUtil.load(mContext,model.getGirft_img_url(),viewHolder.iv);
+        viewHolder.tv.setText(model.getGirft_name());
+        viewHolder.price.setText(model.getPrice()+"桃花币");
+        GlideUtil.load(mContext, model.getGirft_img_url(), viewHolder.iv);
         //viewHolder.iv.setImageDrawable(model.getGirft_img_url());
-        if (model.isSelected()){//被选中
+        if (model.isSelected()) {//被选中
             viewHolder.item_layout.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.item_selector));
-        }else {
+        } else {
             viewHolder.item_layout.setBackgroundDrawable(null);
         }
         return convertView;
@@ -91,6 +93,7 @@ public class GridViewAdapter extends BaseAdapter {
     class ViewHolder {
         public RelativeLayout item_layout;
         public TextView tv;
+        public TextView price;
         public ImageView iv;
     }
 

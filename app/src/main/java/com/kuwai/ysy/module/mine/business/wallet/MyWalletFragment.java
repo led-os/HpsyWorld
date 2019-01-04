@@ -13,13 +13,13 @@ import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.mine.bean.MyWalletBean;
+import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
 public class MyWalletFragment extends BaseFragment<MyWalletPresenter> implements MyWalletContract.IHomeView, View.OnClickListener {
 
-    private Toolbar mToolbar;
     private TextView mTitle;
     private ImageView mIvMoney;
     private LinearLayout mMyYubi;
@@ -53,10 +53,10 @@ public class MyWalletFragment extends BaseFragment<MyWalletPresenter> implements
                 start(WalletDetailsFragment.newInstance());
                 break;
             case R.id.sb_recharge:
-                start(RechargeFragment.newInstance());
+                start(RechargeFragment.newInstance(mTvCashWithDrawal.getText().toString()));
                 break;
             case R.id.btn_cash:
-                start(WithDrawFragment.newInstance());
+                start(WithDrawFragment.newInstance(mTvCashWithDrawal.getText().toString()));
                 break;
         }
 
@@ -65,8 +65,12 @@ public class MyWalletFragment extends BaseFragment<MyWalletPresenter> implements
     @Override
     public void initView(Bundle savedInstanceState) {
 
-
-        mToolbar = mRootView.findViewById(R.id.toolbar);
+        ((NavigationLayout) mRootView.findViewById(R.id.navigation)).setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               getActivity().finish();
+            }
+        });
         mTitle = mRootView.findViewById(R.id.title);
         mIvMoney = mRootView.findViewById(R.id.iv_money);
         mMyYubi = mRootView.findViewById(R.id.my_yubi);
@@ -85,13 +89,14 @@ public class MyWalletFragment extends BaseFragment<MyWalletPresenter> implements
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.requestHomeData(SPManager.getStringValue("uid", "1"));
+        mPresenter.requestHomeData(SPManager.get().getStringValue("uid"));
     }
 
     @Override
     public void setHomeData(MyWalletBean walletBean) {
         mTvCash.setText(walletBean.getData().getAmount());
         mTvCashWithDrawal.setText(walletBean.getData().getForward_amount());
+        mTvYubi.setText(Double.parseDouble(walletBean.getData().getAmount()) - Double.parseDouble(walletBean.getData().getForward_amount()) + "");
     }
 
     @Override

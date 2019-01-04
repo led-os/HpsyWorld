@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <com.kuwai.ysy.widget.NavigationLayout
-        android:id="@+id/titleView"
+        android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:rightImg="@drawable/ic_nav_search_default"

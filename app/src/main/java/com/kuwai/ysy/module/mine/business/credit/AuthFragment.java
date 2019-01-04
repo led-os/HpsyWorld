@@ -17,6 +17,7 @@ import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.business.publishdy.PublishDyActivity;
 import com.kuwai.ysy.utils.DialogUtil;
 import com.kuwai.ysy.utils.UploadHelper;
+import com.kuwai.ysy.widget.NavigationLayout;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -97,6 +98,12 @@ public class AuthFragment extends BaseFragment<AuthPresenter> implements AuthCon
 
         etName = mRootView.findViewById(R.id.my_name);
         etNumber = mRootView.findViewById(R.id.my_number);
+        ((NavigationLayout) mRootView.findViewById(R.id.navigation)).setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
         mID = mRootView.findViewById(R.id.iv_ID);
         mHandID = mRootView.findViewById(R.id.iv_hand_ID);
         tvID = mRootView.findViewById(R.id.tv_ID);
@@ -147,7 +154,7 @@ public class AuthFragment extends BaseFragment<AuthPresenter> implements AuthCon
         number = etNumber.getText().toString();
 
         UploadHelper helper = UploadHelper.getInstance();
-        helper.addParameter("uid", SPManager.getStringValue("uid"));
+        helper.addParameter("uid", SPManager.get().getStringValue("uid"));
         helper.addParameter("full_name", name);
         helper.addParameter("id_number", number);
 

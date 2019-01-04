@@ -28,6 +28,7 @@
             android:button="@null"
             android:checked="true"
             android:gravity="center"
+            android:text="我收到的"
             android:textColor="@color/radio_color_like"
             android:textSize="20sp" />
 
@@ -38,6 +39,7 @@
             android:layout_marginLeft="16dp"
             android:button="@null"
             android:gravity="center"
+            android:text="我送出的"
             android:textColor="@color/radio_color_like"
             android:textSize="16sp" />
 

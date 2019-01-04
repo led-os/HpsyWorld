@@ -15,6 +15,8 @@ import com.rayhahah.rbase.base.RBasePresenter;
 public class ConversationActivity extends BaseActivity {
 
     private NavigationLayout navigationLayout;
+    private String targetId = "";
+    private String title = "";
 
     @Override
     protected RBasePresenter getPresenter() {
@@ -29,12 +31,28 @@ public class ConversationActivity extends BaseActivity {
     @Override
     protected void initView() {
         navigationLayout = findViewById(R.id.navigation);
+        navigationLayout.setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         navigationLayout.setRightClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ConversationActivity.this, ChatSettingActivity.class));
+                Bundle bundle = new Bundle();
+                bundle.putString("id",targetId);
+                bundle.putString("name",title);
+                Intent intent =  new Intent(ConversationActivity.this, ChatSettingActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
+        targetId = getIntent().getData().getQueryParameter("targetId");
+        title = getIntent().getData().getQueryParameter("title");
+        if (title != null && !title.isEmpty()) {
+            navigationLayout.setTitle(title);
+        }
     }
 
     @Override

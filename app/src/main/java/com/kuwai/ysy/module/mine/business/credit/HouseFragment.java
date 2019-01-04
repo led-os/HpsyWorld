@@ -15,6 +15,7 @@ import com.kuwai.ysy.R;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.utils.UploadHelper;
+import com.kuwai.ysy.widget.NavigationLayout;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -75,7 +76,12 @@ public class HouseFragment extends BaseFragment<HousePresenter> implements House
 
         mIvHouse = mRootView.findViewById(R.id.iv_house);
         tvHouse = mRootView.findViewById(R.id.tv_house);
-
+        ((NavigationLayout) mRootView.findViewById(R.id.navigation)).setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
 
         mRootView.findViewById(R.id.rl_house).setOnClickListener(this);
 
@@ -117,7 +123,7 @@ public class HouseFragment extends BaseFragment<HousePresenter> implements House
     private void sendAuth() {
 
         UploadHelper helper = UploadHelper.getInstance();
-        helper.addParameter("uid", SPManager.getStringValue("uid"));
+        helper.addParameter("uid", SPManager.get().getStringValue("uid"));
 
         File file = new File(selectList.get(0).getCompressPath());
         helper.addParameter("file1" + "\";filename=\"" + selectList.get(0).getCompressPath(), file);

@@ -126,7 +126,7 @@ public class StepsView extends View {
     /**
      * 完成的颜色
      */
-    private int mCompletedLineColor = ContextCompat.getColor(getContext(), R.color.theme);
+    private int mCompletedLineColor = ContextCompat.getColor(getContext(), R.color.line_fd);
 
     private Paint mTextNumberPaint;
 
@@ -237,10 +237,12 @@ public class StepsView extends View {
     @Override
     protected synchronized void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (isAnimation) {
-            drawSign(canvas);
-        } else {
-            drawUnSign(canvas);
+        if(mStepBeanList.size()>0){
+            if (isAnimation) {
+                drawSign(canvas);
+            } else {
+                drawUnSign(canvas);
+            }
         }
     }
 
@@ -266,7 +268,7 @@ public class StepsView extends View {
                         //绿色开始绘制的地方,
                         float endX = preComplectedXPosition + mAnimationWidth * (mCount / ANIMATION_INTERVAL);
                         //绘制绿色
-                        canvas.drawRect(preComplectedXPosition, mLeftY, endX+33, mRightY, mCompletedPaint);
+                        canvas.drawRect(preComplectedXPosition, mLeftY, endX + 33, mRightY, mCompletedPaint);
                         //绘制灰色
                        /* canvas.drawRect(endX, mLeftY, preComplectedXPosition + mLineWidth,
                                 mRightY, mUnCompletedPaint);*/

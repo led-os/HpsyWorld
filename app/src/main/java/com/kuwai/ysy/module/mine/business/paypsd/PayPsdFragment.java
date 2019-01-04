@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.allen.library.SuperTextView;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 
 public class PayPsdFragment extends BaseFragment implements View.OnClickListener {
@@ -56,6 +57,12 @@ public class PayPsdFragment extends BaseFragment implements View.OnClickListener
         mStChangePayforPsd = mRootView.findViewById(R.id.st_change_payfor_psd);
         mStChangePayforPsd.setOnClickListener(this);
         mStSetPayforPsd.setOnClickListener(this);
+        ((NavigationLayout) mRootView.findViewById(R.id.navigation)).setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
     }
 
     @Override

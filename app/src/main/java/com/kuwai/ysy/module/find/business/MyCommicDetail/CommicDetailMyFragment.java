@@ -405,12 +405,12 @@ public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter
             ImageView imageDel = pannel.findViewById(R.id.top_del);
             SuperButton submit = pannel.findViewById(R.id.submit);
 
-            mChengyiList.add(new ThemeBean(false, "10鱼币", R.drawable.ic_sel_other, false));
-            mChengyiList.add(new ThemeBean(false, "20鱼币", R.drawable.ic_sel_other, false));
-            mChengyiList.add(new ThemeBean(false, "50鱼币", R.drawable.ic_sel_other, false));
-            mChengyiList.add(new ThemeBean(false, "80鱼币", R.drawable.ic_sel_other, false));
-            mChengyiList.add(new ThemeBean(false, "200鱼币", R.drawable.ic_sel_other, false));
-            mChengyiList.add(new ThemeBean(false, "500鱼币", R.drawable.ic_sel_other, false));
+            mChengyiList.add(new ThemeBean(false, "10桃花币", R.drawable.ic_sel_other, false));
+            mChengyiList.add(new ThemeBean(false, "20桃花币", R.drawable.ic_sel_other, false));
+            mChengyiList.add(new ThemeBean(false, "50桃花币", R.drawable.ic_sel_other, false));
+            mChengyiList.add(new ThemeBean(false, "80桃花币", R.drawable.ic_sel_other, false));
+            mChengyiList.add(new ThemeBean(false, "200桃花币", R.drawable.ic_sel_other, false));
+            mChengyiList.add(new ThemeBean(false, "500桃花币", R.drawable.ic_sel_other, false));
 
             final MoneyAdapter chengyiAdapter = new MoneyAdapter(mChengyiList);
             recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
@@ -439,7 +439,7 @@ public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    popCostCustom(mChengyiList.get(mChengyiPos).getTitle().replace("鱼币", ""));
+                    popCostCustom(mChengyiList.get(mChengyiPos).getTitle().replace("桃花币", ""));
                     themeDialog.dismiss();
                 }
             });

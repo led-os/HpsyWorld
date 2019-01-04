@@ -113,7 +113,7 @@ public class InfoHeightFragment extends BaseFragment implements View.OnClickList
                 }
             });
 
-            NumberPicker picker = new NumberPicker(getActivity());
+            final NumberPicker picker = new NumberPicker(getActivity());
             picker.setWidth(picker.getScreenWidthPixels() / 2);
             picker.setCycleDisable(true);
             picker.setDividerVisible(false);
@@ -140,7 +140,7 @@ public class InfoHeightFragment extends BaseFragment implements View.OnClickList
                 public void onClick(View v) {
                     if (themeDialog != null) {
                         themeDialog.dismiss();
-                        mTvDate.setText(height + "cm");
+                        mTvDate.setText(picker.getSelectedItem() + "cm");
                     }
                 }
             });
@@ -180,7 +180,7 @@ public class InfoHeightFragment extends BaseFragment implements View.OnClickList
             data.add(new GoodsCategory(5, "10W-15W"));
             data.add(new GoodsCategory(6, "15W-20W"));
             data.add(new GoodsCategory(7, "20W以上"));
-            SinglePicker<GoodsCategory> picker = new SinglePicker<>(getActivity(), data);
+            final SinglePicker<GoodsCategory> picker = new SinglePicker<>(getActivity(), data);
             picker.setCanceledOnTouchOutside(false);
             picker.setSelectedIndex(3);
             picker.setOffset(2);
@@ -204,7 +204,8 @@ public class InfoHeightFragment extends BaseFragment implements View.OnClickList
                 public void onClick(View v) {
                     if (heightDialog != null) {
                         heightDialog.dismiss();
-                        mTvIncome.setText(income);
+                        incomeId = picker.getSelectedItem().getId();
+                        mTvIncome.setText(picker.getSelectedItem().getName());
                     }
                 }
             });

@@ -13,6 +13,7 @@ import com.kuwai.ysy.module.find.adapter.MyApplyAdapter;
 import com.kuwai.ysy.module.find.adapter.MyComissAdapter;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.MyRecycleViewDivider;
+import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 
 import java.util.ArrayList;
@@ -49,6 +50,12 @@ public class MyApplyFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void initView(Bundle savedInstanceState) {
         mDongtaiList = mRootView.findViewById(R.id.recyclerView);
+        ((NavigationLayout) mRootView.findViewById(R.id.navigation)).setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
         mDataList.add(new CategoryBean());
         mDataList.add(new CategoryBean());
         mDataList.add(new CategoryBean());

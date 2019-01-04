@@ -2,6 +2,7 @@ package com.kuwai.ysy.module.mine.business.homepage;
 
 import android.util.Log;
 
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.find.api.FoundApiFactory;
 import com.kuwai.ysy.module.find.bean.FoundHome.FoundBean;
 import com.kuwai.ysy.module.find.business.FoundHome.FoundContract;
@@ -29,6 +30,21 @@ public class OtherHomepagePresenter extends RBasePresenter<OtherHomepageContract
             @Override
             public void accept(PersolHomePageBean persolHomePageBean) throws Exception {
                 mView.setHomeData(persolHomePageBean);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.i(TAG, "accept: "+throwable);
+            }
+        }));
+    }
+
+    @Override
+    public void like(String uid, String otherId, int type) {
+        addSubscription(MineApiFactory.getUserLike(uid,otherId,type).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse response) throws Exception {
+                mView.likeResult(response);
             }
         }, new Consumer<Throwable>() {
             @Override

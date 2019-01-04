@@ -18,6 +18,7 @@ import com.kuwai.ysy.module.mine.bean.vip.VipBannerBean;
 import com.kuwai.ysy.module.mine.bean.vip.VipBean;
 import com.kuwai.ysy.utils.BaseLinkPageChangeListener;
 import com.kuwai.ysy.utils.DialogUtil;
+import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 
 import java.util.ArrayList;
@@ -65,6 +66,12 @@ public class VipCenterFragment extends BaseFragment implements View.OnClickListe
     public void initView(Bundle savedInstanceState) {
         headerVp = (ViewPager) mRootView.findViewById(R.id.viewPager);
         bodyVp = (ViewPager) mRootView.findViewById(R.id.viewPager1);
+        ((NavigationLayout) mRootView.findViewById(R.id.navigation)).setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
 
         mHbundle = new Bundle();
         mBbundle = new Bundle();

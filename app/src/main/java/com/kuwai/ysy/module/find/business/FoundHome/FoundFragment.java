@@ -68,7 +68,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
     private List<String> tvbannerList = new ArrayList<>();
     private FoundCityAdapter mfoundCityAdapter;
     private FoundActivityAdapter mfoundActivityAdapter;
-    private String city ="苏州";
+    private String city = "苏州";
 
     private TextView mCitymeetMore, mTuodanMore;
     private FoundBean mFoundBean;
@@ -165,11 +165,11 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
 
                 if (Integer.valueOf(SPManager.get().getStringValue("uid")) == (mFoundBean.getData().getAppointment().get(position).getUid())) {
                     Intent intent = new Intent(getActivity(), CommisDetailMyActivity.class);
-                    intent.putExtra("data",bundle);
+                    intent.putExtra("data", bundle);
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(getActivity(), CommisDetailOtherActivity.class);
-                    intent.putExtra("data",bundle);
+                    intent.putExtra("data", bundle);
                     startActivity(intent);
                 }
             }
@@ -245,8 +245,8 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
     private void getData() {
         Map<String, Object> map = new HashMap<>();
         map.put("city", city);
-        map.put("longitude",113);
-        map.put("latitude",23);
+        map.put("longitude", 113);
+        map.put("latitude", 23);
 
         mPresenter.requestHomeData(map);
     }

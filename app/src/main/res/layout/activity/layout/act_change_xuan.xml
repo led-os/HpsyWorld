@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rightColor="@color/theme"
+        app:rightTxt="保存"
+        app:title1="修改宣言"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <EditText
+        android:id="@+id/et_content"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/navigation"
+        android:layout_margin="12dp"
+        android:background="@drawable/shape_question"
+        android:gravity="left|top"
+        android:hint="用心的自我介绍更能够获得Ta的真心青睐哦~"
+        android:inputType="textMultiLine"
+        android:maxLines="6"
+        android:padding="10dp"
+        android:scrollHorizontally="false"
+        android:singleLine="false"
+        android:textColor="@color/gray_7b"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_content"
+        android:layout_marginTop="10dp"
+        android:background="#0d4e05ff"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:text="为了您的信息安全，请不要在交友宣言中填写微信、QQ、手机号等具体联系方式。"
+        android:textColor="#ff5415f9"
+        android:textSize="13sp" />
+
+</RelativeLayout>

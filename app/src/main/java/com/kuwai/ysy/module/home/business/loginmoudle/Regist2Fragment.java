@@ -1,7 +1,11 @@
 package com.kuwai.ysy.module.home.business.loginmoudle;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -9,11 +13,16 @@ import android.widget.TextView;
 import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.home.api.HomeApiFactory;
 import com.kuwai.ysy.module.home.bean.login.CodeBean;
+import com.kuwai.ysy.module.home.bean.login.LoginBean;
+import com.kuwai.ysy.module.home.business.HomeActivity;
 import com.kuwai.ysy.module.mine.MyPointActivity;
+import com.kuwai.ysy.net.glide.ProgressInterceptor;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.CountDownTextView;
 import com.kuwai.ysy.widget.MyEditText;
@@ -26,6 +35,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.functions.Consumer;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
+
+import static com.kuwai.ysy.app.C.MSG_LOGIN;
 
 public class Regist2Fragment extends BaseFragment implements View.OnClickListener {
 
@@ -38,6 +52,8 @@ public class Regist2Fragment extends BaseFragment implements View.OnClickListene
     private SuperButton mBtnNext;
     private String mPhone;
     private String code = "0";
+
+    private boolean isSanFang = false;
 
     public static Regist2Fragment newInstance(String phone) {
         Bundle args = new Bundle();
@@ -61,23 +77,35 @@ public class Regist2Fragment extends BaseFragment implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_next:
-                if (Utils.isNullString(mEtCode.getText().toString())) {
-                    ToastUtils.showShort("请输入验证码", getActivity());
-                } else if (!code.equals(mEtCode.getText().toString())) {
-                    ToastUtils.showShort("验证码错误", getActivity());
-                    /*HashMap<String, String> param = new HashMap<>();
+                if (isSanFang) {
+                    //三方登录验证是否已完善过信息
+                    String type = SPManager.get().getStringValue(C.SAN_FANG);
+                    String id = SPManager.get().getStringValue(C.SAN_FANG_ID);
+                    HashMap<String, String> param = new HashMap<>();
                     param.put("phone", mPhone);
                     param.put("check_code", mEtCode.getText().toString()); //1代表android
-                    param.put("type", C.CODE_REGIST);
-                    codeAuth(param);*/
+                    param.put("type", type);
+                    param.put(type, id);
+                    codeAuth(param);
                 } else {
-                    SPManager.get().putString(C.REGIST_CODE, mEtCode.getText().toString());
-                    start(Regist3Fragment.newInstance());
+                    if (Utils.isNullString(mEtCode.getText().toString())) {
+                        ToastUtils.showShort("请输入验证码", getActivity());
+                    } else if (!code.equals(mEtCode.getText().toString())) {
+                        ToastUtils.showShort("验证码错误", getActivity());
+                    } else {
+                        SPManager.get().putString(C.REGIST_CODE, mEtCode.getText().toString());
+                        start(Regist3Fragment.newInstance());
+                    }
                 }
+
                 break;
             case R.id.tv_count_down:
                 mTvCountDown.start();
-                getCode(mPhone, C.CODE_REGIST);
+                if (isSanFang) {
+                    getCode(mPhone, C.CODE_SANFANG);
+                } else {
+                    getCode(mPhone, C.CODE_REGIST);
+                }
                 break;
         }
     }
@@ -86,6 +114,9 @@ public class Regist2Fragment extends BaseFragment implements View.OnClickListene
     public void initView(Bundle savedInstanceState) {
 
         mPhone = getArguments().getString("phone");
+        if (!Utils.isNullString(SPManager.get().getStringValue(C.SAN_FANG))) {
+            isSanFang = true;
+        }
 
         mTvRegistTitle = mRootView.findViewById(R.id.tv_regist_title);
         mTitle = mRootView.findViewById(R.id.title);
@@ -98,8 +129,35 @@ public class Regist2Fragment extends BaseFragment implements View.OnClickListene
         mCodeInfo.setText("短信验证码已发送至" + StringUtils.hideMobilePhone4(mPhone));
         mBtnNext.setOnClickListener(this);
         mTvCountDown.start();
-        getCode(mPhone, C.CODE_REGIST);
+        if (isSanFang) {
+            getCode(mPhone, C.CODE_SANFANG);
+        } else {
+            getCode(mPhone, C.CODE_REGIST);
+        }
         mTvCountDown.setOnClickListener(this);
+
+        mEtCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!Utils.isNullString(s.toString())) {
+                    mBtnNext.setEnabled(true);
+                    mBtnNext.setTextColor(getResources().getColor(R.color.white));
+                } else {
+                    mBtnNext.setEnabled(false);
+                    mBtnNext.setTextColor(getResources().getColor(R.color.gray_7b));
+                }
+            }
+        });
     }
 
     @Override
@@ -114,7 +172,7 @@ public class Regist2Fragment extends BaseFragment implements View.OnClickListene
                 if (codeBean.getCode() == 200) {
                     // start(InputCodeFragment.newInstance(mEtCode.getText().toString()));
                     code = String.valueOf(codeBean.getData().getMsgTxt());
-                    Log.e("code+++++++",code);
+                    Log.e("code+++++++", code);
                 } else {
                     ToastUtils.showShort(codeBean.getMsg());
                 }
@@ -128,14 +186,25 @@ public class Regist2Fragment extends BaseFragment implements View.OnClickListene
     }
 
     public void codeAuth(Map<String, String> param) {
-        addSubscription(HomeApiFactory.codeAuth(param).subscribe(new Consumer<SimpleResponse>() {
+        addSubscription(HomeApiFactory.codeAuth(param).subscribe(new Consumer<LoginBean>() {
             @Override
-            public void accept(SimpleResponse codeBean) throws Exception {
-                if (codeBean.code == 200) {
+            public void accept(LoginBean loginBean) throws Exception {
+                if (loginBean.getCode() == 200) {
+                    SPManager.get().putString("uid", String.valueOf(loginBean.getData().getUid()));
+                    SPManager.get().putString("rongyun_token", String.valueOf(loginBean.getData().getRongyun_token()));
+                    SPManager.get().putString("nickname", String.valueOf(loginBean.getData().getNickname()));
+                    SPManager.get().putString("icon", String.valueOf(loginBean.getData().getAvatar()));
+                    SPManager.get().putString("token", String.valueOf(loginBean.getData().getToken()));
+                    SPManager.get().putString(C.HAS_THIRD_PASS, String.valueOf(loginBean.getData().getPayment()));
+                    connectRongYun(loginBean.getData().getRongyun_token(),loginBean);
+                    EventBusUtil.sendEvent(new MessageEvent(MSG_LOGIN));
+                    startActivity(new Intent(getActivity(), HomeActivity.class));
+                    getActivity().finish();
+                } else if (loginBean.getCode() == 203) {
                     SPManager.get().putString(C.REGIST_CODE, mEtCode.getText().toString());
                     start(Regist3Fragment.newInstance());
                 } else {
-                    ToastUtils.showShort(codeBean.msg);
+                    ToastUtils.showShort(loginBean.getMsg());
                 }
             }
         }, new Consumer<Throwable>() {
@@ -144,5 +213,26 @@ public class Regist2Fragment extends BaseFragment implements View.OnClickListene
                 //Log.i(TAG, "accept: " + throwable);
             }
         }));
+    }
+
+    private void connectRongYun(String token, final LoginBean loginBean) {
+
+        RongIMClient.connect(token, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onTokenIncorrect() {
+                Log.i("xxx", "onTokenIncorrect: ");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                Log.i("xxx", "onTokenIncorrect: ");
+                //RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.PRIVATE, "237", "测试");
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.i("xxx", "onTokenIncorrect: ");
+            }
+        });
     }
 }

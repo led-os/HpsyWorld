@@ -9,6 +9,7 @@ import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.kuwai.ysy.widget.PasswordInputView;
 import com.rayhahah.rbase.base.RBasePresenter;
@@ -47,12 +48,18 @@ public class ChangePayPsdFragment extends BaseFragment<ChangePayPsdPresenter> im
     @Override
     public void initView(Bundle savedInstanceState) {
         navigationLayout = mRootView.findViewById(R.id.navigation);
+        navigationLayout.setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
         navigationLayout.setRightClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!TextUtils.isEmpty(mCPsd) && !TextUtils.isEmpty(mPsd) && !TextUtils.isEmpty(mRePsd)) {
                     if (mPsd.equals(mRePsd)) {
-                        mPresenter.requestHomeData(SPManager.getStringValue("uid"), mCPsd, mPsd, mRePsd, C.CHANGE_PAY_PSD);
+                        mPresenter.requestHomeData(SPManager.get().getStringValue("uid"), Utils.encrypt32(mCPsd), Utils.encrypt32(mPsd), Utils.encrypt32(mRePsd), C.CHANGE_PAY_PSD);
                     } else {
                         ToastUtils.showShort("两次输入的新密码不一致");
                     }

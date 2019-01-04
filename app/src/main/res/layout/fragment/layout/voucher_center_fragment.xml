@@ -6,21 +6,23 @@
     android:orientation="vertical">
 
     <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title1="充值中心"
+        app:rightColor="@color/theme"
         app:rightTxt="常见问题"
-        app:rightColor="@color/theme"></com.kuwai.ysy.widget.NavigationLayout>
+        app:title1="充值中心"></com.kuwai.ysy.widget.NavigationLayout>
 
     <com.allen.library.SuperTextView
+        android:id="@+id/tv_current"
         android:layout_width="match_parent"
         android:layout_height="53dp"
         android:layout_marginTop="1dp"
-        android:paddingStart="5dp"
         android:paddingEnd="5dp"
+        android:paddingStart="5dp"
         app:sLeftTextColor="#282828"
         app:sLeftTextSize="16sp"
-        app:sLeftTextString="当前余额(鱼币)"
+        app:sLeftTextString="当前余额(桃花币)"
         app:sRightTextColor="#5415F9"
         app:sRightTextSize="20sp"
         app:sRightTextString="100" />
@@ -29,8 +31,9 @@
         android:layout_width="match_parent"
         android:layout_height="53dp"
         android:layout_marginTop="15dp"
-        android:paddingStart="5dp"
         android:paddingEnd="5dp"
+        android:paddingStart="5dp"
+        app:sDividerLineColor="@color/transparent"
         app:sLeftTextColor="#282828"
         app:sLeftTextSize="16sp"
         app:sLeftTextString="选择充值金额" />
@@ -38,7 +41,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_voucher"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
     </android.support.v7.widget.RecyclerView>
 

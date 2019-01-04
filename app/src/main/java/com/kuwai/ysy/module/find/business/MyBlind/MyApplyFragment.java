@@ -11,6 +11,7 @@ import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.find.adapter.MyApplyAdapter;
 import com.kuwai.ysy.module.find.bean.MyBlindBean;
+import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
@@ -49,6 +50,12 @@ public class MyApplyFragment extends BaseFragment<MyblindPresenter> implements M
     @Override
     public void initView(Bundle savedInstanceState) {
         mDongtaiList = mRootView.findViewById(R.id.recyclerView);
+        ((NavigationLayout) mRootView.findViewById(R.id.navigation)).setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
 //        mDataList.add(new CategoryBean());
 //        mDataList.add(new CategoryBean());
 //        mDataList.add(new CategoryBean());

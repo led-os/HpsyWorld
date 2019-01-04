@@ -11,7 +11,7 @@ public class LoginContract {
 
     public interface ILoginView extends IRBaseView {
 
-        void loginResult(LoginBean loginBean);
+        void loginResult(LoginBean loginBean,String type);
         /**
          * 显示错误信息
          */
@@ -20,7 +20,7 @@ public class LoginContract {
 
     public interface ILoginPresenter {
 
-        void login(Map<String,String> param);
+        void login(Map<String,String> param,String type);
 
     }
 }

@@ -2,16 +2,43 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="320dp">
+    android:layout_height="wrap_content">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:background="@color/white"
+        android:paddingTop="10dp" />
+
+    <LinearLayout
+        android:id="@+id/ll_dot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/viewpager"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp" />
 
     <RelativeLayout
         android:id="@+id/lay_bottom"
         android:layout_width="match_parent"
         android:layout_height="46dp"
+        android:layout_below="@id/ll_dot"
         android:background="@color/white"
-        android:layout_alignParentBottom="true"
         android:gravity="center_vertical"
         android:padding="10dp">
+
+        <com.kuwai.ysy.widget.AmountView
+            android:id="@+id/amount"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:gravity="center_vertical"
+            app:btnWidth="26dp"
+            app:tvWidth="50dp"></com.kuwai.ysy.widget.AmountView>
 
         <TextView
             android:id="@+id/tv_account"
@@ -21,6 +48,7 @@
             android:text="余额: 0"
             android:textColor="@color/theme"
             android:textSize="15sp"
+            android:visibility="gone"
             android:textStyle="bold" />
 
         <TextView
@@ -32,10 +60,12 @@
             android:layout_toRightOf="@id/tv_account"
             android:drawableRight="@drawable/ic_arrow_right"
             android:text="充值"
+            android:visibility="gone"
             android:textColor="@color/balck_28"
             android:textSize="15sp" />
 
         <com.allen.library.SuperButton
+            android:id="@+id/btn_send"
             android:layout_width="65dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
@@ -44,28 +74,11 @@
             android:text="发送"
             android:textColor="@color/white"
             android:textSize="14sp"
-            app:sGradientStartColor="#9a7df7"
-            app:sGradientEndColor="#bfb5ea"
-            app:sGradientType="linear"
             app:sCornersRadius="18dp"
-            app:sGradientOrientation="LEFT_RIGHT"/>
+            app:sGradientEndColor="#bfb5ea"
+            app:sGradientOrientation="LEFT_RIGHT"
+            app:sGradientStartColor="#9a7df7"
+            app:sGradientType="linear" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_dot"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/lay_bottom"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="10dp" />
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:paddingTop="10dp"
-        android:layout_above="@id/ll_dot"
-        android:background="@color/white" />
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.allen.library.CircleImageView;
 import com.allen.library.SuperButton;
 import com.allen.library.SuperTextView;
 import com.kuwai.ysy.R;
@@ -29,6 +30,7 @@ import com.kuwai.ysy.module.mine.business.visitor.VisitorActivity;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.rayhahah.rbase.utils.base.ToastUtils;
+import com.rayhahah.rbase.utils.useful.GlideUtil;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -39,6 +41,7 @@ public class MineLoginFragment extends BaseFragment<MinePresenter> implements Vi
     private RelativeLayout my_integral;
     private RelativeLayout my_money;
     private SuperTextView st_credit;
+    private CircleImageView mHeadImg;
     private SuperTextView st_setting;
     private SuperTextView st_menber, st_like, st_visitor, st_gift, st_ask;
     private TextView mHomeLay;
@@ -108,6 +111,7 @@ public class MineLoginFragment extends BaseFragment<MinePresenter> implements Vi
         st_credit = mRootView.findViewById(R.id.st_credit);
         mHomeLay = mRootView.findViewById(R.id.lay_home);
         tv_text = mRootView.findViewById(R.id.tv_text);
+        mHeadImg = mRootView.findViewById(R.id.img_head);
         mHomeLay.setOnClickListener(this);
         st_ask = mRootView.findViewById(R.id.st_ask);
         st_visitor = mRootView.findViewById(R.id.st_visitor);
@@ -172,6 +176,7 @@ public class MineLoginFragment extends BaseFragment<MinePresenter> implements Vi
     public void setUserData(UserInfo cityMeetBean) {
         mLayoutStatusView.showContent();
         tv_text.setText(cityMeetBean.getData().getNickname());
+        GlideUtil.load(getActivity(),cityMeetBean.getData().getAvatar(),mHeadImg);
         tv_id.setText("ID:" + cityMeetBean.getData().getUid());
         tv_level.setText(cityMeetBean.getData().getGrade() + "");
         img_vip.setVisibility(cityMeetBean.getData().getIs_vip() == 1 ? View.VISIBLE : View.GONE);
@@ -210,6 +215,8 @@ public class MineLoginFragment extends BaseFragment<MinePresenter> implements Vi
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void isLogin(MessageEvent event) {
         if (C.MSG_LOGIN == event.getCode()) {
+            initData();
+        }else if(C.MSG_CHANGE_INFO == event.getCode()){
             initData();
         }
     }

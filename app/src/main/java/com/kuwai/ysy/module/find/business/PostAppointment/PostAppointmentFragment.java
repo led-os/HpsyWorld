@@ -107,6 +107,13 @@ public class PostAppointmentFragment extends BaseFragment<PostAppointmentPresent
         mYouPayRb = mRootView.findViewById(R.id.you_pay_rb);
         mEtJiyu = mRootView.findViewById(R.id.et_jiyu);
 
+        mNavigation.setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
+
         btnright.setOnClickListener(this);
         mTvTime.setOnClickListener(this);
         mTvAddress.setOnClickListener(this);

@@ -19,6 +19,7 @@ import com.kuwai.ysy.module.home.business.MyFragment;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.utils.security.PhoneUtil;
 import com.kuwai.ysy.widget.MyRecycleViewDivider;
+import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -58,6 +59,12 @@ public class InvitePhoneBookFragment extends BaseFragment implements View.OnClic
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        ((NavigationLayout) mRootView.findViewById(R.id.navigation)).setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
         mFriendRl = mRootView.findViewById(R.id.rl_phone_book);
         mFriendRl.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mFriendRl.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 1), R.color.line_color));

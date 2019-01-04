@@ -10,8 +10,7 @@
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        stv:rightImg="@drawable/ic_chat_nav_more"
-        stv:title1="胡大大"></com.kuwai.ysy.widget.NavigationLayout>
+        stv:rightImg="@drawable/ic_chat_nav_more"></com.kuwai.ysy.widget.NavigationLayout>
 
     <fragment
         android:id="@+id/conversation"

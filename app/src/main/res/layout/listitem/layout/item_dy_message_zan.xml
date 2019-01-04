@@ -21,22 +21,26 @@
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@id/img_head"
         android:text="张大贵"
+        android:gravity="bottom"
         android:textColor="@color/balck_28"
-        android:textSize="15sp" />
+        android:textSize="14sp" />
 
     <ImageView
-        android:id="@+id/vip"
+        android:id="@+id/iv_vip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/tv_nick"
         android:layout_toRightOf="@id/tv_nick"
+        android:layout_marginLeft="6dp"
         android:src="@drawable/ic_user_vip" />
 
     <ImageView
+        android:id="@+id/iv_sex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/tv_nick"
-        android:layout_toRightOf="@id/vip"
+        android:layout_toRightOf="@id/iv_vip"
+        android:layout_marginLeft="6dp"
         android:src="@drawable/ic_user_man" />
 
     <ImageView
@@ -52,6 +56,7 @@
         android:src="@drawable/dyn_dyn_ic_like_pre" />
 
     <TextView
+        android:id="@+id/tv_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/img_zan"
@@ -63,6 +68,7 @@
         android:textSize="12sp" />
 
     <ImageView
+        android:id="@+id/img_gift"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"

@@ -15,28 +15,43 @@ import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.HoleDetailActivity;
 import com.kuwai.ysy.module.circle.adapter.TreeHoleAdapter;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
+import com.kuwai.ysy.module.circle.bean.DyMainListBean;
 import com.kuwai.ysy.module.circle.business.PublishHoleActivity;
 import com.kuwai.ysy.module.home.business.HomeActivity;
+import com.kuwai.ysy.module.mine.adapter.TreeHoleMineAdapter;
+import com.kuwai.ysy.module.mine.api.MineApiFactory;
+import com.kuwai.ysy.module.mine.bean.PersonalTreeHole;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.utils.glide.GlideImageLoader;
 import com.kuwai.ysy.widget.MyRecycleViewDivider;
 import com.kuwai.ysy.widget.popwindow.YsyPopWindow;
 import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
-import com.youth.banner.Banner;
+import com.rayhahah.rbase.utils.useful.SPManager;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import io.reactivex.functions.Consumer;
 
 public class TreeHoleMineFragment extends BaseFragment implements View.OnClickListener {
 
-    private TreeHoleAdapter mDongtaiAdapter;
+    private TreeHoleMineAdapter mDongtaiAdapter;
     private RecyclerView mDongtaiList;
     private List<CategoryBean> mDataList = new ArrayList<>();
 
     private YsyPopWindow mListPopWindow;
     private CustomDialog customDialog;
+
+    private SmartRefreshLayout mRefreshLayout;
+    private int mPage = 1;
+    private String uid = "";
+    private PersonalTreeHole mDyMainListBean;
 
     public static TreeHoleMineFragment newInstance() {
         Bundle args = new Bundle();
@@ -47,7 +62,7 @@ public class TreeHoleMineFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     protected int setFragmentLayoutRes() {
-        return R.layout.recyclerview;
+        return R.layout.smart_refresh;
     }
 
     @Override
@@ -66,20 +81,36 @@ public class TreeHoleMineFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        uid = SPManager.get().getStringValue("uid");
         mDongtaiList = mRootView.findViewById(R.id.recyclerView);
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
-        mDataList.add(new CategoryBean());
+
+        mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
+        mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
+        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                mPage = 1;
+                getDy(mPage, uid);
+            }
+        });
+
+        mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                getMore(mPage + 1, uid);
+            }
+        });
+
         mDongtaiList.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 0.5f), R.color.line_color));
-        mDongtaiAdapter = new TreeHoleAdapter();
+        mDongtaiAdapter = new TreeHoleMineAdapter();
         mDongtaiList.setAdapter(mDongtaiAdapter);
 
         mDongtaiAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(getActivity(), HoleDetailActivity.class));
+                Intent intent = new Intent(getActivity(), HoleDetailActivity.class);
+                intent.putExtra("tid", String.valueOf(mDyMainListBean.getData().get(position).getT_id()));
+                startActivity(intent);
             }
         });
 
@@ -98,6 +129,7 @@ public class TreeHoleMineFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
+        getDy(mPage, uid);
     }
 
     private void showPopListView() {
@@ -110,5 +142,40 @@ public class TreeHoleMineFragment extends BaseFragment implements View.OnClickLi
                     .build();
         }
         customDialog.show();
+    }
+
+    private void getDy(int page, String uid) {
+        addSubscription(MineApiFactory.getPersonalTreeHole(uid, page).subscribe(new Consumer<PersonalTreeHole>() {
+            @Override
+            public void accept(PersonalTreeHole dyMainListBean) throws Exception {
+                mRefreshLayout.finishRefresh();
+                mDyMainListBean = dyMainListBean;
+                mDongtaiAdapter.replaceData(dyMainListBean.getData());
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: " + throwable);
+            }
+        }));
+    }
+
+    private void getMore(int page, String uid) {
+        addSubscription(MineApiFactory.getPersonalTreeHole(uid, page).subscribe(new Consumer<PersonalTreeHole>() {
+            @Override
+            public void accept(PersonalTreeHole dyMainListBean) throws Exception {
+                if (dyMainListBean.getData() != null) {
+                    mPage++;
+                }
+                mRefreshLayout.finishLoadmore();
+                mDyMainListBean.getData().addAll(dyMainListBean.getData());
+                mDongtaiAdapter.addData(dyMainListBean.getData());
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: " + throwable);
+            }
+        }));
     }
 }

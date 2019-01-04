@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rightColor="@color/theme"
+        app:rightTxt="保存"
+        app:title1="编辑个人资料"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="16dp"
+                android:gravity="center_vertical"
+                android:text="基本资料"
+                android:textColor="#ff282828"
+                android:textSize="16sp" />
+
+            <View style="@style/horizontal_line" />
+
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tvId"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="22dp"
+                app:sCenterTextString=""
+                app:sCenterViewGravity="left_center"
+                app:sCenterViewMarginLeft="20dp"
+                app:sLeftTextColor="@color/gray_68"
+                app:sLeftTextSize="14sp"
+                app:sLeftTextString="ID"
+                app:sLeftViewGravity="left_center"
+                app:sLeftViewWidth="60dp"></com.allen.library.SuperTextView>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tvAge"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="22dp"
+                app:sCenterTextString="24岁"
+                android:visibility="gone"
+                app:sCenterViewGravity="left_center"
+                app:sCenterViewMarginLeft="20dp"
+                app:sLeftTextColor="@color/gray_68"
+                app:sLeftTextSize="14sp"
+                app:sLeftTextString="年龄"
+                app:sLeftViewGravity="left_center"
+                app:sLeftViewWidth="60dp"
+                app:sRightIconRes="@drawable/ic_arrow_right"></com.allen.library.SuperTextView>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tvHeight"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="22dp"
+                app:sCenterTextString=""
+                app:sCenterViewGravity="left_center"
+                app:sCenterViewMarginLeft="20dp"
+                app:sLeftTextColor="@color/gray_68"
+                app:sLeftTextSize="14sp"
+                app:sLeftTextString="身高"
+                app:sLeftViewGravity="left_center"
+                app:sLeftViewWidth="60dp"
+                app:sRightIconRes="@drawable/ic_arrow_right"></com.allen.library.SuperTextView>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tvNick"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="22dp"
+                app:sCenterTextString=""
+                app:sCenterViewGravity="left_center"
+                app:sCenterViewMarginLeft="20dp"
+                app:sLeftTextColor="@color/gray_68"
+                app:sLeftTextSize="14sp"
+                app:sLeftTextString="昵称"
+                app:sLeftViewGravity="left_center"
+                app:sLeftViewWidth="60dp"
+                app:sRightIconRes="@drawable/ic_arrow_right"></com.allen.library.SuperTextView>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tvGender"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="22dp"
+                app:sCenterTextString="女"
+                app:sCenterViewGravity="left_center"
+                app:sCenterViewMarginLeft="20dp"
+                app:sLeftTextColor="@color/gray_68"
+                app:sLeftTextSize="14sp"
+                app:sLeftTextString="性别"
+                app:sLeftViewGravity="left_center"
+                app:sLeftViewWidth="60dp"
+                app:sRightTextColor="@color/grey_bd"
+                app:sRightTextString="已选择过不可修改"
+                app:sRightViewMarginRight="20dp"></com.allen.library.SuperTextView>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tvBirth"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="22dp"
+                app:sCenterTextString=""
+                app:sCenterViewGravity="left_center"
+                app:sCenterViewMarginLeft="20dp"
+                app:sLeftTextColor="@color/gray_68"
+                app:sLeftTextSize="14sp"
+                app:sLeftTextString="生日"
+                app:sLeftViewGravity="left_center"
+                app:sLeftViewWidth="60dp"
+                app:sRightIconRes="@drawable/ic_arrow_right"></com.allen.library.SuperTextView>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tvEdu"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="22dp"
+                app:sCenterTextString=""
+                app:sCenterViewGravity="left_center"
+                app:sCenterViewMarginLeft="20dp"
+                app:sLeftTextColor="@color/gray_68"
+                app:sLeftTextSize="14sp"
+                app:sLeftTextString="学历"
+                app:sLeftViewGravity="left_center"
+                app:sLeftViewWidth="60dp"
+                app:sRightIconRes="@drawable/ic_arrow_right"></com.allen.library.SuperTextView>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tvIncome"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="22dp"
+                app:sCenterTextString=""
+                app:sCenterViewGravity="left_center"
+                app:sCenterViewMarginLeft="20dp"
+                app:sLeftTextColor="@color/gray_68"
+                app:sLeftTextSize="14sp"
+                app:sLeftTextString="月收入"
+                app:sLeftViewGravity="left_center"
+                app:sLeftViewWidth="60dp"
+                app:sRightIconRes="@drawable/ic_arrow_right"></com.allen.library.SuperTextView>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tvPlace"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="22dp"
+                app:sCenterTextString=""
+                app:sCenterViewGravity="left_center"
+                app:sCenterViewMarginLeft="20dp"
+                app:sLeftTextColor="@color/gray_68"
+                app:sLeftTextSize="14sp"
+                app:sLeftTextString="所在地"
+                app:sLeftViewGravity="left_center"
+                app:sLeftViewWidth="60dp"
+                app:sRightIconRes="@drawable/ic_arrow_right"></com.allen.library.SuperTextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="16dp"
+                android:gravity="center_vertical"
+                android:text="高级资料"
+                android:textColor="#ff282828"
+                android:textSize="16sp" />
+
+            <View style="@style/horizontal_line" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tvHouse"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="22dp"
+                app:sCenterTextString=""
+                app:sCenterViewGravity="left_center"
+                app:sCenterViewMarginLeft="20dp"
+                app:sLeftTextColor="@color/gray_68"
+                app:sLeftTextSize="14sp"
+                app:sLeftTextString="购房情况"
+                app:sLeftViewGravity="left_center"
+                app:sLeftViewWidth="60dp"
+                app:sRightIconRes="@drawable/ic_arrow_right"></com.allen.library.SuperTextView>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tvCar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="22dp"
+                app:sCenterTextString=""
+                app:sCenterViewGravity="left_center"
+                app:sCenterViewMarginLeft="20dp"
+                app:sLeftTextColor="@color/gray_68"
+                app:sLeftTextSize="14sp"
+                app:sLeftTextString="购车情况"
+                app:sLeftViewGravity="left_center"
+                app:sLeftViewWidth="60dp"
+                app:sRightIconRes="@drawable/ic_arrow_right"></com.allen.library.SuperTextView>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tvMarry"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="22dp"
+                app:sCenterTextString=""
+                app:sCenterViewGravity="left_center"
+                app:sCenterViewMarginLeft="20dp"
+                app:sLeftTextColor="@color/gray_68"
+                app:sLeftTextSize="14sp"
+                app:sLeftTextString="婚姻"
+                app:sLeftViewGravity="left_center"
+                app:sLeftViewWidth="60dp"
+                app:sRightIconRes="@drawable/ic_arrow_right"></com.allen.library.SuperTextView>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tvZongjiao"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="22dp"
+                app:sCenterTextString=""
+                app:sCenterViewGravity="left_center"
+                app:sCenterViewMarginLeft="20dp"
+                app:sLeftTextColor="@color/gray_68"
+                app:sLeftTextSize="14sp"
+                app:sLeftTextString="宗教"
+                app:sLeftViewGravity="left_center"
+                app:sLeftViewWidth="60dp"
+                app:sRightIconRes="@drawable/ic_arrow_right"></com.allen.library.SuperTextView>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tvChild"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="22dp"
+                app:sCenterTextString=""
+                app:sCenterViewGravity="left_center"
+                app:sCenterViewMarginLeft="20dp"
+                app:sLeftTextColor="@color/gray_68"
+                app:sLeftTextSize="14sp"
+                app:sLeftTextString="子女"
+                app:sLeftViewGravity="left_center"
+                app:sLeftViewWidth="60dp"
+                app:sRightIconRes="@drawable/ic_arrow_right"></com.allen.library.SuperTextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="16dp"
+                android:gravity="center_vertical"
+                android:text="择偶标准"
+                android:textColor="#ff282828"
+                android:textSize="16sp" />
+
+            <View style="@style/horizontal_line" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tvZeAge"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="22dp"
+                app:sCenterTextString=""
+                app:sCenterViewGravity="left_center"
+                app:sCenterViewMarginLeft="20dp"
+                app:sLeftTextColor="@color/gray_68"
+                app:sLeftTextSize="14sp"
+                app:sLeftTextString="年龄"
+                app:sLeftViewGravity="left_center"
+                app:sLeftViewWidth="60dp"
+                app:sRightIconRes="@drawable/ic_arrow_right"></com.allen.library.SuperTextView>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tvZeHeight"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="22dp"
+                app:sCenterTextString=""
+                app:sCenterViewGravity="left_center"
+                app:sCenterViewMarginLeft="20dp"
+                app:sLeftTextColor="@color/gray_68"
+                app:sLeftTextSize="14sp"
+                app:sLeftTextString="身高"
+                app:sLeftViewGravity="left_center"
+                app:sLeftViewWidth="60dp"
+                app:sRightIconRes="@drawable/ic_arrow_right"></com.allen.library.SuperTextView>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tvZeEdu"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="22dp"
+                app:sCenterTextString=""
+                app:sCenterViewGravity="left_center"
+                app:sCenterViewMarginLeft="20dp"
+                app:sLeftTextColor="@color/gray_68"
+                app:sLeftTextSize="14sp"
+                app:sLeftTextString="学历"
+                app:sLeftViewGravity="left_center"
+                app:sLeftViewWidth="60dp"
+                app:sRightIconRes="@drawable/ic_arrow_right"></com.allen.library.SuperTextView>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tvZeIncome"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="22dp"
+                app:sCenterTextString=""
+                app:sCenterViewGravity="left_center"
+                app:sCenterViewMarginLeft="20dp"
+                app:sLeftTextColor="@color/gray_68"
+                app:sLeftTextSize="14sp"
+                app:sLeftTextString="月收入"
+                app:sLeftViewGravity="left_center"
+                app:sLeftViewWidth="60dp"
+                app:sRightIconRes="@drawable/ic_arrow_right"></com.allen.library.SuperTextView>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tvZePlace"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="22dp"
+                app:sCenterTextString=""
+                app:sCenterViewGravity="left_center"
+                app:sCenterViewMarginLeft="20dp"
+                app:sLeftTextColor="@color/gray_68"
+                app:sLeftTextSize="14sp"
+                app:sLeftTextString="居住地"
+                app:sLeftViewGravity="left_center"
+                app:sLeftViewWidth="60dp"
+                app:sRightIconRes="@drawable/ic_arrow_right"></com.allen.library.SuperTextView>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

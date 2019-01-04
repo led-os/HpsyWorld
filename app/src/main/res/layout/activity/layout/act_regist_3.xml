@@ -81,6 +81,10 @@
         android:text="完成"
         android:textColor="@color/gray_7b"
         android:textSize="16sp"
+        android:enabled="false"
+        app:sUseSelector="true"
+        app:sSelectorNormalColor="@color/theme_light"
+        app:sSelectorDisableColor="@color/line_color"
         app:sSolidColor="@color/line_color" />
 
 </RelativeLayout>

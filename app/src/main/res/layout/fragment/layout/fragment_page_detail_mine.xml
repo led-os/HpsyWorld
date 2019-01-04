@@ -30,6 +30,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/changeXuan"
                 android:layout_width="wrap_content"
                 android:layout_height="44dp"
                 android:layout_marginLeft="16dp"
@@ -47,6 +48,7 @@
             android:layout_marginLeft="30dp" />
 
         <TextView
+            android:id="@+id/tv_sign"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
@@ -76,6 +78,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/renzheng"
                 android:layout_width="wrap_content"
                 android:layout_height="44dp"
                 android:layout_marginLeft="16dp"
@@ -101,6 +104,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tv_isname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="8dp"
@@ -110,6 +114,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/tv_ishouse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -120,6 +125,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/tv_isedu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -130,6 +136,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/tv_iscar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -154,7 +161,7 @@
                 android:drawableLeft="@drawable/ic_list_tab"
                 android:drawablePadding="4dp"
                 android:gravity="center_vertical"
-                android:text="基本资料(3/8)"
+                android:text="基本资料"
                 android:textColor="@color/balck_28"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -192,6 +199,7 @@
                 android:textSize="@dimen/sp_14" />
 
             <TextView
+                android:id="@+id/tv_id"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
@@ -219,6 +227,7 @@
                 android:textSize="@dimen/sp_14" />
 
             <TextView
+                android:id="@+id/tv_age"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
@@ -246,6 +255,7 @@
                 android:textSize="@dimen/sp_14" />
 
             <TextView
+                android:id="@+id/tv_tall"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
@@ -272,12 +282,13 @@
                 android:drawableLeft="@drawable/ic_list_tab"
                 android:drawablePadding="4dp"
                 android:gravity="center_vertical"
-                android:text="高级资料(0/8)"
+                android:text="高级资料"
                 android:textColor="@color/balck_28"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/superInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="44dp"
                 android:layout_marginLeft="16dp"
@@ -314,6 +325,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/chooseZeou"
                 android:layout_width="wrap_content"
                 android:layout_height="44dp"
                 android:layout_marginLeft="16dp"
@@ -325,6 +337,18 @@
                 android:textColor="@color/grey_bd"
                 android:textSize="14sp" />
         </LinearLayout>
+
+        <View
+            style="@style/horizontal_line"
+            android:layout_marginLeft="30dp" />
+
+        <com.kuwai.ysy.widget.shadow.TagFlowLayout
+            android:id="@+id/tv_tag_zeou"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"></com.kuwai.ysy.widget.shadow.TagFlowLayout>
 
         <View
             style="@style/horizontal_line"
@@ -350,6 +374,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/managePlace"
                 android:layout_width="wrap_content"
                 android:layout_height="44dp"
                 android:layout_marginLeft="16dp"
@@ -365,5 +390,13 @@
         <View
             style="@style/horizontal_line"
             android:layout_marginLeft="30dp" />
+
+        <com.kuwai.ysy.widget.shadow.TagFlowLayout
+            android:id="@+id/tv_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"></com.kuwai.ysy.widget.shadow.TagFlowLayout>
     </LinearLayout>
 </ScrollView>

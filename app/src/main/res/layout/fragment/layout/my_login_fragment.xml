@@ -52,7 +52,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="16dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/banner" />
+                        android:src="@drawable/center_img_user_default"/>
 
                     <TextView
                         android:id="@+id/tv_level"
@@ -217,6 +217,8 @@
                     app:sLeftTvDrawableLeft="@drawable/center_ic_list_1"
                     app:sRightTextColor="#ffbdbdbd"
                     app:sRightTextSize="14sp"
+                    app:sLeftTextGravity="center"
+                    app:sRightTextGravity="center"
                     app:sRightTextString="6个未认证"
                     app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
 
@@ -227,6 +229,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="53dp"
                     app:sDividerLineHeight="1px"
+                    app:sLeftTextGravity="center"
+                    app:sRightTextGravity="center"
                     app:sLeftTextColor="#ff282828"
                     app:sLeftTextSize="17sp"
                     app:sLeftTextString="我的想问"
@@ -243,6 +247,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="53dp"
                     app:sDividerLineHeight="1px"
+                    app:sLeftTextGravity="center"
+                    app:sRightTextGravity="center"
                     app:sLeftTextColor="#ff282828"
                     app:sLeftTextSize="17sp"
                     app:sLeftTextString="喜欢"
@@ -257,6 +263,8 @@
                     android:layout_height="53dp"
                     app:sDividerLineHeight="1px"
                     app:sLeftTextColor="#ff282828"
+                    app:sLeftTextGravity="center"
+                    app:sRightTextGravity="center"
                     app:sLeftTextSize="17sp"
                     app:sLeftTextString="访客记录"
                     app:sLeftTvDrawableLeft="@drawable/center_ic_list_4"
@@ -271,6 +279,8 @@
                     app:sDividerLineHeight="1px"
                     app:sLeftTextColor="#ff282828"
                     app:sLeftTextSize="17sp"
+                    app:sLeftTextGravity="center"
+                    app:sRightTextGravity="center"
                     app:sLeftTextString="我的礼物"
                     app:sLeftTvDrawableLeft="@drawable/center_ic_list_5"
                     app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
@@ -285,6 +295,8 @@
                     app:sLeftTextColor="#ff282828"
                     app:sLeftTextSize="17sp"
                     app:sLeftTextString="会员中心"
+                    app:sLeftTextGravity="center"
+                    app:sRightTextGravity="center"
                     app:sLeftTvDrawableLeft="@drawable/center_ic_list_6"
                     app:sRightTextColor="#ffbdbdbd"
                     app:sRightTextSize="14sp"
@@ -301,6 +313,8 @@
                     app:sDividerLineHeight="1px"
                     app:sLeftTextColor="#ff282828"
                     app:sLeftTextSize="17sp"
+                    app:sLeftTextGravity="center"
+                    app:sRightTextGravity="center"
                     app:sLeftTextString="设置"
                     app:sLeftTvDrawableLeft="@drawable/center_ic_list_7"
                     app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">

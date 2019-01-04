@@ -1,6 +1,7 @@
 package com.kuwai.ysy.module.home.business.loginmoudle.login;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -9,18 +10,17 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.TransformationMethod;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseFragment;
-import com.kuwai.ysy.listener.AddressPickTask;
+import com.kuwai.ysy.module.home.VideohomeActivity;
 import com.kuwai.ysy.module.home.bean.login.LoginBean;
 import com.kuwai.ysy.module.home.business.HomeActivity;
 import com.kuwai.ysy.module.home.business.loginmoudle.ChongzhiPsdFragment;
@@ -28,23 +28,19 @@ import com.kuwai.ysy.module.home.business.loginmoudle.Regist1Fragment;
 import com.kuwai.ysy.module.home.business.loginmoudle.SendCodeFragment;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
-import com.kuwai.ysy.utils.security.MD5;
 import com.kuwai.ysy.widget.MyEditText;
-import com.kuwai.ysy.widget.address.AddressPicker;
-import com.rayhahah.dialoglib.CustomDialog;
-import com.rayhahah.rbase.base.RBasePresenter;
-import com.rayhahah.rbase.utils.base.StringUtils;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.HashMap;
+import java.util.Map;
 
-import cn.qqtheme.framework.entity.City;
-import cn.qqtheme.framework.entity.County;
-import cn.qqtheme.framework.entity.Province;
-import cn.qqtheme.framework.picker.DatePicker;
-import cn.qqtheme.framework.picker.DateTimePicker;
+import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 
 import static com.kuwai.ysy.app.C.MSG_LOGIN;
 
@@ -114,6 +110,7 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
                 start(ChongzhiPsdFragment.newInstance());
                 break;
             case R.id.tv_regist:
+                SPManager.get().putString(C.SAN_FANG, "");
                 start(Regist1Fragment.newInstance());
                 break;
             case R.id.btn_login:
@@ -123,21 +120,82 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
                     param.put("login_type", "1"); //1代表android
                     param.put("phone", mEtTel.getText().toString());
                     param.put("password", Utils.encrypt32(mEtCode.getText().toString()));
-                    mPresenter.login(param);
+                    mPresenter.login(param, "");
                 }
                 break;
             case R.id.img_qq:
-                SPManager.get().putString("uid", "1");
-                EventBusUtil.sendEvent(new MessageEvent(MSG_LOGIN));
-                startActivity(new Intent(getActivity(), HomeActivity.class));
-                getActivity().finish();
+                UMShareAPI.get(getActivity()).getPlatformInfo(getActivity(), SHARE_MEDIA.QQ, authListener);
                 break;
             case R.id.img_sina:
-                startActivity(new Intent(getActivity(), HomeActivity.class));
-                getActivity().finish();
+                UMShareAPI.get(getActivity()).getPlatformInfo(getActivity(), SHARE_MEDIA.SINA, authListener);
+                break;
+            case R.id.img_wechat:
+                UMShareAPI.get(getActivity()).getPlatformInfo(getActivity(), SHARE_MEDIA.WEIXIN, authListener);
                 break;
         }
     }
+
+    UMAuthListener authListener = new UMAuthListener() {
+        /**
+         * @desc 授权开始的回调
+         * @param platform 平台名称
+         */
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+            Toast.makeText(mContext, "开始", Toast.LENGTH_LONG).show();
+        }
+
+        /**
+         * @desc 授权成功的回调
+         * @param platform 平台名称
+         * @param action 行为序号，开发者用不上
+         * @param data 用户资料返回
+         */
+        @Override
+        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+            Toast.makeText(mContext, "成功了" + "后台id：" + data.get("uid") + "名字" + data.get("name") + "头像" + data.get("iconurl"), Toast.LENGTH_LONG).show();
+            HashMap<String, String> param = new HashMap<>();
+            String type = "";
+            SPManager.get().putString(C.SAN_FANG_ID, data.get("uid"));
+            Log.e("e", SPManager.get().getStringValue(C.SAN_FANG_ID));
+            if (SHARE_MEDIA.QQ.equals(platform)) {
+                type = C.LOGIN_QQ;
+                param.put("type", C.LOGIN_QQ);
+                param.put(C.LOGIN_QQ, data.get("uid"));
+            } else if (SHARE_MEDIA.SINA.equals(platform)) {
+                type = C.LOGIN_SINA;
+                param.put("type", C.LOGIN_SINA);
+                param.put(C.LOGIN_SINA, data.get("uid"));
+            } else if (SHARE_MEDIA.WEIXIN.equals(platform)) {
+                type = C.LOGIN_WECHAT;
+                param.put("type", C.LOGIN_WECHAT);
+                param.put(C.LOGIN_WECHAT, data.get("uid"));
+            }
+            param.put("login_type", "1"); //1代表android
+            mPresenter.login(param, type);
+        }
+
+        /**
+         * @desc 授权失败的回调
+         * @param platform 平台名称
+         * @param action 行为序号，开发者用不上
+         * @param t 错误原因
+         */
+        @Override
+        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            Toast.makeText(mContext, "失败：" + t.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        /**
+         * @desc 授权取消的回调
+         * @param platform 平台名称
+         * @param action 行为序号，开发者用不上
+         */
+        @Override
+        public void onCancel(SHARE_MEDIA platform, int action) {
+            Toast.makeText(mContext, "取消了", Toast.LENGTH_LONG).show();
+        }
+    };
 
     private boolean checkNull() {
         if (Utils.isNullString(mEtTel.getText().toString())) {
@@ -176,6 +234,7 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
         mTvRegist.setOnClickListener(this);
         mBtnLogin.setOnClickListener(this);
         mImgQq.setOnClickListener(this);
+        mImgWechat.setOnClickListener(this);
         mImgSina.setOnClickListener(this);
 
         mEtTel.addTextChangedListener(new TextWatcher() {
@@ -229,13 +288,21 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
     }
 
     @Override
-    public void loginResult(LoginBean loginBean) {
+    public void loginResult(LoginBean loginBean, String type) {
         if (loginBean.getCode() == 200) {
             SPManager.get().putString("uid", String.valueOf(loginBean.getData().getUid()));
+            SPManager.get().putString("nickname", String.valueOf(loginBean.getData().getNickname()));
+            SPManager.get().putString("icon", String.valueOf(loginBean.getData().getAvatar()));
+            SPManager.get().putString(C.HAS_THIRD_PASS, String.valueOf(loginBean.getData().getPayment()));
             SPManager.get().putString("rongyun_token", String.valueOf(loginBean.getData().getRongyun_token()));
-            connectRongYun(loginBean.getData().getRongyun_token());
+            SPManager.get().putString("token", String.valueOf(loginBean.getData().getToken()));
+            connectRongYun(loginBean.getData().getRongyun_token(),loginBean);
+            EventBusUtil.sendEvent(new MessageEvent(MSG_LOGIN));
             startActivity(new Intent(getActivity(), HomeActivity.class));
             getActivity().finish();
+        } else if (loginBean.getCode() == 201) {
+            SPManager.get().putString(C.SAN_FANG, type);
+            start(Regist1Fragment.newInstance());
         } else {
             ToastUtils.showShort(loginBean.getMsg());
         }
@@ -261,7 +328,7 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
 
     }
 
-    private void connectRongYun(String token) {
+    private void connectRongYun(String token, final LoginBean loginBean) {
 
         RongIMClient.connect(token, new RongIMClient.ConnectCallback() {
             @Override
@@ -272,7 +339,6 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
             @Override
             public void onSuccess(String s) {
                 Log.i("xxx", "onTokenIncorrect: ");
-                //RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.PRIVATE, "237", "测试");
             }
 
             @Override
@@ -280,5 +346,10 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
                 Log.i("xxx", "onTokenIncorrect: ");
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

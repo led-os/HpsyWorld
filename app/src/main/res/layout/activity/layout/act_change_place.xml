@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rightColor="@color/theme"
+        app:rightTxt="编辑"
+        app:title1="足迹地点"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginLeft="16dp"
+        android:gravity="center_vertical"
+        android:text="最近足迹"
+        android:textColor="@color/balck_28"
+        android:textStyle="bold" />
+
+    <View style="@style/horizontal_line" />
+
+    <com.kuwai.ysy.widget.shadow.TagFlowLayout
+        android:id="@+id/tv_latest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"></com.kuwai.ysy.widget.shadow.TagFlowLayout>
+
+    <View style="@style/horizontal_line" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginLeft="16dp"
+        android:gravity="center_vertical"
+        android:text="到过的国家/城市/景点"
+        android:textColor="@color/balck_28"
+        android:textStyle="bold" />
+
+    <View style="@style/horizontal_line" />
+
+    <com.kuwai.ysy.widget.shadow.TagFlowLayout
+        android:id="@+id/tv_country"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"></com.kuwai.ysy.widget.shadow.TagFlowLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#0d4e05ff"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:text="地点足迹仅记录发布动态时添加的地点，您可以在编辑状态下隐藏不想展示的足迹哦～"
+        android:textColor="@color/gray_7b"
+        android:textSize="13sp" />
+
+</LinearLayout>

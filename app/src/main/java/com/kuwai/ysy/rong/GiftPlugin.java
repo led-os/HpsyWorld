@@ -1,39 +1,21 @@
 package com.kuwai.ysy.rong;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.kuwai.ysy.R;
-import com.kuwai.ysy.bean.Model;
 import com.kuwai.ysy.callback.GiftClickCallback;
-import com.kuwai.ysy.module.chat.adapter.GridViewAdapter;
-import com.kuwai.ysy.module.chat.adapter.ViewPagerAdapter;
 import com.kuwai.ysy.module.find.api.AppointApiFactory;
 import com.kuwai.ysy.module.find.bean.GiftPopBean;
 import com.kuwai.ysy.widget.GiftPannelView;
 import com.rayhahah.dialoglib.CustomDialog;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.reactivex.functions.Consumer;
-import io.rong.imkit.MainActivity;
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.plugin.IPluginModule;
@@ -42,18 +24,18 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 
-public class MyPlugin implements IPluginModule, GiftClickCallback {
+public class GiftPlugin implements IPluginModule, GiftClickCallback {
 
     private CustomDialog customDialog;
 
     @Override
     public Drawable obtainDrawable(Context context) {
-        return context.getResources().getDrawable(R.drawable.gift4);
+        return context.getResources().getDrawable(R.drawable.chat_cd_input_ic_gift);
     }
 
     @Override
     public String obtainTitle(Context context) {
-        return "鱼水缘";
+        return "礼物";
     }
 
     @Override
@@ -75,11 +57,10 @@ public class MyPlugin implements IPluginModule, GiftClickCallback {
                     public void accept(@NonNull GiftPopBean dateTheme) throws Exception {
                         GiftPannelView pannelView = new GiftPannelView(context);
                         pannelView.setData(dateTheme.getData(), context);
-                        pannelView.setGiftClickCallBack(MyPlugin.this);
+                        pannelView.setGiftClickCallBack(GiftPlugin.this);
                         customDialog = new CustomDialog.Builder(context)
                                 .setView(pannelView)
                                 .setTouchOutside(true)
-                                .setItemHeight(0.4f)
                                 .setDialogGravity(Gravity.BOTTOM)
                                 .build();
                         customDialog.show();

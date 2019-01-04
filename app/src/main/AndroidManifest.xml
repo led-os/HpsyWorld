@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- 保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
     <!-- 允许获取通讯录 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <!-- 获取sd卡写的权限，用于文件上传和下载 -->
@@ -25,9 +27,9 @@
     <application
         android:name="com.kuwai.ysy.app.MyApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_sading"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_sading_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".module.home.business.loginmoudle.StartupPageActivity">
@@ -49,8 +51,9 @@
         <activity android:name=".module.chat.MyFriendActivity" />
         <activity android:name=".module.chat.business.ChatSettingActivity" />
         <activity android:name=".module.chat.business.QuestionActivity" />
-        <activity android:name=".module.chat.business.act.SendRedActivity" />
-        <activity android:name=".module.chat.business.act.RedRecordActivity" />
+        <activity android:name=".module.chat.business.redpack.SendRedActivity" />
+        <activity android:name=".module.chat.business.redpack.RedRecordActivity" />
+        <activity android:name=".module.chat.business.redpack.RedReceiveActivity" />
 
         //动态
         <activity
@@ -60,7 +63,13 @@
             android:name=".module.circle.DyDetailActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".module.circle.HoleDetailActivity" />
+        <activity
+            android:name=".module.find.VideoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".module.circle.MessageActivity" />
+        <activity android:name=".module.circle.VideoPlayActivity" />
         <activity android:name=".module.circle.business.PublishHoleActivity" />
         <activity android:name=".module.circle.business.RightChooseActivity" />
         <activity android:name=".module.circle.AddressChooseActivity" />
@@ -75,13 +84,16 @@
         <activity android:name=".module.find.business.CommisDetailMyActivity" />
 
         //我的
-        <activity android:name=".module.mine.MyPointActivity" />
+        <activity
+            android:name=".module.mine.MyPointActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".module.mine.MyWalletActivity" />
         <activity android:name="com.kuwai.ysy.module.mine.business.teamplayer.SingleListActivity" />
         <activity
             android:name=".module.mine.MyCreditActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".module.mine.SettingActivity" />
+        <activity android:name=".module.mine.business.updatevideo.UpdateActivity" />
         <activity android:name=".module.mine.VipCenterActivity" />
         <activity android:name=".module.mine.business.like.StLikeActivity" />
         <activity android:name=".module.mine.business.visitor.VisitorActivity" />
@@ -118,7 +130,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="tencent100424468" />
+                <data android:scheme="tencent101511982" />
             </intent-filter>
         </activity>
         <activity

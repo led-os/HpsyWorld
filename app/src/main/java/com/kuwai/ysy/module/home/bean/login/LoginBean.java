@@ -63,6 +63,33 @@ public class LoginBean {
         private String amount;
         private int integral_sum;
         private int is_vip;
+        private int vip_grade;
+        private int payment;
+        private String token;
+
+        public String getToken() {
+            return token == null ? "" : token;
+        }
+
+        public void setToken(String token) {
+            this.token = token == null ? "" : token;
+        }
+
+        public int getVip_grade() {
+            return vip_grade;
+        }
+
+        public void setVip_grade(int vip_grade) {
+            this.vip_grade = vip_grade;
+        }
+
+        public int getPayment() {
+            return payment;
+        }
+
+        public void setPayment(int payment) {
+            this.payment = payment;
+        }
 
         public int getUid() {
             return uid;

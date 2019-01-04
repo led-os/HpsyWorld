@@ -63,7 +63,7 @@ public class LikeMeFragment extends BaseFragment<LikeMePresenter> implements Lik
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.requestHomeData(SPManager.getStringValue("uid", "1"));
+        mPresenter.requestHomeData(SPManager.get().getStringValue("uid"));
     }
 
     @Override
@@ -85,6 +85,7 @@ public class LikeMeFragment extends BaseFragment<LikeMePresenter> implements Lik
         res.add(lv0);
 
         adapter.addData(res);
+        adapter.expandAll();
     }
 
     @Override

@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="250dp"
-    android:layout_height="80dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
     android:background="#f74d31">
 
     <ImageView
         android:id="@+id/img_red"
         android:layout_width="34dp"
         android:layout_height="34dp"
+        android:layout_marginBottom="12dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/chat_cd_ic_re" />
@@ -19,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="10dp"
-        android:layout_toRightOf="@id/img_red"
+        android:layout_toRightOf="@+id/img_red"
         android:text="恭喜发财，大吉大利"
         android:textColor="#ffffffff"
         android:textSize="14sp" />
@@ -28,9 +31,9 @@
         android:id="@+id/sub_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/img_red"
+        android:layout_alignBottom="@+id/img_red"
         android:layout_marginLeft="8dp"
-        android:layout_toRightOf="@id/img_red"
+        android:layout_toRightOf="@+id/img_red"
         android:text="点击领取"
         android:textColor="#ffffffff"
         android:textSize="10sp" />
@@ -38,7 +41,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/img_red"
         android:background="@color/white"
         android:paddingBottom="4dp"
         android:paddingLeft="10dp"

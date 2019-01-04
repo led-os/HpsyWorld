@@ -183,6 +183,12 @@ public class HoleDetailMainFragment extends BaseFragment<HoleDetailPresenter> im
         tid = getArguments().getString("tid");
 
         mLeft = (ImageView) mRootView.findViewById(R.id.left);
+        mLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
         mTime = mRootView.findViewById(R.id.tv_time);
         mChat = mRootView.findViewById(R.id.sb_chat);
         mTopLay = (RelativeLayout) mRootView.findViewById(R.id.top_lay);

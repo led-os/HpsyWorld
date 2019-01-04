@@ -1,21 +1,58 @@
 package com.kuwai.ysy.module.mine.business.homepage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.mine.MyCreditActivity;
+import com.kuwai.ysy.module.mine.api.MineApiFactory;
+import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
+import com.kuwai.ysy.module.mine.business.change.ChangeInfoFragment;
+import com.kuwai.ysy.module.mine.business.change.ChangePlaceFragment;
+import com.kuwai.ysy.module.mine.business.change.ChangeXuanFragment;
+import com.kuwai.ysy.utils.EventBusUtil;
+import com.kuwai.ysy.utils.Utils;
+import com.kuwai.ysy.widget.shadow.FlowLayout;
+import com.kuwai.ysy.widget.shadow.TagAdapter;
+import com.kuwai.ysy.widget.shadow.TagFlowLayout;
+import com.rayhahah.rbase.base.RBaseFragment;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.useful.GlideUtil;
+import com.rayhahah.rbase.utils.useful.SPManager;
+
+import org.apache.commons.lang3.StringUtils;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.picker.DateTimePicker;
 import cn.qqtheme.framework.util.ConvertUtils;
+import io.reactivex.functions.Consumer;
 
 public class PageDetailMineFragment extends BaseFragment implements View.OnClickListener {
 
     private TextView mEditInfoTv;
+    private TextView mIsName, mIsHouse, mIsEdu, mIsCar, mID, mAge, mTall, mSign;
+    private TagFlowLayout tagFlowLayout, tagZeou;
+    private TagAdapter tagAdapter, zeouAdapter;
+    private LayoutInflater mInflater;
+    private List<String> mVals = new ArrayList<>();
+    private List<String> mValsZeou = new ArrayList<>();
+    private TextView changeXuan, renzheng, superInfo, chooseZeou, managePlace;
+
+    private PersolHomePageBean mPersolHomePageBean;
 
     public static PageDetailMineFragment newInstance() {
         Bundle args = new Bundle();
@@ -30,79 +67,174 @@ public class PageDetailMineFragment extends BaseFragment implements View.OnClick
     }
 
     @Override
-    protected RBasePresenter getPresenter() {
-        return null;
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_info_edit:
-                onYearMonthDayPicker();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data",mPersolHomePageBean);
+                ((RBaseFragment) getParentFragment()).start(ChangeInfoFragment.newInstance(bundle));
+                break;
+            case R.id.superInfo:
+                Bundle bundle1 = new Bundle();
+                bundle1.putSerializable("data",mPersolHomePageBean);
+                ((RBaseFragment) getParentFragment()).start(ChangeInfoFragment.newInstance(bundle1));
+                break;
+            case R.id.chooseZeou:
+                Bundle bundle2 = new Bundle();
+                bundle2.putSerializable("data",mPersolHomePageBean);
+                ((RBaseFragment) getParentFragment()).start(ChangeInfoFragment.newInstance(bundle2));
+                break;
+            case R.id.changeXuan:
+                ((RBaseFragment) getParentFragment()).start(ChangeXuanFragment.newInstance());
+                break;
+            case R.id.managePlace:
+                ((RBaseFragment) getParentFragment()).start(ChangePlaceFragment.newInstance());
+                break;
+            case R.id.renzheng:
+                startActivity(new Intent(getActivity(), MyCreditActivity.class));
                 break;
         }
     }
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        EventBusUtil.register(this);
+        mIsName = mRootView.findViewById(R.id.tv_isname);
+        mIsHouse = mRootView.findViewById(R.id.tv_ishouse);
+        mIsEdu = mRootView.findViewById(R.id.tv_isedu);
+        mIsCar = mRootView.findViewById(R.id.tv_iscar);
         mEditInfoTv = mRootView.findViewById(R.id.tv_info_edit);
+        mID = mRootView.findViewById(R.id.tv_id);
+        tagFlowLayout = mRootView.findViewById(R.id.tv_tag);
+        tagZeou = mRootView.findViewById(R.id.tv_tag_zeou);
+        mAge = mRootView.findViewById(R.id.tv_age);
+        mInflater = LayoutInflater.from(getActivity());
+        mTall = mRootView.findViewById(R.id.tv_tall);
+        mSign = mRootView.findViewById(R.id.tv_sign);
+        changeXuan = mRootView.findViewById(R.id.changeXuan);
+        renzheng = mRootView.findViewById(R.id.renzheng);
+        superInfo = mRootView.findViewById(R.id.superInfo);
+        chooseZeou = mRootView.findViewById(R.id.chooseZeou);
+        managePlace = mRootView.findViewById(R.id.managePlace);
+
+        changeXuan.setOnClickListener(this);
+        renzheng.setOnClickListener(this);
+        superInfo.setOnClickListener(this);
+        chooseZeou.setOnClickListener(this);
+        managePlace.setOnClickListener(this);
         mEditInfoTv.setOnClickListener(this);
+    }
+
+    @Override
+    protected RBasePresenter getPresenter() {
+        return null;
     }
 
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
+        getPersonInfo();
     }
 
-    public void onYearMonthDayTimePicker() {
-        DateTimePicker picker = new DateTimePicker(getActivity(), DateTimePicker.HOUR_24);
-        picker.setDateRangeStart(2017, 1, 1);
-        picker.setDateRangeEnd(2025, 11, 11);
-        picker.setTimeRangeStart(9, 0);
-        picker.setTimeRangeEnd(20, 30);
-        picker.setTopLineColor(0x99FF0000);
-        picker.setLabelTextColor(0xFFFF0000);
-        picker.setDividerColor(0xFFFF0000);
-        picker.setOnDateTimePickListener(new DateTimePicker.OnYearMonthDayTimePickListener() {
+    private void getPersonInfo() {
+        addSubscription(MineApiFactory.getUsetInfoMine(SPManager.get().getStringValue("uid")).subscribe(new Consumer<PersolHomePageBean>() {
             @Override
-            public void onDateTimePicked(String year, String month, String day, String hour, String minute) {
-                //showToast(year + "-" + month + "-" + day + " " + hour + ":" + minute);
+            public void accept(PersolHomePageBean persolHomePageBean) throws Exception {
+
+                mPersolHomePageBean = persolHomePageBean;
+                if (persolHomePageBean.getData().getInfo().getIs_real() == 0) {
+                    mIsName.setVisibility(View.GONE);
+                } else {
+                    mIsName.setVisibility(View.VISIBLE);
+                }
+
+                if ("0".equals(persolHomePageBean.getData().getInfo().getBuy_house())) {
+                    mIsHouse.setVisibility(View.GONE);
+                } else {
+                    mIsHouse.setVisibility(View.VISIBLE);
+                }
+
+                if (persolHomePageBean.getData().getInfo().getIs_education() == 0) {
+                    mIsEdu.setVisibility(View.GONE);
+                } else {
+                    mIsEdu.setVisibility(View.VISIBLE);
+                }
+
+                if (persolHomePageBean.getData().getInfo().getIs_vehicle() == 0) {
+                    mIsCar.setVisibility(View.GONE);
+                } else {
+                    mIsCar.setVisibility(View.VISIBLE);
+                }
+
+                mSign.setText(persolHomePageBean.getData().getInfo().getSig());
+                mID.setText(String.valueOf(persolHomePageBean.getData().getInfo().getUid()));
+                mAge.setText(String.valueOf(persolHomePageBean.getData().getInfo().getAge()));
+                mTall.setText(String.valueOf(persolHomePageBean.getData().getInfo().getHeight() + "cm"));
+
+                //足迹
+                mVals.clear();
+                for (int i = 0; i < persolHomePageBean.getData().getFootprints().size(); i++) {
+                    mVals.add(persolHomePageBean.getData().getFootprints().get(i).getRegion_name());
+                }
+
+                //择偶标准
+                mValsZeou.clear();
+                PersolHomePageBean.DataBean.SelectionBean selectionBean = persolHomePageBean.getData().getSelection();
+                if (!Utils.isNullString(selectionBean.getAnnual_income())) {
+                    mValsZeou.add(selectionBean.getAnnual_income());
+                }
+                if (!Utils.isNullString(selectionBean.getLove_education())) {
+                    mValsZeou.add(selectionBean.getLove_education());
+                }
+                if (!Utils.isNullString(selectionBean.getLove_address())) {
+                    mValsZeou.add(selectionBean.getLove_address());
+                }
+                if (!Utils.isNullString(selectionBean.getLove_age())) {
+                    mValsZeou.add(selectionBean.getLove_age());
+                }
+                if (!Utils.isNullString(selectionBean.getLove_height())) {
+                    mValsZeou.add(selectionBean.getLove_height());
+                }
+
+                zeouAdapter = new TagAdapter<String>(mValsZeou) {
+                    @Override
+                    public View getView(FlowLayout parent, int position, String s) {
+                        SuperButton tv = (SuperButton) mInflater.inflate(R.layout.item_zeou, tagFlowLayout, false);
+                        tv.setText(s);
+                        return tv;
+                    }
+                };
+
+                tagAdapter = new TagAdapter<String>(mVals) {
+                    @Override
+                    public View getView(FlowLayout parent, int position, String s) {
+                        SuperButton tv = (SuperButton) mInflater.inflate(R.layout.item_text_address, tagFlowLayout, false);
+                        tv.setText(s);
+                        return tv;
+                    }
+                };
+
+                tagZeou.setAdapter(zeouAdapter);
+                tagFlowLayout.setAdapter(tagAdapter);
             }
-        });
-        picker.show();
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: "+throwable);
+            }
+        }));
     }
 
-    public void onYearMonthDayPicker() {
-        final DatePicker picker = new DatePicker(getActivity());
-        picker.setCanceledOnTouchOutside(true);
-        picker.setUseWeight(true);
-        picker.setTopPadding(ConvertUtils.toPx(getActivity(), 10));
-        picker.setRangeEnd(2111, 1, 11);
-        picker.setRangeStart(2016, 8, 29);
-        picker.setSelectedItem(2050, 10, 14);
-        picker.setResetWhileWheel(false);
-        picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
-            @Override
-            public void onDatePicked(String year, String month, String day) {
-                //showToast(year + "-" + month + "-" + day);
-            }
-        });
-        picker.setOnWheelListener(new DatePicker.OnWheelListener() {
-            @Override
-            public void onYearWheeled(int index, String year) {
-                picker.setTitleText(year + "-" + picker.getSelectedMonth() + "-" + picker.getSelectedDay());
-            }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBusUtil.unregister(this);
+    }
 
-            @Override
-            public void onMonthWheeled(int index, String month) {
-                picker.setTitleText(picker.getSelectedYear() + "-" + month + "-" + picker.getSelectedDay());
-            }
-
-            @Override
-            public void onDayWheeled(int index, String day) {
-                picker.setTitleText(picker.getSelectedYear() + "-" + picker.getSelectedMonth() + "-" + day);
-            }
-        });
-        picker.show();
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void isLogin(MessageEvent event) {
+        if (event.getCode() == C.MSG_CHANGE_INFO) {
+            getPersonInfo();
+        }
     }
 }

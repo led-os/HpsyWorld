@@ -2,6 +2,7 @@ package com.kuwai.ysy.module.home.api;
 
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.home.bean.HomeBean;
+import com.kuwai.ysy.module.home.bean.HomeVideoBean;
 import com.kuwai.ysy.module.home.bean.login.CodeBean;
 import com.kuwai.ysy.module.home.bean.login.LoginBean;
 
@@ -37,9 +38,13 @@ public interface HomeService {
 
     @FormUrlEncoded
     @POST("User/ThirdPartyRegistration")
-    Observable<SimpleResponse> codeAuth(@FieldMap Map<String, String> num);
+    Observable<LoginBean> codeAuth(@FieldMap Map<String, String> num);
 
     @FormUrlEncoded
     @POST("User/register")
     Observable<SimpleResponse> regist(@FieldMap Map<String, String> num);
+
+    @FormUrlEncoded
+    @POST("HomePage/HomePageList")
+    Observable<HomeVideoBean> getHomeData(@FieldMap Map<String, String> num);
 }

@@ -2,6 +2,8 @@ package com.kuwai.ysy.module.home.business.loginmoudle;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.TransformationMethod;
@@ -91,6 +93,29 @@ public class Regist3Fragment extends BaseFragment implements View.OnClickListene
 
         mBtnComplete.setOnClickListener(this);
         mImgEye.setOnClickListener(this);
+
+        mEtPsd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!Utils.isNullString(s.toString())) {
+                    mBtnComplete.setEnabled(true);
+                    mBtnComplete.setTextColor(getResources().getColor(R.color.white));
+                } else {
+                    mBtnComplete.setEnabled(false);
+                    mBtnComplete.setTextColor(getResources().getColor(R.color.gray_7b));
+                }
+            }
+        });
     }
 
     @Override

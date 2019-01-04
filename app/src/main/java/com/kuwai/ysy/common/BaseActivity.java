@@ -98,10 +98,10 @@ public abstract class BaseActivity<T extends RBasePresenter> extends RBaseActivi
         startActivity(intent);
     }
 
-    @Override
+    /*@Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocalManageUtil.setLocal(newBase));
-    }
+    }*/
 
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {

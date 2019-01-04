@@ -16,6 +16,7 @@ import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.mine.adapter.PicAdapter;
 import com.kuwai.ysy.module.mine.adapter.homepage.PageGiftReceiveAdapter;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
+import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.shadow.FlowLayout;
 import com.kuwai.ysy.widget.shadow.TagAdapter;
 import com.kuwai.ysy.widget.shadow.TagFlowLayout;
@@ -29,14 +30,15 @@ import java.util.List;
 
 public class PageDetailFragment extends BaseFragment<PageDetailPresenter> implements PageDetailContract.IHomeView, View.OnClickListener {
 
-    private TagFlowLayout tagFlowLayout;
-    private RecyclerView mRlGift;
-    private List<String> mVals;
+    private TagFlowLayout tagFlowLayout, tagZeou;
+    private TagAdapter tagAdapter, zeouAdapter;
+    private List<String> mVals = new ArrayList<>();
+    private List<String> mValsZeou = new ArrayList<>();
     private PageGiftReceiveAdapter mDateAdapter;
+    private RecyclerView mRlGift;
     private List<CategoryBean> mDataList = new ArrayList<>();
     private String otherid;
     private TextView mIsName, mIsHouse, mIsEdu, mIsCar, mID, mAge, mTall, mSign;
-    private TagAdapter tagAdapter;
     private LayoutInflater mInflater;
     private TextView mGift;
 
@@ -83,6 +85,7 @@ public class PageDetailFragment extends BaseFragment<PageDetailPresenter> implem
 
         mInflater = LayoutInflater.from(getActivity());
         tagFlowLayout = mRootView.findViewById(R.id.tv_tag);
+        tagZeou = mRootView.findViewById(R.id.tv_tag_zeou);
         mRlGift = mRootView.findViewById(R.id.rl_gift);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -105,7 +108,7 @@ public class PageDetailFragment extends BaseFragment<PageDetailPresenter> implem
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         otherid = getArguments().getString("id");
-        mPresenter.requestHomeData(SPManager.getStringValue("uid", "1"), otherid);
+        mPresenter.requestHomeData(otherid,SPManager.get().getStringValue("uid") );
     }
 
     @Override
@@ -137,14 +140,43 @@ public class PageDetailFragment extends BaseFragment<PageDetailPresenter> implem
         mSign.setText(persolHomePageBean.getData().getInfo().getSig());
         mID.setText(String.valueOf(persolHomePageBean.getData().getInfo().getUid()));
         mAge.setText(String.valueOf(persolHomePageBean.getData().getInfo().getAge()));
-        mTall.setText(String.valueOf(persolHomePageBean.getData().getInfo().getHeight()));
+        mTall.setText(String.valueOf(persolHomePageBean.getData().getInfo().getHeight() + "cm"));
 
         mDateAdapter.addData(persolHomePageBean.getData().getGift());
 
-        mVals = new ArrayList<>();
+        //足迹
+        mVals.clear();
         for (int i = 0; i < persolHomePageBean.getData().getFootprints().size(); i++) {
             mVals.add(persolHomePageBean.getData().getFootprints().get(i).getRegion_name());
         }
+
+        //择偶标准
+        mValsZeou.clear();
+        PersolHomePageBean.DataBean.SelectionBean selectionBean = persolHomePageBean.getData().getSelection();
+        if (!Utils.isNullString(selectionBean.getAnnual_income())) {
+            mValsZeou.add(selectionBean.getAnnual_income());
+        }
+        if (!Utils.isNullString(selectionBean.getLove_education())) {
+            mValsZeou.add(selectionBean.getLove_education());
+        }
+        if (!Utils.isNullString(selectionBean.getLove_address())) {
+            mValsZeou.add(selectionBean.getLove_address());
+        }
+        if (!Utils.isNullString(selectionBean.getLove_age())) {
+            mValsZeou.add(selectionBean.getLove_age());
+        }
+        if (!Utils.isNullString(selectionBean.getLove_height())) {
+            mValsZeou.add(selectionBean.getLove_height());
+        }
+
+        zeouAdapter = new TagAdapter<String>(mValsZeou) {
+            @Override
+            public View getView(FlowLayout parent, int position, String s) {
+                SuperButton tv = (SuperButton) mInflater.inflate(R.layout.item_zeou, tagFlowLayout, false);
+                tv.setText(s);
+                return tv;
+            }
+        };
 
         tagAdapter = new TagAdapter<String>(mVals) {
             @Override
@@ -155,6 +187,7 @@ public class PageDetailFragment extends BaseFragment<PageDetailPresenter> implem
             }
         };
 
+        tagZeou.setAdapter(zeouAdapter);
         tagFlowLayout.setAdapter(tagAdapter);
     }
 

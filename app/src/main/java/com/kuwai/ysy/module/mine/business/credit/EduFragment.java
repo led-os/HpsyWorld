@@ -21,6 +21,7 @@ import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.home.bean.GoodsCategory;
 import com.kuwai.ysy.utils.UploadHelper;
+import com.kuwai.ysy.widget.NavigationLayout;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -95,6 +96,12 @@ public class EduFragment extends BaseFragment<EduPresenter> implements EduContra
         etSchool = mRootView.findViewById(R.id.my_school);
         mIvEdu = mRootView.findViewById(R.id.iv_edu);
         tvEdu = mRootView.findViewById(R.id.tv_edu);
+        ((NavigationLayout) mRootView.findViewById(R.id.navigation)).setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
 
 
         mRootView.findViewById(R.id.rl_edu).setOnClickListener(this);
@@ -141,7 +148,7 @@ public class EduFragment extends BaseFragment<EduPresenter> implements EduContra
         mSchool = etSchool.getText().toString();
 
         UploadHelper helper = UploadHelper.getInstance();
-        helper.addParameter("uid", SPManager.getStringValue("uid"));
+        helper.addParameter("uid", SPManager.get().getStringValue("uid"));
         helper.addParameter("full_name", mName);
         helper.addParameter("education", mEdu);
         helper.addParameter("school", mSchool);

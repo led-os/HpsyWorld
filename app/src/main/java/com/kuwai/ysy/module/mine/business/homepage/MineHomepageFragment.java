@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.mine.business.homepage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,29 +20,36 @@ import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.mine.MinePicAdapter;
+import com.kuwai.ysy.module.mine.adapter.HomePageVideoAdapter;
 import com.kuwai.ysy.module.mine.adapter.PicAdapter;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.kuwai.ysy.module.mine.bean.TabEntity;
 import com.kuwai.ysy.module.mine.bean.vip.GallaryBean;
+import com.kuwai.ysy.module.mine.business.updatevideo.UpdateActivity;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
 import org.apache.commons.lang3.StringUtils;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MineHomepageFragment extends BaseFragment<MineHomepagePresenter> implements MineHomepageContract.IHomeView, View.OnClickListener {
+public class MineHomepageFragment extends BaseFragment<MineHomepagePresenter> implements MineHomepageContract.IHomeView, View.OnClickListener, HomePageVideoAdapter.OnAddItemClickListener {
 
     private ImageView mLeft;
     private TextView mTitle;
     private TextView mSubTitle;
     private RecyclerView mRlPic;
-    private MinePicAdapter mDateAdapter;
+    private HomePageVideoAdapter mDateAdapter;
 
     private ImageView mRight;
     private CircleImageView mImgHead;
@@ -50,6 +58,7 @@ public class MineHomepageFragment extends BaseFragment<MineHomepagePresenter> im
     private TextView mTvLevel;
     private TextView mTvSign;
     private ImageView mImgRight;
+    private ImageView imgSex;
 
     private ViewPager viewPager;
     private final String[] mTitles = {"资料信息", "动态", "树洞"};
@@ -84,9 +93,16 @@ public class MineHomepageFragment extends BaseFragment<MineHomepagePresenter> im
     public void initView(Bundle savedInstanceState) {
 
         mLeft = mRootView.findViewById(R.id.left);
+        mLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
         mTitle = mRootView.findViewById(R.id.title);
         mSubTitle = mRootView.findViewById(R.id.sub_title);
         mRlPic = mRootView.findViewById(R.id.rl_pic);
+        imgSex = mRootView.findViewById(R.id.img_sex);
 
         mRight = mRootView.findViewById(R.id.right);
         mImgHead = mRootView.findViewById(R.id.img_head);
@@ -100,7 +116,7 @@ public class MineHomepageFragment extends BaseFragment<MineHomepagePresenter> im
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRlPic.setLayoutManager(linearLayoutManager);
-        mDateAdapter = new MinePicAdapter();
+        mDateAdapter = new HomePageVideoAdapter(this);
         mRlPic.setAdapter(mDateAdapter);
 
         viewPager = mRootView.findViewById(R.id.vp);
@@ -150,9 +166,7 @@ public class MineHomepageFragment extends BaseFragment<MineHomepagePresenter> im
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.requestHomeData(SPManager.getStringValue("uid", "1"));
-
-        //slidingTabLayout.setTabWidth(Utils.getScreenWidth() / 2);
+        mPresenter.requestHomeData(SPManager.get().getStringValue("uid"));
     }
 
     @Override
@@ -178,6 +192,12 @@ public class MineHomepageFragment extends BaseFragment<MineHomepagePresenter> im
         GlideUtil.load(mContext, persolHomePageBean.getData().getInfo().getAvatar(), mImgHead);
         mTvNick.setText(persolHomePageBean.getData().getInfo().getNickname());
 
+        if (persolHomePageBean.getData().getInfo().getGender() == 1) {
+            imgSex.setImageResource(R.drawable.center_charm_ic_man);
+        } else {
+            imgSex.setImageResource(R.drawable.center_charm_ic_woman);
+        }
+
         switch (persolHomePageBean.getData().getInfo().getIs_vip()) {
             case 0:
                 mImgVip.setVisibility(View.GONE);
@@ -198,7 +218,7 @@ public class MineHomepageFragment extends BaseFragment<MineHomepagePresenter> im
         }
         mTvSign.setText(StringUtils.join(info.toArray(), "|"));
 
-        mDateAdapter.addData(persolHomePageBean.getData().getInfo().getAttach());
+        mDateAdapter.setData(persolHomePageBean.getData().getInfo().getVideo());
     }
 
     @Override
@@ -221,6 +241,11 @@ public class MineHomepageFragment extends BaseFragment<MineHomepagePresenter> im
 
     }
 
+    @Override
+    public void onItemAddClick() {
+        startActivity(new Intent(getActivity(), UpdateActivity.class));
+    }
+
     private class MyPagerAdapter extends FragmentPagerAdapter {
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -241,4 +266,5 @@ public class MineHomepageFragment extends BaseFragment<MineHomepagePresenter> im
             return mFragments.get(position);
         }
     }
+
 }

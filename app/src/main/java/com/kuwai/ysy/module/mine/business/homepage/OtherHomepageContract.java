@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.mine.business.homepage;
 
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.find.bean.FoundHome.FoundBean;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.rayhahah.rbase.base.IRBaseView;
@@ -22,6 +23,7 @@ public class OtherHomepageContract {
          * 显示错误信息
          */
         void showError(int errorCode, String msg);
+        void likeResult(SimpleResponse response);
     }
 
     public interface IHomePresenter {
@@ -30,5 +32,7 @@ public class OtherHomepageContract {
          * 获取首页精选数据
          */
         void requestHomeData(String uid ,String otherid);
+
+        void like(String uid,String otherId,int type);
     }
 }

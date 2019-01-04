@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/place"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/voucher_money_shape"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="苏州大学附属医院"
+        android:textColor="@color/theme" />
+
+    <ImageView
+        android:id="@+id/delete"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginLeft="-10dp"
+        android:layout_toRightOf="@id/place"
+        android:visibility="gone"
+        android:src="@drawable/center_foot_del" />
+</RelativeLayout>

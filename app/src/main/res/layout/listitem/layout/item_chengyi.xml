@@ -8,8 +8,8 @@
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
     android:layout_marginTop="20dp"
-    android:text="10鱼币"
-    android:textSize="15sp"
+    android:text="10桃花币"
+    android:textSize="13sp"
     app:sCornersRadius="24dp"
     app:sStrokeWidth="1px">
 

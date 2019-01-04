@@ -56,28 +56,47 @@ public class InfoInviteFragment extends BaseFragment implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_start:
-                Map<String, String> params = new HashMap<>();
-                params.put("phone", SPManager.get().getStringValue(C.REGIST_PHONE));
-                params.put("check_code", SPManager.get().getStringValue(C.REGIST_CODE));
-                params.put("city", SPManager.get().getStringValue(C.REGIST_CITY));
-                params.put("gender", SPManager.get().getStringValue(C.REGIST_GENDER));
-                params.put("birthday", SPManager.get().getStringValue(C.REGIST_BIRTHDAY));
-                params.put("height", SPManager.get().getStringValue(C.REGIST_HEIGHT));
-                params.put("annual_income", SPManager.get().getStringValue(C.REGIST_INCOME));
-                params.put("education", SPManager.get().getStringValue(C.REGIST_EDUCATION));
-                params.put("login_type", "1");
-                params.put("type", "phone");
-
-                params.put("nickname", SPManager.get().getStringValue(C.REGIST_NAME));
-                params.put("avatar", SPManager.get().getStringValue(C.REGIST_AVATAR));
-                params.put("password", SPManager.get().getStringValue(C.REGIST_PSD));
-                params.put("longitude", SPManager.get().getStringValue(C.REGIST_LONGITUDE));
-                params.put("latitude", SPManager.get().getStringValue(C.REGIST_LATITUDE));
-                params.put("referee", mEtId.getText().toString());
-
-                regist(params);
+                toRegist();
+                break;
+            case R.id.tv_pass:
+                toRegist();
                 break;
         }
+    }
+
+    private void toRegist() {
+        Map<String, String> params = new HashMap<>();
+        params.put("phone", SPManager.get().getStringValue(C.REGIST_PHONE));
+        params.put("check_code", SPManager.get().getStringValue(C.REGIST_CODE));
+        params.put("city", SPManager.get().getStringValue(C.REGIST_CITY));
+        params.put("gender", SPManager.get().getStringValue(C.REGIST_GENDER));
+        params.put("birthday", SPManager.get().getStringValue(C.REGIST_BIRTHDAY));
+        params.put("height", SPManager.get().getStringValue(C.REGIST_HEIGHT));
+        params.put("annual_income", SPManager.get().getStringValue(C.REGIST_INCOME));
+        params.put("education", SPManager.get().getStringValue(C.REGIST_EDUCATION));
+        params.put("login_type", "1");
+        if (!Utils.isNullString(SPManager.get().getStringValue(C.SAN_FANG))) {
+            params.put("type", SPManager.get().getStringValue(C.SAN_FANG));
+        } else {
+            params.put("type", "phone");
+        }
+        if(!Utils.isNullString(SPManager.get().getStringValue(C.REGIST_NAME))){
+            params.put("nickname", SPManager.get().getStringValue(C.REGIST_NAME));
+        }
+        if(!Utils.isNullString(SPManager.get().getStringValue(C.REGIST_AVATAR))){
+            params.put("avatar", SPManager.get().getStringValue(C.REGIST_AVATAR));
+        }
+
+        params.put("password", SPManager.get().getStringValue(C.REGIST_PSD));
+        if(!Utils.isNullString(SPManager.get().getStringValue(C.REGIST_LONGITUDE))){
+            params.put("longitude", SPManager.get().getStringValue(C.REGIST_LONGITUDE));
+            params.put("latitude", SPManager.get().getStringValue(C.REGIST_LATITUDE));
+        }
+        if(!Utils.isNullString(mEtId.getText().toString())){
+            params.put("referee", mEtId.getText().toString());
+        }
+
+        regist(params);
     }
 
     @Override
@@ -89,6 +108,7 @@ public class InfoInviteFragment extends BaseFragment implements View.OnClickList
         mBtnStart = mRootView.findViewById(R.id.btn_start);
 
         mBtnStart.setOnClickListener(this);
+        mTvPass.setOnClickListener(this);
     }
 
     @Override
@@ -111,6 +131,7 @@ public class InfoInviteFragment extends BaseFragment implements View.OnClickList
             @Override
             public void accept(Throwable throwable) throws Exception {
                 //Log.i(TAG, "accept: " + throwable);
+                ToastUtils.showShort("网络错误");
             }
         }));
     }

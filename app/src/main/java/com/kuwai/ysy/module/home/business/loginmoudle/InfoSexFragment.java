@@ -66,7 +66,7 @@ public class InfoSexFragment extends BaseFragment implements View.OnClickListene
                     ToastUtils.showShort("请选择性别");
                 } else {
                     SPManager.get().putString(C.REGIST_GENDER, String.valueOf(sex));
-                    SPManager.get().putString(C.REGIST_BIRTHDAY, mYear + "-" + mMonth + "-" + mDay);
+                    SPManager.get().putString(C.REGIST_BIRTHDAY, mTvDate.getText().toString());
                     start(InfoPosFragment.newInstance());
                 }
                 break;
@@ -162,7 +162,7 @@ public class InfoSexFragment extends BaseFragment implements View.OnClickListene
                     if (themeDialog != null) {
                         themeDialog.dismiss();
                     }
-                    mTvDate.setText(mYear + "年" + mMonth + "月" + mDay + "日");
+                    mTvDate.setText(datePicker.getSelectedYear() + "-" + datePicker.getSelectedMonth() + "-" + datePicker.getSelectedDay());
                 }
             });
             themeDialog = new CustomDialog.Builder(getActivity())

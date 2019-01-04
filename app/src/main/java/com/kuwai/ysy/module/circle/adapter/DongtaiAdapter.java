@@ -4,6 +4,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.kuwai.ysy.R;
@@ -29,25 +31,21 @@ import ch.ielse.view.imagewatcher.ImageWatcher;
 public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, BaseViewHolder> {
 
     private ImageWatcher mImageWatcher;
-    //private List<String> imgList;
 
-    public DongtaiAdapter(List data, ImageWatcher imageWatcher) {
-        super(R.layout.item_dongtai, data);
+    public DongtaiAdapter(ImageWatcher imageWatcher) {
+        super(R.layout.item_dongtai);
         this.mImageWatcher = imageWatcher;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, final DyMainListBean.DataBean item) {
+        helper.setText(R.id.tv_content, item.getText());
         switch (item.getType()) {
             case C.DY_TXT:
-                helper.setText(R.id.tv_content, item.getText());
                 break;
             case C.DY_PIC:
-                helper.setText(R.id.tv_content, item.getText());
-                //imgList = new ArrayList<String>();
-                //imgList.clear();
-                //imgList = item.getAttach();
-
+                helper.getView(R.id.rl_play).setVisibility(View.GONE);
+                helper.getView(R.id.nine_grid_view).setVisibility(View.VISIBLE);
                 final NineGridView nineGridView = helper.getView(R.id.nine_grid_view);
                 nineGridView.setAdapter(new NineImageAdapter(mContext, item.getAttach()));
                 nineGridView.setOnImageClickListener(new NineGridView.OnImageClickListener() {
@@ -58,6 +56,16 @@ public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, Ba
                 });
                 break;
             case C.DY_FILM:
+                helper.addOnClickListener(R.id.iv_playimg);
+                helper.getView(R.id.rl_play).setVisibility(View.VISIBLE);
+                helper.getView(R.id.nine_grid_view).setVisibility(View.GONE);
+                if (item.getAttach() != null && item.getAttach().size() > 0) {
+                    RequestOptions myOptions = new RequestOptions()
+                            .centerCrop()
+                            .override(300, 500);
+                    Glide.with(mContext).load(item.getAttach().get(0)).apply(myOptions).into((ImageView) helper.getView(R.id.iv_playimg));
+                }
+
                 break;
         }
 
@@ -91,7 +99,7 @@ public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, Ba
         helper.setText(R.id.tv_time, DateTimeUitl.getStandardDate(String.valueOf(item.getUpdate_time())));
         SPManager.get().getStringValue("uid");
 
-        if (item.getUid() == (Integer.valueOf(SPManager.getStringValue("uid","1")))) {
+        if (item.getUid() == (Integer.valueOf(SPManager.get().getStringValue("uid")))) {
             helper.getView(R.id.tv_delete).setVisibility(View.VISIBLE);
         } else {
             helper.getView(R.id.tv_delete).setVisibility(View.GONE);

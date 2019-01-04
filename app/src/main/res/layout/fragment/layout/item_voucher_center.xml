@@ -3,10 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp">
 
     <LinearLayout
+        android:id="@+id/lay_parent"
         android:layout_width="110dp"
         android:layout_height="60dp"
         android:background="@drawable/voucher_money_shape"
@@ -14,21 +15,23 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_marginTop="8dp"
+            android:id="@+id/tv_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5鱼币"
+            android:layout_marginTop="8dp"
+            android:text="5桃花币"
             android:textColor="#282828"
-            android:textSize="17sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
-            android:layout_marginTop="2dp"
+            android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
             android:text="售价:9.99元"
-            android:textColor="#ff282828"
-            android:textSize="14sp" />
+            android:textColor="#99282828"
+            android:textSize="12sp" />
 
     </LinearLayout>
 

@@ -2,10 +2,12 @@ package com.kuwai.ysy.rong;
 
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +15,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.listener.OnRedPacketDialogClickListener;
+import com.kuwai.ysy.module.chat.api.ChatApiFactory;
+import com.kuwai.ysy.module.chat.business.redpack.RedReceiveActivity;
+import com.kuwai.ysy.rong.bean.RedBean;
 import com.kuwai.ysy.rong.bean.RedPacketEntity;
 import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.utils.base.ToastUtils;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.emoticon.AndroidEmoji;
@@ -25,16 +36,16 @@ import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
 import io.rong.imkit.utilities.OptionsPopupDialog;
 import io.rong.imkit.widget.provider.IContainerItemProvider;
+import io.rong.imlib.IRongCallback;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
+import io.rong.imlib.model.UserInfo;
 
 @ProviderTag(
         messageContent = RedSendMessage.class,
-        showPortrait = false,
         showProgress = false,
-        showWarning = false,
-        centerInHorizontal = true,
-        showSummaryWithName = false
+        showWarning = false
 )
 public class RedSendMessageItemProvider extends IContainerItemProvider.MessageProvider<RedSendMessage> {
     private static final String TAG = "QuestionMessageItemProvider";
@@ -42,6 +53,7 @@ public class RedSendMessageItemProvider extends IContainerItemProvider.MessagePr
     private View mRedPacketDialogView;
     private RedPacketViewHolder mRedPacketViewHolder;
     private CustomDialog mRedPacketDialog;
+    private String targetId = "";
 
     private static class ViewHolder {
         TextView message;
@@ -50,10 +62,9 @@ public class RedSendMessageItemProvider extends IContainerItemProvider.MessagePr
 
     @Override
     public View newView(Context context, ViewGroup group) {
-        View view = LayoutInflater.from(context).inflate(R.layout.rong_question, null);
-
+        View view = LayoutInflater.from(context).inflate(R.layout.rong_repack_mine, null);
         RedSendMessageItemProvider.ViewHolder holder = new RedSendMessageItemProvider.ViewHolder();
-        //holder.message = (TextView) view.findViewById(R.id.message);
+        holder.message = (TextView) view.findViewById(R.id.title);
         view.setTag(holder);
         return view;
     }
@@ -80,15 +91,16 @@ public class RedSendMessageItemProvider extends IContainerItemProvider.MessagePr
 
     @Override
     public void onItemClick(View view, int position, RedSendMessage content, UIMessage message) {
-        if(message.getMessageDirection() == Message.MessageDirection.SEND){
-
+        if (message.getMessageDirection() == Message.MessageDirection.RECEIVE) {
+            targetId = message.getTargetId();
+            if (message.getUserInfo() != null) {
+                RedPacketEntity entity = new RedPacketEntity(message.getUserInfo().getName(), message.getUserInfo().getPortraitUri(), content.getExtra());
+                showRedPacketDialog(entity, view.getContext(), content.getContent(), SPManager.get().getStringValue("uid"));
+            }
         }
-        RedPacketEntity entity = new RedPacketEntity("萨顶顶", "http://192.168.1.88/public/static/img/avatar/201812/19/1159e6106c38a19e6dd82d12de770cb5.jpg", "大吉大利，今晚吃鸡");
-        showRedPacketDialog(entity, view.getContext());
-        //view.getContext().startActivity(new Intent(view.getContext(), QuestionActivity.class));
     }
 
-    public void showRedPacketDialog(RedPacketEntity entity, Context mContext) {
+    public void showRedPacketDialog(final RedPacketEntity entity, final Context mContext, final String rid, final String uid) {
         if (mRedPacketDialogView == null) {
             mRedPacketDialogView = View.inflate(mContext, R.layout.dialog_red_packet, null);
             mRedPacketViewHolder = new RedPacketViewHolder(mContext, mRedPacketDialogView);
@@ -111,8 +123,7 @@ public class RedSendMessageItemProvider extends IContainerItemProvider.MessagePr
             @Override
             public void onOpenClick() {
                 //领取红包,调用接口
-                ToastUtils.showShort("萨顶顶中了五百万大奖");
-                mRedPacketDialog.dismiss();
+                receiveRed(rid, entity.remark, mContext);
             }
         });
 
@@ -174,15 +185,61 @@ public class RedSendMessageItemProvider extends IContainerItemProvider.MessagePr
         }).show();
     }
 
+    void receiveRed(final String rid, final String remark, final Context context) {
+        ChatApiFactory.receiveRed(SPManager.get().getStringValue("uid"), rid).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse response) throws Exception {
+                mRedPacketDialog.dismiss();
+                if (response.code == 200) {
+                    sendMessage(rid, remark);
+                    Intent intent = new Intent(context, RedReceiveActivity.class);
+                    intent.putExtra("rid", rid);
+                    context.startActivity(intent);
+                } else {
+                    ToastUtils.showShort(response.msg);
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: "+throwable);
+                //ToastUtils.showShort("网络错误");
+            }
+        });
+    }
+
+    private void sendMessage(String redid, String jiyu) {
+        RedReceiveMessage testMessage = new RedReceiveMessage();
+        testMessage.setContent(redid);
+        testMessage.setExtra(jiyu);
+        final Message message = Message.obtain(targetId, Conversation.ConversationType.PRIVATE, testMessage);
+        RongIM.getInstance().sendMessage(message, "红包消息", "红包消息", new IRongCallback.ISendMessageCallback() {
+            @Override
+            public void onAttached(Message message) {
+                Log.i("xxx", "onTokenIncorrect: ");
+            }
+
+            @Override
+            public void onSuccess(Message message) {
+                Log.i("xxx", "onTokenIncorrect: ");
+            }
+
+            @Override
+            public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                Log.i("xxx", "onTokenIncorrect: ");
+            }
+        });
+    }
+
     @Override
     public void bindView(final View v, int position, final RedSendMessage content, final UIMessage data) {
         RedSendMessageItemProvider.ViewHolder holder = (RedSendMessageItemProvider.ViewHolder) v.getTag();
 
-        /*if (data.getMessageDirection() == Message.MessageDirection.SEND) {
-            holder.message.setBackgroundResource(io.rong.imkit.R.drawable.rc_ic_bubble_right);
+        if (data.getMessageDirection() == Message.MessageDirection.SEND) {
+            holder.message.setText(content.getExtra());
         } else {
-            holder.message.setBackgroundResource(io.rong.imkit.R.drawable.rc_ic_bubble_left);
-        }*/
+            holder.message.setText(content.getExtra());
+        }
 
         /*final TextView textView = holder.message;
         textView.setText(content.getContent());

@@ -2,7 +2,6 @@ package com.kuwai.ysy.rong;
 
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.text.Selection;
 import android.text.Spannable;
@@ -16,21 +15,16 @@ import android.widget.TextView;
 
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.listener.OnRedPacketDialogClickListener;
-import com.kuwai.ysy.module.chat.business.QuestionActivity;
-import com.kuwai.ysy.module.chat.business.act.SendRedActivity;
 import com.kuwai.ysy.rong.bean.RedPacketEntity;
 import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.RongKitIntent;
 import io.rong.imkit.emoticon.AndroidEmoji;
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
 import io.rong.imkit.utilities.OptionsPopupDialog;
-import io.rong.imkit.widget.ILinkClickListener;
-import io.rong.imkit.widget.LinkTextViewMovementMethod;
 import io.rong.imkit.widget.provider.IContainerItemProvider;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
@@ -89,7 +83,7 @@ public class QuestionMessageItemProvider extends IContainerItemProvider.MessageP
     public void onItemClick(View view, int position, QuestionMessage content, UIMessage message) {
         //RedPacketEntity entity = new RedPacketEntity("萨顶顶", "http://192.168.1.88/public/static/img/avatar/201812/19/1159e6106c38a19e6dd82d12de770cb5.jpg", "大吉大利，今晚吃鸡");
         //showRedPacketDialog(entity, view.getContext());
-        view.getContext().startActivity(new Intent(view.getContext(), SendRedActivity.class));
+        //view.getContext().startActivity(new Intent(view.getContext(), SendRedActivity.class));
         //view.getContext().startActivity(new Intent(view.getContext(), QuestionActivity.class));
     }
 

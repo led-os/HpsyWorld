@@ -59,7 +59,7 @@ public class ILikeFragment extends BaseFragment<ILikePresenter> implements ILike
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.requestHomeData(SPManager.getStringValue("uid", "1"));
+        mPresenter.requestHomeData(SPManager.get().getStringValue("uid"));
     }
 
     @Override

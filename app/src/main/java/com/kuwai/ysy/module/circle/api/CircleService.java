@@ -1,6 +1,10 @@
 package com.kuwai.ysy.module.circle.api;
 
 import com.kuwai.ysy.bean.SimpleResponse;
+import com.kuwai.ysy.module.chat.bean.StsBean;
+import com.kuwai.ysy.module.circle.bean.AllCommentBean;
+import com.kuwai.ysy.module.circle.bean.AllLikeBean;
+import com.kuwai.ysy.module.circle.bean.AllRewardBean;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.DyCommentListBean;
 import com.kuwai.ysy.module.circle.bean.DyDetailBean;
@@ -60,6 +64,13 @@ public interface CircleService {
     @Multipart
     @POST("Dynamic/ReleaseDynamic")
     Observable<SimpleResponse> publishDy(@PartMap Map<String, RequestBody> map);
+
+    /**
+     * 视频sts
+     */
+    @FormUrlEncoded
+    @POST("Upload/execurl")
+    Observable<StsBean> getVideoSts(@Field("uid") String uid, @Field("token") String token);
 
     /**
      * 删除动态
@@ -227,6 +238,27 @@ public interface CircleService {
     @FormUrlEncoded
     @POST("Dynamic/TreeHoleCommentList")
     Observable<DyCommentListBean> getHoleCommentListData(@Field("t_id") String t_id, @Field("uid") String uid, @Field("page") int page);
+
+    /**
+     * 说说评论列表
+     */
+    @FormUrlEncoded
+    @POST("Dynamic/getCommentList")
+    Observable<AllCommentBean> getAllCommentListData(@Field("uid") String uid, @Field("page") int page);
+
+    /**
+     * 说说打赏列表
+     */
+    @FormUrlEncoded
+    @POST("Dynamic/getGitfList")
+    Observable<AllRewardBean> getAllRewardListData(@Field("uid") String uid, @Field("page") int page);
+
+    /**
+     * 说说点赞列表
+     */
+    @FormUrlEncoded
+    @POST("Dynamic/getLikesList")
+    Observable<AllLikeBean> getAllLikeListData(@Field("uid") String uid, @Field("page") int page);
 
     /**
      * 树洞评论列表点赞

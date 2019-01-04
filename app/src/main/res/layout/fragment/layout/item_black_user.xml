@@ -6,12 +6,11 @@
     android:paddingStart="16dp"
     android:paddingEnd="16dp">
 
-    <ImageView
+    <com.allen.library.CircleImageView
         android:id="@+id/iv_headicon"
         android:layout_width="42dp"
         android:layout_height="42dp"
-        android:layout_centerVertical="true"
-        android:src="@color/colorAccent" />
+        android:layout_centerVertical="true" />
 
     <TextView
         android:id="@+id/tv_nickname"
@@ -32,7 +31,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:layout_toEndOf="@+id/tv_nickname"
-        android:src="@drawable/center_ic_head_pressed" />
+        android:src="@drawable/ic_user_woman" />
 
     <ImageView
         android:id="@+id/iv_vip"
@@ -40,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
+        android:visibility="gone"
         android:layout_toEndOf="@+id/iv_sex"
         android:src="@drawable/center_ic_head_pressed" />
 
@@ -55,6 +55,7 @@
         android:textSize="13sp" />
 
     <com.allen.library.SuperButton
+        android:id="@+id/btn_yichu"
         android:layout_width="65dp"
         android:layout_height="28dp"
         android:layout_alignParentEnd="true"

@@ -22,7 +22,7 @@ public class AmountView extends LinearLayout implements View.OnClickListener, Te
 
     private static final String TAG = "AmountView";
     private int amount = 1; //购买数量
-    private int goods_storage = 10; //商品库存
+    private int goods_storage = 10000; //商品库存
 
     private OnAmountChangeListener mListener;
 
@@ -120,6 +120,10 @@ public class AmountView extends LinearLayout implements View.OnClickListener, Te
         if (mListener != null) {
             mListener.onAmountChange(this, amount);
         }
+    }
+
+    public int getAmount() {
+        return amount;
     }
 
 

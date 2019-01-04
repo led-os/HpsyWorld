@@ -19,7 +19,7 @@ import io.rong.imlib.model.MentionedInfo;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
 
-@MessageTag(value = "RCD:loingsystemmessage", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
+@MessageTag(value = "RCD:question", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
 public class QuestionMessage extends MessageContent {
     private final static String TAG = "TestMessage";
 

@@ -96,6 +96,9 @@ public class ChongzhiPsdFragment extends BaseFragment implements View.OnClickLis
                     mTvCountDown.start();
                 }
                 break;
+            case R.id.img_left:
+                pop();
+                break;
         }
     }
 
@@ -116,6 +119,7 @@ public class ChongzhiPsdFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void initView(Bundle savedInstanceState) {
         mImgLeft = mRootView.findViewById(R.id.img_left);
+        mImgLeft.setOnClickListener(this);
         mTitle = mRootView.findViewById(R.id.title);
         mEtTel = mRootView.findViewById(R.id.et_tel);
         mLine = mRootView.findViewById(R.id.line);

@@ -35,8 +35,6 @@ public class BlindListAdapter extends BaseQuickAdapter<TuoDanBean.DataBean, Base
         }
 
         helper.setText(R.id.tv_num,String.valueOf(item.getEnrolment()));
-        helper.addOnClickListener(R.id.rl_activity);
-
 
     }
 

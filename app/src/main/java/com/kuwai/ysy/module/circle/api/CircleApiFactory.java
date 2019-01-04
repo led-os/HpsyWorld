@@ -2,6 +2,10 @@ package com.kuwai.ysy.module.circle.api;
 
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.SimpleResponse;
+import com.kuwai.ysy.module.chat.bean.StsBean;
+import com.kuwai.ysy.module.circle.bean.AllCommentBean;
+import com.kuwai.ysy.module.circle.bean.AllLikeBean;
+import com.kuwai.ysy.module.circle.bean.AllRewardBean;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.DyCommentListBean;
 import com.kuwai.ysy.module.circle.bean.DyDetailBean;
@@ -57,6 +61,13 @@ public class CircleApiFactory {
                 .create(CircleService.class)
                 .publishDy(map)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<StsBean> getVideoSts(String uid, String token) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(CircleService.class)
+                .getVideoSts(uid,token)
+                .compose(RxSchedulers.<StsBean>ioMain());
     }
 
     public static Observable<SimpleResponse> deleteDy(String d_id, String uid) {
@@ -218,6 +229,27 @@ public class CircleApiFactory {
                 .create(CircleService.class)
                 .getHoleCommentListData(d_id, uid, page)
                 .compose(RxSchedulers.<DyCommentListBean>ioMain());
+    }
+
+    public static Observable<AllCommentBean> getAllCommentListData(String uid, int page) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(CircleService.class)
+                .getAllCommentListData(uid, page)
+                .compose(RxSchedulers.<AllCommentBean>ioMain());
+    }
+
+    public static Observable<AllLikeBean> getAllLikeListData(String uid, int page) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(CircleService.class)
+                .getAllLikeListData(uid, page)
+                .compose(RxSchedulers.<AllLikeBean>ioMain());
+    }
+
+    public static Observable<AllRewardBean> getAllRewardListData(String uid, int page) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(CircleService.class)
+                .getAllRewardListData(uid, page)
+                .compose(RxSchedulers.<AllRewardBean>ioMain());
     }
 
     public static Observable<SimpleResponse> holeLikeOrNot(Map<String, Object> params) {

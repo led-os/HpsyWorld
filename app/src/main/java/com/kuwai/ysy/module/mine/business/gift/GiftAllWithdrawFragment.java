@@ -12,6 +12,7 @@ import com.kuwai.ysy.module.mine.adapter.ExpandableGiftAdapter;
 import com.kuwai.ysy.module.mine.adapter.ExpandableItemAdapter;
 import com.kuwai.ysy.module.mine.bean.like.ChildLevel;
 import com.kuwai.ysy.module.mine.bean.like.ParentLevel;
+import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 
 import java.util.ArrayList;
@@ -47,7 +48,12 @@ public class GiftAllWithdrawFragment extends BaseFragment implements View.OnClic
     @Override
     public void initView(Bundle savedInstanceState) {
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recyclerView);
-
+        ((NavigationLayout) mRootView.findViewById(R.id.navigation)).setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
         list = generateData();
         adapter = new ExpandableGiftAdapter(list);
 

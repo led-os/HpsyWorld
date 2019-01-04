@@ -37,6 +37,7 @@
         android:id="@+id/img_sex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
         android:layout_alignBottom="@id/tv_nick"
         android:layout_toRightOf="@id/tv_nick" />
 
@@ -46,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/tv_nick"
+        android:layout_marginLeft="6dp"
         android:layout_toRightOf="@id/img_sex"
         android:src="@drawable/ic_user_vip" />
 

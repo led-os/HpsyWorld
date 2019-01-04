@@ -15,6 +15,8 @@ import com.kuwai.ysy.rong.ExtensionModule;
 import com.kuwai.ysy.rong.MyTextMessageItemProvider;
 import com.kuwai.ysy.rong.QuestionMessage;
 import com.kuwai.ysy.rong.QuestionMessageItemProvider;
+import com.kuwai.ysy.rong.RedReceiveMessage;
+import com.kuwai.ysy.rong.RedReceiveMessageItemProvider;
 import com.kuwai.ysy.rong.RedSendMessage;
 import com.kuwai.ysy.rong.RedSendMessageItemProvider;
 import com.kuwai.ysy.utils.language.LocalManageUtil;
@@ -28,6 +30,7 @@ import com.taobao.sophix.listener.PatchLoadStatusListener;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.commonsdk.UMConfigure;
+import com.umeng.socialize.PlatformConfig;
 
 import java.util.List;
 
@@ -53,7 +56,7 @@ public class MyApp extends BaseApplication {
     @Override
     protected void attachBaseContext(Context base) {
         //LocalManageUtil.saveSystemCurrentLanguage(base);
-        super.attachBaseContext(LocalManageUtil.setLocal(base));
+        super.attachBaseContext(base);
         MultiDex.install(this);
     }
 
@@ -70,6 +73,8 @@ public class MyApp extends BaseApplication {
         RongIM.getInstance().registerMessageTemplate(new QuestionMessageItemProvider());
         RongIM.registerMessageType(RedSendMessage.class);
         RongIM.getInstance().registerMessageTemplate(new RedSendMessageItemProvider());
+        RongIM.registerMessageType(RedReceiveMessage.class);
+        RongIM.getInstance().registerMessageTemplate(new RedReceiveMessageItemProvider());
         setMyExtensionModule();
     }
 
@@ -77,9 +82,13 @@ public class MyApp extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         initRetrofit();
-        //initBugly();
+        initBugly();
 
-        UMConfigure.init(this, "5a12384aa40fa3551f0001d1", "umeng", UMConfigure.DEVICE_TYPE_PHONE, "");
+        UMConfigure.init(this, "5bdf9e6af1f556220800009b", "umeng", UMConfigure.DEVICE_TYPE_PHONE, "");
+        PlatformConfig.setWeixin("wx061451b819a2c377", "a2ede8246092bd70ac33cac9dc24d69f");
+        PlatformConfig.setSinaWeibo("240524518", "cc4933f41b939f5188e3ec06c5c921d9","http://sns.whalecloud.com");
+        PlatformConfig.setQQZone("101511982", "cae47898315b8ce1a93cf51bc2de7354");
+
         //腾讯x5
         QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
 
@@ -109,7 +118,7 @@ public class MyApp extends BaseApplication {
 
 
     private void initBugly() {
-        CrashReport.initCrashReport(getApplicationContext(), C.BUGLY.APP_ID, false);
+        CrashReport.initCrashReport(getApplicationContext(), C.BUGLY.APP_ID, true);
     }
 
     /**

@@ -34,7 +34,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="16dp"
             android:gravity="center_vertical"
-            android:text="快递费¥：10鱼币"
+            android:text="快递费¥：10桃花币"
             android:textColor="#ff282838"
             android:textSize="12sp" />
 

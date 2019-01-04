@@ -62,7 +62,7 @@ public class LikeEachOtherFragment extends BaseFragment<LikeEachOtherPresenter> 
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.requestHomeData(SPManager.getStringValue("uid", "1"), page);
+        mPresenter.requestHomeData(SPManager.get().getStringValue("uid"), page);
     }
 
     @Override

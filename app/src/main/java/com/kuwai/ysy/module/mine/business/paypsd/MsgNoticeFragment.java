@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 
 public class MsgNoticeFragment extends BaseFragment implements View.OnClickListener {
@@ -34,6 +35,13 @@ public class MsgNoticeFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void initView(Bundle savedInstanceState) {
+
+        ((NavigationLayout) mRootView.findViewById(R.id.navigation)).setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
     }
 
     @Override

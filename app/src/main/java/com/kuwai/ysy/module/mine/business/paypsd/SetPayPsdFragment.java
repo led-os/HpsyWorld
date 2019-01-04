@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import com.kuwai.ysy.R;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.home.bean.GoodsCategory;
+import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.kuwai.ysy.widget.PasswordInputView;
 import com.rayhahah.dialoglib.CustomDialog;
@@ -30,6 +32,7 @@ public class SetPayPsdFragment extends BaseFragment<SetPayPsdPresenter> implemen
 
     private PasswordInputView mPsdView,mSurePsd;
     private NavigationLayout navigationLayout;
+    private EditText mPsdEt;
     private String mPsd, mRePsd;
     private CustomDialog eduDialog = null;
 
@@ -59,12 +62,19 @@ public class SetPayPsdFragment extends BaseFragment<SetPayPsdPresenter> implemen
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        mPsdEt = mRootView.findViewById(R.id.psd_view);
         navigationLayout = mRootView.findViewById(R.id.navigation);
+        navigationLayout.setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
         navigationLayout.setRightClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!TextUtils.isEmpty(mPsd) && !TextUtils.isEmpty(mRePsd)) {
-                    mPresenter.requestHomeData(SPManager.getStringValue("uid"), "", mPsd, mRePsd);
+                    mPresenter.requestHomeData(SPManager.get().getStringValue("uid"), Utils.encrypt32(mPsdEt.getText().toString()), Utils.encrypt32(mPsd),Utils.encrypt32(mRePsd) );
                 }else {
                     ToastUtils.showShort("密码不能为空");
                 }

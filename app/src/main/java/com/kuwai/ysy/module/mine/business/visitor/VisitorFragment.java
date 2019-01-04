@@ -59,7 +59,7 @@ public class VisitorFragment extends BaseFragment<VisitorPresenter> implements V
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.requestHomeData(SPManager.getStringValue("uid", "1"), C.My_VISITOR);
+        mPresenter.requestHomeData(SPManager.get().getStringValue("uid", "1"), C.My_VISITOR);
     }
 
     @Override

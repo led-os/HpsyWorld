@@ -3,6 +3,7 @@ package com.kuwai.ysy.module.home.api;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.home.bean.HomeBean;
+import com.kuwai.ysy.module.home.bean.HomeVideoBean;
 import com.kuwai.ysy.module.home.bean.login.CodeBean;
 import com.kuwai.ysy.module.home.bean.login.LoginBean;
 import com.kuwai.ysy.net.ApiClient;
@@ -42,11 +43,11 @@ public class HomeApiFactory {
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
-    public static Observable<SimpleResponse> codeAuth(Map<String, String> num) {
+    public static Observable<LoginBean> codeAuth(Map<String, String> num) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(HomeService.class)
                 .codeAuth(num)
-                .compose(RxSchedulers.<SimpleResponse>ioMain());
+                .compose(RxSchedulers.<LoginBean>ioMain());
     }
 
     public static Observable<SimpleResponse> regist(Map<String, String> num) {
@@ -54,5 +55,12 @@ public class HomeApiFactory {
                 .create(HomeService.class)
                 .regist(num)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<HomeVideoBean> getHomeData(Map<String, String> num) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(HomeService.class)
+                .getHomeData(num)
+                .compose(RxSchedulers.<HomeVideoBean>ioMain());
     }
 }

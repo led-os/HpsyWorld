@@ -1,7 +1,12 @@
 package com.kuwai.ysy.module.home.business.loginmoudle;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,21 +14,30 @@ import android.widget.TextView;
 import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.home.api.HomeApiFactory;
 import com.kuwai.ysy.module.home.bean.login.CodeBean;
 import com.kuwai.ysy.module.home.bean.login.LoginBean;
+import com.kuwai.ysy.module.home.business.HomeActivity;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.CountDownTextView;
 import com.kuwai.ysy.widget.MyEditText;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.StringUtils;
 import com.rayhahah.rbase.utils.base.ToastUtils;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.functions.Consumer;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
+
+import static com.kuwai.ysy.app.C.MSG_LOGIN;
 
 public class InputCodeFragment extends BaseFragment implements View.OnClickListener {
 
@@ -75,6 +89,9 @@ public class InputCodeFragment extends BaseFragment implements View.OnClickListe
                     login(param);
                 }
                 break;
+            case R.id.img_left:
+                pop();
+                break;
         }
     }
 
@@ -96,6 +113,30 @@ public class InputCodeFragment extends BaseFragment implements View.OnClickListe
         mTvCountDown.start();
         mTvCountDown.setOnClickListener(this);
         mBtnAuth.setOnClickListener(this);
+        mImgLeft.setOnClickListener(this);
+
+        mEtCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!Utils.isNullString(s.toString())) {
+                    mBtnAuth.setEnabled(true);
+                    mBtnAuth.setTextColor(getResources().getColor(R.color.white));
+                } else {
+                    mBtnAuth.setEnabled(false);
+                    mBtnAuth.setTextColor(getResources().getColor(R.color.gray_7b));
+                }
+            }
+        });
     }
 
     @Override
@@ -126,7 +167,16 @@ public class InputCodeFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void accept(LoginBean loginBean) throws Exception {
                 if (loginBean.getCode() == 200) {
-
+                    SPManager.get().putString("uid", String.valueOf(loginBean.getData().getUid()));
+                    SPManager.get().putString("rongyun_token", String.valueOf(loginBean.getData().getRongyun_token()));
+                    SPManager.get().putString("token", String.valueOf(loginBean.getData().getToken()));
+                    SPManager.get().putString("nickname", String.valueOf(loginBean.getData().getNickname()));
+                    SPManager.get().putString("icon", String.valueOf(loginBean.getData().getAvatar()));
+                    SPManager.get().putString(C.HAS_THIRD_PASS, String.valueOf(loginBean.getData().getPayment()));
+                    connectRongYun(loginBean.getData().getRongyun_token(), loginBean);
+                    EventBusUtil.sendEvent(new MessageEvent(MSG_LOGIN));
+                    startActivity(new Intent(getActivity(), HomeActivity.class));
+                    getActivity().finish();
                 } else {
                     ToastUtils.showShort(loginBean.getMsg());
                 }
@@ -137,5 +187,26 @@ public class InputCodeFragment extends BaseFragment implements View.OnClickListe
                 //Log.i(TAG, "accept: " + throwable);
             }
         }));
+    }
+
+    private void connectRongYun(String token, final LoginBean loginBean) {
+
+        RongIMClient.connect(token, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onTokenIncorrect() {
+                Log.i("xxx", "onTokenIncorrect: ");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                Log.i("xxx", "onTokenIncorrect: ");
+                //RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.PRIVATE, "237", "测试");
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.i("xxx", "onTokenIncorrect: ");
+            }
+        });
     }
 }

@@ -29,7 +29,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:text="几丁二"
+            android:text="***"
             android:textColor="@color/balck_28"
             android:textSize="14sp" />
 
@@ -43,7 +43,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:text="24岁|165cm|本科|12-20万元"
+            android:text=""
             android:textColor="@color/grey_bd"
             android:textSize="12sp" />
 
@@ -68,7 +68,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/banner" />
+            android:src="@drawable/center_img_user_default" />
 
         <TextView
             android:id="@+id/tv_level"
@@ -85,6 +85,7 @@
             android:textSize="10sp" />
 
         <com.allen.library.CircleImageView
+            android:id="@+id/img_sex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="4dp"
@@ -107,16 +108,17 @@
             android:layout_below="@id/img_head"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
-            android:text="几丁二"
+            android:text="***"
             android:textColor="@color/balck_28"
             android:textSize="16dp" />
 
         <ImageView
             android:id="@+id/img_vip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:layout_below="@id/img_head"
             android:layout_marginLeft="8dp"
+            android:visibility="gone"
             android:layout_marginTop="12dp"
             android:layout_toRightOf="@id/tv_nick"
             android:src="@drawable/ic_user_vip" />
@@ -131,7 +133,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="2dp"
         android:gravity="center_horizontal"
-        android:text="ID:15244125|江苏苏州"
+        android:text=""
         android:layout_marginBottom="6dp"
         android:textColor="@color/grey_bd"
         android:textSize="14dp" />

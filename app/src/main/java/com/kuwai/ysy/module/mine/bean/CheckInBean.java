@@ -4,10 +4,11 @@ import java.util.List;
 
 public class CheckInBean {
 
+
     /**
      * code : 200
      * msg : 获取成功
-     * data : {"integral":{"integral_sum":227,"integral_exchange":227,"sign_times":1},"sign_in":[],"daily_tasks":[{"sum":0,"name":"登录","integral":"10","Total":1},{"sum":0,"name":"签到","integral":"10","Total":1},{"sum":0,"name":"邀请ta传图、视频","integral":"10","Total":1},{"sum":0,"name":"停留时长大于30分钟","integral":"20","Total":1},{"sum":0,"name":"喜欢一个用户","integral":"5","Total":1},{"sum":0,"name":"动态、树洞发布","integral":"10","Total":1},{"sum":0,"name":"动态树洞内容点赞","integral":"5","Total":1},{"sum":0,"name":"动态树洞内容评论","integral":"5","Total":1},{"sum":0,"name":"分享","integral":"20","Total":1},{"sum":0,"name":"主动搭讪一个用户","integral":"5","Total":1},{"sum":0,"name":"发出/收到红包","integral":"10","Total":1}]}
+     * data : {"integral":{"integral_sum":2787,"integral_exchange":1887,"sign_times":1},"sign_in":[{"create_time":1545635757}],"daily_tasks":[{"sum":1,"name":"登录","integral":"10","Total":1},{"sum":1,"name":"签到","integral":"10","Total":1},{"integral":"10","sum":0,"name":"邀请ta传图、视频","Total":5},{"sum":0,"name":"停留时长大于30分钟","integral":"20","Total":1},{"sum":0,"name":"喜欢一个用户","integral":"5","Total":10},{"sum":0,"name":"动态、树洞发布","integral":"10","Total":5},{"sum":0,"name":"动态树洞内容点赞","integral":"5","Total":5},{"sum":0,"name":"动态树洞内容评论","integral":"5","Total":5},{"sum":0,"name":"分享","integral":"20","Total":10},{"sum":0,"name":"主动搭讪一个用户","integral":"5","Total":10},{"sum":0,"name":"发出/收到红包","integral":"10","Total":10}]}
      */
 
     private int code;
@@ -40,13 +41,13 @@ public class CheckInBean {
 
     public static class DataBean {
         /**
-         * integral : {"integral_sum":227,"integral_exchange":227,"sign_times":1}
-         * sign_in : []
-         * daily_tasks : [{"sum":0,"name":"登录","integral":"10","Total":1},{"sum":0,"name":"签到","integral":"10","Total":1},{"sum":0,"name":"邀请ta传图、视频","integral":"10","Total":1},{"sum":0,"name":"停留时长大于30分钟","integral":"20","Total":1},{"sum":0,"name":"喜欢一个用户","integral":"5","Total":1},{"sum":0,"name":"动态、树洞发布","integral":"10","Total":1},{"sum":0,"name":"动态树洞内容点赞","integral":"5","Total":1},{"sum":0,"name":"动态树洞内容评论","integral":"5","Total":1},{"sum":0,"name":"分享","integral":"20","Total":1},{"sum":0,"name":"主动搭讪一个用户","integral":"5","Total":1},{"sum":0,"name":"发出/收到红包","integral":"10","Total":1}]
+         * integral : {"integral_sum":2787,"integral_exchange":1887,"sign_times":1}
+         * sign_in : [{"create_time":1545635757}]
+         * daily_tasks : [{"sum":1,"name":"登录","integral":"10","Total":1},{"sum":1,"name":"签到","integral":"10","Total":1},{"integral":"10","sum":0,"name":"邀请ta传图、视频","Total":5},{"sum":0,"name":"停留时长大于30分钟","integral":"20","Total":1},{"sum":0,"name":"喜欢一个用户","integral":"5","Total":10},{"sum":0,"name":"动态、树洞发布","integral":"10","Total":5},{"sum":0,"name":"动态树洞内容点赞","integral":"5","Total":5},{"sum":0,"name":"动态树洞内容评论","integral":"5","Total":5},{"sum":0,"name":"分享","integral":"20","Total":10},{"sum":0,"name":"主动搭讪一个用户","integral":"5","Total":10},{"sum":0,"name":"发出/收到红包","integral":"10","Total":10}]
          */
 
         private IntegralBean integral;
-        private List<?> sign_in;
+        private List<SignInBean> sign_in;
         private List<DailyTasksBean> daily_tasks;
 
         public IntegralBean getIntegral() {
@@ -57,11 +58,11 @@ public class CheckInBean {
             this.integral = integral;
         }
 
-        public List<?> getSign_in() {
+        public List<SignInBean> getSign_in() {
             return sign_in;
         }
 
-        public void setSign_in(List<?> sign_in) {
+        public void setSign_in(List<SignInBean> sign_in) {
             this.sign_in = sign_in;
         }
 
@@ -75,8 +76,8 @@ public class CheckInBean {
 
         public static class IntegralBean {
             /**
-             * integral_sum : 227
-             * integral_exchange : 227
+             * integral_sum : 2787
+             * integral_exchange : 1887
              * sign_times : 1
              */
 
@@ -109,9 +110,25 @@ public class CheckInBean {
             }
         }
 
+        public static class SignInBean {
+            /**
+             * create_time : 1545635757
+             */
+
+            private long create_time;
+
+            public long getCreate_time() {
+                return create_time;
+            }
+
+            public void setCreate_time(long create_time) {
+                this.create_time = create_time;
+            }
+        }
+
         public static class DailyTasksBean {
             /**
-             * sum : 0
+             * sum : 1
              * name : 登录
              * integral : 10
              * Total : 1

@@ -13,7 +13,7 @@ import com.kuwai.ysy.module.mine.bean.vip.GallaryBean;
 import com.kuwai.ysy.utils.BlurTransformation;
 
 
-public class MinePicAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+public class MinePicAdapter extends BaseQuickAdapter<PersolHomePageBean.DataBean.InfoBean.VideoBean, BaseViewHolder> {
 
 
     public MinePicAdapter() {
@@ -21,10 +21,10 @@ public class MinePicAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, String item) {
+    protected void convert(BaseViewHolder helper, PersolHomePageBean.DataBean.InfoBean.VideoBean item) {
         ImageView imageView = helper.getView(R.id.img_pic);
 
-        Glide.with(mContext).load(item).into(imageView);
+        Glide.with(mContext).load(item.getAttach()).into(imageView);
 
     }
 

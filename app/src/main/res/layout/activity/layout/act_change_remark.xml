@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         stv:rightColor="@color/theme"
@@ -31,24 +32,17 @@
             android:textSize="16dp" />
 
         <EditText
+            android:id="@+id/et_content"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="18dp"
             android:layout_weight="1"
             android:background="@null"
             android:gravity="center_vertical"
-            android:text="胡大大"
+            android:hint="请输入备注名称"
             android:textColor="@color/balck_28"
             android:textSize="16sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginRight="16dp"
-            android:gravity="center_vertical"
-            android:text="3/10"
-            android:textColor="@color/gray_7b"
-            android:textSize="13dp" />
     </LinearLayout>
 
     <View style="@style/horizontal_line" />

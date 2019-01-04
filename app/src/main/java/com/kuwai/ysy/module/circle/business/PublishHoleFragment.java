@@ -98,6 +98,12 @@ public class PublishHoleFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void initView(Bundle savedInstanceState) {
         mLeftImg = mRootView.findViewById(R.id.left_img);
+        mLeftImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
         mRightTxt = mRootView.findViewById(R.id.right_txt);
         mEtTitle = mRootView.findViewById(R.id.et_title);
         mEtContent = mRootView.findViewById(R.id.et_content);

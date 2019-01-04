@@ -14,6 +14,8 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.chat.FindFriendChildFragment;
+import com.kuwai.ysy.module.chat.FindFriendNearFragment;
+import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -24,21 +26,34 @@ import io.reactivex.functions.Consumer;
 
 public class FindFriendFragment extends BaseFragment implements View.OnClickListener {
 
-    private final String[] mTitles = {"推荐", "附近","新朋友"};
+    private final String[] mTitles = {"推荐", "附近"};
     private ViewPager viewPager;
     private SlidingTabLayout slidingTabLayout;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private MyPagerAdapter mAdapter;
     private TextView mPhoneBookTv;
+    private NavigationLayout navigationLayout;
 
     @Override
     public void initView(Bundle savedInstanceState) {
         viewPager = mRootView.findViewById(R.id.vp);
+        navigationLayout = mRootView.findViewById(R.id.navigation);
+        navigationLayout.setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
+        navigationLayout.setRightClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                start(SearchFriendFragment.newInstance());
+            }
+        });
         slidingTabLayout = mRootView.findViewById(R.id.tl_9);
         mPhoneBookTv = mRootView.findViewById(R.id.lay_phone_book);
-        for (String title : mTitles) {
-            mFragments.add(FindFriendChildFragment.newInstance());
-        }
+        mFragments.add(FindFriendChildFragment.newInstance());
+        mFragments.add(FindFriendNearFragment.newInstance());
         mAdapter = new MyPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(mAdapter);
         slidingTabLayout.setViewPager(viewPager);

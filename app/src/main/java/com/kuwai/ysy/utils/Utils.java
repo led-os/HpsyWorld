@@ -3,19 +3,24 @@ package com.kuwai.ysy.utils;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.DimenRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import com.alivc.player.VcPlayerLog;
 import com.kuwai.ysy.utils.language.HanziToPinyin;
 import com.rayhahah.rbase.BaseApplication;
 
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Utils {
 
@@ -66,6 +71,20 @@ public class Utils {
             throw new RuntimeException(e);
         }
         return encryptStr;
+    }
+
+    public static boolean isStrangePhone() {
+        boolean strangePhone = Build.DEVICE.equalsIgnoreCase("mx5")
+                || Build.DEVICE.equalsIgnoreCase("Redmi Note2")
+                || Build.DEVICE.equalsIgnoreCase("Z00A_1")
+                || Build.DEVICE.equalsIgnoreCase("hwH60-L02")
+                || Build.DEVICE.equalsIgnoreCase("hermes")
+                || (Build.DEVICE.equalsIgnoreCase("V4") && Build.MANUFACTURER.equalsIgnoreCase("Meitu"))
+                || (Build.DEVICE.equalsIgnoreCase("m1metal") && Build.MANUFACTURER.equalsIgnoreCase("Meizu"));
+
+        VcPlayerLog.e("lfj1115 ", " Build.Device = " + Build.DEVICE + " , isStrange = " + strangePhone);
+        return strangePhone;
+
     }
 
     /**
@@ -157,11 +176,60 @@ public class Utils {
         return BaseApplication.getAppContext().getResources().getDisplayMetrics().widthPixels;
     }
 
+    /**
+     * 状态栏高度
+     */
+    public static int getStatusHeight(Context context) {
+
+        int statusBarHeight = -1;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            statusBarHeight = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return statusBarHeight;
+    }
+
+    public static int getWindowWidth() {
+        WindowManager wm = (WindowManager) BaseApplication.getAppContext().getSystemService(Context.WINDOW_SERVICE);
+        return wm.getDefaultDisplay().getWidth();
+    }
+
+    public static int getWindowHeight() {
+        WindowManager wm = (WindowManager) BaseApplication.getAppContext().getSystemService(Context.WINDOW_SERVICE);
+        return wm.getDefaultDisplay().getHeight();
+    }
+
     public static int getScreenHeight() {
         return BaseApplication.getAppContext().getResources().getDisplayMetrics().heightPixels;
     }
 
     public static int getDimensionPixelOffset(@DimenRes int resId) {
         return BaseApplication.getAppContext().getResources().getDimensionPixelOffset(resId);
+    }
+
+    /**
+     * 获取当前日期是星期几<br>
+     *
+     * @param dt
+     * @return 当前日期是星期几
+     */
+    public static int getWeekOfDate(Date dt) {
+        String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dt);
+        int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+        if (w < 0)
+            w = 0;
+        return w;
+    }
+
+    public static String getWeekOfDateString(Date dt) {
+        String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dt);
+        int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+        if (w < 0)
+            w = 0;
+        return weekDays[w];
     }
 }

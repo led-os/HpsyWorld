@@ -22,21 +22,24 @@
         android:layout_toRightOf="@id/img_head"
         android:text="张大贵"
         android:textColor="@color/balck_28"
-        android:textSize="15sp" />
+        android:textSize="14sp" />
 
     <ImageView
-        android:id="@+id/vip"
+        android:id="@+id/iv_vip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/tv_nick"
         android:layout_toRightOf="@id/tv_nick"
+        android:layout_marginLeft="6dp"
         android:src="@drawable/ic_user_vip" />
 
     <ImageView
+        android:id="@+id/iv_sex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/tv_nick"
-        android:layout_toRightOf="@id/vip"
+        android:layout_toRightOf="@id/iv_vip"
+        android:layout_marginLeft="6dp"
         android:src="@drawable/ic_user_man" />
 
     <TextView
@@ -47,6 +50,7 @@
         android:layout_below="@id/tv_nick"
         android:layout_toRightOf="@id/img_head"
         android:layout_marginLeft="10dp"
+        android:layout_toLeftOf="@id/img_gift"
         android:textSize="13sp"
         android:text="你在哪"
         android:maxLines="2"
@@ -55,6 +59,7 @@
         android:layout_marginTop="4dp" />
 
     <TextView
+        android:id="@+id/tv_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/content"
@@ -66,6 +71,7 @@
         android:textSize="12sp" />
 
     <ImageView
+        android:id="@+id/img_gift"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
