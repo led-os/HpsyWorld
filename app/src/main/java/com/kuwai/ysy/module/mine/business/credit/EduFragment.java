@@ -27,6 +27,8 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.rayhahah.dialoglib.CustomDialog;
+import com.rayhahah.dialoglib.DialogInterface;
+import com.rayhahah.dialoglib.NormalAlertDialog;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
@@ -38,6 +40,7 @@ import cn.qqtheme.framework.picker.SinglePicker;
 
 public class EduFragment extends BaseFragment<EduPresenter> implements EduContract.IHomeView, View.OnClickListener {
 
+    private NavigationLayout navigationLayout;
     private EditText etName, etSchool;
     private SuperTextView stEdu;
     private ImageView mIvEdu;
@@ -90,6 +93,14 @@ public class EduFragment extends BaseFragment<EduPresenter> implements EduContra
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        navigationLayout = mRootView.findViewById(R.id.navigation);
+        navigationLayout.setRightClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NormalAlertDialog dialog = initCleanDialog();
+                dialog.show();
+            }
+        });
 
         etName = mRootView.findViewById(R.id.my_name);
         stEdu = mRootView.findViewById(R.id.my_edu);
@@ -267,5 +278,21 @@ public class EduFragment extends BaseFragment<EduPresenter> implements EduContra
                     .build();
         }
         eduDialog.show();
+    }
+
+    private NormalAlertDialog initCleanDialog() {
+        return new NormalAlertDialog.Builder(getActivity())
+                .setTitleText("学历作用？")
+                .setContentText(getResources().getString(R.string.auth_notice))
+                .setSingleButtonText("好的，知道了")
+                .setSingleMode(true)
+                .setSingleListener(new DialogInterface.OnSingleClickListener<NormalAlertDialog>() {
+                    @Override
+                    public void clickSingleButton(NormalAlertDialog dialog, View view) {
+                        dialog.dismiss();
+                    }
+                })
+                .setCanceledOnTouchOutside(true)
+                .build();
     }
 }

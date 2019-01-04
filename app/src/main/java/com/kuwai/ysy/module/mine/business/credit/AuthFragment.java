@@ -22,6 +22,8 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.rayhahah.dialoglib.DialogInterface;
+import com.rayhahah.dialoglib.NormalAlertDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.FileUtils;
 import com.rayhahah.rbase.utils.base.ToastUtils;
@@ -37,6 +39,7 @@ import okhttp3.RequestBody;
 
 public class AuthFragment extends BaseFragment<AuthPresenter> implements AuthContract.IHomeView, View.OnClickListener {
 
+    private NavigationLayout navigationLayout;
     private EditText etName, etNumber;
     private ImageView mID, mHandID;
     private TextView tvID, tvHandID;
@@ -95,6 +98,14 @@ public class AuthFragment extends BaseFragment<AuthPresenter> implements AuthCon
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        navigationLayout = mRootView.findViewById(R.id.navigation);
+        navigationLayout.setRightClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NormalAlertDialog dialog = initCleanDialog();
+                dialog.show();
+            }
+        });
 
         etName = mRootView.findViewById(R.id.my_name);
         etNumber = mRootView.findViewById(R.id.my_number);
@@ -247,5 +258,21 @@ public class AuthFragment extends BaseFragment<AuthPresenter> implements AuthCon
             }
 
         }
+    }
+
+    private NormalAlertDialog initCleanDialog() {
+        return new NormalAlertDialog.Builder(getActivity())
+                .setTitleText("认证作用？")
+                .setContentText(getResources().getString(R.string.auth_notice))
+                .setSingleButtonText("好的，知道了")
+                .setSingleMode(true)
+                .setSingleListener(new DialogInterface.OnSingleClickListener<NormalAlertDialog>() {
+                    @Override
+                    public void clickSingleButton(NormalAlertDialog dialog, View view) {
+                        dialog.dismiss();
+                    }
+                })
+                .setCanceledOnTouchOutside(true)
+                .build();
     }
 }

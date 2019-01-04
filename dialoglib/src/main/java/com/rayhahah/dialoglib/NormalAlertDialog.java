@@ -186,7 +186,7 @@ public class NormalAlertDialog {
             isTitleVisible = true;
             isTouchOutside = true;
             height = 0.23f;
-            width = 0.65f;
+            width = 0.85f;
             titleTextSize = 16;
             contentTextSize = 14;
             buttonTextSize = 14;
