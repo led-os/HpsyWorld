@@ -237,7 +237,7 @@
                     app:sLeftTvDrawableLeft="@drawable/center_ic_list_2"
                     app:sRightTextColor="#ffbdbdbd"
                     app:sRightTextSize="14sp"
-                    app:sRightTextString="未设置"
+                    app:sRightTextString="去设置"
                     app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
 
                 </com.allen.library.SuperTextView>

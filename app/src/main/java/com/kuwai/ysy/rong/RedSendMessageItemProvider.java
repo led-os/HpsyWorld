@@ -19,6 +19,7 @@ import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.listener.OnRedPacketDialogClickListener;
 import com.kuwai.ysy.module.chat.api.ChatApiFactory;
 import com.kuwai.ysy.module.chat.business.redpack.RedReceiveActivity;
+import com.kuwai.ysy.module.chat.business.redpack.RedSendMyActivity;
 import com.kuwai.ysy.rong.bean.RedBean;
 import com.kuwai.ysy.rong.bean.RedPacketEntity;
 import com.rayhahah.dialoglib.CustomDialog;
@@ -94,9 +95,13 @@ public class RedSendMessageItemProvider extends IContainerItemProvider.MessagePr
         if (message.getMessageDirection() == Message.MessageDirection.RECEIVE) {
             targetId = message.getTargetId();
             if (message.getUserInfo() != null) {
-                RedPacketEntity entity = new RedPacketEntity(message.getUserInfo().getName(), message.getUserInfo().getPortraitUri(), content.getExtra());
-                showRedPacketDialog(entity, view.getContext(), content.getContent(), SPManager.get().getStringValue("uid"));
+                RedPacketEntity entity = new RedPacketEntity(message.getUserInfo().getName(), message.getUserInfo().getPortraitUri(), content.getContent());
+                showRedPacketDialog(entity, view.getContext(), content.getExtra(), SPManager.get().getStringValue("uid"));
             }
+        } else {
+            Intent intent = new Intent(view.getContext(), RedSendMyActivity.class);
+            intent.putExtra("rid", content.getExtra());
+            view.getContext().startActivity(intent);
         }
     }
 
@@ -210,8 +215,8 @@ public class RedSendMessageItemProvider extends IContainerItemProvider.MessagePr
 
     private void sendMessage(String redid, String jiyu) {
         RedReceiveMessage testMessage = new RedReceiveMessage();
-        testMessage.setContent(redid);
-        testMessage.setExtra(jiyu);
+        testMessage.setContent(jiyu);
+        testMessage.setExtra(redid);
         final Message message = Message.obtain(targetId, Conversation.ConversationType.PRIVATE, testMessage);
         RongIM.getInstance().sendMessage(message, "红包消息", "红包消息", new IRongCallback.ISendMessageCallback() {
             @Override
@@ -236,9 +241,9 @@ public class RedSendMessageItemProvider extends IContainerItemProvider.MessagePr
         RedSendMessageItemProvider.ViewHolder holder = (RedSendMessageItemProvider.ViewHolder) v.getTag();
 
         if (data.getMessageDirection() == Message.MessageDirection.SEND) {
-            holder.message.setText(content.getExtra());
+            holder.message.setText(content.getContent());
         } else {
-            holder.message.setText(content.getExtra());
+            holder.message.setText(content.getContent());
         }
 
         /*final TextView textView = holder.message;

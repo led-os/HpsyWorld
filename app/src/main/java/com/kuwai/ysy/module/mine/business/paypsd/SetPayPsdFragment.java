@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.home.bean.GoodsCategory;
@@ -30,7 +31,7 @@ import cn.qqtheme.framework.picker.SinglePicker;
 
 public class SetPayPsdFragment extends BaseFragment<SetPayPsdPresenter> implements SetPayPsdContract.IHomeView, View.OnClickListener {
 
-    private PasswordInputView mPsdView,mSurePsd;
+    private PasswordInputView mPsdView, mSurePsd;
     private NavigationLayout navigationLayout;
     private EditText mPsdEt;
     private String mPsd, mRePsd;
@@ -74,8 +75,8 @@ public class SetPayPsdFragment extends BaseFragment<SetPayPsdPresenter> implemen
             @Override
             public void onClick(View view) {
                 if (!TextUtils.isEmpty(mPsd) && !TextUtils.isEmpty(mRePsd)) {
-                    mPresenter.requestHomeData(SPManager.get().getStringValue("uid"), Utils.encrypt32(mPsdEt.getText().toString()), Utils.encrypt32(mPsd),Utils.encrypt32(mRePsd) );
-                }else {
+                    mPresenter.requestHomeData(SPManager.get().getStringValue("uid"), Utils.encrypt32(mPsdEt.getText().toString()), Utils.encrypt32(mPsd), Utils.encrypt32(mRePsd));
+                } else {
                     ToastUtils.showShort("密码不能为空");
                 }
             }
@@ -114,7 +115,9 @@ public class SetPayPsdFragment extends BaseFragment<SetPayPsdPresenter> implemen
     @Override
     public void setHomeData(SimpleResponse response) {
         ToastUtils.showShort(response.msg);
-
+        if (response.code == 200) {
+            SPManager.get().putString(C.HAS_THIRD_PASS, "1");
+        }
     }
 
     @Override

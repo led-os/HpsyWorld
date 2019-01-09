@@ -263,7 +263,7 @@ public class AuthFragment extends BaseFragment<AuthPresenter> implements AuthCon
     private NormalAlertDialog initCleanDialog() {
         return new NormalAlertDialog.Builder(getActivity())
                 .setTitleText("认证作用？")
-                .setContentText(getResources().getString(R.string.auth_notice))
+                .setContentText(getResources().getString(R.string.renzheng))
                 .setSingleButtonText("好的，知道了")
                 .setSingleMode(true)
                 .setSingleListener(new DialogInterface.OnSingleClickListener<NormalAlertDialog>() {

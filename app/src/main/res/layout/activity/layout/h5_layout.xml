@@ -10,7 +10,7 @@
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title1="浏览器"></com.kuwai.ysy.widget.NavigationLayout>
+        app:title1=""></com.kuwai.ysy.widget.NavigationLayout>
 
     <com.kuwai.ysy.widget.X5WebView
         android:id="@+id/h5_webview"

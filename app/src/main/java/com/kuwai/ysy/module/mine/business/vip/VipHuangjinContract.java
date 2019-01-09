@@ -1,19 +1,17 @@
 package com.kuwai.ysy.module.mine.business.vip;
 
 import com.kuwai.ysy.bean.AliOrderInfoBean;
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.mine.bean.user.UserInfo;
 import com.rayhahah.rbase.base.IRBaseView;
+
+import java.util.Map;
 
 public class VipHuangjinContract {
 
     public interface IMineView extends IRBaseView {
 
-        /**
-         * 设置第一次请求的数据
-         */
-        void setUserData(UserInfo cityMeetBean);
-
-        void setAliOrderInfo(AliOrderInfoBean infoBean);
+        void setAliOrderInfo(SimpleResponse infoBean);
         /**
          * 显示错误信息
          */
@@ -22,9 +20,8 @@ public class VipHuangjinContract {
 
     public interface IUserPresenter {
 
-        void requestUserData(String uid);
 
-        void getAliOrderInfo();
+        void getAliOrderInfo(Map<String,Object> param);
 
     }
 }

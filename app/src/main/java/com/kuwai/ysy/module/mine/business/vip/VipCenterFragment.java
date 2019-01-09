@@ -29,7 +29,7 @@ import io.reactivex.functions.Consumer;
 public class VipCenterFragment extends BaseFragment implements View.OnClickListener {
 
     private int[] mPics = new int[]{R.drawable.bg_huangjin, R.drawable.bg_bojin, R.drawable.bg_zaunshi, R.drawable.bg_super};
-    private String[] mTitles = new String[]{"黄金会员VIP", "铂金会员VIP", "钻石会员VIP", "高级会员VIP"};
+    private String[] mTitles = new String[]{"黄金会员VIP", "铂金会员VIP", "钻石会员VIP", "特级定制VIP"};
     private int[] mImgs = new int[]{R.drawable.center_vip_bg_pud, R.drawable.center_vip_bg_baijin, R.drawable.center_vip_bg_zuanshi, R.drawable.center_vip_bg_super};
     private List<VipBannerBean> mBannerList = new ArrayList<>();
 

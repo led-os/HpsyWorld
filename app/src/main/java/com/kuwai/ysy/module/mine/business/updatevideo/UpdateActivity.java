@@ -20,6 +20,8 @@ import com.alibaba.sdk.android.vod.upload.model.SvideoInfo;
 import com.alibaba.sdk.android.vod.upload.session.VodHttpClientConfig;
 import com.alibaba.sdk.android.vod.upload.session.VodSessionCreateInfo;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.module.chat.api.ChatApiFactory;
@@ -34,6 +36,7 @@ import com.kuwai.ysy.module.mine.adapter.MyVideoAdapter;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.module.mine.bean.WallBean;
 import com.kuwai.ysy.utils.DialogUtil;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.UploadHelper;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NavigationLayout;
@@ -196,11 +199,11 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
 
     private void requestWritePermission(final int type) {
         RxPermissions rxPermissions = new RxPermissions(UpdateActivity.this);
-        rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
-                        if(aBoolean){
+                        if (aBoolean) {
                             photoAndVideo(type);
                         }
                     }
@@ -218,7 +221,7 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
                     if (selectList.size() > 0) {
                         media = selectList.get(0);
                         String pictureType = media.getPictureType();
-                        DialogUtil.showLoadingDialog(UpdateActivity.this, "", getResources().getColor(R.color.theme));
+                        DialogUtil.showLoadingDialog(UpdateActivity.this, "上传中", getResources().getColor(R.color.theme));
                         if ("video/mp4".equals(pictureType)) {
                             //视频上传
                             videoPath = media.getPath();
@@ -442,6 +445,10 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
             public void accept(SimpleResponse dyDetailBean) throws Exception {
                 //UploadHelper.getInstance().clear();
                 //mView.setPublishCallBack(dyDetailBean);
+                if (dyDetailBean.code == 200) {
+                    EventBusUtil.sendEvent(new MessageEvent(C.MSG_UPDATE_VIDEO));
+                    getWall();
+                }
                 DialogUtil.dismissDialog(true);
                 ToastUtils.showShort(dyDetailBean.msg);
             }
@@ -466,6 +473,10 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
             public void accept(SimpleResponse dyDetailBean) throws Exception {
                 //UploadHelper.getInstance().clear();
                 //mView.setPublishCallBack(dyDetailBean);
+                if (dyDetailBean.code == 200) {
+                    EventBusUtil.sendEvent(new MessageEvent(C.MSG_UPDATE_VIDEO));
+                    getWall();
+                }
                 DialogUtil.dismissDialog(true);
                 ToastUtils.showShort(dyDetailBean.msg);
             }

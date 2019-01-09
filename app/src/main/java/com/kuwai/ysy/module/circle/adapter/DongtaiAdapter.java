@@ -51,7 +51,9 @@ public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, Ba
                 nineGridView.setOnImageClickListener(new NineGridView.OnImageClickListener() {
                     @Override
                     public void onImageClick(int position, View view) {
-                        mImageWatcher.show((ImageView) view, nineGridView.getImageViews(), item.getAttach());
+                        if (mImageWatcher != null) {
+                            mImageWatcher.show((ImageView) view, nineGridView.getImageViews(), item.getAttach());
+                        }
                     }
                 });
                 break;

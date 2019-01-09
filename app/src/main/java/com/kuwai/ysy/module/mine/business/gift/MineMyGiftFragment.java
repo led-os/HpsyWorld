@@ -68,7 +68,7 @@ public class MineMyGiftFragment extends BaseFragment implements View.OnClickList
         navigationLayout.setRightClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                start(GiftRealExchangeFragment.newInstance());
+                start(GiftAllWithdrawFragment.newInstance());
             }
         });
         radioButtonLookme = mRootView.findViewById(R.id.radio_lookme);

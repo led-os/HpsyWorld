@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.circle.business.DyDetail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -17,16 +18,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.allen.library.SuperButton;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.callback.GiftClickCallback;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.circle.VideoPlayActivity;
 import com.kuwai.ysy.module.circle.bean.DyCommentListBean;
 import com.kuwai.ysy.module.circle.bean.DyDetailBean;
 import com.kuwai.ysy.module.circle.bean.second.CommentDetailBean;
@@ -45,11 +50,19 @@ import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.utils.base.DateTimeUitl;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
 import com.rayhahah.rbase.utils.useful.SPManager;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.editorpage.ShareActivity;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.rong.imkit.MainActivity;
 
 public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implements DyDetailContract.IHomeView, View.OnClickListener, GiftClickCallback {
 
@@ -102,6 +115,9 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
     private GiftPopBean giftPopBean;
     private boolean isLike = false;
 
+    private RelativeLayout rl_play;
+    private ImageView iv_playimg;
+
     public static DyDetailMainFragment newInstance(Bundle bundle) {
         DyDetailMainFragment fragment = new DyDetailMainFragment();
         fragment.setArguments(bundle);
@@ -121,6 +137,14 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.iv_playimg:
+                Intent intent = new Intent(getActivity(), VideoPlayActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("vid", mDyDetailBean.getData().getVideo_id());
+                bundle.putString("imgurl", mDyDetailBean.getData().getAttach().get(0));
+                intent.putExtras(bundle);
+                startActivity(intent);
+                break;
             case R.id.bottom_lay:
                 showCommentDialog();
                 break;
@@ -160,6 +184,8 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
         mImgHead = (NiceImageView) mRootView.findViewById(R.id.img_head);
         mTvNick = (TextView) mRootView.findViewById(R.id.tv_nick);
         mIvSex = mRootView.findViewById(R.id.iv_sex);
+        rl_play = mRootView.findViewById(R.id.rl_play);
+        iv_playimg = mRootView.findViewById(R.id.iv_playimg);
         mTvInfo = (TextView) mRootView.findViewById(R.id.tv_info);
         mTvContent = (TextView) mRootView.findViewById(R.id.tv_content);
         mTvLocation = (TextView) mRootView.findViewById(R.id.tv_location);
@@ -184,10 +210,18 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
         mRadioReward = (RadioButton) mRootView.findViewById(R.id.radio_reward);
         mRadioZan = (RadioButton) mRootView.findViewById(R.id.radio_zan);
 
+        navigationLayout.setRightClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                share();
+            }
+        });
+
         mRadioDashang.setOnClickListener(this);
         mRadioReward.setOnClickListener(this);
         mRadioZan.setOnClickListener(this);
         mDshangBtn.setOnClickListener(this);
+        iv_playimg.setOnClickListener(this);
 
         nineGridView = mRootView.findViewById(R.id.nine_grid_view);
 
@@ -276,6 +310,65 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
         });
     }
 
+    private void share() {
+        /*UMImage image = new UMImage(getActivity(), R.drawable.center_mark_ic_more);//网络图片
+        //image.setThumb(image);
+        image.compressStyle = UMImage.CompressStyle.QUALITY;*/
+        UMImage image = null;
+        if (mDyDetailBean.getData().getAttach() != null && mDyDetailBean.getData().getAttach().size() > 0) {
+            image = new UMImage(getActivity(), mDyDetailBean.getData().getAttach().get(0));//网络图片
+        } else {
+            image = new UMImage(getActivity(), R.mipmap.ic_sading);//网络图片
+        }
+        String url = "http://api.yushuiyuan.cn/h5/trend-detail.html?did=" + did;
+        UMWeb web = new UMWeb(url);
+        web.setTitle("鱼水缘动态");//标题
+        web.setThumb(image);  //缩略图
+        web.setDescription(mDyDetailBean.getData().getText());//描述
+        new ShareAction(getActivity())
+                .withMedia(web)
+                .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
+                .setCallback(shareListener).open();
+    }
+
+    private UMShareListener shareListener = new UMShareListener() {
+        /**
+         * @descrption 分享开始的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+        }
+
+        /**
+         * @descrption 分享成功的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Toast.makeText(getActivity(), "成功了", Toast.LENGTH_LONG).show();
+        }
+
+        /**
+         * @descrption 分享失败的回调
+         * @param platform 平台类型
+         * @param t 错误原因
+         */
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(getActivity(), "失败" + t.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        /**
+         * @descrption 分享取消的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(getActivity(), "取消了", Toast.LENGTH_LONG).show();
+        }
+    };
+
     private void showCommentDialog() {
         if (dialog == null) {
             dialog = new BottomSheetDialog(getActivity(), R.style.BottomSheetEdit);
@@ -346,18 +439,26 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
             info.add(dyDetailBean.getData().getAnnual_income());
         }
         mTvInfo.setText(StringUtils.join(info.toArray(), "|"));
-
+        mTvContent.setText(mDyDetailBean.getData().getText());
         switch (dyDetailBean.getData().getType()) {
             case C.DY_TXT:
-                mTvContent.setText(mDyDetailBean.getData().getText());
                 break;
             case C.DY_PIC:
-                mTvContent.setText(mDyDetailBean.getData().getText());
+                rl_play.setVisibility(View.GONE);
+                nineGridView.setVisibility(View.VISIBLE);
                 imgList = dyDetailBean.getData().getAttach();
                 nineImageAdapter = new NineImageAdapter(mContext, imgList);
                 nineGridView.setAdapter(nineImageAdapter);
                 break;
             case C.DY_FILM:
+                rl_play.setVisibility(View.VISIBLE);
+                nineGridView.setVisibility(View.GONE);
+                if (dyDetailBean.getData().getAttach() != null && dyDetailBean.getData().getAttach().size() > 0) {
+                    RequestOptions myOptions = new RequestOptions()
+                            .centerCrop()
+                            .override(300, 500);
+                    Glide.with(mContext).load(dyDetailBean.getData().getAttach().get(0)).apply(myOptions).into(iv_playimg);
+                }
 
                 break;
         }

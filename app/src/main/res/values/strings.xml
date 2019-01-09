@@ -34,6 +34,7 @@
     <string name="loading_text">加载中&#8230;</string>
     <string name="no_network">请检查网络后点击重新加载</string>
     <string name="data_error">啊噢，数据加载出错了(ㄒoㄒ)~~</string>
+    <string name="server_error">啊噢，服务器出错了(ㄒoㄒ)~~</string>
     <string name="meetagree_text">茫茫人海中，希望你能够选中我。期待与你的约会！</string>
     <string name="empty_view_hint">暂时木有内容呀~~</string>
     <string name="login_error">你还没有登录呢，登录才能查看呢～</string>

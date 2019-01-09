@@ -111,7 +111,7 @@ public class MyFriendFragment extends BaseFragment implements View.OnClickListen
         mTitleBar.setOnTitleBarListener(new OnTitleBarListener() {
             @Override
             public void onLeftClick(View v) {
-                pop();
+                getActivity().finish();
             }
 
             @Override

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import com.kuwai.ysy.module.chat.bean.StsBean;
 import com.kuwai.ysy.module.circle.AddressChooseActivity;
 import com.kuwai.ysy.module.circle.aliyun.AlivcSvideoRecordActivity;
 import com.kuwai.ysy.module.circle.business.RightChooseActivity;
+import com.kuwai.ysy.module.mine.business.homepage.MineHomepageFragment;
 import com.kuwai.ysy.utils.DialogUtil;
 import com.kuwai.ysy.utils.UploadHelper;
 import com.kuwai.ysy.utils.Utils;
@@ -36,10 +38,12 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.FileUtils;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
+import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
@@ -76,6 +80,7 @@ public class PublishDyActivity extends BaseActivity<PublishPresenter> implements
     private TextView mInfoTv;
     private NavigationLayout navigationLayout;
     private EditText et_content;
+    private int themeId = R.style.picture_default_style;
 
     private StsBean stsTokenBean;
     private VodSessionCreateInfo vodSessionCreateInfo;
@@ -86,6 +91,7 @@ public class PublishDyActivity extends BaseActivity<PublishPresenter> implements
     private int type = DY_TXT;
     private int publicId = 1;
     private String TAG = "gggg";
+    private CustomDialog customDialog;
 
     @Override
     protected PublishPresenter getPresenter() {
@@ -247,10 +253,114 @@ public class PublishDyActivity extends BaseActivity<PublishPresenter> implements
                 });
     }
 
+    /**
+     * 选择图片对话框
+     */
+    public void showSelectdialog() {
+
+        if (customDialog == null) {
+
+            View parent = View.inflate(this, R.layout.dialog_add_picture, null);
+            TextView tv_camera = (TextView) parent.findViewById(R.id.tv_camera);
+            TextView tv_gallery = (TextView) parent.findViewById(R.id.tv_gallery);
+            TextView tv_cancel = (TextView) parent.findViewById(R.id.tv_cancel);
+
+            final View.OnClickListener clickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (v.getId()) {
+                        case R.id.tv_cancel:
+                            //selectDialog.dismiss();
+                            break;
+                        case R.id.tv_camera:
+                            requestCameraPermission();
+                            break;
+                        case R.id.tv_gallery:
+                            requestWritePermission();
+                            break;
+                    }
+                    customDialog.dismiss();
+                }
+            };
+
+            tv_camera.setOnClickListener(clickListener);
+            tv_cancel.setOnClickListener(clickListener);
+            tv_gallery.setOnClickListener(clickListener);
+
+            customDialog = new CustomDialog.Builder(this)
+                    .setView(parent)
+                    .setTouchOutside(true)
+                    .setDialogGravity(Gravity.BOTTOM)
+                    .build();
+        }
+        customDialog.show();
+    }
+
+    private void requestCameraPermission() {
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.requestEach(Manifest.permission.CAMERA)
+                .subscribe(new Consumer<Permission>() {
+                    @Override
+                    public void accept(Permission permission) throws Exception {
+                        if (permission.granted) {
+                            startActivityForResult(new Intent(PublishDyActivity.this, AlivcSvideoRecordActivity.class), REQUST_CODE_VIDEO);
+                        } else if (permission.shouldShowRequestPermissionRationale) {
+                            //拒绝权限请求
+                            Toast.makeText(PublishDyActivity.this, "该功能需要获取相机权限", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // 拒绝权限请求,并不再询问
+                            // 可以提醒用户进入设置界面去设置权限
+                            Toast.makeText(PublishDyActivity.this, "该功能需要获取相机权限", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(RxPermissionsActivity.this, "已拒绝权限"+ permission.name +"并不再询问", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    private void requestWritePermission() {
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (aBoolean) {
+                            photoAndVideo();
+                        } else {
+                            Toast.makeText(PublishDyActivity.this, "该功能需要获取相册权限", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
     @Override
     public void gridAdd() {
-        photoAndVideo();
+        showSelectdialog();
         //startActivityForResult(new Intent(PublishDyActivity.this, AlivcSvideoRecordActivity.class), REQUST_CODE_VIDEO);
+    }
+
+    @Override
+    public void gridClick(int position, View v) {
+        if (selectList.size() > 0) {
+            media = selectList.get(position);
+            String pictureType = media.getPictureType();
+            int mediaType = PictureMimeType.pictureToVideo(pictureType);
+
+            switch (mediaType) {
+                case 1:
+                    // 预览图片 可自定长按保存路径
+                    //PictureSelector.create(MainActivity.this).themeStyle(themeId).externalPicturePreview(position, "/custom_file", selectList);
+                    PictureSelector.create(PublishDyActivity.this).themeStyle(themeId).openExternalPreview(position, selectList);
+                    break;
+                case 2:
+                    // 预览视频
+                    PictureSelector.create(PublishDyActivity.this).externalPictureVideo(media.getPath());
+                    break;
+                case 3:
+                    // 预览音频
+                    PictureSelector.create(PublishDyActivity.this).externalPictureAudio(media.getPath());
+                    break;
+            }
+        }
     }
 
     private List<LocalMedia> selectList = new ArrayList<>();
@@ -287,6 +397,7 @@ public class PublishDyActivity extends BaseActivity<PublishPresenter> implements
                         imagePath = FileUtils.bitmapToStringPath(this, mBitmap);
                     } else if (data.getStringExtra("imgpath") != null) {
                         media.setPath(data.getStringExtra("imgpath"));
+                        media.setCompressPath(data.getStringExtra("imgpath"));
                     }
 
                     selectList.add(media);

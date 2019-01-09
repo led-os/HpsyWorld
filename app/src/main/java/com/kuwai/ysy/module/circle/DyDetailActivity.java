@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.circle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -9,6 +10,7 @@ import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.module.circle.business.DyDashang.DyDashangListFragment;
 import com.kuwai.ysy.module.circle.business.DyDetail.DyDetailMainFragment;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.umeng.socialize.UMShareAPI;
 
 public class DyDetailActivity extends BaseActivity implements View.OnClickListener {
 
@@ -33,12 +35,24 @@ public class DyDetailActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void initView() {
         bundle = new Bundle();
-        bundle.putString("did",getIntent().getStringExtra("did"));
+        bundle.putString("did", getIntent().getStringExtra("did"));
         loadRootFragment(R.id.container, DyDetailMainFragment.newInstance(bundle), false, true);
     }
 
     @Override
     public void onClick(View v) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        UMShareAPI.get(this).release();
     }
 }

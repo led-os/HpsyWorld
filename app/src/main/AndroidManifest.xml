@@ -46,6 +46,7 @@
             android:launchMode="singleTask" />
         <activity android:name=".module.home.business.loginmoudle.login.LoginActivity" />
         <activity android:name=".module.home.WebviewH5Activity" />
+        <activity android:name=".module.home.FilterActivity" />
 
         //聊天
         <activity android:name=".module.chat.MyFriendActivity" />
@@ -54,6 +55,7 @@
         <activity android:name=".module.chat.business.redpack.SendRedActivity" />
         <activity android:name=".module.chat.business.redpack.RedRecordActivity" />
         <activity android:name=".module.chat.business.redpack.RedReceiveActivity" />
+        <activity android:name=".module.chat.business.redpack.RedSendMyActivity" />
 
         //动态
         <activity
@@ -196,6 +198,65 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="1710cbdfca064bab89a9b31ea21814b0" />
+
+        <receiver
+            android:exported="true"
+            android:name=".receiver.MyMessageReceiver">
+            <intent-filter>
+                <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MI_MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
+                <action android:name="io.rong.push.intent.MI_MESSAGE_CLICKED" />
+                <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
+            </intent-filter>
+        </receiver>
+
+        <!--<service
+            android:name="io.rong.push.core.PushRegistrationService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE">
+        </service>-->
+
+
+        <!-- <service
+             android:name="io.rong.push.core.MessageHandleService"
+             android:exported="true"
+             android:permission="android.permission.BIND_JOB_SERVICE">
+         </service>
+
+
+         <service
+             android:name="io.rong.push.PushService"
+             android:exported="false"
+             android:process="io.rong.push"
+             android:permission="android.permission.BIND_JOB_SERVICE">
+         </service>-->
+
+
+        <!-- push 相关事件接收器 -->
+        <receiver
+            android:name="io.rong.push.PushReceiver"
+            android:process="io.rong.push">
+            <!-- 此处进程可以改名，名称需要和PushService所在进程统一 -->
+
+            <!-- 心跳事件 -->
+            <intent-filter>
+                <action android:name="io.rong.push.intent.action.HEART_BEAT" />
+            </intent-filter>
+            <!-- 网络变动事件 -->
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <!-- 部分用户事件 -->
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

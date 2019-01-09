@@ -19,6 +19,7 @@ public class NewFriendsAdapter extends BaseQuickAdapter<MyFriends.DataBean, Base
         super(R.layout.item_new_friend, data);
     }
 
+
     @Override
     protected void convert(BaseViewHolder helper, MyFriends.DataBean item) {
         //0在线   1离线

@@ -66,7 +66,8 @@ public class FindFriendNearFragment extends BaseFragment implements View.OnClick
     public void initView(Bundle savedInstanceState) {
         mFriendRl = mRootView.findViewById(R.id.recyclerView);
         uid = SPManager.get().getStringValue("uid");
-
+        latitude = SPManager.get().getStringValue("latitude");
+        longitude = SPManager.get().getStringValue("longitude");
         mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -127,8 +128,8 @@ public class FindFriendNearFragment extends BaseFragment implements View.OnClick
         addSubscription(ChatApiFactory.getNearFriends(uid, mPage,longitude,latitude).subscribe(new Consumer<MyFriends>() {
             @Override
             public void accept(MyFriends myBlindBean) throws Exception {
+                mRefreshLayout.finishRefresh();
                 if (myBlindBean.getCode() == 200) {
-                    mRefreshLayout.finishRefresh();
                     mDyMainListBean = myBlindBean;
                     myFriendsAdapter.replaceData(myBlindBean.getData());
                 } else {

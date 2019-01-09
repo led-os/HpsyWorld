@@ -4,7 +4,10 @@ package com.kuwai.ysy.module.chat.api;
 import com.kuwai.ysy.bean.AliOrderInfoBean;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.chat.bean.MyFriends;
+import com.kuwai.ysy.module.chat.bean.NoticeBean;
 import com.kuwai.ysy.module.chat.bean.ReceiveBean;
+import com.kuwai.ysy.module.chat.bean.RedMySendBean;
+import com.kuwai.ysy.module.chat.bean.RedRecordBean;
 import com.kuwai.ysy.module.chat.bean.StsBean;
 import com.kuwai.ysy.module.chat.bean.UserInfoBean;
 import com.kuwai.ysy.module.mine.bean.BlackListBean;
@@ -121,12 +124,12 @@ public interface ChatService {
     //红包详情-自己看到
     @FormUrlEncoded
     @POST("Chat/OwnRedEnvelopesDetails")
-    Observable<SimpleResponse> redDetailMine(@Field("uid") String uid,@Field("r_id") String r_id);
+    Observable<RedMySendBean> redDetailMine(@Field("uid") String uid, @Field("r_id") String r_id);
 
     //发出/收到-红包列表
     @FormUrlEncoded
     @POST("Chat/HandOutRedEnvelopesList")
-    Observable<SimpleResponse> redList(@Field("other_uid") String other_uid,@Field("type") String type,@Field("page") int page);
+    Observable<RedRecordBean> redList(@Field("uid") String uid, @Field("type") String type, @Field("page") int page);
 
     //STS
     @GET("Upload/vodPlayRole")
@@ -134,7 +137,17 @@ public interface ChatService {
 
     //系统通知列表
     @FormUrlEncoded
-    @POST("系统通知列表")
-    Observable<SimpleResponse> redDetailMine(@Field("uid") String uid,@Field("page") int page);
+    @POST("Chat/NotificationList")
+    Observable<NoticeBean> getSystemNotice(@Field("uid") String uid, @Field("page") int page);
+
+    //约会通知列表
+    @FormUrlEncoded
+    @POST("Chat/ReleaseDataNoticeList")
+    Observable<NoticeBean> getDateNotice(@Field("uid") String uid);
+
+    //打赏人
+    @FormUrlEncoded
+    @POST("Chat/Giving")
+    Observable<SimpleResponse> rewardPe(@FieldMap Map<String,Object> map);
 
 }

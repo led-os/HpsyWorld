@@ -283,7 +283,7 @@ public class EduFragment extends BaseFragment<EduPresenter> implements EduContra
     private NormalAlertDialog initCleanDialog() {
         return new NormalAlertDialog.Builder(getActivity())
                 .setTitleText("学历作用？")
-                .setContentText(getResources().getString(R.string.auth_notice))
+                //.setContentText(getResources().getString(R.string.auth_notice))
                 .setSingleButtonText("好的，知道了")
                 .setSingleMode(true)
                 .setSingleListener(new DialogInterface.OnSingleClickListener<NormalAlertDialog>() {

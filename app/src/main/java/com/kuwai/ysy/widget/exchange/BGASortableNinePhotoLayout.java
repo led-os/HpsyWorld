@@ -183,6 +183,13 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BaseQuic
             }
 
             @Override
+            public void onItemClick(int position, View v) {
+                if (mGridAdd != null) {
+                    mGridAdd.gridClick(position, v);
+                }
+            }
+
+            @Override
             public void onDeleteClick(int pos) {
                 mPhotoAdapter.mList.remove(pos);
                 mPhotoAdapter.notifyItemRemoved(pos);
@@ -194,6 +201,8 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BaseQuic
 
     public interface GridAdd {
         void gridAdd();
+
+        void gridClick(int position, View v);
     }
 
     public void setGridAdd(GridAdd gridAdd) {
@@ -444,14 +453,14 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BaseQuic
             }
             final ViewHolder viewHolder = new ViewHolder(LayoutInflater.from(context).inflate(R.layout.bga_pp_item_nine_photo, parent, false));
 
-            viewHolder.ivAdd.setOnClickListener(new View.OnClickListener() {
+            /*viewHolder.ivAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (itemClickListener != null) {
                         itemClickListener.onItemAddClick();
                     }
                 }
-            });
+            });*/
 
             return viewHolder;
         }
@@ -515,18 +524,16 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BaseQuic
             holder.ivPhoto.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mPhotoAdapter.isPlusItem(holder.getMyPosition())) {
-                        if (itemClickListener != null) {
+                    if (itemClickListener != null) {
+                        if (isPlusItem(holder.getMyPosition())) {
                             itemClickListener.onItemAddClick();
+                        } else {
+                            itemClickListener.onItemClick(holder.getMyPosition(), v);
                         }
-                    } else {
-                /*if (mDelegate != null && ViewCompat.getScaleX(itemView) <= 1.0f) {
-                    mDelegate.onClickNinePhotoItem(this, itemView, position, mPhotoAdapter.getItem(position), getData());
-                }*/
+
                     }
                 }
             });
-
 
             holder.nameTv.setOnClickListener(new OnClickListener() {
                 @Override
@@ -595,6 +602,8 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BaseQuic
          * 继续添加图片接口
          */
         void onItemAddClick();
+
+        void onItemClick(int position, View v);
 
         void onDeleteClick(int pos);
 

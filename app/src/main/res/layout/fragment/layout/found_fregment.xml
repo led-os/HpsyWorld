@@ -98,6 +98,8 @@
                 <LinearLayout
                     android:layout_width="215dp"
                     android:layout_height="24dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
                     android:background="@drawable/shape_found_text">
 
                     <com.kuwai.ysy.widget.TextBannerView

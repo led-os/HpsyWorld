@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
-                android:text="高级会员VIP"
+                android:text="特级定制VIP"
                 android:textColor="#ffd4b483"
                 android:textSize="16sp" />
 
@@ -121,6 +121,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/line1"
+                android:visibility="gone"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:padding="14dp">
@@ -157,6 +158,7 @@
                 android:layout_below="@id/lay_wechat"
                 android:background="@color/white"
                 android:gravity="center_vertical"
+                android:visibility="gone"
                 android:paddingBottom="14dp"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp">
@@ -189,6 +191,7 @@
                 android:id="@+id/line2"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
+                android:visibility="gone"
                 android:layout_below="@id/lay_ali"
                 android:background="@color/line_color" />
 
@@ -196,10 +199,10 @@
                 android:id="@+id/sec_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/line2"
+                android:layout_below="@id/line1"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
-                android:text="高级会员vip尊享特权"
+                android:text="特级定制vip尊享特权"
                 android:textColor="#ffd4b483"
                 android:textSize="16sp" />
 
@@ -207,7 +210,7 @@
                 android:id="@+id/lay_content"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_below="@id/sec_title"
+                android:layout_below="@+id/sec_title"
                 android:layout_marginTop="10dp">
 
                 <TextView
@@ -241,7 +244,7 @@
                 android:id="@+id/rl_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/lay_content"></android.support.v7.widget.RecyclerView>
+                android:layout_below="@+id/lay_content"></android.support.v7.widget.RecyclerView>
 
             <RelativeLayout
                 android:id="@+id/lay_auth"
@@ -265,7 +268,7 @@
                     android:layout_height="1px"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="12dp"
-                    android:layout_toLeftOf="@id/sub_title_auth"
+                    android:layout_toLeftOf="@+id/sub_title_auth"
                     android:background="@color/line_color" />
 
                 <View
@@ -273,7 +276,7 @@
                     android:layout_height="1px"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="12dp"
-                    android:layout_toRightOf="@id/sub_title_auth"
+                    android:layout_toRightOf="@+id/sub_title_auth"
                     android:background="@color/line_color" />
             </RelativeLayout>
 
@@ -281,13 +284,13 @@
                 android:id="@+id/rl_auth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/lay_auth"></android.support.v7.widget.RecyclerView>
+                android:layout_below="@+id/lay_auth"></android.support.v7.widget.RecyclerView>
 
             <RelativeLayout
                 android:id="@+id/lay_activity"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_below="@id/rl_auth"
+                android:layout_below="@+id/rl_auth"
                 android:layout_marginTop="10dp">
 
                 <TextView
@@ -321,7 +324,7 @@
                 android:id="@+id/rl_activity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/lay_activity"></android.support.v7.widget.RecyclerView>
+                android:layout_below="@+id/lay_activity"></android.support.v7.widget.RecyclerView>
 
         </RelativeLayout>
     </ScrollView>
@@ -372,11 +375,12 @@
             android:layout_below="@id/tv_sum_title"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="8dp"
-            android:text="您已选择钻石VIP会员，连续包月套餐"
+            android:text="您已选择特级定制VIP"
             android:textColor="#ff282838"
             android:textSize="12sp" />
 
         <com.allen.library.SuperButton
+            android:id="@+id/btn_submit"
             android:layout_width="114dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"

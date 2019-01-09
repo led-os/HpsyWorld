@@ -18,6 +18,7 @@ import com.kuwai.ysy.utils.language.HanziToPinyin;
 import com.rayhahah.rbase.BaseApplication;
 
 import java.security.MessageDigest;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -47,6 +48,17 @@ public class Utils {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0); //强制隐藏键盘
     }
 
+    /**
+     * 将double类型的数字保留两位小数（四舍五入）
+     *
+     * @param number
+     * @return
+     */
+    public static String format2Number(double number) {
+        DecimalFormat df = new DecimalFormat();
+        df.applyPattern("#0.00");
+        return df.format(number);
+    }
 
     /**
      * encrypt32

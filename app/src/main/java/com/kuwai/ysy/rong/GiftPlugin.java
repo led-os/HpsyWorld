@@ -9,11 +9,18 @@ import android.util.Log;
 import android.view.Gravity;
 
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.callback.GiftClickCallback;
+import com.kuwai.ysy.module.chat.api.ChatApiFactory;
 import com.kuwai.ysy.module.find.api.AppointApiFactory;
 import com.kuwai.ysy.module.find.bean.GiftPopBean;
 import com.kuwai.ysy.widget.GiftPannelView;
 import com.rayhahah.dialoglib.CustomDialog;
+import com.rayhahah.rbase.utils.base.ToastUtils;
+import com.rayhahah.rbase.utils.useful.SPManager;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongExtension;
@@ -27,6 +34,7 @@ import io.rong.imlib.model.Message;
 public class GiftPlugin implements IPluginModule, GiftClickCallback {
 
     private CustomDialog customDialog;
+    private String targetId;
 
     @Override
     public Drawable obtainDrawable(Context context) {
@@ -42,6 +50,7 @@ public class GiftPlugin implements IPluginModule, GiftClickCallback {
     public void onClick(Fragment fragment, RongExtension rongExtension) {
         createDialog(fragment.getActivity());
         rongExtension.collapseExtension();
+        targetId = rongExtension.getTargetId();
         //ToastUtil.getInstance()._short(fragment.getActivity(), "萨顶顶发红包了");
     }
 
@@ -74,10 +83,11 @@ public class GiftPlugin implements IPluginModule, GiftClickCallback {
         //View root = View.inflate(context, R.layout.dialog_gift, null);
     }
 
-    private void sendMessage(String msg) {
-        QuestionMessage testMessage = new QuestionMessage();
-        testMessage.setContent(msg);
-        final Message message = Message.obtain("2", Conversation.ConversationType.PRIVATE, testMessage);
+    private void sendMessage(GiftPopBean.DataBean gift) {
+        GiftSendMessage testMessage = new GiftSendMessage();
+        testMessage.setContent(gift.getGirft_img_url());
+        testMessage.setExtra(String.valueOf(gift.num));
+        final Message message = Message.obtain(targetId, Conversation.ConversationType.PRIVATE, testMessage);
         RongIM.getInstance().sendMessage(message, "系统消息", "系统消息", new IRongCallback.ISendMessageCallback() {
             @Override
             public void onAttached(Message message) {
@@ -98,6 +108,31 @@ public class GiftPlugin implements IPluginModule, GiftClickCallback {
 
     @Override
     public void giftClick(GiftPopBean.DataBean giftBean) {
-        sendMessage("");
+        customDialog.dismiss();
+        giftReward(giftBean);
+    }
+
+    private void giftReward(final GiftPopBean.DataBean gift) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("uid", SPManager.get().getStringValue("uid"));
+        param.put("other_uid", targetId);
+        param.put("g_id", gift.getG_id());
+        param.put("g_nums", gift.num);
+        param.put("message", "");
+        ChatApiFactory.rewardPe(param)
+                .subscribe(new Consumer<SimpleResponse>() {
+                    @Override
+                    public void accept(@NonNull SimpleResponse dateTheme) throws Exception {
+                        if (dateTheme.code == 200) {
+                            sendMessage(gift);
+                        }
+                        ToastUtils.showShort(dateTheme.msg);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        //mView.showViewError(throwable);
+                    }
+                });
     }
 }

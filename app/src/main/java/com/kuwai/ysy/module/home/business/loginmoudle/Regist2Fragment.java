@@ -191,10 +191,10 @@ public class Regist2Fragment extends BaseFragment implements View.OnClickListene
             public void accept(LoginBean loginBean) throws Exception {
                 if (loginBean.getCode() == 200) {
                     SPManager.get().putString("uid", String.valueOf(loginBean.getData().getUid()));
-                    SPManager.get().putString("rongyun_token", String.valueOf(loginBean.getData().getRongyun_token()));
-                    SPManager.get().putString("nickname", String.valueOf(loginBean.getData().getNickname()));
-                    SPManager.get().putString("icon", String.valueOf(loginBean.getData().getAvatar()));
-                    SPManager.get().putString("token", String.valueOf(loginBean.getData().getToken()));
+                    SPManager.get().putString("rongyun_token", loginBean.getData().getRongyun_token());
+                    SPManager.get().putString("nickname", loginBean.getData().getNickname());
+                    SPManager.get().putString("icon", loginBean.getData().getAvatar());
+                    SPManager.get().putString("token", loginBean.getData().getToken());
                     SPManager.get().putString(C.HAS_THIRD_PASS, String.valueOf(loginBean.getData().getPayment()));
                     connectRongYun(loginBean.getData().getRongyun_token(),loginBean);
                     EventBusUtil.sendEvent(new MessageEvent(MSG_LOGIN));
@@ -210,7 +210,7 @@ public class Regist2Fragment extends BaseFragment implements View.OnClickListene
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                //Log.i(TAG, "accept: " + throwable);
+                ToastUtils.showShort(R.string.server_error);
             }
         }));
     }

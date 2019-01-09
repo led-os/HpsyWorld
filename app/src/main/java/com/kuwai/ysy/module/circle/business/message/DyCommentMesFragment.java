@@ -109,8 +109,8 @@ public class DyCommentMesFragment extends BaseFragment implements View.OnClickLi
         addSubscription(CircleApiFactory.getAllCommentListData(uid, mPage).subscribe(new Consumer<AllCommentBean>() {
             @Override
             public void accept(AllCommentBean myBlindBean) throws Exception {
+                mRefreshLayout.finishRefresh();
                 if (myBlindBean.getCode() == 200) {
-                    mRefreshLayout.finishRefresh();
                     mAllLikeBean = myBlindBean;
                     mDateAdapter.replaceData(myBlindBean.getData());
                 } else {

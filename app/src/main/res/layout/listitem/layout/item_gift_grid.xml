@@ -7,11 +7,11 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
         android:layout_gravity="center"
-        android:src="@color/theme_light"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:src="@color/theme_light" />
 
     <TextView
         android:id="@+id/textView"
@@ -19,9 +19,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
-        android:layout_marginTop="6dp"
-        android:text="zhansagn"
+        android:text=""
         android:textColor="@color/gray_7b"
         android:textSize="14sp" />
 
@@ -31,8 +31,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:gravity="center_horizontal"
         android:layout_marginTop="4dp"
+        android:gravity="center_horizontal"
         android:textColor="@color/theme_light"
         android:textSize="12sp" />
 </RelativeLayout>

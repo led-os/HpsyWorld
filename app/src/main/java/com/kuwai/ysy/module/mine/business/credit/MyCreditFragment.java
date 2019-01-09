@@ -80,7 +80,7 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
         mNavigation.setLeftClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pop();
+                getActivity().finish();
             }
         });
         mNavigation.setRightClick(new View.OnClickListener() {

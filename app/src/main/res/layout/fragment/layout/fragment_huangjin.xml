@@ -45,6 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/line1"
+                android:visibility="gone"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:padding="14dp">
@@ -81,6 +82,7 @@
                 android:layout_below="@id/lay_wechat"
                 android:background="@color/white"
                 android:gravity="center_vertical"
+                android:visibility="gone"
                 android:paddingBottom="14dp"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp">
@@ -114,6 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:layout_below="@id/lay_ali"
+                android:visibility="gone"
                 android:background="@color/line_color" />
 
             <TextView
@@ -296,7 +299,7 @@
             android:layout_below="@id/tv_sum_title"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="8dp"
-            android:text="您已选择黄金VIP会员，连续包月套餐"
+            android:text="您已选择黄金VIP会员"
             android:textColor="#ff282838"
             android:textSize="12sp" />
 

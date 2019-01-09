@@ -13,6 +13,7 @@ import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NiceImageView;
 import com.kuwai.ysy.widget.shadow.ShadowConfig;
 import com.kuwai.ysy.widget.shadow.ShadowHelper;
+import com.rayhahah.rbase.utils.useful.GlideUtil;
 
 /**
  * Created by sunnysa on 2018/11/22.
@@ -26,7 +27,7 @@ public class FoundCityAdapter extends BaseQuickAdapter<FoundBean.DataBean.Appoin
     @Override
     protected void convert(BaseViewHolder helper, FoundBean.DataBean.AppointmentBean item) {
 
-        Glide.with(mContext).load(item.getAvatar()).into((NiceImageView) helper.getView(R.id.iv_userpic));
+        GlideUtil.load(mContext,item.getAvatar(), (ImageView) helper.getView(R.id.iv_userpic));
         helper.setText(R.id.sb_distance, "距你"+ item.getDistance() +"km");
         helper.setText(R.id.tv_theme, item.getName());
         switch (item.getConsumption_type()) {

@@ -43,6 +43,7 @@ public class IntegralFragment extends BaseFragment<IntegralDetailPresenter> impl
         });
         mAdapter = new IntegralDetailAdapter(R.layout.item_integral_detail);
         mRvIntegral.setAdapter(mAdapter);
+        mRvIntegral.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRvIntegral.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 0.5f), R.color.line_color));
 
     }

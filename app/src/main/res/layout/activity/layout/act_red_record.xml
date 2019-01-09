@@ -7,23 +7,22 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:background="#cc3f29">
+        android:layout_height="70dp"
+        android:background="#cc3f29"
+        android:paddingTop="20dp">
 
         <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="16dp">
 
 
             <TextView
                 android:id="@+id/left_txt"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left|center"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
                 android:text="关闭"
                 android:textColor="#ffe9c295"
                 android:textSize="16sp" />
@@ -32,26 +31,25 @@
         <TextView
             android:id="@+id/title"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:text="发出的红包"
+            android:text="收到的红包"
             android:textColor="#ffe9c295"
             android:textSize="16sp" />
 
         <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:layout_marginRight="16dp">
 
             <ImageView
                 android:id="@+id/right"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:src="@drawable/dyn_tree_ic_more" />
         </FrameLayout>
@@ -80,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="14dp"
-        android:text="徐璐共发出"
+        android:text="徐璐共收到"
         android:textColor="#ff282838"
         android:textSize="13sp" />
 
@@ -90,15 +88,17 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="14dp"
-        android:text="5370.12"
+        android:text="0000.00"
         android:textColor="#ff282838"
         android:textSize="50sp" />
 
     <LinearLayout
+        android:id="@+id/lay_send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
@@ -125,6 +125,11 @@
             android:textSize="16sp" />
     </LinearLayout>
 
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/mRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rl_record"
         android:layout_width="match_parent"
@@ -132,4 +137,5 @@
         android:layout_marginTop="30dp"
         android:background="@color/white"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"></android.support.v7.widget.RecyclerView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

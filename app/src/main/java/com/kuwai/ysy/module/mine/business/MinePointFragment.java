@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.mine.adapter.CheckAdapter;
@@ -19,6 +21,7 @@ import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.module.mine.bean.CheckInBean;
 import com.kuwai.ysy.module.mine.bean.IntegralDetailBean;
 import com.kuwai.ysy.module.mine.business.Integral.IntegralFragment;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.AmountView;
 import com.kuwai.ysy.widget.MyRecycleViewDivider;
@@ -198,7 +201,7 @@ public class MinePointFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void accept(CheckInBean checkInBean) throws Exception {
                 mCheckInbean = checkInBean;
-                tv_integral.setText(checkInBean.getData().getIntegral().getIntegral_sum() + "");
+                tv_integral.setText(checkInBean.getData().getIntegral().getIntegral_exchange() + "");
                 mLianTv.setText("已连续签到" + checkInBean.getData().getIntegral().getSign_times() + "天");
                 for (int i = 0; i < checkInBean.getData().getSign_in().size(); i++) {
                     for (int j = 0; j < mStepBeans.size(); j++) {
@@ -233,6 +236,9 @@ public class MinePointFragment extends BaseFragment implements View.OnClickListe
             public void accept(SimpleResponse simpleResponse) throws Exception {
                 if (simpleResponse.code == 200) {
                     mStepView.startSignAnimation(positon - 1);
+                    mSignTv.setText("已签到");
+                    EventBusUtil.sendEvent(new MessageEvent(C.MSG_CHANGE_INFO));
+                    getPointToday();
                 } else {
                     ToastUtils.showShort(simpleResponse.msg);
                 }
@@ -250,6 +256,7 @@ public class MinePointFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void accept(SimpleResponse simpleResponse) throws Exception {
                 if (simpleResponse.code == 200) {
+                    getPointToday();
                     //mStepView.startSignAnimation(positon);
                 }
                 ToastUtils.showShort(simpleResponse.msg);

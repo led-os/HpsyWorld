@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
@@ -21,4 +21,12 @@
         android:scaleType="centerCrop"
         android:visibility="gone" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/iv_video"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:background="@drawable/ic_mine_msg_film" />
+
+</RelativeLayout>

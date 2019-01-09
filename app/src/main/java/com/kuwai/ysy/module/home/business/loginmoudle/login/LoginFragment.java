@@ -26,6 +26,7 @@ import com.kuwai.ysy.module.home.business.HomeActivity;
 import com.kuwai.ysy.module.home.business.loginmoudle.ChongzhiPsdFragment;
 import com.kuwai.ysy.module.home.business.loginmoudle.Regist1Fragment;
 import com.kuwai.ysy.module.home.business.loginmoudle.SendCodeFragment;
+import com.kuwai.ysy.utils.DialogUtil;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.MyEditText;
@@ -115,6 +116,7 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
                 break;
             case R.id.btn_login:
                 if (checkNull()) {
+                    DialogUtil.showLoadingDialog(getActivity(), "", getResources().getColor(R.color.theme));
                     HashMap<String, String> param = new HashMap<>();
                     param.put("type", C.LOGIN_PHONE);
                     param.put("login_type", "1"); //1代表android
@@ -142,7 +144,7 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
          */
         @Override
         public void onStart(SHARE_MEDIA platform) {
-            Toast.makeText(mContext, "开始", Toast.LENGTH_LONG).show();
+            //Toast.makeText(mContext, "开始", Toast.LENGTH_LONG).show();
         }
 
         /**
@@ -153,7 +155,8 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
          */
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-            Toast.makeText(mContext, "成功了" + "后台id：" + data.get("uid") + "名字" + data.get("name") + "头像" + data.get("iconurl"), Toast.LENGTH_LONG).show();
+            //Toast.makeText(mContext, "成功了" + "后台id：" + data.get("uid") + "名字" + data.get("name") + "头像" + data.get("iconurl"), Toast.LENGTH_LONG).show();
+            DialogUtil.showLoadingDialog(getActivity(), "", getResources().getColor(R.color.theme));
             HashMap<String, String> param = new HashMap<>();
             String type = "";
             SPManager.get().putString(C.SAN_FANG_ID, data.get("uid"));
@@ -183,7 +186,14 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
          */
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
-            Toast.makeText(mContext, "失败：" + t.getMessage(), Toast.LENGTH_LONG).show();
+            if (SHARE_MEDIA.QQ.equals(platform)) {
+                UMShareAPI.get(mContext).deleteOauth(getActivity(), SHARE_MEDIA.QQ, null);
+            } else if (SHARE_MEDIA.SINA.equals(platform)) {
+                UMShareAPI.get(mContext).deleteOauth(getActivity(), SHARE_MEDIA.SINA, null);
+            } else if (SHARE_MEDIA.WEIXIN.equals(platform)) {
+                UMShareAPI.get(mContext).deleteOauth(getActivity(), SHARE_MEDIA.WEIXIN, null);
+            }
+            Toast.makeText(mContext, t.getMessage(), Toast.LENGTH_LONG).show();
         }
 
         /**
@@ -193,7 +203,7 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
          */
         @Override
         public void onCancel(SHARE_MEDIA platform, int action) {
-            Toast.makeText(mContext, "取消了", Toast.LENGTH_LONG).show();
+            //Toast.makeText(mContext, "取消了", Toast.LENGTH_LONG).show();
         }
     };
 
@@ -289,13 +299,14 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
 
     @Override
     public void loginResult(LoginBean loginBean, String type) {
+        DialogUtil.dismissDialog(true);
         if (loginBean.getCode() == 200) {
             SPManager.get().putString("uid", String.valueOf(loginBean.getData().getUid()));
-            SPManager.get().putString("nickname", String.valueOf(loginBean.getData().getNickname()));
-            SPManager.get().putString("icon", String.valueOf(loginBean.getData().getAvatar()));
+            SPManager.get().putString("nickname", loginBean.getData().getNickname());
+            SPManager.get().putString("icon", loginBean.getData().getAvatar());
             SPManager.get().putString(C.HAS_THIRD_PASS, String.valueOf(loginBean.getData().getPayment()));
-            SPManager.get().putString("rongyun_token", String.valueOf(loginBean.getData().getRongyun_token()));
-            SPManager.get().putString("token", String.valueOf(loginBean.getData().getToken()));
+            SPManager.get().putString("rongyun_token", loginBean.getData().getRongyun_token());
+            SPManager.get().putString("token", loginBean.getData().getToken());
             connectRongYun(loginBean.getData().getRongyun_token(),loginBean);
             EventBusUtil.sendEvent(new MessageEvent(MSG_LOGIN));
             startActivity(new Intent(getActivity(), HomeActivity.class));

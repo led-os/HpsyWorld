@@ -11,12 +11,19 @@ import android.widget.TextView;
 
 import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.mine.bean.MyWalletBean;
+import com.kuwai.ysy.utils.EventBusUtil;
+import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class MyWalletFragment extends BaseFragment<MyWalletPresenter> implements MyWalletContract.IHomeView, View.OnClickListener {
 
@@ -64,11 +71,11 @@ public class MyWalletFragment extends BaseFragment<MyWalletPresenter> implements
 
     @Override
     public void initView(Bundle savedInstanceState) {
-
+        EventBusUtil.register(this);
         ((NavigationLayout) mRootView.findViewById(R.id.navigation)).setLeftClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               getActivity().finish();
+                getActivity().finish();
             }
         });
         mTitle = mRootView.findViewById(R.id.title);
@@ -96,7 +103,7 @@ public class MyWalletFragment extends BaseFragment<MyWalletPresenter> implements
     public void setHomeData(MyWalletBean walletBean) {
         mTvCash.setText(walletBean.getData().getAmount());
         mTvCashWithDrawal.setText(walletBean.getData().getForward_amount());
-        mTvYubi.setText(Double.parseDouble(walletBean.getData().getAmount()) - Double.parseDouble(walletBean.getData().getForward_amount()) + "");
+        mTvYubi.setText(Utils.format2Number(Double.parseDouble(walletBean.getData().getAmount()) - Double.parseDouble(walletBean.getData().getForward_amount())));
     }
 
     @Override
@@ -117,5 +124,18 @@ public class MyWalletFragment extends BaseFragment<MyWalletPresenter> implements
     @Override
     public void showViewError(Throwable t) {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBusUtil.unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void isLogin(MessageEvent event) {
+        if (event.getCode() == C.MSG_RECHARGE_SUCC) {
+            mPresenter.requestHomeData(SPManager.get().getStringValue("uid"));
+        }
     }
 }

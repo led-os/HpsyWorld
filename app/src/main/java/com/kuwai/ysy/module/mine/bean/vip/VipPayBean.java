@@ -6,6 +6,7 @@ public class VipPayBean {
     private String type;
     private String price;
     private String des;
+    private String day;
 
     private boolean isCheck;
 
@@ -49,6 +50,14 @@ public class VipPayBean {
         isCheck = check;
     }
 
+    public String getDay() {
+        return day == null ? "" : day;
+    }
+
+    public void setDay(String day) {
+        this.day = day == null ? "" : day;
+    }
+
     public VipPayBean(String type, String price, String des, boolean isCheck) {
         this.type = type;
         this.price = price;
@@ -56,11 +65,12 @@ public class VipPayBean {
         this.isCheck = isCheck;
     }
 
-    public VipPayBean(int vipType, String type, String price, String des, boolean isCheck) {
+    public VipPayBean(int vipType, String type, String price, String des, boolean isCheck,String day) {
         this.vipType = vipType;
         this.type = type;
         this.price = price;
         this.des = des;
         this.isCheck = isCheck;
+        this.day = day;
     }
 }

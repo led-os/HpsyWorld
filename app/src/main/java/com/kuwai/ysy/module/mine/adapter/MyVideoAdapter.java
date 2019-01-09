@@ -1,6 +1,7 @@
 package com.kuwai.ysy.module.mine.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,6 +81,19 @@ public class MyVideoAdapter extends RecyclerView.Adapter<MyVideoAdapter.ViewHold
         this.mList.clear();
         mList.addAll(data);
         notifyDataSetChanged();
+    }
+
+    public void addData(@NonNull WallBean.DataBean.VideoBean data) {
+        mList.add(data);
+        notifyItemInserted(mList.size());
+        compatibilityDataSizeChanged(1);
+    }
+
+    private void compatibilityDataSizeChanged(int size) {
+        final int dataSize = mList == null ? 0 : mList.size();
+        if (dataSize == size) {
+            notifyDataSetChanged();
+        }
     }
 
     @Override

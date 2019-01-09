@@ -7,6 +7,7 @@ import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.circle.bean.DyMainListBean;
 import com.kuwai.ysy.module.find.bean.appointment.MyAppointMent;
 import com.kuwai.ysy.module.mine.bean.BlackListBean;
+import com.kuwai.ysy.module.mine.bean.ChangeHeadBean;
 import com.kuwai.ysy.module.mine.bean.CheckInBean;
 import com.kuwai.ysy.module.mine.bean.CreditBean;
 import com.kuwai.ysy.module.mine.bean.EarlierBean;
@@ -385,7 +386,7 @@ public interface MineService {
      */
     @FormUrlEncoded
     @POST("My/DelFootprints")
-    Observable<SimpleResponse> deleteFoot(@Field("uid") String uid,@Field("f_id") String fid);
+    Observable<SimpleResponse> deleteFoot(@Field("uid") String uid, @Field("f_id") String fid);
 
     /**
      * 黑名单-列表
@@ -401,7 +402,7 @@ public interface MineService {
     @FormUrlEncoded
     @POST("My/ShieldList")
     Observable<BlackListBean> getPingList(@Field("uid") String uid,
-                                           @Field("page") int page);
+                                          @Field("page") int page);
 
     /**
      * 积分兑换桃花币
@@ -434,8 +435,8 @@ public interface MineService {
     @FormUrlEncoded
     @POST("My/GiftExchangePeachCoinAll")
     Observable<SimpleResponse> getGiftExchangePeachCoinAll(@Field("uid") String uid,
-                                                           @Field("type_1") int type1,
-                                                           @Field("type_2") int type2);
+                                                           @Field("type_1") String type1,
+                                                           @Field("type_2") String type2);
 
     /**
      * 礼物兑换实物-信息展示
@@ -475,9 +476,9 @@ public interface MineService {
     @FormUrlEncoded
     @POST("My/WalletWithdrawals")
     Observable<SimpleResponse> walletWithdrawals(@Field("uid") String uid,
-                                                    @Field("forward_amount") String money,
-                                                    @Field("alipay_id") String payid,
-                                                    @Field("alipay_name") String payName);
+                                                 @Field("forward_amount") String money,
+                                                 @Field("alipay_id") String payid,
+                                                 @Field("alipay_name") String payName);
 
     /**
      * 钱包-充值记录
@@ -504,8 +505,10 @@ public interface MineService {
     /**
      * zfb订单获取
      */
-    @GET("Payment/pagePay")
-    Observable<AliOrderInfoBean> getAliOrderInfo();
+    @FormUrlEncoded
+    @POST("Payment/pagePay")
+    Observable<AliOrderInfoBean> getAliOrderInfo(@Field("uid") String uid,
+                                                 @Field("money") String money);
 
     /**
      * 最近足迹
@@ -535,5 +538,19 @@ public interface MineService {
     @Multipart
     @POST("My/AddUserImgae")
     Observable<SimpleResponse> addPhotoWall(@PartMap Map<String, RequestBody> map);
+
+    /**
+     * 修改头像
+     */
+    @Multipart
+    @POST("User/UpdateAvatar")
+    Observable<ChangeHeadBean> changeHead(@PartMap Map<String, RequestBody> map);
+
+    /**
+     * 开通会员
+     */
+    @FormUrlEncoded
+    @POST("UserVip/OpenMembership")
+    Observable<SimpleResponse> openVip(@FieldMap Map<String, Object> infos);
 
 }

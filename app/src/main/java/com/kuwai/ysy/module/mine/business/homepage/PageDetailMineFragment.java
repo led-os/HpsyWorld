@@ -71,21 +71,21 @@ public class PageDetailMineFragment extends BaseFragment implements View.OnClick
         switch (v.getId()) {
             case R.id.tv_info_edit:
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("data",mPersolHomePageBean);
+                bundle.putSerializable("data", mPersolHomePageBean);
                 ((RBaseFragment) getParentFragment()).start(ChangeInfoFragment.newInstance(bundle));
                 break;
             case R.id.superInfo:
                 Bundle bundle1 = new Bundle();
-                bundle1.putSerializable("data",mPersolHomePageBean);
+                bundle1.putSerializable("data", mPersolHomePageBean);
                 ((RBaseFragment) getParentFragment()).start(ChangeInfoFragment.newInstance(bundle1));
                 break;
             case R.id.chooseZeou:
                 Bundle bundle2 = new Bundle();
-                bundle2.putSerializable("data",mPersolHomePageBean);
+                bundle2.putSerializable("data", mPersolHomePageBean);
                 ((RBaseFragment) getParentFragment()).start(ChangeInfoFragment.newInstance(bundle2));
                 break;
             case R.id.changeXuan:
-                ((RBaseFragment) getParentFragment()).start(ChangeXuanFragment.newInstance());
+                ((RBaseFragment) getParentFragment()).start(ChangeXuanFragment.newInstance(mPersolHomePageBean.getData().getInfo().getSig()));
                 break;
             case R.id.managePlace:
                 ((RBaseFragment) getParentFragment()).start(ChangePlaceFragment.newInstance());

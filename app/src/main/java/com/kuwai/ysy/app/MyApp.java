@@ -12,6 +12,8 @@ import android.util.DisplayMetrics;
 
 import com.kuwai.ysy.net.ApiClient;
 import com.kuwai.ysy.rong.ExtensionModule;
+import com.kuwai.ysy.rong.GiftSendMessage;
+import com.kuwai.ysy.rong.GiftSendMessageItemProvider;
 import com.kuwai.ysy.rong.MyTextMessageItemProvider;
 import com.kuwai.ysy.rong.QuestionMessage;
 import com.kuwai.ysy.rong.QuestionMessageItemProvider;
@@ -75,6 +77,8 @@ public class MyApp extends BaseApplication {
         RongIM.getInstance().registerMessageTemplate(new RedSendMessageItemProvider());
         RongIM.registerMessageType(RedReceiveMessage.class);
         RongIM.getInstance().registerMessageTemplate(new RedReceiveMessageItemProvider());
+        RongIM.registerMessageType(GiftSendMessage.class);
+        RongIM.getInstance().registerMessageTemplate(new GiftSendMessageItemProvider());
         setMyExtensionModule();
     }
 

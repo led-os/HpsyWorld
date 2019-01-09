@@ -3,7 +3,10 @@ package com.kuwai.ysy.module.chat.api;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.chat.bean.MyFriends;
+import com.kuwai.ysy.module.chat.bean.NoticeBean;
 import com.kuwai.ysy.module.chat.bean.ReceiveBean;
+import com.kuwai.ysy.module.chat.bean.RedMySendBean;
+import com.kuwai.ysy.module.chat.bean.RedRecordBean;
 import com.kuwai.ysy.module.chat.bean.StsBean;
 import com.kuwai.ysy.module.chat.bean.UserInfoBean;
 import com.kuwai.ysy.module.mine.bean.user.UserInfo;
@@ -116,11 +119,11 @@ public class ChatApiFactory {
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
-    public static Observable<SimpleResponse> redDetailMine(String uid, String rid) {
+    public static Observable<RedMySendBean> redDetailMine(String uid, String rid) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
                 .redDetailMine(uid,rid)
-                .compose(RxSchedulers.<SimpleResponse>ioMain());
+                .compose(RxSchedulers.<RedMySendBean>ioMain());
     }
 
     public static Observable<ReceiveBean> redDetailOther(String otherId, String rid) {
@@ -130,13 +133,26 @@ public class ChatApiFactory {
                 .compose(RxSchedulers.<ReceiveBean>ioMain());
     }
 
-    public static Observable<SimpleResponse> redList(String uid, String otherId,int page) {
+    public static Observable<RedRecordBean> redList(String uid, String otherId, int page) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
                 .redList(uid,otherId,page)
-                .compose(RxSchedulers.<SimpleResponse>ioMain());
+                .compose(RxSchedulers.<RedRecordBean>ioMain());
     }
 
+    public static Observable<NoticeBean> getSystemNotice(String uid, int page) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(ChatService.class)
+                .getSystemNotice(uid,page)
+                .compose(RxSchedulers.<NoticeBean>ioMain());
+    }
+
+    public static Observable<NoticeBean> getDateNotice(String uid) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(ChatService.class)
+                .getDateNotice(uid)
+                .compose(RxSchedulers.<NoticeBean>ioMain());
+    }
 
     public static Observable<StsBean> getSts() {
         return ApiClient.get(C.BaseURL.BASE_URL)
@@ -145,4 +161,10 @@ public class ChatApiFactory {
                 .compose(RxSchedulers.<StsBean>ioMain());
     }
 
+    public static Observable<SimpleResponse> rewardPe(Map<String,Object> param) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(ChatService.class)
+                .rewardPe(param)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
 }

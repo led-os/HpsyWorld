@@ -2,6 +2,7 @@ package com.kuwai.ysy.module.home.business.loginmoudle.login;
 
 import android.util.Log;
 
+import com.kuwai.ysy.R;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.circle.api.CircleApiFactory;
 import com.kuwai.ysy.module.circle.bean.DyDetailBean;
@@ -9,6 +10,7 @@ import com.kuwai.ysy.module.circle.business.DyDetail.DyDetailContract;
 import com.kuwai.ysy.module.home.api.HomeApiFactory;
 import com.kuwai.ysy.module.home.bean.login.LoginBean;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 
 import java.util.Map;
 
@@ -37,7 +39,7 @@ public class LoginPresenter extends RBasePresenter<LoginContract.ILoginView> imp
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                Log.i(TAG, "accept: " + throwable);
+                ToastUtils.showShort(R.string.server_error);
             }
         }));
     }

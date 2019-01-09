@@ -55,7 +55,7 @@ public class ChatFragment extends BaseFragment implements View.OnClickListener{
 //                .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")
 //                .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "false")
 //                .appendQueryParameter(Conversation.ConversationType.PUBLIC_SERVICE.getName(), "false")
-                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//设置系统会话，该会话非聚合显示
+                //.appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//设置系统会话，该会话非聚合显示
                 .build();
         conversationListFragment.setUri(uri);
 

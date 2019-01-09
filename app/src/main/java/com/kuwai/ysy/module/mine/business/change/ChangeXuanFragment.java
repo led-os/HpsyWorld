@@ -12,6 +12,7 @@ import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.utils.EventBusUtil;
+import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
@@ -24,8 +25,9 @@ public class ChangeXuanFragment extends BaseFragment implements View.OnClickList
     private NavigationLayout mNavigation;
     private EditText mEtContent;
 
-    public static ChangeXuanFragment newInstance() {
+    public static ChangeXuanFragment newInstance(String sign) {
         Bundle args = new Bundle();
+        args.putString("sign", sign);
         ChangeXuanFragment fragment = new ChangeXuanFragment();
         fragment.setArguments(args);
         return fragment;
@@ -52,6 +54,7 @@ public class ChangeXuanFragment extends BaseFragment implements View.OnClickList
     public void initView(Bundle savedInstanceState) {
         mNavigation = mRootView.findViewById(R.id.navigation);
         mEtContent = mRootView.findViewById(R.id.et_content);
+        mEtContent.setText(getArguments().getString("sign"));
         mNavigation.setRightClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +79,7 @@ public class ChangeXuanFragment extends BaseFragment implements View.OnClickList
             @Override
             public void accept(SimpleResponse response) throws Exception {
                 if (response.code == 200) {
+                    Utils.showOrHide(getActivity(), mEtContent);
                     EventBusUtil.sendEvent(new MessageEvent(C.MSG_CHANGE_INFO));
                     pop();
                 }

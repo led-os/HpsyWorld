@@ -19,7 +19,7 @@ import io.rong.imlib.model.MentionedInfo;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
 
-@MessageTag(value = "RCD:redpack", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
+@MessageTag(value = "YSY:redpocket", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
 public class RedSendMessage extends MessageContent {
     private final static String TAG = "TestMessage";
 

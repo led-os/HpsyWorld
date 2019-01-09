@@ -1,5 +1,9 @@
 package com.kuwai.ysy.module.mine.bean;
 
+import com.chad.library.adapter.base.entity.AbstractExpandableItem;
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+import com.kuwai.ysy.module.mine.adapter.ExpandableGiftAdapter;
+
 import java.util.List;
 
 public class GiftWithdrawalsBean {
@@ -39,7 +43,7 @@ public class GiftWithdrawalsBean {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean extends AbstractExpandableItem<DataBean.ArrBean> implements MultiItemEntity {
         /**
          * nickname : 张三
          * uid : 1
@@ -51,6 +55,7 @@ public class GiftWithdrawalsBean {
         private int uid;
         private String avatar;
         private List<ArrBean> arr;
+        public boolean isAllCheck = false;
 
         public String getNickname() {
             return nickname;
@@ -84,7 +89,17 @@ public class GiftWithdrawalsBean {
             this.arr = arr;
         }
 
-        public static class ArrBean {
+        @Override
+        public int getLevel() {
+            return 0;
+        }
+
+        @Override
+        public int getItemType() {
+            return ExpandableGiftAdapter.TYPE_LEVEL_0;
+        }
+
+        public static class ArrBean implements MultiItemEntity {
             /**
              * g_id : 27
              * type : 1
@@ -110,6 +125,7 @@ public class GiftWithdrawalsBean {
             private String nickname;
             private String avatar;
             private int uid;
+            public boolean isCheck = false;
 
             public int getG_id() {
                 return g_id;
@@ -197,6 +213,11 @@ public class GiftWithdrawalsBean {
 
             public void setUid(int uid) {
                 this.uid = uid;
+            }
+
+            @Override
+            public int getItemType() {
+                return ExpandableGiftAdapter.TYPE_LEVEL_1;
             }
         }
     }

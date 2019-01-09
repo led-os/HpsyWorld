@@ -23,7 +23,7 @@ public class IntegralDetailAdapter extends BaseQuickAdapter<IntegralDetailBean.D
         //helper.setText(R.id.tv_time, DateTimeUitl.getIntegralTime(String.valueOf(item.getCreate_time())));
 
         if ("+".equals(item.getType())) {
-            helper.setTextColor(R.id.tv_num, Color.parseColor("#ff282828"));
+            helper.setTextColor(R.id.tv_num, mContext.getResources().getColor(R.color.theme));
         } else {
             helper.setTextColor(R.id.tv_num, mContext.getResources().getColor(R.color.balck_28));
         }

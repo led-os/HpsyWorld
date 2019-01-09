@@ -8,11 +8,13 @@ import com.kuwai.ysy.module.circle.bean.DyMainListBean;
 import com.kuwai.ysy.module.find.api.AppointService;
 import com.kuwai.ysy.module.find.bean.appointment.MyAppointMent;
 import com.kuwai.ysy.module.mine.bean.BlackListBean;
+import com.kuwai.ysy.module.mine.bean.ChangeHeadBean;
 import com.kuwai.ysy.module.mine.bean.CheckInBean;
 import com.kuwai.ysy.module.mine.bean.CreditBean;
 import com.kuwai.ysy.module.mine.bean.ESUser;
 import com.kuwai.ysy.module.mine.bean.GiftAcceptBean;
 import com.kuwai.ysy.module.mine.bean.GiftBoxBean;
+import com.kuwai.ysy.module.mine.bean.GiftWithdrawalsBean;
 import com.kuwai.ysy.module.mine.bean.IntegralDetailBean;
 import com.kuwai.ysy.module.mine.bean.MyAskBean;
 import com.kuwai.ysy.module.mine.bean.MyWalletBean;
@@ -84,6 +86,13 @@ public class MineApiFactory {
                 .compose(RxSchedulers.<PersonalTreeHole>ioMain());
     }
 
+    public static Observable<GiftWithdrawalsBean> getUserWithdrawalsAllList(String uid) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getUserWithdrawalsAllList(uid)
+                .compose(RxSchedulers.<GiftWithdrawalsBean>ioMain());
+    }
+
     public static Observable<GiftAcceptBean> getGiftAccept(String uid, int page) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)
@@ -95,6 +104,13 @@ public class MineApiFactory {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)
                 .getUserLike(uid, otherid, type)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<SimpleResponse> getGiftExchangePeachCoinAll(String uid, String type1, String type2) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getGiftExchangePeachCoinAll(uid, type1, type2)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
@@ -210,10 +226,10 @@ public class MineApiFactory {
                 .compose(RxSchedulers.<VipBean>ioMain());
     }
 
-    public static Observable<AliOrderInfoBean> getAliOrderInfo() {
+    public static Observable<AliOrderInfoBean> getAliOrderInfo(String uid,String money) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)
-                .getAliOrderInfo()
+                .getAliOrderInfo(uid,money)
                 .compose(RxSchedulers.<AliOrderInfoBean>ioMain());
     }
 
@@ -354,6 +370,20 @@ public class MineApiFactory {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)
                 .addVideoWall(params)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<ChangeHeadBean> changeHead(Map<String, RequestBody> params) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .changeHead(params)
+                .compose(RxSchedulers.<ChangeHeadBean>ioMain());
+    }
+
+    public static Observable<SimpleResponse> openVip(Map<String, Object> param) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .openVip(param)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 }

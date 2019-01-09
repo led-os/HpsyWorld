@@ -17,8 +17,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/navigation"
         android:layout_marginBottom="50dp"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        />
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,23 +27,60 @@
 
         <View style="@style/horizontal_line" />
 
+        <RadioButton
+            android:id="@+id/radio_all"
+            android:layout_width="36dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp" />
+
         <TextView
             android:id="@+id/tv_transfee"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/radio_all"
             android:gravity="center_vertical"
-            android:text="快递费¥：10桃花币"
+            android:text="全选"
             android:textColor="#ff282838"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_mom"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@id/tv_transfee"
+            android:gravity="center_vertical"
+            android:text="到账金额："
+            android:textColor="#ff282838"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_money"
+            android:layout_toRightOf="@id/tv_mom"
+            android:text="￥"
+            android:textColor="@color/theme"
+            android:textSize="10sp" />
+
+        <com.kuwai.ysy.widget.CustomFontTextview
+            android:id="@+id/tv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_point"
+            android:text="0.00"
+            android:textColor="@color/theme"
+            android:textSize="20sp" />
 
         <com.allen.library.SuperButton
             android:id="@+id/btn_duihuan"
             android:layout_width="116dp"
             android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
             android:text="立即提现"
             android:textColor="@color/white"
-            android:layout_alignParentRight="true"
             android:textSize="16sp"
             app:sGradientEndColor="#b35415F9"
             app:sGradientOrientation="LEFT_RIGHT"

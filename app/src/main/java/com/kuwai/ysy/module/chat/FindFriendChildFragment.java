@@ -131,8 +131,8 @@ public class FindFriendChildFragment extends BaseFragment implements View.OnClic
         addSubscription(ChatApiFactory.getTuiFriends(uid, mPage).subscribe(new Consumer<MyFriends>() {
             @Override
             public void accept(MyFriends myBlindBean) throws Exception {
+                mRefreshLayout.finishRefresh();
                 if (myBlindBean.getCode() == 200) {
-                    mRefreshLayout.finishRefresh();
                     mDyMainListBean = myBlindBean;
                     myFriendsAdapter.replaceData(myBlindBean.getData());
                 } else {

@@ -149,8 +149,8 @@ public class SearchFriendFragment extends BaseFragment implements View.OnClickLi
         addSubscription(ChatApiFactory.searchFriends(text, mPage).subscribe(new Consumer<MyFriends>() {
             @Override
             public void accept(MyFriends myBlindBean) throws Exception {
+                mRefreshLayout.finishRefresh();
                 if (myBlindBean.getCode() == 200) {
-                    mRefreshLayout.finishRefresh();
                     mDyMainListBean = myBlindBean;
                     myFriendsAdapter.replaceData(myBlindBean.getData());
                 } else {

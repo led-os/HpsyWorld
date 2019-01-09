@@ -174,9 +174,9 @@ public class RedReceiveMessageItemProvider extends IContainerItemProvider.Messag
         RedReceiveMessageItemProvider.ViewHolder holder = (RedReceiveMessageItemProvider.ViewHolder) v.getTag();
 
         if (data.getMessageDirection() == Message.MessageDirection.SEND) {
-            holder.message.setText(content.getExtra());
+            holder.message.setText(content.getContent());
         } else {
-            holder.message.setText(content.getExtra());
+            holder.message.setText(content.getContent());
         }
 
         /*final TextView textView = holder.message;

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.module.find.bean.GiftPopBean;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
+import com.kuwai.ysy.utils.Utils;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
 
 import java.util.ArrayList;
@@ -20,11 +21,11 @@ public class HomePageVideoAdapter extends RecyclerView.Adapter<HomePageVideoAdap
 
     private static final int TYPE_ADD = 1;
     private static final int TYPE_PIC = 2;
-    private  List<PersolHomePageBean.DataBean.InfoBean.VideoBean> mList = new ArrayList<>();
+    private List<PersolHomePageBean.DataBean.InfoBean.VideoBean> mList = new ArrayList<>();
     private Context context;
-    private static final int MAX_SIZE = 8;
+    private static final int MAX_SIZE = 18;
 
-    public HomePageVideoAdapter( OnAddItemClickListener itemClickListener) {
+    public HomePageVideoAdapter(OnAddItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 
@@ -57,14 +58,20 @@ public class HomePageVideoAdapter extends RecyclerView.Adapter<HomePageVideoAdap
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         if (getItemViewType(position) == TYPE_ADD) {
             holder.ivPhoto.setVisibility(View.GONE);
             holder.ivAdd.setVisibility(View.VISIBLE);
+            holder.ivVideo.setVisibility(View.GONE);
         } else {
             holder.ivAdd.setVisibility(View.GONE);
             holder.ivPhoto.setVisibility(View.VISIBLE);
+            if (!Utils.isNullString(mList.get(position).getVideo_id())) {
+                holder.ivVideo.setVisibility(View.VISIBLE);
+            } else {
+                holder.ivVideo.setVisibility(View.GONE);
+            }
             GlideUtil.load(context, mList.get(position).getAttach(), holder.ivPhoto);
             //holder.ivPhoto.setImageBitmap(BitmapFactory.decodeFile(mList.get(position)));
         }
@@ -74,6 +81,15 @@ public class HomePageVideoAdapter extends RecyclerView.Adapter<HomePageVideoAdap
         } else {
             holder.ivPhoto.setVisibility(View.VISIBLE);
         }
+
+        holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (itemClickListener != null) {
+                    itemClickListener.photoClick(position, v);
+                }
+            }
+        });
     }
 
     public void setData(List<PersolHomePageBean.DataBean.InfoBean.VideoBean> data) {
@@ -94,11 +110,13 @@ public class HomePageVideoAdapter extends RecyclerView.Adapter<HomePageVideoAdap
 
         private ImageView ivPhoto;
         private ImageView ivAdd;
+        private ImageView ivVideo;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ivPhoto = itemView.findViewById(R.id.iv_photo);
             ivAdd = itemView.findViewById(R.id.iv_add);
+            ivVideo = itemView.findViewById(R.id.iv_video);
         }
     }
 
@@ -110,5 +128,6 @@ public class HomePageVideoAdapter extends RecyclerView.Adapter<HomePageVideoAdap
          */
         void onItemAddClick();
 
+        void photoClick(int position, View v);
     }
 }

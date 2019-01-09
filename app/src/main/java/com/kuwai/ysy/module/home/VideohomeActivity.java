@@ -1,6 +1,7 @@
 package com.kuwai.ysy.module.home;
 
 import android.content.Intent;
+import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,12 +9,14 @@ import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.aliyun.vodplayer.media.AliyunVidSts;
+import com.aliyun.vodplayer.media.AliyunVodPlayer;
 import com.aliyun.vodplayerview.widget.AovPlayerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
@@ -21,6 +24,7 @@ import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.listener.PlayerManager;
 import com.kuwai.ysy.module.circle.VideoPlayActivity;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.business.DongtaiFragment;
@@ -66,6 +70,8 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
     private RadioButton mTvNear;
     HomePicAdapter mPicAdapter;
 
+    private PlayerManager playerManager;
+
     public static VideohomeActivity newInstance() {
         Bundle args = new Bundle();
         VideohomeActivity fragment = new VideohomeActivity();
@@ -89,6 +95,7 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
         rvPic = mRootView.findViewById(R.id.rv_pic);
         mTvDate = mRootView.findViewById(R.id.tv_date);
         mTvDate.setOnClickListener(this);
+        mTvFilter.setOnClickListener(this);
         mMainRadiogroup = mRootView.findViewById(R.id.main_radiogroup);
         mTvTui = mRootView.findViewById(R.id.tv_tui);
         mLine = mRootView.findViewById(R.id.line);
@@ -97,8 +104,9 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
         rvPage2 = mRootView.findViewById(R.id.rv_page2);
         urlList = new ArrayList<>();
         mNearList = new ArrayList<>();
-        rvPage2.addOnScrollListener(new HomeActivity.ListScrollListener());
-        rvPic.addOnScrollListener(new HomeActivity.ListScrollListener());
+        //rvPage2.addOnScrollListener(new HomeActivity.ListScrollListener());
+        //rvPic.addOnScrollListener(new HomeActivity.ListScrollListener());
+        playerManager = new PlayerManager(getActivity(), new AliyunVodPlayer(getActivity()));
 
         // 创建StaggeredGridLayoutManager实例
         rvPic.addItemDecoration(new StaggeredDividerItemDecoration(getActivity(), 8));
@@ -114,7 +122,7 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
         snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(rvPage2);
 
-        videoAdapter = new ListVideoAdapter(urlList);
+        videoAdapter = new ListVideoAdapter(urlList, playerManager);
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         rvPage2.setLayoutManager(layoutManager);
         rvPage2.setAdapter(videoAdapter);
@@ -161,7 +169,7 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
                         mTvTui.setTextColor(getResources().getColor(R.color.gray_d2));
                         mLine.setBackgroundColor(getResources().getColor(R.color.gray_d2));
                         mTvNear.setTextColor(getResources().getColor(R.color.balck_28));
-                        pauseVideo();
+                        playerManager.stop();
                         break;
                 }
             }
@@ -179,23 +187,46 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
                     case RecyclerView.SCROLL_STATE_IDLE://停止滚动
                         View view = snapHelper.findSnapView(layoutManager);
                         //AovPlayerView.releaseAllVideos();
-                        RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
-                        if (viewHolder instanceof ListVideoAdapter.VideoViewHolder) {
-                            int position = viewHolder.getAdapterPosition();
-                            for (HomeVideoBean.DataBean url : urlList) {
-                                url.setPlay(false);
+                        if (view != null) {
+                            final RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
+                            if (viewHolder instanceof ListVideoAdapter.VideoViewHolder) {
+                                int position = viewHolder.getAdapterPosition();
+                                TextureView textureView = new TextureView(getActivity());
+                                textureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
+                                    @Override
+                                    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+                                        playerManager.start(((ListVideoAdapter.VideoViewHolder) viewHolder));
+                                        playerManager.setSurfaceTexture(surface);
+                                    }
+
+                                    @Override
+                                    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+
+                                    }
+
+                                    @Override
+                                    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+                                        return true;
+                                    }
+
+                                    @Override
+                                    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+
+                                    }
+                                });
+
+                                ((ListVideoAdapter.VideoViewHolder) viewHolder).addTextureView(textureView);
                             }
-                            urlList.get(position).setPlay(true);
-                            videoAdapter.notifyDataSetChanged();
                         }
                         break;
                     case RecyclerView.SCROLL_STATE_DRAGGING://拖动
                         break;
                     case RecyclerView.SCROLL_STATE_SETTLING://惯性滑动
-                        for (HomeVideoBean.DataBean url : urlList) {
+                        playerManager.stop();
+                        /*for (HomeVideoBean.DataBean url : urlList) {
                             url.setPlay(false);
                         }
-                        videoAdapter.notifyDataSetChanged();
+                        videoAdapter.notifyDataSetChanged();*/
                         break;
                 }
 
@@ -227,7 +258,8 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
         RecyclerView.ViewHolder viewHolder = rvPage2.getChildViewHolder(view);
         int position = viewHolder.getAdapterPosition();
         if (isVisibleToUser) {
-            if (viewHolder != null && viewHolder instanceof ListVideoAdapter.VideoViewHolder) {
+            restartVideo();
+            /*if (viewHolder != null && viewHolder instanceof ListVideoAdapter.VideoViewHolder) {
                 //((ListVideoAdapter.VideoViewHolder) viewHolder).mp_video.startVideo();
                 AliyunVidSts mVidSts = new AliyunVidSts();
                 mVidSts.setVid(urlList.get(position).getVideo_id());
@@ -235,33 +267,34 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
                 mVidSts.setAkSceret(SPManager.get().getStringValue(C.ALI_SECRET));
                 mVidSts.setSecurityToken(SPManager.get().getStringValue(C.ALI_TOKEN));
                 ((ListVideoAdapter.VideoViewHolder) viewHolder).mp_video.setVidSts(mVidSts);
-            }
+            }*/
         } else {
-
-            if (viewHolder != null && viewHolder instanceof ListVideoAdapter.VideoViewHolder) {
+            playerManager.stop();
+            /*if (viewHolder != null && viewHolder instanceof ListVideoAdapter.VideoViewHolder) {
                 //((ListVideoAdapter.VideoViewHolder) viewHolder).mp_video.startVideo();
                 ((ListVideoAdapter.VideoViewHolder) viewHolder).mp_video.PlayStop();
-            }
+            }*/
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        pauseVideo();
+        playerManager.stop();
     }
 
     private void pauseVideo() {
         if (snapHelper == null) {
             return;
         }
-        View view = snapHelper.findSnapView(layoutManager);
+
+        /*View view = snapHelper.findSnapView(layoutManager);
         //AovPlayerView.releaseAllVideos();
         RecyclerView.ViewHolder viewHolder = rvPage2.getChildViewHolder(view);
         if (viewHolder != null && viewHolder instanceof ListVideoAdapter.VideoViewHolder) {
             //((ListVideoAdapter.VideoViewHolder) viewHolder).mp_video.startVideo();
             ((ListVideoAdapter.VideoViewHolder) viewHolder).mp_video.PlayStop();
-        }
+        }*/
     }
 
     @Override
@@ -288,8 +321,45 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
         if (view == null) {
             return;
         }
+        final RecyclerView.ViewHolder viewHolder = rvPage2.getChildViewHolder(view);
+
+        if (viewHolder != null && viewHolder instanceof ListVideoAdapter.VideoViewHolder) {
+
+            int playingPosition = playerManager.getPosition();
+            if (playingPosition >= 0) {
+                //说明有在播放的
+                playerManager.resetTextureView();
+            } else {
+                //int position = viewHolder.getAdapterPosition();
+                TextureView textureView = new TextureView(getActivity());
+                textureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
+                    @Override
+                    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+                        playerManager.start(((ListVideoAdapter.VideoViewHolder) viewHolder));
+                        playerManager.setSurfaceTexture(surface);
+                    }
+
+                    @Override
+                    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+
+                    }
+
+                    @Override
+                    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+                        return true;
+                    }
+
+                    @Override
+                    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+
+                    }
+                });
+
+                ((ListVideoAdapter.VideoViewHolder) viewHolder).addTextureView(textureView);
+            }
+        }
         //AovPlayerView.releaseAllVideos();
-        RecyclerView.ViewHolder viewHolder = rvPage2.getChildViewHolder(view);
+        /*RecyclerView.ViewHolder viewHolder = rvPage2.getChildViewHolder(view);
         int position = viewHolder.getAdapterPosition();
         if (viewHolder != null && viewHolder instanceof ListVideoAdapter.VideoViewHolder) {
             //((ListVideoAdapter.VideoViewHolder) viewHolder).mp_video.startVideo();
@@ -299,7 +369,7 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
             mVidSts.setAkSceret(SPManager.get().getStringValue(C.ALI_SECRET));
             mVidSts.setSecurityToken(SPManager.get().getStringValue(C.ALI_TOKEN));
             ((ListVideoAdapter.VideoViewHolder) viewHolder).mp_video.setVidSts(mVidSts);
-        }
+        }*/
     }
 
     @Override
@@ -310,6 +380,9 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
                 intent.putExtra("type", "yunshi");
                 intent.putExtra(C.H5_FLAG, C.H5_URL + C.YUNSHI + SPManager.get().getStringValue("uid"));
                 startActivity(intent);
+                break;
+            case R.id.tv_filter:
+                startActivity(new Intent(getActivity(),FilterActivity.class));
                 break;
         }
     }
@@ -323,6 +396,7 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
                     urlList.clear();
                     urlList.addAll(homeVideoBean.getData());
                     urlList.get(0).setPlay(true);
+                    playerManager.setData(urlList);
                     videoAdapter.notifyDataSetChanged();
                 } else {
                     ToastUtils.showShort(homeVideoBean.getMsg());
@@ -357,5 +431,11 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
                 Log.i("", "accept: " + throwable);
             }
         }));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        playerManager.release();
     }
 }

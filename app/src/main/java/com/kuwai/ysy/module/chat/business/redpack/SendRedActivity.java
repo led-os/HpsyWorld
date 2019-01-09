@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.chat.business.redpack;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,8 +14,10 @@ import android.widget.TextView;
 
 import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.module.chat.api.ChatApiFactory;
+import com.kuwai.ysy.module.home.WebviewH5Activity;
 import com.kuwai.ysy.rong.RedSendMessage;
 import com.kuwai.ysy.rong.bean.RedBean;
 import com.kuwai.ysy.utils.Utils;
@@ -107,6 +110,10 @@ public class SendRedActivity extends BaseActivity implements View.OnClickListene
             case R.id.btn_send_red:
                 if (Double.parseDouble(mEtRedNum.getText().toString()) <= 0) {
                     ToastUtils.showShort("请输入红包金额");
+                } else if (Utils.isNullString(mEtRedContent.getText().toString())) {
+                    ToastUtils.showShort("请输入寄语");
+                } else if (!"1".equals(SPManager.get().getStringValue(C.HAS_THIRD_PASS))) {
+                    ToastUtils.showShort("请前往个人中心设置支付密码");
                 } else {
                     popCostCustom(mEtRedNum.getText().toString());
                 }
@@ -130,11 +137,7 @@ public class SendRedActivity extends BaseActivity implements View.OnClickListene
                 @Override
                 public void setOnPasswordFinished(String text) {
                     if (text.length() == 6) {
-                        if (Utils.isNullString(mEtRedContent.getText().toString())) {
-                            ToastUtils.showShort("请输入寄语");
-                        } else {
-                            sendRed(money, Utils.encrypt32(text), mEtRedContent.getText().toString());
-                        }
+                        sendRed(money, Utils.encrypt32(text), mEtRedContent.getText().toString());
                         inputView.setText("");
                         costDialog.dismiss();
                         Utils.showOrHide(SendRedActivity.this, inputView);
@@ -178,6 +181,24 @@ public class SendRedActivity extends BaseActivity implements View.OnClickListene
                 }
             });
 
+            record.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(SendRedActivity.this, RedRecordActivity.class));
+                    bottomDialog.dismiss();
+                }
+            });
+
+            help.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(SendRedActivity.this, WebviewH5Activity.class);
+                    intent.putExtra(C.H5_FLAG, C.H5_URL + C.HONGBAOXUZHI);
+                    startActivity(intent);
+                    bottomDialog.dismiss();
+                }
+            });
+
             bottomDialog = new CustomDialog.Builder(this)
                     .setView(pannel)
                     .setTouchOutside(true)
@@ -216,8 +237,8 @@ public class SendRedActivity extends BaseActivity implements View.OnClickListene
 
     private void sendMessage(String redid, String jiyu) {
         RedSendMessage testMessage = new RedSendMessage();
-        testMessage.setContent(redid);
-        testMessage.setExtra(jiyu);
+        testMessage.setContent(jiyu);
+        testMessage.setExtra(redid);
         testMessage.setUserInfo(new UserInfo(SPManager.get().getStringValue("uid"), SPManager.get().getStringValue("nickname"), Uri.parse(SPManager.get().getStringValue("icon"))));
         final Message message = Message.obtain(targetId, Conversation.ConversationType.PRIVATE, testMessage);
         RongIM.getInstance().sendMessage(message, "红包消息", "红包消息", new IRongCallback.ISendMessageCallback() {

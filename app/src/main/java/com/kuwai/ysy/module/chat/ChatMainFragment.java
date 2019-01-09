@@ -18,6 +18,7 @@ import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.chat.api.ChatApiFactory;
 import com.kuwai.ysy.module.chat.bean.UserInfoBean;
+import com.kuwai.ysy.module.chat.business.NoticeFragment;
 import com.kuwai.ysy.module.mine.business.gift.GiftMyAcceptFragment;
 import com.kuwai.ysy.module.mine.business.gift.GiftMySendFragment;
 import com.kuwai.ysy.module.mine.business.gift.GiftRealExchangeFragment;
@@ -87,16 +88,16 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
         Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
                 .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话，该会话聚合显示
-//                .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")
+                //.appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "true")
 //                .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "false")
-//                .appendQueryParameter(Conversation.ConversationType.PUBLIC_SERVICE.getName(), "false")
-                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//设置系统会话，该会话非聚合显示
+                //.appendQueryParameter(Conversation.ConversationType.PUBLIC_SERVICE.getName(), "true")
+                //.appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//设置系统会话，该会话非聚合显示
                 .build();
         conversationListFragment.setUri(uri);
 
         fragments = new ArrayList<>();
         fragments.add(conversationListFragment);
-        fragments.add(GiftMySendFragment.newInstance());
+        fragments.add(NoticeFragment.newInstance());
 
         RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
 
@@ -156,10 +157,10 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
-                    case R.id.radio_lookme:
+                    case R.id.tv_chat_count:
                         pager.setCurrentItem(0);
                         break;
-                    case R.id.radio_mylook:
+                    case R.id.tv_notice:
                         pager.setCurrentItem(1);
                         break;
                 }

@@ -113,6 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:visibility="gone"
                 android:layout_toRightOf="@id/aliyun_record_bg"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">

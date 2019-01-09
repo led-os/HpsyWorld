@@ -38,7 +38,8 @@ public class C {
     public static final String MEILILEVEL = "charm-level.html";
     public static final String TISHENGMEILI = "up-charm-level.html";
     public static final String YUYUE = "order-fortune-tell.html?uid=";
-
+    public static final String GIFT_CHANGE = "exchange-gift.html?uid=";
+    public static final String GIFT_RECHARGE = "gift-cash.html?uid=";
 
     public interface DIR {
         String PIC_DIR = FileUtils.getRootFilePath() + "Ysy/images";
@@ -72,6 +73,7 @@ public class C {
     public @interface BaseURL {
         String TEST_URL = "http://baobab.kaiyanapp.com/api/";
         String BASE_URL = "http://192.168.1.88/api/";
+        //String BASE_URL = "http://api.yushuiyuan.cn/api/";
     }
 
     /**
@@ -152,8 +154,11 @@ public class C {
     public static final int MSG_COMMENT_HOLE = 0x00000104;
     public static final int MSG_REWARD_HOLE = 0x00000105;
     public static final int MSG_FIND_TEXT_RUN = 0x00000106;
+    public static final int MSG_GIFT_WITHDRAW_SUCC = 0x00000107;
 
     public static final int MSG_CHANGE_INFO = 0x000001001;
+    public static final int MSG_RECHARGE_SUCC = 0x000001002;
+    public static final int MSG_UPDATE_VIDEO = 0x000001003;
 
     //注册参数
     public static final String REGIST_NAME = "RE_NAME";//全部动态

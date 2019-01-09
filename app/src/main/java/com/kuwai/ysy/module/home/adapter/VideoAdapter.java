@@ -48,7 +48,7 @@ public class VideoAdapter extends BaseMultiItemQuickAdapter<HomeMutiBean, BaseVi
 
                 break;
             case HomeMutiBean.VIDEO:
-                AovPlayerView aovPlayerView = helper.getView(R.id.video);
+                //AovPlayerView aovPlayerView = helper.getView(R.id.video);
                 break;
         }
     }

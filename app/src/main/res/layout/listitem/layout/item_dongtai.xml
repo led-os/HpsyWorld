@@ -117,7 +117,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/top_lay"
-            android:layout_marginTop="14dp"
+            android:paddingTop="10dp"
+            android:maxLength="10"
+            android:ellipsize="end"
+            android:layout_marginLeft="10dp"
             android:textColor="@color/gray_7b"
             android:textSize="12sp" />
 
@@ -126,8 +129,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/tv_location"
-            android:layout_marginLeft="16dp"
             android:layout_toRightOf="@id/tv_location"
+            android:layout_toLeftOf="@+id/tv_delete"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="10dp"
             android:textColor="@color/gray_7b"
             android:textSize="12sp" />
 
@@ -135,7 +141,7 @@
             android:id="@+id/tv_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/tv_location"
+            android:layout_alignBottom="@id/tv_time"
             android:layout_alignParentRight="true"
             android:layout_marginEnd="18dp"
             android:drawableLeft="@drawable/dyn_dyn_ic_delete"
@@ -148,7 +154,7 @@
         <View
             android:id="@+id/line1"
             style="@style/horizontal_line"
-            android:layout_below="@id/tv_location"
+            android:layout_below="@id/tv_time"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="12dp" />
 

@@ -75,7 +75,7 @@ public class WebviewH5Activity extends BaseActivity {
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
                 if (title != null) {
-                    //tvAppTitle.setText(title);
+                    navigationLayout.setTitle(title);
                 }
             }
         });
@@ -175,7 +175,7 @@ public class WebviewH5Activity extends BaseActivity {
                 }
             });
             h5Webview.addJavascriptInterface(joinActivityCall, "Android");
-        }else if("yunshi".equals(type)){
+        } else if ("yunshi".equals(type)) {
 
         }
     }

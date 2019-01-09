@@ -131,7 +131,7 @@ public class InfoInviteFragment extends BaseFragment implements View.OnClickList
             @Override
             public void accept(Throwable throwable) throws Exception {
                 //Log.i(TAG, "accept: " + throwable);
-                ToastUtils.showShort("网络错误");
+                ToastUtils.showShort(R.string.server_error);
             }
         }));
     }

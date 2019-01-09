@@ -174,7 +174,7 @@ public class ChongzhiPsdFragment extends BaseFragment implements View.OnClickLis
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                //Log.i(TAG, "accept: " + throwable);
+                ToastUtils.showShort(R.string.server_error);
             }
         }));
     }

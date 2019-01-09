@@ -149,7 +149,6 @@ public class MineLoginFragment extends BaseFragment<MinePresenter> implements Vi
         } else {
             mLayoutStatusView.showError();
             //SuperButton button = mRootView.findViewById(R.id.no_login);
-
         }
     }
 

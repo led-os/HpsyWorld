@@ -141,6 +141,7 @@ dependencies {
     implementation 'com.aliyun.dpa:oss-android-sdk:2.4.5'
 
     api (name: 'alipaySdk-15.5.9-20181123210657-noUtdid', ext: 'aar')
+    implementation 'com.github.SherlockGougou:BigImageViewPager:v4_3.2.0'
     //compile (name: 'AlivcPlayer-3.4.8', ext: 'aar')
     //compile (name: 'AlivcReporter-1.2', ext: 'aar')
     //compile (name: 'AliyunVodPlayer-3.4.8', ext: 'aar')
