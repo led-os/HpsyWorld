@@ -15,6 +15,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.chat.api.ChatApiFactory;
 import com.kuwai.ysy.module.chat.bean.UserInfoBean;
@@ -22,9 +24,15 @@ import com.kuwai.ysy.module.chat.business.NoticeFragment;
 import com.kuwai.ysy.module.mine.business.gift.GiftMyAcceptFragment;
 import com.kuwai.ysy.module.mine.business.gift.GiftMySendFragment;
 import com.kuwai.ysy.module.mine.business.gift.GiftRealExchangeFragment;
+import com.kuwai.ysy.utils.EventBusUtil;
+import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
+import com.rayhahah.rbase.utils.useful.SPManager;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,14 +74,20 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.chat:
-                startActivity(new Intent(getActivity(), MyFriendActivity.class));
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    startActivity(new Intent(getActivity(), MyFriendActivity.class));
+                } else {
+                    ToastUtils.showShort(R.string.login_error);
+                }
                 break;
         }
     }
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        EventBusUtil.register(this);
         pager = mRootView.findViewById(R.id.vp_dy_detail);
+        mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
         imgChat = mRootView.findViewById(R.id.chat);
         radioGroup = (RadioGroup) mRootView.findViewById(R.id.main_radiogroup);
         radioButtonLookme = mRootView.findViewById(R.id.tv_chat_count);
@@ -83,12 +97,14 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
         imgChat.setOnClickListener(this);
         radioButtonLookme.setTextSize(22);
 
+        refreshContent();
+
         //会话列表
         ConversationListFragment conversationListFragment = new ConversationListFragment();
         Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
                 .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话，该会话聚合显示
-                //.appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "true")
+                .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "true")
 //                .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "false")
                 //.appendQueryParameter(Conversation.ConversationType.PUBLIC_SERVICE.getName(), "true")
                 //.appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//设置系统会话，该会话非聚合显示
@@ -168,12 +184,21 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
         });
     }
 
+    private void refreshContent() {
+        if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+            mLayoutStatusView.showContent();
+        } else {
+            mLayoutStatusView.showError();
+        }
+    }
+
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         //getConversation();
     }
 
+    //该方法不建议放在有生命周期的地方
     private UserInfo findUserById(String userId) {
         addSubscription(ChatApiFactory.getUserInfo(userId).subscribe(new Consumer<UserInfoBean>() {
             @Override
@@ -189,9 +214,24 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                ToastUtils.showShort("网络错误");
+                //ToastUtils.showShort("网络错误");
             }
         }));
         return userInfo;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void isLogin(MessageEvent event) {
+        if (C.MSG_LOGIN == event.getCode()) {
+            refreshContent();
+        } else if (C.MSG_LOG_OUT == event.getCode()) {
+            refreshContent();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBusUtil.unregister(this);
     }
 }

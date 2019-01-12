@@ -15,6 +15,7 @@ import com.kuwai.ysy.module.circle.bean.DyRewardlistBean;
 import com.kuwai.ysy.module.circle.bean.HoleCommentListBean;
 import com.kuwai.ysy.module.circle.bean.HoleDetailBean;
 import com.kuwai.ysy.module.circle.bean.HoleMainListBean;
+import com.kuwai.ysy.module.mine.bean.ChangeHeadBean;
 import com.kuwai.ysy.net.ApiClient;
 import com.rayhahah.rbase.utils.useful.RxSchedulers;
 
@@ -66,7 +67,7 @@ public class CircleApiFactory {
     public static Observable<StsBean> getVideoSts(String uid, String token) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(CircleService.class)
-                .getVideoSts(uid,token)
+                .getVideoSts(uid, token)
                 .compose(RxSchedulers.<StsBean>ioMain());
     }
 
@@ -173,6 +174,13 @@ public class CircleApiFactory {
                 .create(CircleService.class)
                 .getDyHoleListData(t_id, page)
                 .compose(RxSchedulers.<DyRewardlistBean>ioMain());
+    }
+
+    public static Observable<ChangeHeadBean> getGroup(int uid, String otherId, int tid) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(CircleService.class)
+                .getGroup(uid, otherId, tid)
+                .compose(RxSchedulers.<ChangeHeadBean>ioMain());
     }
 
     public static Observable<SimpleResponse> openAnonyChat(String d_id, String uid, int status) {

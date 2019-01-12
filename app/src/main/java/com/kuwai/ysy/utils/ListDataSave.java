@@ -64,15 +64,5 @@ public class ListDataSave {
         }
         return list;
 
-        /*ArrayList<T> datalist = new ArrayList<T>();
-        String strJson = preferences.getString(tag, null);
-        if (null == strJson) {
-            return datalist;
-        }
-        Gson gson = new Gson();
-        datalist = gson.fromJson(strJson, new TypeToken<List<T>>() {
-        }.getType());
-        return datalist;*/
-
     }
 }

@@ -6,6 +6,8 @@ import com.kuwai.ysy.module.find.bean.FoundHome.FoundBean;
 import com.kuwai.ysy.module.find.bean.MeetThemeBean;
 import com.rayhahah.rbase.base.IRBaseView;
 
+import java.util.Map;
+
 public class CityMeetContract {
 
     public interface IHomeView extends IRBaseView {
@@ -33,7 +35,7 @@ public class CityMeetContract {
         /**
          * 获取首页精选数据
          */
-        void requestHomeData();
+        void requestHomeData(Map<String,Object> param);
 
         void getMeetfilter();
 

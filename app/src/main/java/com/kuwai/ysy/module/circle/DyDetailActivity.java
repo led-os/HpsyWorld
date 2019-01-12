@@ -34,9 +34,10 @@ public class DyDetailActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initView() {
-        bundle = new Bundle();
-        bundle.putString("did", getIntent().getStringExtra("did"));
-        loadRootFragment(R.id.container, DyDetailMainFragment.newInstance(bundle), false, true);
+        //bundle = new Bundle();
+        //bundle.putString("did", getIntent().getStringExtra("did"));
+       // bundle.putInt("index",getIntent().getIntExtra("index"));
+        loadRootFragment(R.id.container, DyDetailMainFragment.newInstance(getIntent().getExtras()), false, true);
     }
 
     @Override

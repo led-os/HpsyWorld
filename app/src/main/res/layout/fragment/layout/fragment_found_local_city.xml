@@ -7,8 +7,10 @@
     android:orientation="vertical">
 
     <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:title1="请选择所在城市">
 
     </com.kuwai.ysy.widget.NavigationLayout>
 
@@ -17,10 +19,11 @@
         android:layout_height="43dp">
 
         <RelativeLayout
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
             android:background="@drawable/shape_friend_edit">
 
             <ImageView

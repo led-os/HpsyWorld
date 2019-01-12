@@ -56,10 +56,10 @@ public class ChatApiFactory {
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
-    public static Observable<MyFriends> getTuiFriends(String uid, int page) {
+    public static Observable<MyFriends> getTuiFriends(String uid,String gender, int page) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
-                .getTuiFriends(uid,page)
+                .getTuiFriends(uid,gender,page)
                 .compose(RxSchedulers.<MyFriends>ioMain());
     }
 

@@ -4,6 +4,8 @@ import com.kuwai.ysy.module.find.bean.FoundHome.FoundBean;
 import com.kuwai.ysy.module.find.bean.TuoDanBean;
 import com.rayhahah.rbase.base.IRBaseView;
 
+import java.util.Map;
+
 public class TuoDanContract {
 
     public interface IHomeView extends IRBaseView {
@@ -29,6 +31,6 @@ public class TuoDanContract {
         /**
          * 获取首页精选数据
          */
-        void requestHomeData(int page);
+        void requestHomeData(Map<String,Object> param);
     }
 }

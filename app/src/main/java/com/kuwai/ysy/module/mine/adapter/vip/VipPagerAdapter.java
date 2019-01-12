@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.module.mine.bean.vip.VipBannerBean;
+import com.kuwai.ysy.utils.Utils;
 
 import java.util.List;
 
@@ -34,6 +35,9 @@ public class VipPagerAdapter extends PagerAdapter {
     public Object instantiateItem(final ViewGroup container, final int position) {//子View显示
         View view = View.inflate(container.getContext(), R.layout.item_vip_card, null);
         RelativeLayout imageView = view.findViewById(R.id.content);
+        ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
+        layoutParams.width = Utils.getScreenWidth() - 200;
+        imageView.setLayoutParams(layoutParams);
         TextView title = view.findViewById(R.id.title);
         TextView tequan = view.findViewById(R.id.tequan);
         tequan.setText(mData.get(position).tequan + "种特权");

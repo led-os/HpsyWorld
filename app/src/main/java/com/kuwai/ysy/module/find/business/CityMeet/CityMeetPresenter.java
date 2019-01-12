@@ -10,6 +10,8 @@ import com.kuwai.ysy.module.find.bean.MeetThemeBean;
 import com.kuwai.ysy.module.find.business.FoundHome.FoundContract;
 import com.rayhahah.rbase.base.RBasePresenter;
 
+import java.util.Map;
+
 import io.reactivex.functions.Consumer;
 
 /**
@@ -26,8 +28,8 @@ public class CityMeetPresenter extends RBasePresenter<CityMeetContract.IHomeView
     }
 
     @Override
-    public void requestHomeData() {
-        addSubscription(FoundApiFactory.getCityMeetList(1, "苏州市").subscribe(new Consumer<CityMeetBean>() {
+    public void requestHomeData(Map<String,Object> param) {
+        addSubscription(FoundApiFactory.getCityMeetList(param).subscribe(new Consumer<CityMeetBean>() {
             @Override
             public void accept(CityMeetBean cityMeetBean) throws Exception {
                 mView.setHomeData(cityMeetBean);

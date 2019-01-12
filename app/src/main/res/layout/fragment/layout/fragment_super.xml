@@ -259,7 +259,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:text="身份特权"
+                    android:text="活动特权"
                     android:textColor="#ff7b7b7b"
                     android:textSize="14sp" />
 
@@ -299,7 +299,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:text="活动特权"
+                    android:text="身份特权"
                     android:textColor="#ff7b7b7b"
                     android:textSize="14sp" />
 
@@ -324,7 +324,20 @@
                 android:id="@+id/rl_activity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:layout_below="@+id/lay_activity"></android.support.v7.widget.RecyclerView>
+
+            <View
+                android:id="@+id/bottom"
+                style="@style/horizontal_line"
+                android:layout_below="@id/rl_activity" />
+
+            <include
+                android:id="@+id/ll_io"
+                layout="@layout/bottom_vip"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/bottom" />
 
         </RelativeLayout>
     </ScrollView>

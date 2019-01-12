@@ -7,6 +7,8 @@ import com.rayhahah.rbase.base.IRBaseView;
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.RequestBody;
+
 public class PostAppointmentContract {
 
     public interface IHomeView extends IRBaseView {
@@ -32,6 +34,6 @@ public class PostAppointmentContract {
         /**
          * 发送约会信息
          */
-        void sendInfo(HashMap<String, Object> params);
+        void sendInfo(HashMap<String, RequestBody> params);
     }
 }

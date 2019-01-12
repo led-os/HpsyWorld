@@ -11,6 +11,8 @@ import com.kuwai.ysy.module.chat.business.ChatSettingFragment;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 
+import io.rong.imkit.RongIM;
+
 
 public class ConversationActivity extends BaseActivity {
 

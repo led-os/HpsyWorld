@@ -29,6 +29,7 @@
             android:src="@drawable/ic_find_nav_back" />
 
         <ImageView
+            android:id="@+id/img_more"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_alignParentRight="true"
@@ -70,8 +71,8 @@
 
             <ImageView
                 android:id="@+id/iv_sex"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:layout_alignBottom="@id/tv_age"
                 android:layout_marginLeft="6dp"
                 android:layout_toRightOf="@id/tv_age" />

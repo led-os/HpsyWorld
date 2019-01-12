@@ -253,7 +253,7 @@
             android:drawableRight="@drawable/ic_arrow_right"
             android:gravity="center_vertical"
             android:paddingRight="12dp"
-            android:text="他收到的礼物(999+)"
+            android:text="他收到的礼物"
             android:textColor="@color/balck_28"
             android:textSize="14sp"
             android:textStyle="bold" />

@@ -75,6 +75,7 @@ public class NoticeFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void initView(Bundle savedInstanceState) {
         mDownDate = mRootView.findViewById(R.id.down_date);
+        mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
         mRlDate = mRootView.findViewById(R.id.rl_date);
         mDownSystem = mRootView.findViewById(R.id.down_system);
         mMRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
@@ -116,8 +117,10 @@ public class NoticeFragment extends BaseFragment implements View.OnClickListener
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         uid = SPManager.get().getStringValue("uid");
-        uid = "1";
-        getFriends();
+        if(!Utils.isNullString(uid)){
+            getFriends();
+        }else{
+        }
     }
 
     void getFriends() {

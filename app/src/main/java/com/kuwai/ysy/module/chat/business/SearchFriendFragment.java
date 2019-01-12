@@ -167,7 +167,7 @@ public class SearchFriendFragment extends BaseFragment implements View.OnClickLi
     }
 
     private void getMore(String text) {
-        addSubscription(ChatApiFactory.getTuiFriends(text, mPage + 1).subscribe(new Consumer<MyFriends>() {
+        addSubscription(ChatApiFactory.searchFriends(text, mPage + 1).subscribe(new Consumer<MyFriends>() {
             @Override
             public void accept(MyFriends myFriends) throws Exception {
                 if (myFriends.getData() != null) {

@@ -14,6 +14,7 @@ import com.kuwai.ysy.module.circle.bean.DyRewardlistBean;
 import com.kuwai.ysy.module.circle.bean.HoleCommentListBean;
 import com.kuwai.ysy.module.circle.bean.HoleDetailBean;
 import com.kuwai.ysy.module.circle.bean.HoleMainListBean;
+import com.kuwai.ysy.module.mine.bean.ChangeHeadBean;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -205,6 +206,13 @@ public interface CircleService {
     Observable<DyRewardlistBean> getDyHoleListData(@Field("t_id") String t_id, @Field("page") int page);
 
     /**
+     * 动态打赏列表
+     */
+    @FormUrlEncoded
+    @POST("Chat/Anonymous")
+    Observable<ChangeHeadBean> getGroup(@Field("uid") int uid, @Field("other_uid") String other_uid, @Field("t_id") int t_id);
+
+    /**
      * 删除树洞一级评论
      */
     @FormUrlEncoded
@@ -230,7 +238,7 @@ public interface CircleService {
      */
     @FormUrlEncoded
     @POST("Dynamic/InsertTreeHoleCommentSub")
-    Observable<SimpleResponse> holeSecComment(@Field("t_clid") String t_clid, @Field("other_uid") String other_uid, @Field("uid") String uid, @Field("text") String text);
+    Observable<SimpleResponse> holeSecComment(@Field("t_clid") String t_clid,  @Field("uid") String uid, @Field("other_uid") String other_uid,@Field("text") String text);
 
     /**
      * 树洞评论列表

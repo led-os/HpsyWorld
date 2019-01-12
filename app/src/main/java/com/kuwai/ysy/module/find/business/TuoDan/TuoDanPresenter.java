@@ -8,6 +8,8 @@ import com.kuwai.ysy.module.find.bean.TuoDanBean;
 import com.kuwai.ysy.module.find.business.FoundHome.FoundContract;
 import com.rayhahah.rbase.base.RBasePresenter;
 
+import java.util.Map;
+
 import io.reactivex.functions.Consumer;
 
 /**
@@ -23,8 +25,8 @@ public class TuoDanPresenter extends RBasePresenter<TuoDanContract.IHomeView> im
     }
 
     @Override
-    public void requestHomeData(int page) {
-        addSubscription(FoundApiFactory.getTuoDanList(page).subscribe(new Consumer<TuoDanBean>() {
+    public void requestHomeData(Map<String,Object> param) {
+        addSubscription(FoundApiFactory.getTuoDanList(param).subscribe(new Consumer<TuoDanBean>() {
             @Override
             public void accept(TuoDanBean tuoDanBean) throws Exception {
                 mView.setHomeData(tuoDanBean);

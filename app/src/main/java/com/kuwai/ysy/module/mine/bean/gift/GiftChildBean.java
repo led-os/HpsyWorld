@@ -2,7 +2,6 @@ package com.kuwai.ysy.module.mine.bean.gift;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.kuwai.ysy.module.mine.adapter.ExpandableGiftAdapter;
-import com.kuwai.ysy.module.mine.adapter.ExpandableItemAdapter;
 
 public class GiftChildBean implements MultiItemEntity {
 

@@ -173,8 +173,8 @@ public interface MineService {
      */
     @FormUrlEncoded
     @POST("My/DelVisitorsRecord")
-    Observable<VisitorBean> getDelVisitorsRecord(@Field("uid") String uid,
-                                                 @Field("v_id") String vid,
+    Observable<SimpleResponse> getDelVisitorsRecord(@Field("uid") String uid,
+                                                 @Field("v_id") int vid,
                                                  @Field("type") String type);
 
     /**

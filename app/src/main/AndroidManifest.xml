@@ -11,7 +11,8 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- 保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_LOGS"
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
     <!-- 允许获取通讯录 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -79,7 +80,8 @@
         <activity android:name=".module.circle.aliyun.AlivcRecorderActivity" />
 
         //发现
-        <activity android:name=".module.find.FoundLocationActivity" />
+        <activity android:name=".module.find.business.FoundLocation.FoundLocationFragment"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity android:name=".module.find.business.TuoDan.TuodanActivity" />
         <activity android:name=".module.find.CityMeetActivity" />
         <activity android:name=".module.find.CommisDetailOtherActivity" />
@@ -101,6 +103,7 @@
         <activity android:name=".module.mine.business.visitor.VisitorActivity" />
         <activity android:name=".module.mine.business.gift.GiftActivity" />
         <activity android:name=".module.mine.business.question.AskQuestionActivity" />
+        <activity android:name=".module.mine.OtherHomeActivity" />
         <activity android:name=".module.mine.business.homepage.HomePageActivity" />
 
         <!--会话界面-->
@@ -117,6 +120,20 @@
                 <data
                     android:host="com.kuwai.ysy"
                     android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".module.chat.ConversationListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="com.kuwai.ysy"
+                    android:pathPrefix="/subconversationlist"
                     android:scheme="rong" />
             </intent-filter>
         </activity>
@@ -200,8 +217,8 @@
             android:value="1710cbdfca064bab89a9b31ea21814b0" />
 
         <receiver
-            android:exported="true"
-            android:name=".receiver.MyMessageReceiver">
+            android:name=".receiver.MyMessageReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
                 <action android:name="io.rong.push.intent.MI_MESSAGE_ARRIVED" />

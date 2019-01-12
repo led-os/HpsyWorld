@@ -19,17 +19,16 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_below="@id/title"
-        android:layout_marginTop="14dp"
-        android:src="@drawable/beau_girl" />
+        android:layout_marginTop="14dp" />
 
     <TextView
+        android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="30dp"
         android:layout_toRightOf="@id/img_head"
-        android:text="徐璐"
         android:textColor="#ff282838"
         android:textSize="16sp" />
 

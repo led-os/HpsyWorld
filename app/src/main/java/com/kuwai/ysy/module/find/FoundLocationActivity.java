@@ -27,7 +27,7 @@ public class FoundLocationActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void initView() {
-        loadRootFragment(R.id.container, new FoundLocationFragment(),false,true);
+        //loadRootFragment(R.id.container, new FoundLocationFragment(),false,true);
     }
 
     @Override

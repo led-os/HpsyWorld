@@ -55,6 +55,7 @@
 
     <color name="text_theme">#b35415f9</color>
     <color name="text_orange">#ff6161</color>
+    <color name="bg_orange">#b3ff6161</color>
     <color name="shadow">#f1ecff</color>
 
     <color name="filter_solid_select">#ddd0fe</color>
@@ -83,6 +84,7 @@
     <color name="aliyun_white">#FFF</color>
 
     <color name="theme_light">#b7aceb</color>
+    <color name="bg_circle">#875BFB</color>
 
     <color name="vip_huangjin">#5415F9</color>
     <color name="vip_baijin">#FF6161</color>

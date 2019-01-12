@@ -2,15 +2,19 @@ package com.kuwai.ysy.module.find.business.PostAppointment;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.allen.library.SuperButton;
 import com.allen.library.SuperTextView;
@@ -21,7 +25,9 @@ import com.kuwai.ysy.module.circle.AddressChooseActivity;
 import com.kuwai.ysy.module.circle.business.publishdy.PublishDyActivity;
 import com.kuwai.ysy.module.find.bean.BlindBean;
 import com.kuwai.ysy.module.find.bean.GiftPopBean;
+import com.kuwai.ysy.module.mine.business.homepage.MineHomepageFragment;
 import com.kuwai.ysy.utils.DialogUtil;
+import com.kuwai.ysy.utils.UploadHelper;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.luck.picture.lib.PictureSelector;
@@ -35,6 +41,7 @@ import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -74,9 +81,10 @@ public class PostAppointmentFragment extends BaseFragment<PostAppointmentPresent
     private Calendar calendar;
     private static final int REQUST_CODE_ADDRESS = 1003;
     private PoiItem poiItem;
-    private int payType = 0;
+    private String payType = "0";
     private int sexType = 0;
     private String name = "";
+    private ImageView imgUp;
 
     public static PostAppointmentFragment newInstance(Bundle bundle) {
         PostAppointmentFragment fragment = new PostAppointmentFragment();
@@ -93,6 +101,8 @@ public class PostAppointmentFragment extends BaseFragment<PostAppointmentPresent
         mGiftData = (List<GiftPopBean.DataBean>) getArguments().getSerializable("gift");
         TextView btnright = mRootView.findViewById(R.id.right_txt);
         mNavigation = mRootView.findViewById(R.id.navigation);
+        imgUp = mRootView.findViewById(R.id.img_up);
+        imgUp.setOnClickListener(this);
         mTvTime = mRootView.findViewById(R.id.tv_time);
         mTvAddress = mRootView.findViewById(R.id.tv_address);
         mRlObject = mRootView.findViewById(R.id.rl_object);
@@ -138,13 +148,13 @@ public class PostAppointmentFragment extends BaseFragment<PostAppointmentPresent
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.aa_pay_rb:
-                        payType = 0;
+                        payType = "0";
                         break;
                     case R.id.my_pay_rb:
-                        payType = 1;
+                        payType = "1";
                         break;
                     case R.id.you_pay_rb:
-                        payType = 2;
+                        payType = "2";
                         break;
                 }
             }
@@ -164,6 +174,9 @@ public class PostAppointmentFragment extends BaseFragment<PostAppointmentPresent
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.img_up:
+                requestWritePermission(PHOTO_RESULT);
+                break;
             case R.id.tv_address:
                 requestLocationPermission();
                 break;
@@ -190,33 +203,38 @@ public class PostAppointmentFragment extends BaseFragment<PostAppointmentPresent
                     gift = stringBuffer.toString().substring(0, stringBuffer.length() - 1);
                 }
 
-                HashMap<String, Object> map = new HashMap<>(16);
-                map.put("uid", SPManager.get().getStringValue("uid"));
-                map.put("sincerity", Integer.parseInt(sincerityId) < 0 ? 100 : sincerityId);
-                map.put("release_time", DateTimeUitl.toTimeInteger(mTvTime.getRightString(), "yyyy-MM-dd HH:mm"));
-                map.put("city", poiItem.getCityName());
-                map.put("area", poiItem.getAdName());
-                map.put("address", poiItem.getTitle());
-                map.put("address_name", poiItem.getSnippet());
-                map.put("longitude", poiItem.getLatLonPoint().getLongitude());
-                map.put("latitude", poiItem.getLatLonPoint().getLatitude());
-                map.put("girl_friend", sexType);
-                map.put("consumption_type", payType);
+                UploadHelper helper = UploadHelper.getInstance();
+                helper.clear();
+                helper.addParameter("uid", SPManager.get().getStringValue("uid"));
+                helper.addParameter("sincerity", String.valueOf(Integer.parseInt(sincerityId) < 0 ? 100 : sincerityId));
+                helper.addParameter("release_time", String.valueOf(DateTimeUitl.toTimeInteger(mTvTime.getRightString(), "yyyy-MM-dd HH:mm")));
+                helper.addParameter("city", poiItem.getCityName());
+                helper.addParameter("area", poiItem.getAdName());
+                helper.addParameter("address", poiItem.getTitle());
+                helper.addParameter("address_name", poiItem.getSnippet());
+                helper.addParameter("longitude", String.valueOf(poiItem.getLatLonPoint().getLongitude()));
+                helper.addParameter("latitude", String.valueOf(poiItem.getLatLonPoint().getLatitude()));
+                helper.addParameter("girl_friend", String.valueOf(sexType));
+                helper.addParameter("consumption_type", payType);
                 if (!Utils.isNullString(earnest_money)) {
-                    map.put("earnest_money", earnest_money);
+                    helper.addParameter("earnest_money", earnest_money);
                 }
                 if (!Utils.isNullString(gift)) {
-                    map.put("gift", gift);
+                    helper.addParameter("gift", gift);
                 }
                 if (!Utils.isNullString(mEtJiyu.getText().toString())) {
-                    map.put("Message", mEtJiyu.getText().toString());
+                    helper.addParameter("Message", mEtJiyu.getText().toString());
                 }
                 if (Integer.parseInt(sincerityId) < 0) {
-                    map.put("other", name);
+                    helper.addParameter("other", name);
+                }
+                if (media != null) {
+                    File file = new File(media.getCompressPath());
+                    helper.addParameter("file" + 0 + "\";filename=\"" + file.getName(), file);
                 }
 
                 DialogUtil.showLoadingDialog(getActivity(), "发布中", getResources().getColor(R.color.theme));
-                mPresenter.sendInfo(map);
+                mPresenter.sendInfo(helper.builder());
                 break;
         }
     }
@@ -347,6 +365,38 @@ public class PostAppointmentFragment extends BaseFragment<PostAppointmentPresent
                 });
     }
 
+    private void requestWritePermission(final int type) {
+        RxPermissions rxPermissions = new RxPermissions(getActivity());
+        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (aBoolean) {
+                            PictureSelector.create(PostAppointmentFragment.this)
+                                    .openGallery(PictureMimeType.ofImage())
+                                    .isCamera(false)// 是否显示拍照按钮 true or false
+                                    .compress(true)
+                                    .maxSelectNum(1)// 最大图片选择数量 int
+                                    .minSelectNum(1)// 最小选择数量 int
+                                    .enableCrop(true)// 是否裁剪 true or false
+                                    .withAspectRatio(1, 1)// int 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
+                                    .freeStyleCropEnabled(true)// 裁剪框是否可拖拽 true or false
+                                    .circleDimmedLayer(false)// 是否圆形裁剪 true or false
+                                    .showCropFrame(true)// 是否显示裁剪矩形边框 圆形裁剪时建议设为false   true or false
+                                    .showCropGrid(true)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false    true or false
+                                    .forResult(type);
+                        } else {
+                            Toast.makeText(getActivity(), "该功能需要获取相册权限", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    private List<LocalMedia> selectList = new ArrayList<>();
+    private LocalMedia media;
+    private Bitmap bitmap;
+    private static final int PHOTO_RESULT = 10000;
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -360,6 +410,18 @@ public class PostAppointmentFragment extends BaseFragment<PostAppointmentPresent
                         mTvAddress.setRightString(name + address);
                     }
                     break;
+                case PHOTO_RESULT:
+                    selectList = PictureSelector.obtainMultipleResult(data);
+                    if (selectList.size() > 0) {
+                        for (int i = 0; i < selectList.size(); i++) {
+                            media = selectList.get(0);
+                            bitmap = BitmapFactory.decodeFile(media.getCompressPath());
+                        }
+                    }
+                    if (media != null) {
+                        //File file = new File(media.getCompressPath());
+                        imgUp.setImageBitmap(bitmap);
+                    }
             }
 
         }

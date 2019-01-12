@@ -20,6 +20,8 @@ import com.kuwai.ysy.module.mine.bean.vip.VipBean;
 import com.kuwai.ysy.module.mine.bean.vip.VipPayBean;
 import com.kuwai.ysy.widget.CustomFontTextview;
 import com.kuwai.ysy.widget.layoutmanager.MyGridLayoutManager;
+import com.rayhahah.dialoglib.DialogInterface;
+import com.rayhahah.dialoglib.NormalAlertDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
@@ -44,6 +46,7 @@ public class VipSuperFragment extends BaseFragment<VipHuangjinPresenter> impleme
     private CustomFontTextview sec_price, tv_money;
     private TextView source_price;
     private SuperButton mSubmitBtn;
+    private TextView mXieyiTv, mZhengceTv;
 
     public static VipSuperFragment newInstance(Bundle args) {
         VipSuperFragment fragment = new VipSuperFragment();
@@ -72,6 +75,12 @@ public class VipSuperFragment extends BaseFragment<VipHuangjinPresenter> impleme
                 param.put("source", "Android");
                 mPresenter.getAliOrderInfo(param);
                 break;
+            case R.id.tv_xieyi:
+                ToastUtils.showShort("协议");
+                break;
+            case R.id.tv_zhengce:
+                ToastUtils.showShort("政策");
+                break;
         }
     }
 
@@ -79,6 +88,10 @@ public class VipSuperFragment extends BaseFragment<VipHuangjinPresenter> impleme
     public void initView(Bundle savedInstanceState) {
         mVipdata = (VipBean.DataBean) getArguments().getSerializable("data");
         rl_fee = mRootView.findViewById(R.id.rl_fee);
+        mXieyiTv = mRootView.findViewById(R.id.tv_xieyi);
+        mZhengceTv = mRootView.findViewById(R.id.tv_zhengce);
+        mXieyiTv.setOnClickListener(this);
+        mZhengceTv.setOnClickListener(this);
         tv_money = mRootView.findViewById(R.id.tv_money);
         sec_price = mRootView.findViewById(R.id.sec_price);
         sec_price.setText(mVipdata.getMonthly_card() + "");
@@ -125,8 +138,25 @@ public class VipSuperFragment extends BaseFragment<VipHuangjinPresenter> impleme
     public void setAliOrderInfo(SimpleResponse infoBean) {
         if (infoBean.code == 200) {
             //ToastUtils.showShort("");
+            initCleanDialog().show();
         }
         ToastUtils.showShort(infoBean.msg);
+    }
+
+    private NormalAlertDialog initCleanDialog() {
+        return new NormalAlertDialog.Builder(getActivity())
+                .setTitleText("提示")
+                .setContentText(getResources().getString(R.string.vip_tips))
+                .setSingleButtonText("好的，知道了")
+                .setSingleMode(true)
+                .setSingleListener(new DialogInterface.OnSingleClickListener<NormalAlertDialog>() {
+                    @Override
+                    public void clickSingleButton(NormalAlertDialog dialog, View view) {
+                        dialog.dismiss();
+                    }
+                })
+                .setCanceledOnTouchOutside(true)
+                .build();
     }
 
     @Override

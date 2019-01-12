@@ -115,6 +115,9 @@ public class ChangePsdFragment extends BaseFragment<ChangePsdPresenter> implemen
 
     @Override
     public void setHomeData(SimpleResponse response) {
+        if(response.code == 200){
+            pop();
+        }
         ToastUtils.showShort(response.msg);
     }
 

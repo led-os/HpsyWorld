@@ -11,11 +11,18 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.find.adapter.MyDateAdapter;
 import com.kuwai.ysy.module.find.bean.appointment.MyAppointMent;
 import com.kuwai.ysy.module.find.business.CommisDetail.CommisDetailFragment;
 import com.kuwai.ysy.module.find.business.MyCommicDetail.CommicDetailMyFragment;
+import com.kuwai.ysy.utils.EventBusUtil;
+import com.rayhahah.rbase.utils.useful.SPManager;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +33,7 @@ public class MydateMainFragment extends BaseFragment<MyInvitedPresenter> impleme
     private RecyclerView mDongtaiList;
     private List<MyAppointMent.DataBean> mDataList = new ArrayList<>();
     private MyAppointMent mMyAppointMent;
+    private int state = -1;
 
     public static MydateMainFragment newInstance() {
         Bundle args = new Bundle();
@@ -51,6 +59,7 @@ public class MydateMainFragment extends BaseFragment<MyInvitedPresenter> impleme
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        EventBusUtil.register(this);
         mDongtaiList = mRootView.findViewById(R.id.recyclerView);
         mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mDateAdapter = new MyDateAdapter(mDataList);
@@ -71,14 +80,19 @@ public class MydateMainFragment extends BaseFragment<MyInvitedPresenter> impleme
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.getMyAppointMent("1", 1, -1);
+        mPresenter.getMyAppointMent(SPManager.get().getStringValue("uid"), 1, state);
     }
 
     @Override
     public void getMyAppintMent(MyAppointMent myAppointMent) {
         mMyAppointMent = myAppointMent;
-        mDataList.addAll(myAppointMent.getData());
-        mDateAdapter.notifyDataSetChanged();
+        if (myAppointMent.getCode() == 200) {
+            mDateAdapter.replaceData(myAppointMent.getData());
+        } else {
+            mDateAdapter.getData().clear();
+            mDateAdapter.notifyDataSetChanged();
+        }
+
     }
 
     @Override
@@ -92,7 +106,21 @@ public class MydateMainFragment extends BaseFragment<MyInvitedPresenter> impleme
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBusUtil.unregister(this);
+    }
+
+    @Override
     public void showViewError(Throwable t) {
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void isLogin(MessageEvent event) {
+        if (event.getCode() == C.MSG_FILTER_DATE) {
+            state = (int) event.getData();
+            mPresenter.getMyAppointMent(SPManager.get().getStringValue("uid"), 1, state);
+        }
     }
 }

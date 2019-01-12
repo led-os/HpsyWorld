@@ -201,7 +201,7 @@
     <EditText
         android:id="@+id/et_jiyu"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="120dp"
         android:background="@color/white"
         android:gravity="top|start"
         android:hint="给你们的约会来句寄语吧～"
@@ -209,4 +209,11 @@
         android:paddingStart="16dp"
         android:textSize="@dimen/sp_16" />
 
+    <ImageView
+        android:id="@+id/img_up"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginLeft="14dp"
+        android:src="@drawable/ic_btn_gift_add"/>
 </LinearLayout>

@@ -96,7 +96,7 @@ public class FindFriendChildFragment extends BaseFragment implements View.OnClic
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.btn_add_friend:
-                        addFriends(String.valueOf(mDatalist.get(position).getUid()));
+                        addFriends(String.valueOf(mDatalist.get(position).getUid()),position);
                         break;
                 }
             }
@@ -109,12 +109,14 @@ public class FindFriendChildFragment extends BaseFragment implements View.OnClic
         getFriends();
     }
 
-    void addFriends(String otherId) {
+    void addFriends(String otherId, final int pos) {
         addSubscription(ChatApiFactory.addFriends(SPManager.get().getStringValue("uid"), otherId).subscribe(new Consumer<SimpleResponse>() {
             @Override
             public void accept(SimpleResponse response) throws Exception {
                 if (response.code == 200) {
                     //newFriendsAdapter.replaceData(myBlindBean.getData());
+                    mDatalist.get(pos).setFriends(-1);
+                    myFriendsAdapter.notifyItemChanged(pos);
                 }
                 ToastUtils.showShort(response.msg);
             }
@@ -128,7 +130,7 @@ public class FindFriendChildFragment extends BaseFragment implements View.OnClic
     }
 
     void getFriends() {
-        addSubscription(ChatApiFactory.getTuiFriends(uid, mPage).subscribe(new Consumer<MyFriends>() {
+        addSubscription(ChatApiFactory.getTuiFriends(uid,SPManager.get().getStringValue("sex_") ,mPage).subscribe(new Consumer<MyFriends>() {
             @Override
             public void accept(MyFriends myBlindBean) throws Exception {
                 mRefreshLayout.finishRefresh();
@@ -149,7 +151,7 @@ public class FindFriendChildFragment extends BaseFragment implements View.OnClic
     }
 
     private void getMore() {
-        addSubscription(ChatApiFactory.getTuiFriends(uid, mPage + 1).subscribe(new Consumer<MyFriends>() {
+        addSubscription(ChatApiFactory.getTuiFriends(uid, SPManager.get().getStringValue("sex_"),mPage + 1).subscribe(new Consumer<MyFriends>() {
             @Override
             public void accept(MyFriends myFriends) throws Exception {
                 if (myFriends.getData() != null) {

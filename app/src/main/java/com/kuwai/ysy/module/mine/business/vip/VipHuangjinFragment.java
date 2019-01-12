@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.allen.library.SuperButton;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -17,6 +18,8 @@ import com.kuwai.ysy.module.mine.bean.vip.VipBean;
 import com.kuwai.ysy.module.mine.bean.vip.VipPayBean;
 import com.kuwai.ysy.widget.CustomFontTextview;
 import com.kuwai.ysy.widget.layoutmanager.MyGridLayoutManager;
+import com.rayhahah.dialoglib.DialogInterface;
+import com.rayhahah.dialoglib.NormalAlertDialog;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
@@ -42,6 +45,7 @@ public class VipHuangjinFragment extends BaseFragment<VipHuangjinPresenter> impl
     private SuperButton mSubmitBtn;
 
     private VipBean.DataBean mVipdata = null;
+    private TextView mXieyiTv, mZhengceTv;
 
     public static VipHuangjinFragment newInstance(Bundle bundle) {
         VipHuangjinFragment fragment = new VipHuangjinFragment();
@@ -70,12 +74,22 @@ public class VipHuangjinFragment extends BaseFragment<VipHuangjinPresenter> impl
                 param.put("source", "Android");
                 mPresenter.getAliOrderInfo(param);
                 break;
+            case R.id.tv_xieyi:
+                ToastUtils.showShort("协议");
+                break;
+            case R.id.tv_zhengce:
+                ToastUtils.showShort("政策");
+                break;
         }
     }
 
     @Override
     public void initView(Bundle savedInstanceState) {
 
+        mXieyiTv = mRootView.findViewById(R.id.tv_xieyi);
+        mZhengceTv = mRootView.findViewById(R.id.tv_zhengce);
+        mXieyiTv.setOnClickListener(this);
+        mZhengceTv.setOnClickListener(this);
         rl_fee = mRootView.findViewById(R.id.rl_fee);
         tv_money = mRootView.findViewById(R.id.tv_money);
         mSubmitBtn = mRootView.findViewById(R.id.btn_submit);
@@ -144,8 +158,25 @@ public class VipHuangjinFragment extends BaseFragment<VipHuangjinPresenter> impl
         //toAliPay(infoBean);
         if (infoBean.code == 200) {
             //ToastUtils.showShort("");
+            initCleanDialog().show();
         }
         ToastUtils.showShort(infoBean.msg);
+    }
+
+    private NormalAlertDialog initCleanDialog() {
+        return new NormalAlertDialog.Builder(getActivity())
+                .setTitleText("提示")
+                .setContentText(getResources().getString(R.string.vip_tips))
+                .setSingleButtonText("好的，知道了")
+                .setSingleMode(true)
+                .setSingleListener(new DialogInterface.OnSingleClickListener<NormalAlertDialog>() {
+                    @Override
+                    public void clickSingleButton(NormalAlertDialog dialog, View view) {
+                        dialog.dismiss();
+                    }
+                })
+                .setCanceledOnTouchOutside(true)
+                .build();
     }
 
     @Override

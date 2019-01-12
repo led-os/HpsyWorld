@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.circle.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DyMainListBean {
@@ -236,8 +237,12 @@ public class DyMainListBean {
             this.whatgood = whatgood;
         }
 
-        public List<RewardBean> getReward() {
-            return reward;
+        public List<String> getReward() {
+            List<String> urls = new ArrayList<>();
+            for (RewardBean bean : reward) {
+                urls.add(bean.getAvatar());
+            }
+            return urls;
         }
 
         public void setReward(List<RewardBean> reward) {

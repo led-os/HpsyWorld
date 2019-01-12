@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,23 +28,37 @@ import com.kuwai.ysy.module.find.CommisDetailOtherActivity;
 import com.kuwai.ysy.module.find.FoundLocationActivity;
 import com.kuwai.ysy.module.find.business.CommisDetail.CommisDetailFragment;
 import com.kuwai.ysy.module.find.business.CommisDetailMyActivity;
+import com.kuwai.ysy.module.find.business.FoundLocation.FoundLocationFragment;
 import com.kuwai.ysy.module.find.business.MyCommicDetail.CommicDetailMyFragment;
 import com.kuwai.ysy.module.find.business.TuoDan.TuodanActivity;
 import com.kuwai.ysy.module.find.adapter.WebBannerAdapter;
 import com.kuwai.ysy.module.find.adapter.FoundActivityAdapter;
 import com.kuwai.ysy.module.find.bean.FoundHome.FoundBean;
 import com.kuwai.ysy.module.find.adapter.FoundCityAdapter;
+import com.kuwai.ysy.module.home.WebviewH5Activity;
 import com.kuwai.ysy.module.home.business.HomeActivity;
+import com.kuwai.ysy.module.mine.adapter.vip.BannerAdapter;
 import com.kuwai.ysy.utils.EventBusUtil;
+import com.kuwai.ysy.utils.Utils;
+import com.kuwai.ysy.utils.ZoomOutPageTransformer;
+import com.kuwai.ysy.utils.glide.GlideImageLoader;
+import com.kuwai.ysy.utils.glide.GlideRoundLoader;
 import com.kuwai.ysy.widget.BannerLayout;
+import com.kuwai.ysy.widget.BannerRound;
 import com.kuwai.ysy.widget.TextBannerView;
+import com.kuwai.ysy.widget.ViewPagerIndicator;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
 import com.rayhahah.rbase.utils.useful.SPManager;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.WeakHandler;
+import com.youth.banner.view.BannerViewPager;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +71,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
 
     private NestedScrollView scrollView;
 
-    private BannerLayout mBanner;
+    //private BannerLayout mBanner;
     private RelativeLayout mIvHuaban;
     private CircleImageView mIvHeadicon;
     private TextView mTvCity;
@@ -73,6 +88,13 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
     private TextView mCitymeetMore, mTuodanMore;
     private FoundBean mFoundBean;
 
+    BannerViewPager mViewpager;
+    private int count = 0;
+    ViewPagerIndicator mIndicatorLine;
+    private BannerAdapter mBannerAdapter;
+    private BannerRound bannerRound;
+    private List<String> mBannerList = new ArrayList<>();
+
     @Override
     protected int setFragmentLayoutRes() {
         return R.layout.found_fregment;
@@ -82,13 +104,21 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_city_meet_more:
-                startActivity(new Intent(getActivity(), CityMeetActivity.class));
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    startActivity(new Intent(getActivity(), CityMeetActivity.class));
+                } else {
+                    ToastUtils.showShort(R.string.login_error);
+                }
                 break;
             case R.id.tv_tuodan_more:
-                startActivity(new Intent(getActivity(), TuodanActivity.class));
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    startActivity(new Intent(getActivity(), TuodanActivity.class));
+                } else {
+                    ToastUtils.showShort(R.string.login_error);
+                }
                 break;
             case R.id.tv_location:
-                startActivity(new Intent(getActivity(), FoundLocationActivity.class));
+                startActivityForResult(new Intent(getActivity(), FoundLocationFragment.class), 0);
                 break;
         }
     }
@@ -97,8 +127,14 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
     @Override
     public void initView(Bundle savedInstanceState) {
         EventBusUtil.register(this);
+        SPManager.get().putString("cityName", "苏州市");
+        SPManager.get().putString("cityId", "114");
         mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
-        mBanner = mRootView.findViewById(R.id.banner);
+        mViewpager = mRootView.findViewById(R.id.bannerViewPager);
+        mIndicatorLine = mRootView.findViewById(R.id.indicator_line);
+
+        mIndicatorLine = mRootView.findViewById(R.id.indicator_line);
+        bannerRound = mRootView.findViewById(R.id.banner);
         scrollView = mRootView.findViewById(R.id.scrool);
         mLocationTv = mRootView.findViewById(R.id.tv_location);
         mIvHuaban = mRootView.findViewById(R.id.iv_huaban);
@@ -111,17 +147,11 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
         mTvActivity = mRootView.findViewById(R.id.tv_activity);
         mRvActivity = mRootView.findViewById(R.id.rv_activity);
 
-
         scrollView.setOnScrollChangeListener(new HomeActivity.ScroolListener());
 
         mCitymeetMore.setOnClickListener(this);
         mTuodanMore.setOnClickListener(this);
         mLocationTv.setOnClickListener(this);
-
-       /* mBanner.setImageLoader(new GlideImageLoader());
-        mBanner.setImages(Arrays.asList(images));
-        mBanner.start();*/
-
 
         Drawable drawable = getResources().getDrawable(R.mipmap.ic_launcher);
         /**这里可以设置带图标的数据（1.0.2新方法），比setDatas方法多了带图标参数；
@@ -174,6 +204,17 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
                 }
             }
         });
+
+        mfoundActivityAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(getActivity(), WebviewH5Activity.class);
+                intent.putExtra("type", "huodong");
+                intent.putExtra("id", mfoundActivityAdapter.getData().get(position).getAid());
+                intent.putExtra(C.H5_FLAG, C.H5_URL + C.HUODONGXIANGQING + "uid=" + SPManager.get().getStringValue("uid") + "&aid=" + mfoundActivityAdapter.getData().get(position).getAid());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -217,8 +258,15 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
     public void setHomeData(FoundBean foundBean) {
         mFoundBean = foundBean;
         mLayoutStatusView.showContent();
-        WebBannerAdapter webBannerAdapter = new WebBannerAdapter(getActivity(), foundBean);
-        mBanner.setAdapter(webBannerAdapter);
+        mBannerList.clear();
+        for (FoundBean.DataBean.BannerBean data : foundBean.getData().getBanner()) {
+            mBannerList.add(data.getImg());
+        }
+        bannerRound.setImageLoader(new GlideRoundLoader());
+        bannerRound.setImages(mBannerList);
+        bannerRound.setBannerStyle(BannerConfig.NOT_INDICATOR);
+        mIndicatorLine.setViewPager(mViewpager, 4);
+        bannerRound.start();
 
         mfoundCityAdapter.replaceData(foundBean.getData().getAppointment());
         mfoundActivityAdapter.replaceData(foundBean.getData().getActivity());
@@ -245,8 +293,10 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
     private void getData() {
         Map<String, Object> map = new HashMap<>();
         map.put("city", city);
-        map.put("longitude", 113);
-        map.put("latitude", 23);
+        //latitude = SPManager.get().getStringValue("latitude");
+        //longitude = SPManager.get().getStringValue("longitude");
+        map.put("longitude", SPManager.get().getStringValue("longitude"));
+        map.put("latitude", SPManager.get().getStringValue("latitude"));
 
         mPresenter.requestHomeData(map);
     }
@@ -273,6 +323,17 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
             int pos = (int) event.getData();
             GlideUtil.load(getActivity(), mFoundBean.getData().getNews().get(pos).getAvatar(), mIvHeadicon);
             //mPresenter.getCommentList(did, SPManager.get().getStringValue("uid"), 1);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (data != null) {
+                city = data.getStringExtra("city");
+                mLocationTv.setText(city);
+            }
         }
     }
 

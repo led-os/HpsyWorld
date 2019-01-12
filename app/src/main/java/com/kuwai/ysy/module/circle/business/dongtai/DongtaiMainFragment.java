@@ -19,9 +19,11 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.chat.MyFriendActivity;
 import com.kuwai.ysy.module.circle.DyDetailActivity;
 import com.kuwai.ysy.module.circle.FriendsVideoFragment;
 import com.kuwai.ysy.module.circle.VideoPlayActivity;
@@ -30,11 +32,15 @@ import com.kuwai.ysy.module.circle.adapter.DongtaiAdapter;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.DyMainListBean;
 import com.kuwai.ysy.module.home.business.HomeActivity;
+import com.kuwai.ysy.module.mine.OtherHomeActivity;
+import com.kuwai.ysy.module.mine.business.homepage.OtherHomepageFragment;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.DragFloatActionButton;
 import com.kuwai.ysy.widget.GlideSimpleTarget;
 import com.kuwai.ysy.widget.popwindow.YsyPopWindow;
 import com.rayhahah.dialoglib.CustomDialog;
+import com.rayhahah.rbase.base.RBaseFragment;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -43,6 +49,9 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +76,7 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
     private SmartRefreshLayout mRefreshLayout;
 
     private int mPosition = 0;
+    private int index;
 
     public static DongtaiMainFragment newInstance(String type) {
         Bundle args = new Bundle();
@@ -90,14 +100,18 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_edit:
-                showPopListView();
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    showPopListView();
+                } else {
+                    ToastUtils.showShort(R.string.login_error);
+                }
                 break;
         }
     }
 
     @Override
     public void initView(Bundle savedInstanceState) {
-
+        EventBusUtil.register(this);
         type = getArguments().getString("type");
 
         mDongtaiList = mRootView.findViewById(R.id.recyclerView);
@@ -149,8 +163,23 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
+                    case R.id.img_head:
+                        if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                            if (!SPManager.get().getStringValue("uid").equals(String.valueOf(mDongtaiAdapter.getData().get(position).getUid()))) {
+                                Intent intent1 = new Intent(getActivity(), OtherHomeActivity.class);
+                                intent1.putExtra("uid", String.valueOf(mDongtaiAdapter.getData().get(position).getUid()));
+                                startActivity(intent1);
+                            }
+                        } else {
+                            ToastUtils.showShort(R.string.login_error);
+                        }
+                        break;
                     case R.id.tv_more:
-                        showMore();
+                        if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                            showMore();
+                        } else {
+                            ToastUtils.showShort(R.string.login_error);
+                        }
                         break;
                     case R.id.iv_playimg:
                         Intent intent = new Intent(getActivity(), VideoPlayActivity.class);
@@ -167,11 +196,15 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
                         break;
 
                     case R.id.ll_like:
-                        mPosition = position;
-                        mPresenter.dyListZan(String.valueOf(mDyMainListBean.getData().get(position).getD_id()),
-                                SPManager.get().getStringValue("uid"),
-                                String.valueOf(mDyMainListBean.getData().get(position).getUid()),
-                                mDyMainListBean.getData().get(position).getWhatgood() == 0 ? 1 : 2);
+                        if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                            mPosition = position;
+                            mPresenter.dyListZan(String.valueOf(mDyMainListBean.getData().get(position).getD_id()),
+                                    SPManager.get().getStringValue("uid"),
+                                    String.valueOf(mDyMainListBean.getData().get(position).getUid()),
+                                    mDyMainListBean.getData().get(position).getWhatgood() == 0 ? 1 : 2);
+                        } else {
+                            ToastUtils.showShort(R.string.login_error);
+                        }
                         break;
                 }
             }
@@ -180,9 +213,17 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
         mDongtaiAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(getActivity(), DyDetailActivity.class);
-                intent.putExtra("did", String.valueOf(mDyMainListBean.getData().get(position).getD_id()));
-                startActivity(intent);
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    index = position;
+                    Intent intent = new Intent(getActivity(), DyDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("index", position);
+                    bundle.putString("did", String.valueOf(mDyMainListBean.getData().get(position).getD_id()));
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else {
+                    ToastUtils.showShort(R.string.login_error);
+                }
             }
         });
     }
@@ -345,5 +386,27 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
     @Override
     public void showViewError(Throwable t) {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBusUtil.unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void isLogin(MessageEvent event) {
+        if (event.getCode() == C.MSG_ZAN_DY) {
+            DyMainListBean.DataBean dataBean = mDyMainListBean.getData().get(index);
+            if ("0".equals(event.getData())) {
+                //未点赞
+                dataBean.setGood(dataBean.getGood() - 1);
+                dataBean.setWhatgood(0);
+            } else {
+                dataBean.setWhatgood(1);
+                dataBean.setGood(dataBean.getGood() + 1);
+            }
+            mDongtaiAdapter.notifyItemChanged(index);
+        }
     }
 }

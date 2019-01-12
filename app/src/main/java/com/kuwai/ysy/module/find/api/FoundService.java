@@ -16,12 +16,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 
 public interface FoundService {
@@ -42,8 +44,9 @@ public interface FoundService {
     Observable<LocalNextBean> getNextData(@Query("region_id") int num);
 
     //同城约会
+    @FormUrlEncoded
     @POST("Appointment/AppointmentList")
-    Observable<CityMeetBean> getMeetListData(@Query("page") int page, @Query("city") String city);
+    Observable<CityMeetBean> getMeetListData(@FieldMap Map<String,Object> map);
 
     //约会-申请方-申请应约
     @POST("Appointment/invitation")
@@ -85,8 +88,9 @@ public interface FoundService {
     Observable<SimpleResponse> deleteAppoint(@Field("r_id") int rid);
 
     //相亲活动列表
+    @FormUrlEncoded
     @POST("Appointment/EnrollActivityList")
-    Observable<TuoDanBean> getTuoDanData(@Query("page") int page);
+    Observable<TuoDanBean> getTuoDanData(@FieldMap Map<String,Object> map);
 
     //我的相亲活动列表
     @POST("Appointment/MyEnrollActivityList")
@@ -94,8 +98,8 @@ public interface FoundService {
 
     //发布约会
     @POST("Appointment/Appointment")
-    @FormUrlEncoded
-    Observable<BlindBean> sendBlind(@FieldMap HashMap<String, Object> params);
+    @Multipart
+    Observable<BlindBean> sendBlind(@PartMap HashMap<String, RequestBody> params);
 //    Observable<BlindBean> sendBlind(@Query("uid") int uid,@Query("sincerity") int sincerity,@Query("release_time") int time,
 //                                      @Query("area") String area,@Query("address") String address,@Query("girl_friend") int sex,
 //                                      @Query("consumption_type") int payfor,@Query("earnest_money") int money,@Query("gift") String gift,

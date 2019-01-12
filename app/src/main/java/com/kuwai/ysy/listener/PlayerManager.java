@@ -11,12 +11,16 @@ import com.aliyun.vodplayer.media.AliyunVidSts;
 import com.aliyun.vodplayer.media.AliyunVodPlayer;
 import com.aliyun.vodplayer.media.IAliyunVodPlayer;
 import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.module.chat.api.ChatApiFactory;
+import com.kuwai.ysy.module.chat.bean.StsBean;
 import com.kuwai.ysy.module.home.adapter.ListVideoAdapter;
 import com.kuwai.ysy.module.home.bean.HomeVideoBean;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.functions.Consumer;
 
 import static com.aliyun.vodplayer.media.IAliyunVodPlayer.VideoScalingMode.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING;
 
@@ -43,6 +47,13 @@ public class PlayerManager {
             public void onError(int arg0, int arg1, String msg) {
                 Toast.makeText(context.getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
                 stop();
+            }
+        });
+
+        vodPlayer.setOnTimeExpiredErrorListener(new IAliyunVodPlayer.OnTimeExpiredErrorListener() {
+            @Override
+            public void onTimeExpiredError() {
+                getSts();
             }
         });
 
@@ -77,7 +88,28 @@ public class PlayerManager {
         vodPlayer.prepareAsync(mVidSts);
     }
 
-    public void setData(List<HomeVideoBean.DataBean> url){
+    void getSts() {
+        ChatApiFactory.getSts().subscribe(new Consumer<StsBean>() {
+            @Override
+            public void accept(StsBean stsBean) throws Exception {
+                if (stsBean.getCode() == 200) {
+                    SPManager.get().putString(C.ALI_ACID, stsBean.getData().getAccessKeyId());
+                    SPManager.get().putString(C.ALI_SECRET, stsBean.getData().getAccessKeySecret());
+                    SPManager.get().putString(C.ALI_TOKEN, stsBean.getData().getSecurityToken());
+                } else {
+                    //ToastUtils.showShort(stsBean.getMsg());
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: "+throwable);
+                //ToastUtils.showShort("网络错误");
+            }
+        });
+    }
+
+    public void setData(List<HomeVideoBean.DataBean> url) {
         urlList = url;
     }
 

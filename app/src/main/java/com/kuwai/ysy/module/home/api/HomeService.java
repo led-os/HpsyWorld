@@ -9,6 +9,7 @@ import com.kuwai.ysy.module.home.bean.login.LoginBean;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -42,9 +43,9 @@ public interface HomeService {
 
     @FormUrlEncoded
     @POST("User/register")
-    Observable<SimpleResponse> regist(@FieldMap Map<String, String> num);
+    Observable<SimpleResponse> regist(@FieldMap Map<String, RequestBody> num);
 
     @FormUrlEncoded
     @POST("HomePage/HomePageList")
-    Observable<HomeVideoBean> getHomeData(@FieldMap Map<String, String> num);
+    Observable<HomeVideoBean> getHomeData(@FieldMap Map<String, Object> num);
 }

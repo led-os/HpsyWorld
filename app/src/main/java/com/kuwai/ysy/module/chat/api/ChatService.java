@@ -79,7 +79,7 @@ public interface ChatService {
     //寻找好友列表-推荐
     @FormUrlEncoded
     @POST("Chat/RecommendFriendList")
-    Observable<MyFriends> getTuiFriends(@Field("uid") String uid,@Field("page") int page);
+    Observable<MyFriends> getTuiFriends(@Field("uid") String uid,@Field("gender") String gender,@Field("page") int page);
 
     //寻找好友列表-附近
     @FormUrlEncoded

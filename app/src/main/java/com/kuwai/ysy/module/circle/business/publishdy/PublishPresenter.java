@@ -11,6 +11,7 @@ import com.kuwai.ysy.module.circle.business.DyDetail.DyDetailContract;
 import com.kuwai.ysy.utils.DialogUtil;
 import com.kuwai.ysy.utils.UploadHelper;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 
 import java.util.HashMap;
 
@@ -44,15 +45,16 @@ public class PublishPresenter extends RBasePresenter<PublishDyContract.IPublishV
 
     @Override
     public void getStsToken(String uid, String token, final String type) {
-        addSubscription(CircleApiFactory.getVideoSts(uid,token).subscribe(new Consumer<StsBean>() {
+        addSubscription(CircleApiFactory.getVideoSts(uid, token).subscribe(new Consumer<StsBean>() {
             @Override
             public void accept(StsBean stsBean) throws Exception {
-                mView.getTokenResult(stsBean,type);
+                mView.getTokenResult(stsBean, type);
             }
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
                 Log.i(TAG, "accept: " + throwable);
+                ToastUtils.showShort(R.string.server_error);
             }
         }));
     }

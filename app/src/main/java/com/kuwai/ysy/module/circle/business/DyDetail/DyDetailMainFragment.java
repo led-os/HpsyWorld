@@ -41,6 +41,7 @@ import com.kuwai.ysy.module.circle.business.DyZan.DyZanListFragment;
 import com.kuwai.ysy.module.find.bean.GiftPopBean;
 import com.kuwai.ysy.others.NineImageAdapter;
 import com.kuwai.ysy.utils.EventBusUtil;
+import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.GiftPannelView;
 import com.kuwai.ysy.widget.MyViewPager;
 import com.kuwai.ysy.widget.NavigationLayout;
@@ -80,6 +81,7 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
     private NineImageAdapter nineImageAdapter;
 
     private NiceImageView mImgHead;
+    private int index;
     /**
      * 杨和苏Ysny
      */
@@ -180,7 +182,7 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
     @Override
     public void initView(Bundle savedInstanceState) {
         did = getArguments().getString("did");
-
+        index = getArguments().getInt("index");
         mImgHead = (NiceImageView) mRootView.findViewById(R.id.img_head);
         mTvNick = (TextView) mRootView.findViewById(R.id.tv_nick);
         mIvSex = mRootView.findViewById(R.id.iv_sex);
@@ -315,20 +317,23 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
         //image.setThumb(image);
         image.compressStyle = UMImage.CompressStyle.QUALITY;*/
         UMImage image = null;
-        if (mDyDetailBean.getData().getAttach() != null && mDyDetailBean.getData().getAttach().size() > 0) {
-            image = new UMImage(getActivity(), mDyDetailBean.getData().getAttach().get(0));//网络图片
-        } else {
-            image = new UMImage(getActivity(), R.mipmap.ic_sading);//网络图片
+        if (mDyDetailBean != null) {
+            if (mDyDetailBean.getData().getAttach() != null && mDyDetailBean.getData().getAttach().size() > 0) {
+                image = new UMImage(getActivity(), mDyDetailBean.getData().getAttach().get(0));//网络图片
+            } else {
+                image = new UMImage(getActivity(), R.mipmap.ic_sading);//网络图片
+            }
+            String url = "http://api.yushuiyuan.cn/h5/trend-detail.html?did=" + did;
+            UMWeb web = new UMWeb(url);
+            web.setTitle("鱼水缘动态");//标题
+            web.setThumb(image);  //缩略图
+            web.setDescription(mDyDetailBean.getData().getText());//描述
+            new ShareAction(getActivity())
+                    .withMedia(web)
+                    .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
+                    .setCallback(shareListener).open();
         }
-        String url = "http://api.yushuiyuan.cn/h5/trend-detail.html?did=" + did;
-        UMWeb web = new UMWeb(url);
-        web.setTitle("鱼水缘动态");//标题
-        web.setThumb(image);  //缩略图
-        web.setDescription(mDyDetailBean.getData().getText());//描述
-        new ShareAction(getActivity())
-                .withMedia(web)
-                .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
-                .setCallback(shareListener).open();
+
     }
 
     private UMShareListener shareListener = new UMShareListener() {
@@ -391,7 +396,9 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
                     String commentContent = commentText.getText().toString().trim();
                     if (!TextUtils.isEmpty(commentContent)) {
                         dialog.dismiss();
-                        mPresenter.addFirComment(did, "1", commentContent);
+                        mPresenter.addFirComment(did, SPManager.get().getStringValue("uid"), commentContent);
+                        Utils.showOrHide(getActivity(), commentText);
+                        commentText.setText("");
                     } else {
                         Toast.makeText(getActivity(), "评论内容不能为空", Toast.LENGTH_SHORT).show();
                     }
@@ -463,11 +470,11 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
                 break;
         }
 
-        mTvLocation.setText(dyDetailBean.getData().getAddress());
+        mTvLocation.setText(Utils.isNullString(dyDetailBean.getData().getAddress()) ? "" : dyDetailBean.getData().getAddress() + "    ");
         mTvTime.setText(DateTimeUitl.getStandardDate(String.valueOf(dyDetailBean.getData().getUpdate_time())));
-        mRadioDashang.setText("打赏（" + String.valueOf(dyDetailBean.getData().getReward()) + "）");
-        mRadioReward.setText("评论（" + String.valueOf(dyDetailBean.getData().getComment()) + "）");
-        mRadioZan.setText("点赞（" + String.valueOf(dyDetailBean.getData().getGood()) + "）");
+        //mRadioDashang.setText("打赏（" + String.valueOf(dyDetailBean.getData().getReward()) + "）");
+        //mRadioReward.setText("评论（" + String.valueOf(dyDetailBean.getData().getComment()) + "）");
+        //mRadioZan.setText("点赞（" + String.valueOf(dyDetailBean.getData().getGood()) + "）");
 
     }
 
@@ -490,12 +497,14 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
 
     @Override
     public void zanResult() {
-        EventBusUtil.sendEvent(new MessageEvent(C.MSG_ZAN_DY));
+
         isLike = !isLike;
         if (isLike) {
             mDshangBtn.setText("取消赞");
+            EventBusUtil.sendEvent(new MessageEvent(C.MSG_ZAN_DY,"1"));
         } else {
             mDshangBtn.setText("赞一下");
+            EventBusUtil.sendEvent(new MessageEvent(C.MSG_ZAN_DY,"0"));
         }
     }
 

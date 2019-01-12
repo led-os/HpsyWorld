@@ -114,8 +114,8 @@
 
         <ImageView
             android:id="@+id/img_vip"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
             android:layout_below="@id/img_head"
             android:layout_marginLeft="8dp"
             android:visibility="gone"

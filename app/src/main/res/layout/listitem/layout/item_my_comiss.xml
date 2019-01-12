@@ -27,9 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/tv_nick"
         android:layout_marginLeft="8dp"
-        android:visibility="invisible"
-        android:layout_toRightOf="@id/tv_nick"
-        android:src="@drawable/ic_find_list_pick" />
+        android:layout_toRightOf="@id/tv_nick" />
 
     <TextView
         android:id="@+id/tv_time_state"
@@ -38,7 +36,7 @@
         android:layout_alignBottom="@id/tv_nick"
         android:layout_marginLeft="2dp"
         android:layout_toRightOf="@id/img_pick_type"
-        android:textColor="@color/balck_28"
+        android:textColor="@color/theme"
         android:textSize="13sp" />
 
     <TextView
@@ -47,6 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_nick"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="6dp"
         android:layout_toRightOf="@id/img_head"
         android:layout_weight="1"
         android:gravity="center_vertical"
@@ -55,9 +54,11 @@
 
     <ImageView
         android:id="@+id/img_sex"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
         android:layout_below="@id/tv_nick"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="6dp"
         android:layout_toRightOf="@id/tv_age" />
 
 

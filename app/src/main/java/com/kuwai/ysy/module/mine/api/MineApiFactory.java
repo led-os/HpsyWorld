@@ -58,6 +58,13 @@ public class MineApiFactory {
                 .compose(RxSchedulers.<PersolHomePageBean>ioMain());
     }
 
+    public static Observable<SimpleResponse> delVisitorsRecord(String uid, int otherid,String type) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getDelVisitorsRecord(uid, otherid,type)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
     public static Observable<PersolHomePageBean> getUsetInfoMine(String uid) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)

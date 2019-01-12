@@ -20,6 +20,7 @@ import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.find.adapter.DialogGiftAdapter;
+import com.kuwai.ysy.module.find.adapter.DialogOtherGiftAdapter;
 import com.kuwai.ysy.module.find.bean.BlindBean;
 import com.kuwai.ysy.module.find.bean.CommisDetailBean;
 import com.kuwai.ysy.module.mine.business.homepage.OtherHomepageFragment;
@@ -37,6 +38,8 @@ import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.rong.imkit.RongIM;
 
 public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> implements CommisDetailContract.IHomeView, View.OnClickListener {
 
@@ -122,6 +125,8 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
     private String uid;
 
     private CommisDetailBean mcCommisDetailBean;
+    private CustomDialog giftDialog;
+    private ImageView imgMore;
 
     public static CommisDetailFragment newInstance(Bundle bundle) {
         CommisDetailFragment fragment = new CommisDetailFragment();
@@ -143,29 +148,33 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.img_more:
+                showMore();
+                break;
             case R.id.tv_more:
 
-                if (customDialog == null) {
+                if (giftDialog == null) {
                     View pannel = View.inflate(getActivity(), R.layout.dialog_more_gift, null);
                     RecyclerView recyclerView = pannel.findViewById(R.id.rl_gift);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
                     linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                     recyclerView.setLayoutManager(linearLayoutManager);
-                    DialogGiftAdapter adapter = new DialogGiftAdapter(mcCommisDetailBean.getData().getGift());
+                    DialogOtherGiftAdapter adapter = new DialogOtherGiftAdapter(mcCommisDetailBean.getData().getGift());
                     recyclerView.setAdapter(adapter);
-                    customDialog = new CustomDialog.Builder(getActivity())
+                    giftDialog = new CustomDialog.Builder(getActivity())
                             .setView(pannel)
                             .setTouchOutside(true)
                             .setItemHeight(0.2f)
+                            .setItemWidth(0.7f)
                             .setDialogGravity(Gravity.CENTER)
                             .build();
                 }
-                customDialog.show();
+                giftDialog.show();
                 break;
 
             case R.id.btn_commis:
                 if ("应约".equals(mBtnCommis.getText().toString())) {
-                    mPresenter.getApply(rid, Integer.valueOf(SPManager.get().getStringValue("uid")), getResources().getString(R.string.meetagree_text));
+                    showPop();
                 } else {
                     mPresenter.cancelApply(mcCommisDetailBean.getData().getR_id(), Integer.parseInt(SPManager.get().getStringValue("uid")));
                 }
@@ -176,6 +185,50 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
         }
     }
 
+    private void showMore() {
+        View pannel = View.inflate(getActivity(), R.layout.dialog_dongtai_item_more, null);
+        if (customDialog == null) {
+            customDialog = new CustomDialog.Builder(getActivity())
+                    .setView(pannel)
+                    .setTouchOutside(true)
+                    .setDialogGravity(Gravity.CENTER)
+                    .build();
+        }
+        customDialog.show();
+    }
+
+    private void showPop() {
+        View pannel = View.inflate(getActivity(), R.layout.dialog_yingyue_content, null);
+        ImageView head = pannel.findViewById(R.id.img_head);
+        TextView title = pannel.findViewById(R.id.tv_name);
+        GlideUtil.load(getActivity(), mcCommisDetailBean.getData().getAvatar(), head);
+        title.setText(mcCommisDetailBean.getData().getNickname());
+        pannel.findViewById(R.id.tv_send).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                //RongIM.getInstance().setMessageAttachedUserInfo(true);
+                mPresenter.getApply(rid, Integer.valueOf(SPManager.get().getStringValue("uid")), getResources().getString(R.string.meetagree_text));
+            }
+        });
+
+        pannel.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+            }
+        });
+
+        if (customDialog == null) {
+            customDialog = new CustomDialog.Builder(getActivity())
+                    .setView(pannel)
+                    .setTouchOutside(true)
+                    .setDialogGravity(Gravity.CENTER)
+                    .build();
+        }
+        customDialog.show();
+    }
+
     @Override
     public void initView(Bundle savedInstanceState) {
         rid = getArguments().getInt("rid");
@@ -183,6 +236,7 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
 
         mLayoutStatusView = mRootView.findViewById(R.id.mLayoutStatusView);
         mCover = mRootView.findViewById(R.id.iv_cover);
+        imgMore = mRootView.findViewById(R.id.img_more);
         mTvName = (TextView) mRootView.findViewById(R.id.tv_name);
         mTvAge = (TextView) mRootView.findViewById(R.id.tv_age);
         mSex = mRootView.findViewById(R.id.iv_sex);
@@ -218,6 +272,7 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
         mTopLay.setOnClickListener(this);
         mTvName.setOnClickListener(this);
         mTvMore.setOnClickListener(this);
+        imgMore.setOnClickListener(this);
         mBtnCommis.setOnClickListener(this);
 
         mRadius = Utils.dp2px(8);
@@ -307,8 +362,11 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
         } else if (commisDetailBean.getData().getGift().size() == 1) {
             mApGift.setText(commisDetailBean.getData().getGift().get(0).getGirft_name()
                     + "*" + commisDetailBean.getData().getGift().get(0).getG_nums());
+            mApGift.setVisibility(View.VISIBLE);
             mTvMore.setVisibility(View.INVISIBLE);
         } else if (commisDetailBean.getData().getGift().size() > 1) {
+            mApGift.setVisibility(View.VISIBLE);
+            mTvMore.setVisibility(View.VISIBLE);
             mApGift.setText(commisDetailBean.getData().getGift().get(0).getGirft_name()
                     + "*" + commisDetailBean.getData().getGift().get(0).getG_nums());
         }

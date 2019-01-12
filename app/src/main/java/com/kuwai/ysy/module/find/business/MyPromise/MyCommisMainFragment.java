@@ -63,26 +63,26 @@ public class MyCommisMainFragment extends BaseFragment<MyPromisePresenter> imple
         mDateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (mMyCommis.getData().get(position).getStatus() == 0) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("rid", mMyCommis.getData().get(position).getR_id());
+                //if (mMyCommis.getData().get(position).getStatus() == 0) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("rid", mMyCommis.getData().get(position).getR_id());
 
-                    if ((Integer.valueOf(SPManager.get().getStringValue("uid","1"))) == (mMyCommis.getData().get(position).getUid())) {
-                        ((BaseFragment) getParentFragment()).start(CommicDetailMyFragment.newInstance(bundle));
-                    } else {
-                        ((BaseFragment) getParentFragment()).start(CommisDetailFragment.newInstance(bundle));
+                if ((Integer.valueOf(SPManager.get().getStringValue("uid", "1"))) == (mMyCommis.getData().get(position).getUid())) {
+                    ((BaseFragment) getParentFragment()).start(CommicDetailMyFragment.newInstance(bundle));
+                } else {
+                    ((BaseFragment) getParentFragment()).start(CommisDetailFragment.newInstance(bundle));
 
-                    }
-                } else if (mMyCommis.getData().get(position).getStatus() == 1 || mMyCommis.getData().get(position).getStatus() == 2) {
-                    //去聊聊
                 }
+                //} else if (mMyCommis.getData().get(position).getStatus() == 1 || mMyCommis.getData().get(position).getStatus() == 2) {
+                //去聊聊
+                //}
             }
         });
 
         mDateAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (view.getId()==R.id.sb_status){
+                if (view.getId() == R.id.sb_status) {
                     if (mMyCommis.getData().get(position).getStatus() == 0) {
                         mPresenter.getCancelApply(mMyCommis.getData().get(position).getR_id(),
                                 (Integer.valueOf(SPManager.get().getStringValue("uid"))));
@@ -95,7 +95,7 @@ public class MyCommisMainFragment extends BaseFragment<MyPromisePresenter> imple
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.getMyCommis("1", 1);
+        mPresenter.getMyCommis(SPManager.get().getStringValue("uid"), 1);
     }
 
     @Override

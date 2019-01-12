@@ -45,21 +45,33 @@ public class MyComissAdapter extends BaseQuickAdapter<MyCommis.DataBean, BaseVie
         helper.setText(R.id.tv_time, DateTimeUitl.timedate(String.valueOf(item.getRelease_time())));
         switch (item.getStatus()) {
             case 0:
+                helper.getView(R.id.img_pick_type).setVisibility(View.VISIBLE);
+                GlideUtil.load(mContext, R.drawable.ic_find_list_think, (ImageView) helper.getView(R.id.img_pick_type));
                 helper.setText(R.id.sb_status, "取消应约");
+                helper.setText(R.id.tv_time_state, "考虑中");
 //                helper.setText(R.id.tv_time_state,);
                 break;
             case 1:
-                helper.setText(R.id.sb_status, "去聊聊");
-                GlideUtil.load(mContext, R.drawable.dyn_message_ic_like, (ImageView) helper.getView(R.id.img_pick_type));
+                helper.setText(R.id.sb_status, "已同意");
+                helper.getView(R.id.img_pick_type).setVisibility(View.VISIBLE);
+                GlideUtil.load(mContext, R.drawable.ic_find_list_pick, (ImageView) helper.getView(R.id.img_pick_type));
                 helper.setText(R.id.tv_time_state, "选中你啦");
                 break;
             case 2:
-                helper.setText(R.id.sb_status, "去聊聊");
-                helper.setText(R.id.tv_time_state, "被拒绝");
+                helper.getView(R.id.img_pick_type).setVisibility(View.INVISIBLE);
+                helper.setText(R.id.sb_status, "被拒绝");
+                // helper.setText(R.id.tv_time_state, "被拒绝");
                 break;
             case 3:
+                helper.getView(R.id.img_pick_type).setVisibility(View.INVISIBLE);
                 helper.getView(R.id.tv_more).setVisibility(View.INVISIBLE);
                 helper.setText(R.id.sb_status, "发布方已取消");
+//                helper.setText(R.id.tv_time_state);
+                break;
+            case 4:
+                helper.getView(R.id.img_pick_type).setVisibility(View.INVISIBLE);
+                helper.getView(R.id.tv_more).setVisibility(View.INVISIBLE);
+                helper.setText(R.id.sb_status, "已取消");
 //                helper.setText(R.id.tv_time_state);
                 break;
         }

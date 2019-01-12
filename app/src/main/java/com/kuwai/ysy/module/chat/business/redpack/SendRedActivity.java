@@ -230,7 +230,7 @@ public class SendRedActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void accept(Throwable throwable) throws Exception {
                 //Log.i(TAG, "accept: "+throwable);
-                ToastUtils.showShort("网络错误");
+                ToastUtils.showShort(R.string.server_error);
             }
         }));
     }

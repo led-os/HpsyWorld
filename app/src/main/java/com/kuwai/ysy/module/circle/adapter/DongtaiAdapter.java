@@ -13,7 +13,9 @@ import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.DyMainListBean;
 import com.kuwai.ysy.others.NineImageAdapter;
+import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NineGridView;
+import com.kuwai.ysy.widget.PileLayout;
 import com.kuwai.ysy.widget.TextImageView;
 import com.rayhahah.rbase.utils.base.DateTimeUitl;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
@@ -71,6 +73,19 @@ public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, Ba
                 break;
         }
 
+        PileLayout pileLayout = helper.getView(R.id.round_head);
+        if (item.getReward_sum() > 0) {
+            helper.getView(R.id.tv_reward).setVisibility(View.GONE);
+            helper.getView(R.id.ll_reward).setVisibility(View.VISIBLE);
+            pileLayout.setPicWidth(24);
+            pileLayout.setPicCount(item.getReward_sum());
+            pileLayout.setUrls(item.getReward());
+        } else {
+            helper.getView(R.id.tv_reward).setVisibility(View.VISIBLE);
+            helper.getView(R.id.ll_reward).setVisibility(View.GONE);
+        }
+
+        helper.addOnClickListener(R.id.img_head);
         GlideUtil.load(mContext, item.getAvatar(), (ImageView) helper.getView(R.id.img_head));
         helper.setText(R.id.tv_nick, item.getNickname());
         switch (item.getGender()) {
@@ -97,14 +112,15 @@ public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, Ba
         }
         helper.setText(R.id.tv_info, StringUtils.join(info.toArray(), "|"));
 
-        helper.setText(R.id.tv_location, item.getAddress());
+        helper.setText(R.id.tv_location, Utils.isNullString(item.getAddress()) ? "" : item.getAddress() + "    ");
         helper.setText(R.id.tv_time, DateTimeUitl.getStandardDate(String.valueOf(item.getUpdate_time())));
-        SPManager.get().getStringValue("uid");
 
-        if (item.getUid() == (Integer.valueOf(SPManager.get().getStringValue("uid")))) {
-            helper.getView(R.id.tv_delete).setVisibility(View.VISIBLE);
-        } else {
-            helper.getView(R.id.tv_delete).setVisibility(View.GONE);
+        if(!Utils.isNullString(SPManager.get().getStringValue("uid"))){
+            if (item.getUid() == (Integer.valueOf(SPManager.get().getStringValue("uid")))) {
+                helper.getView(R.id.tv_delete).setVisibility(View.VISIBLE);
+            } else {
+                helper.getView(R.id.tv_delete).setVisibility(View.GONE);
+            }
         }
 
         helper.setText(R.id.tv_comms_num, String.valueOf(item.getComment()));

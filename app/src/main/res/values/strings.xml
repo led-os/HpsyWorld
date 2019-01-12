@@ -37,7 +37,7 @@
     <string name="server_error">啊噢，服务器出错了(ㄒoㄒ)~~</string>
     <string name="meetagree_text">茫茫人海中，希望你能够选中我。期待与你的约会！</string>
     <string name="empty_view_hint">暂时木有内容呀~~</string>
-    <string name="login_error">你还没有登录呢，登录才能查看呢～</string>
+    <string name="login_error">你还没有登录呢～</string>
 
     <string name="language_cn">中文</string>
     <string name="language_en">ENGLISH</string>
@@ -76,6 +76,7 @@
 
     <string name="renzheng">1：认证可以获得积分。\n
 2：认证可以提高魅力等级，让大家更容易记住你。</string>
+    <string name="vip_tips">会员开通成功，如遇部分功能无法使用，请退出账号重新登录～</string>
     <string name="pay_success">支付成功:</string>
     <string name="pay_failed">支付失败:</string>
 </resources>

@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -115,6 +117,27 @@ public class PublishDyActivity extends BaseActivity<PublishPresenter> implements
 
         mPhotosSnpl = findViewById(R.id.snpl_moment_add_photos);
         et_content = findViewById(R.id.et_content);
+
+        et_content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!Utils.isNullString(s.toString())) {
+                    navigationLayout.setRightColor(getResources().getColor(R.color.theme));
+                }else{
+                    navigationLayout.setRightColor(getResources().getColor(R.color.gray_7b));
+                }
+            }
+        });
         navigationLayout = findViewById(R.id.navigation);
         navigationLayout.setLeftClick(new View.OnClickListener() {
             @Override
@@ -165,6 +188,7 @@ public class PublishDyActivity extends BaseActivity<PublishPresenter> implements
     private void publishDy() {
         String type = "0";
         UploadHelper helper = UploadHelper.getInstance();
+        helper.clear();
         helper.addParameter("uid", SPManager.get().getStringValue("uid"));
         helper.addParameter("text", et_content.getText().toString());
         helper.addParameter("visibility", String.valueOf(publicId));

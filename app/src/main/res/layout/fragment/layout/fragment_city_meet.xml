@@ -56,13 +56,17 @@
         style="@style/horizontal_line"
         android:layout_below="@id/lay_filter" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rl_city_meet"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/mRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/line1">
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rl_city_meet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <TextView
         android:id="@+id/publish"
@@ -71,7 +75,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="80dp"
-        android:clickable="true"
         android:layout_marginRight="30dp"
+        android:clickable="true"
         android:drawableLeft="@drawable/dyn_dyn_btn_edit" />
 </RelativeLayout>

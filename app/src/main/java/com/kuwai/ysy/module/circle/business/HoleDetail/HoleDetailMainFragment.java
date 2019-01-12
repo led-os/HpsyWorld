@@ -33,11 +33,13 @@ import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.callback.GiftClickCallback;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.circle.api.CircleApiFactory;
 import com.kuwai.ysy.module.circle.bean.HoleDetailBean;
 import com.kuwai.ysy.module.circle.business.DyDashang.DyDashangListFragment;
 import com.kuwai.ysy.module.circle.business.dycomment.DySecFragment;
 import com.kuwai.ysy.module.circle.business.holecomment.HoleComFragment;
 import com.kuwai.ysy.module.find.bean.GiftPopBean;
+import com.kuwai.ysy.module.mine.bean.ChangeHeadBean;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.GiftPannelView;
@@ -54,6 +56,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.functions.Consumer;
+import io.rong.imkit.RongIM;
 
 public class HoleDetailMainFragment extends BaseFragment<HoleDetailPresenter> implements HoleDetailContract.IHomeView, View.OnClickListener, GiftClickCallback {
 
@@ -137,7 +142,11 @@ public class HoleDetailMainFragment extends BaseFragment<HoleDetailPresenter> im
                 showPopListView();
                 break;
             case R.id.sb_chat:
-
+                if ("0".equals(mHoleDetailBean.getData().getChat_room())) {
+                    setGroup();
+                } else {
+                    RongIM.getInstance().startGroupChat(getActivity(), String.valueOf(mHoleDetailBean.getData().getChat_room()), "树洞");
+                }
                 break;
             case R.id.bottom_lay:
                 if (canComment) {
@@ -215,6 +224,7 @@ public class HoleDetailMainFragment extends BaseFragment<HoleDetailPresenter> im
         mRootView.findViewById(R.id.radio_reward).setOnClickListener(this);
         mRootView.findViewById(R.id.sb_chat).setOnClickListener(this);
         mBottomLay.setOnClickListener(this);
+        mDshangBtn.setOnClickListener(this);
 
         Bundle bundle = new Bundle();
         bundle.putString("did", tid);
@@ -280,6 +290,20 @@ public class HoleDetailMainFragment extends BaseFragment<HoleDetailPresenter> im
         });
     }
 
+    public void setGroup() {
+        addSubscription(CircleApiFactory.getGroup( mHoleDetailBean.getData().getT_uid(),SPManager.get().getStringValue("uid"), mHoleDetailBean.getData().getT_id()).subscribe(new Consumer<ChangeHeadBean>() {
+            @Override
+            public void accept(ChangeHeadBean holeDetailBean) throws Exception {
+                RongIM.getInstance().startGroupChat(getActivity(), holeDetailBean.getData(), "树洞");
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                ToastUtils.showShort(R.string.server_error);
+            }
+        }));
+    }
+
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
@@ -291,7 +315,12 @@ public class HoleDetailMainFragment extends BaseFragment<HoleDetailPresenter> im
     @Override
     public void setHomeData(HoleDetailBean holeDetailBean) {
         mHoleDetailBean = holeDetailBean;
-
+        if (SPManager.get().getStringValue("uid").equals(holeDetailBean.getData().getT_uid())) {
+            mRightImg.setVisibility(View.VISIBLE);
+        }
+        if (holeDetailBean.getData().getAnonymous_chat() == 1 && (!SPManager.get().getStringValue("uid").equals(holeDetailBean.getData().getT_uid()))) {
+            mChat.setVisibility(View.VISIBLE);
+        }
         if (mHoleDetailBean.getData().getOpen_comment() == 1) {
             canComment = true;
         }
@@ -307,8 +336,10 @@ public class HoleDetailMainFragment extends BaseFragment<HoleDetailPresenter> im
         mTvTile.setText(holeDetailBean.getData().getTitle());
         mContainer.setText(holeDetailBean.getData().getText());
 
-        mRadioDashang.setText("打赏（" + String.valueOf(holeDetailBean.getData().getReward()) + ")");
-        mRadioReward.setText("评论（" + String.valueOf(holeDetailBean.getData().getComment()) + ")");
+        //mRadioDashang.setText("打赏（" + String.valueOf(holeDetailBean.getData().getReward()) + ")");
+        //mRadioReward.setText("评论（" + String.valueOf(holeDetailBean.getData().getComment()) + ")");
+        mRadioDashang.setText("打赏");
+        mRadioReward.setText("评论");
 
     }
 
@@ -374,6 +405,8 @@ public class HoleDetailMainFragment extends BaseFragment<HoleDetailPresenter> im
                     if (!TextUtils.isEmpty(commentContent)) {
                         dialog.dismiss();
                         mPresenter.addFirComment(tid, SPManager.get().getStringValue("uid"), commentContent);
+                        Utils.showOrHide(getActivity(), commentText);
+                        commentText.setText("");
                     } else {
                         Toast.makeText(getActivity(), "评论内容不能为空", Toast.LENGTH_SHORT).show();
                     }

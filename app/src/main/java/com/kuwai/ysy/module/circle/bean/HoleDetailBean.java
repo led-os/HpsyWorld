@@ -61,6 +61,15 @@ public class HoleDetailBean {
         private int open_comment;
         private int anonymous_chat;
         private int t_uid;
+        private String chat_room;
+
+        public String getChat_room() {
+            return chat_room;
+        }
+
+        public void setChat_room(String chat_room) {
+            this.chat_room = chat_room;
+        }
 
         public int getT_id() {
             return t_id;

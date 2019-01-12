@@ -93,19 +93,21 @@ public class FindFriendNearFragment extends BaseFragment implements View.OnClick
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.btn_add_friend:
-                        addFriends(String.valueOf(mDatalist.get(position).getUid()));
+                        addFriends(String.valueOf(mDatalist.get(position).getUid()),position);
                         break;
                 }
             }
         });
     }
 
-    void addFriends(String otherId) {
+    void addFriends(String otherId, final int pos) {
         addSubscription(ChatApiFactory.addFriends(SPManager.get().getStringValue("uid"), otherId).subscribe(new Consumer<SimpleResponse>() {
             @Override
             public void accept(SimpleResponse response) throws Exception {
                 if (response.code == 200) {
                     //newFriendsAdapter.replaceData(myBlindBean.getData());
+                    mDatalist.get(pos).setFriends(-1);
+                    myFriendsAdapter.notifyItemChanged(pos);
                 }
                 ToastUtils.showShort(response.msg);
             }

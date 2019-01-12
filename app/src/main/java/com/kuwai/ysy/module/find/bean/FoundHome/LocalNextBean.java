@@ -42,7 +42,7 @@ public class LocalNextBean {
         private int region_id;
         private String region_name;
         private int parent_id;
-        public boolean ischecked;
+        public boolean ischecked = false;
 
         public int getRegion_id() {
             return region_id;
@@ -66,6 +66,18 @@ public class LocalNextBean {
 
         public void setParent_id(int parent_id) {
             this.parent_id = parent_id;
+        }
+
+        public DataBean(String region_name) {
+            this.region_name = region_name;
+        }
+
+        public DataBean(int region_id, String region_name) {
+            this.region_id = region_id;
+            this.region_name = region_name;
+        }
+
+        public DataBean() {
         }
     }
 }

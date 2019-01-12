@@ -9,12 +9,10 @@ import io.rong.imlib.model.Conversation;
 
 public class ExtensionModule extends DefaultExtensionModule {
 
-    private GiftPlugin giftPlugin;
-    private RedPackPlugin redPackPlugin;
-
     @Override
     public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType) {
         List<IPluginModule> pluginModules = super.getPluginModules(conversationType);
+        pluginModules.add(new LocationPlugin());
         pluginModules.add(new GiftPlugin());
         pluginModules.add(new RedPackPlugin());
 

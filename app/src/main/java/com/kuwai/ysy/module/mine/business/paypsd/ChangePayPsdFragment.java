@@ -114,6 +114,9 @@ public class ChangePayPsdFragment extends BaseFragment<ChangePayPsdPresenter> im
     @Override
     public void setHomeData(SimpleResponse response) {
         ToastUtils.showShort(response.msg);
+        if(response.code == 200){
+            pop();
+        }
     }
 
     @Override

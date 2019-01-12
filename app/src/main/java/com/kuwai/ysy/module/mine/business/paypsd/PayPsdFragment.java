@@ -8,9 +8,13 @@ import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.useful.SPManager;
+
+import io.rong.imkit.RongIM;
 
 public class PayPsdFragment extends BaseFragment implements View.OnClickListener {
 
@@ -41,6 +45,7 @@ public class PayPsdFragment extends BaseFragment implements View.OnClickListener
         switch (v.getId()){
             case R.id.st_set_payfor_psd:
                 start(SetPayPsdFragment.newInstance());
+                //RongIM.getInstance().deleteMessages();
                 break;
             case R.id.st_change_payfor_psd:
                 start(ChangePayPsdFragment.newInstance());
@@ -57,6 +62,11 @@ public class PayPsdFragment extends BaseFragment implements View.OnClickListener
         mStChangePayforPsd = mRootView.findViewById(R.id.st_change_payfor_psd);
         mStChangePayforPsd.setOnClickListener(this);
         mStSetPayforPsd.setOnClickListener(this);
+        if("1".equals(SPManager.get().getStringValue(C.HAS_THIRD_PASS))){
+            mStSetPayforPsd.setVisibility(View.GONE);
+        }else{
+            mStSetPayforPsd.setVisibility(View.VISIBLE);
+        }
         ((NavigationLayout) mRootView.findViewById(R.id.navigation)).setLeftClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

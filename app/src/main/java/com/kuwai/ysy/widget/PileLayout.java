@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.allen.library.CircleImageView;
 import com.bumptech.glide.Glide;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.utils.Utils;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
 
 import java.util.ArrayList;
@@ -25,6 +27,8 @@ public class PileLayout extends ViewGroup {
     private boolean flag = false;//false表示右边增加，true表示左边增加
 
     private int spWidth = 20;
+    private int picWidth = 26;
+    private int picCount = 0;
 
     //在new的时候会调用此方法
     public PileLayout(Context context) {
@@ -182,6 +186,15 @@ public class PileLayout extends ViewGroup {
         this.spWidth = spWidth;
     }
 
+    public void setPicWidth(int spWidth) {
+        this.picWidth = Utils.dp2px(24);
+    }
+
+    public void setPicCount(int count) {
+        this.picCount = count;
+    }
+
+
     public void setFlag(boolean flag) {
         this.flag = flag;
     }
@@ -211,14 +224,31 @@ public class PileLayout extends ViewGroup {
             //清空重新绘制
 
             CircleImageView imageView = (CircleImageView) LayoutInflater.from(context).inflate(R.layout.item_round_head, this, false);
+            imageView.setBorderColor(getResources().getColor(R.color.white));
+            imageView.setBorderWidth(2);
+            if (picWidth != 26) {
+                ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
+                layoutParams.width = picWidth;
+                layoutParams.height = picWidth;
+                imageView.setLayoutParams(layoutParams);
+            }
             GlideUtil.load(context, allUrls.get(i), imageView);
+            this.addView(imageView);
             if (i >= 3) {
-                CircleTextView circleTextView = (CircleTextView) LayoutInflater.from(context).inflate(R.layout.item_round_text, this, false);
-                circleTextView.setText("+" + allUrls.size());
-                this.addView(circleTextView);
                 break;
             }
-            this.addView(imageView);
+        }
+        if (picCount > 3) {
+            CircleTextView circleTextView = (CircleTextView) LayoutInflater.from(context).inflate(R.layout.item_round_text, this, false);
+            circleTextView.setTextSize(12);
+            if (picWidth != 26) {
+                ViewGroup.LayoutParams layoutParams = circleTextView.getLayoutParams();
+                layoutParams.width = picWidth;
+                layoutParams.height = picWidth;
+                circleTextView.setLayoutParams(layoutParams);
+            }
+            circleTextView.setText("+" + picCount);
+            this.addView(circleTextView);
         }
         postInvalidate();
     }

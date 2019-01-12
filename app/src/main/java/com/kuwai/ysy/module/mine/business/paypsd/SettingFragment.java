@@ -30,6 +30,8 @@ import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.utils.UmengText;
 
+import io.rong.imkit.RongIM;
+
 public class SettingFragment extends BaseFragment implements View.OnClickListener {
 
     private TextView mTitle;
@@ -70,8 +72,8 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
                 start(MsgNoticeFragment.newInstance());
                 break;
             case R.id.st_help:
-                Intent intent2= new Intent(getActivity(), WebviewH5Activity.class);
-                intent2.putExtra(C.H5_FLAG, C.H5_URL + C.CONTACTUS+SPManager.get().getStringValue("uid"));
+                Intent intent2 = new Intent(getActivity(), WebviewH5Activity.class);
+                intent2.putExtra(C.H5_FLAG, C.H5_URL + C.CONTACTUS + SPManager.get().getStringValue("uid"));
                 startActivity(intent2);
                 break;
             case R.id.st_agree:
@@ -80,7 +82,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
                 startActivity(intent);
                 break;
             case R.id.st_about:
-                Intent intent1= new Intent(getActivity(), WebviewH5Activity.class);
+                Intent intent1 = new Intent(getActivity(), WebviewH5Activity.class);
                 intent1.putExtra(C.H5_FLAG, C.H5_URL + C.ABOUTUS);
                 startActivity(intent1);
                 break;
@@ -110,6 +112,8 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
                             UMShareAPI.get(mContext).deleteOauth(getActivity(), SHARE_MEDIA.WEIXIN, null);
                         }
                         SPManager.clear();
+                        RongIM.getInstance().disconnect();
+                        EventBusUtil.sendEvent(new MessageEvent(C.MSG_LOG_OUT));
                         startActivity(new Intent(getActivity(), LoginActivity.class));
                         getActivity().finish();
                     }
@@ -127,7 +131,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
         ((NavigationLayout) mRootView.findViewById(R.id.navigation)).setLeftClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               getActivity().finish();
+                getActivity().finish();
             }
         });
         mTitle = mRootView.findViewById(R.id.title);

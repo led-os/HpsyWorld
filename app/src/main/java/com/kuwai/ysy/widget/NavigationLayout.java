@@ -130,6 +130,11 @@ public class NavigationLayout extends RelativeLayout implements
         }
     }
 
+    public void setRightColor(int color) {
+        this.rightColor = color;
+        mRightText.setTextColor(rightColor);
+    }
+
     private OnClickListener mLeftClick;
     private OnClickListener mRightClick;
 

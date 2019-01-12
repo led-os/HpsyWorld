@@ -63,6 +63,15 @@ public class MyFriends {
         private int annual_income;
         private String sig;
         private int is_vip;
+        private int friends;
+
+        public int getFriends() {
+            return friends;
+        }
+
+        public void setFriends(int friends) {
+            this.friends = friends;
+        }
 
         public int getUid() {
             return uid;

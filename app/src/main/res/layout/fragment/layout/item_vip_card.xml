@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:id="@+id/content"
-        android:layout_width="280dp"
+        android:layout_width="320dp"
         android:layout_height="140dp"
         android:background="@drawable/bg_huangjin"
         android:paddingStart="20dp">

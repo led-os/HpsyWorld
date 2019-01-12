@@ -2,11 +2,13 @@ package com.kuwai.ysy.module.mine.business.paypsd;
 
 import android.util.Log;
 
+import com.kuwai.ysy.R;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
 import com.kuwai.ysy.module.mine.business.like.ILikeContract;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 
 import io.reactivex.functions.Consumer;
 
@@ -34,6 +36,7 @@ public class ChangePsdPresenter extends RBasePresenter<ChangePsdContract.IHomeVi
             @Override
             public void accept(Throwable throwable) throws Exception {
                 Log.i(TAG, "accept: " + throwable);
+                ToastUtils.showShort(R.string.server_error);
             }
         }));
     }

@@ -1,6 +1,7 @@
 package com.kuwai.ysy.module.mine.adapter;
 
 import android.graphics.Color;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -13,11 +14,13 @@ import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.kuwai.ysy.module.mine.bean.vip.GallaryBean;
 import com.kuwai.ysy.utils.BlurTransformation;
+import com.kuwai.ysy.utils.Utils;
+import com.rayhahah.rbase.utils.useful.GlideUtil;
 
 import java.util.List;
 
 
-public class PicAdapter extends BaseQuickAdapter<GallaryBean, BaseViewHolder> {
+public class PicAdapter extends BaseQuickAdapter<PersolHomePageBean.DataBean.InfoBean.VideoBean, BaseViewHolder> {
 
 
     public PicAdapter() {
@@ -25,21 +28,15 @@ public class PicAdapter extends BaseQuickAdapter<GallaryBean, BaseViewHolder> {
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, GallaryBean item) {
+    protected void convert(BaseViewHolder helper, PersolHomePageBean.DataBean.InfoBean.VideoBean item) {
         ImageView imageView = helper.getView(R.id.img_pic);
-
-        if (item.isVip() || item.isHasPay()) {
-            Glide.with(mContext).load(item.getPic()).into(imageView);
+        ImageView video = helper.getView(R.id.iv_video);
+        if (!Utils.isNullString(item.getVideo_id())) {
+            video.setVisibility(View.VISIBLE);
         } else {
-            RequestOptions options = new RequestOptions()
-                    .skipMemoryCache(true)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    //高斯模糊 范围在 0 -- 25 越大模糊程度越高
-                    .transforms(new BlurTransformation(mContext, 20));
-            Glide.with(mContext).load(item.getPic()).apply(options).into(imageView);
-
-
+            video.setVisibility(View.GONE);
         }
+        Glide.with(mContext).load(item.getAttach()).into(imageView);
     }
 
 }

@@ -175,13 +175,13 @@ public class MineLoginFragment extends BaseFragment<MinePresenter> implements Vi
     public void setUserData(UserInfo cityMeetBean) {
         mLayoutStatusView.showContent();
         tv_text.setText(cityMeetBean.getData().getNickname());
-        GlideUtil.load(getActivity(),cityMeetBean.getData().getAvatar(),mHeadImg);
+        GlideUtil.load(getActivity(), cityMeetBean.getData().getAvatar(), mHeadImg);
         tv_id.setText("ID:" + cityMeetBean.getData().getUid());
         tv_level.setText(cityMeetBean.getData().getGrade() + "");
         img_vip.setVisibility(cityMeetBean.getData().getIs_vip() == 1 ? View.VISIBLE : View.GONE);
         tv_money.setText(cityMeetBean.getData().getAmount());
         tv_integral.setText(cityMeetBean.getData().getIntegral_sum() + "");
-        st_credit.setRightString(cityMeetBean.getData().getAuthentication_sum() + "个未认证");
+        //st_credit.setRightString(cityMeetBean.getData().getAuthentication_sum() + "个未认证");
     }
 
     @Override
@@ -215,7 +215,9 @@ public class MineLoginFragment extends BaseFragment<MinePresenter> implements Vi
     public void isLogin(MessageEvent event) {
         if (C.MSG_LOGIN == event.getCode()) {
             initData();
-        }else if(C.MSG_CHANGE_INFO == event.getCode()){
+        } else if (C.MSG_CHANGE_INFO == event.getCode()) {
+            initData();
+        } else if (C.MSG_LOG_OUT == event.getCode()) {
             initData();
         }
     }

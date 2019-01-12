@@ -10,7 +10,6 @@
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:rightImg="@drawable/ic_nav_search_default"
         app:title1="喜欢"></com.kuwai.ysy.widget.NavigationLayout>
 
     <RadioGroup

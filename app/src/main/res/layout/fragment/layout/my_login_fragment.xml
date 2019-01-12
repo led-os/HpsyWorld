@@ -219,7 +219,7 @@
                     app:sRightTextSize="14sp"
                     app:sLeftTextGravity="center"
                     app:sRightTextGravity="center"
-                    app:sRightTextString="6个未认证"
+                    app:sRightTextString="去认证"
                     app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
 
                 </com.allen.library.SuperTextView>

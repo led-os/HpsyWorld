@@ -70,6 +70,7 @@ public class ChatSettingFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void initView(Bundle savedInstanceState) {
         targetId = getArguments().getString("id");
+        navigationLayout = mRootView.findViewById(R.id.navigation);
         navigationLayout.setLeftClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

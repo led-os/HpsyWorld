@@ -24,21 +24,23 @@
         android:textSize="15sp" />
 
     <ImageView
-        android:id="@+id/vip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="20dp"
-        android:visibility="gone"
-        android:layout_toRightOf="@id/tv_nick"
-        android:src="@drawable/ic_user_vip" />
+        android:id="@+id/iv_sex"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_alignBottom="@id/tv_nick"
+        android:layout_toRightOf="@id/tv_nick" />
 
     <ImageView
-        android:id="@+id/iv_sex"
-        android:layout_width="25dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/vip"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginLeft="6dp"
         android:layout_alignBottom="@id/tv_nick"
-        android:layout_toRightOf="@id/vip"/>
+        android:layout_toRightOf="@id/iv_sex"
+        android:visibility="gone"
+        android:src="@drawable/ic_user_vip" />
+
 
     <TextView
         android:id="@+id/tv_time"

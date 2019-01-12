@@ -9,12 +9,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.module.find.bean.FoundHome.FoundBean;
+import com.rayhahah.rbase.utils.useful.GlideUtil;
+
+import java.util.List;
 
 public class BannerAdapter extends PagerAdapter implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
     private Context mContext;
     private ItemClickListener itemClickListener;
     private int currentPosition = 0;
+    private List<FoundBean.DataBean.BannerBean> mDataList = null;
 
 
     public BannerAdapter(Context context, ViewPager viewPager) {
@@ -30,7 +35,7 @@ public class BannerAdapter extends PagerAdapter implements View.OnClickListener,
 
     @Override
     public int getCount() {
-        return 6;
+        return mDataList.size();
     }
 
     @Override
@@ -40,8 +45,9 @@ public class BannerAdapter extends PagerAdapter implements View.OnClickListener,
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_vip, null);
-        ImageView imageView = view.findViewById(R.id.iv_icon);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_image, null);
+        ImageView imageView = view.findViewById(R.id.image);
+        GlideUtil.load(mContext,mDataList.get(position).getImg(),imageView);
         imageView.setOnClickListener(this);
         container.addView(view);
         return view;
@@ -82,5 +88,9 @@ public class BannerAdapter extends PagerAdapter implements View.OnClickListener,
 
     public interface ItemClickListener {
         void onItemClick(int index);
+    }
+
+    public void setData(List<FoundBean.DataBean.BannerBean> list){
+     mDataList = list;
     }
 }

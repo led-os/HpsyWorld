@@ -25,6 +25,7 @@ import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.services.core.LatLonPoint;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.controller.NavigationController;
 import com.kuwai.ysy.module.chat.ChatFragment;
@@ -35,17 +36,29 @@ import com.kuwai.ysy.module.chat.bean.UserInfoBean;
 import com.kuwai.ysy.module.circle.business.DongtaiFragment;
 import com.kuwai.ysy.module.find.business.FoundHome.FoundFragment;
 import com.kuwai.ysy.module.home.VideohomeActivity;
+import com.kuwai.ysy.module.home.api.HomeApiFactory;
+import com.kuwai.ysy.module.home.bean.login.LoginBean;
+import com.kuwai.ysy.module.home.business.loginmoudle.login.LoginActivity;
 import com.kuwai.ysy.module.mine.business.mine.MineLoginFragment;
+import com.kuwai.ysy.utils.EventBusUtil;
+import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.PageNavigationView;
 import com.rayhahah.rbase.base.RBaseFragment;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
+
+import static com.kuwai.ysy.app.C.MSG_LOGIN;
 
 public class HomeActivity extends BaseActivity implements AMapLocationListener {
 
@@ -99,16 +112,90 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
         viewPager.setOffscreenPageLimit(5);
         mNavigationController.setupWithViewPager(viewPager);
         getLocation();
+        autoLogin();
         // connectRongYun(user1);
-        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+    }
 
+    private void autoLogin() {
+        HashMap<String, String> param = new HashMap<>();
+        if (!Utils.isNullString(SPManager.get().getStringValue("password_"))) {
+            //手机号登录
+            param.put("type", C.LOGIN_PHONE);
+            param.put("login_type", "1"); //1代表android
+            param.put("phone", SPManager.get().getStringValue("phone_"));
+            param.put("password", SPManager.get().getStringValue("password_"));
+            login(param, "");
+        } else if (!Utils.isNullString(SPManager.get().getStringValue(C.SAN_FANG_ID))) {
+            //三方登陆
+            param.put("type", SPManager.get().getStringValue(C.SAN_FANG));
+            param.put("login_type", "1"); //1代表android
+            param.put(SPManager.get().getStringValue(C.SAN_FANG), SPManager.get().getStringValue(C.SAN_FANG_ID));
+            login(param, SPManager.get().getStringValue(C.SAN_FANG));
+        } else if (!Utils.isNullString("token")) {
+            //验证码登录
+            param.put("type", "token");
+            param.put("login_type", "1"); //1代表android
+            param.put("phone", SPManager.get().getStringValue("phone_"));
+            param.put("token", SPManager.get().getStringValue("token"));
+        }
+    }
+
+    public void login(Map<String, String> param, final String type) {
+        addSubscription(HomeApiFactory.login(param).subscribe(new Consumer<LoginBean>() {
             @Override
-            public UserInfo getUserInfo(String userId) {
-                findUserById(userId);
-                return null;//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。SDK
+            public void accept(LoginBean loginBean) throws Exception {
+                if (loginBean.getCode() == 200) {
+                    SPManager.get().putString(C.SAN_FANG, type);
+                    SPManager.get().putString("uid", String.valueOf(loginBean.getData().getUid()));
+                    SPManager.get().putString("nickname", loginBean.getData().getNickname());
+                    SPManager.get().putString("phone_", loginBean.getData().getPhone());
+                    SPManager.get().putString("password_", SPManager.get().getStringValue("password_"));
+                    SPManager.get().putString("icon", loginBean.getData().getAvatar());
+                    SPManager.get().putString("sex_", String.valueOf(loginBean.getData().getGender()));
+                    SPManager.get().putString(C.HAS_THIRD_PASS, String.valueOf(loginBean.getData().getPayment()));
+                    SPManager.get().putString("rongyun_token", loginBean.getData().getRongyun_token());
+                    SPManager.get().putString("token", loginBean.getData().getToken());
+                    connectRongYun(loginBean.getData().getRongyun_token(), loginBean);
+                    EventBusUtil.sendEvent(new MessageEvent(MSG_LOGIN));
+                } else {
+                    if (C.LOGIN_QQ.equals(SPManager.get().getStringValue(C.SAN_FANG))) {
+                        UMShareAPI.get(mContext).deleteOauth(HomeActivity.this, SHARE_MEDIA.QQ, null);
+                    } else if (C.LOGIN_SINA.equals(SPManager.get().getStringValue(C.SAN_FANG))) {
+                        UMShareAPI.get(mContext).deleteOauth(HomeActivity.this, SHARE_MEDIA.SINA, null);
+                    } else if (C.LOGIN_WECHAT.equals(SPManager.get().getStringValue(C.SAN_FANG))) {
+                        UMShareAPI.get(mContext).deleteOauth(HomeActivity.this, SHARE_MEDIA.WEIXIN, null);
+                    }
+                    SPManager.clear();
+                    RongIM.getInstance().disconnect();
+                    //startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //ToastUtils.showShort(R.string.server_error);
+            }
+        }));
+    }
+
+    private void connectRongYun(String token, final LoginBean loginBean) {
+
+        RongIMClient.connect(token, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onTokenIncorrect() {
+                Log.i("xxx", "onTokenIncorrect: ");
             }
 
-        }, true);
+            @Override
+            public void onSuccess(String s) {
+                Log.i("xxx", "onTokenIncorrect: ");
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.i("xxx", "onTokenIncorrect: ");
+            }
+        });
     }
 
     private void getLocation() {
@@ -127,26 +214,6 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
         // 在定位结束后，在合适的生命周期调用onDestroy()方法
         // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
         mlocationClient.startLocation();
-    }
-
-    private void findUserById(String userId) {
-        addSubscription(ChatApiFactory.getUserInfo(userId).subscribe(new Consumer<UserInfoBean>() {
-            @Override
-            public void accept(UserInfoBean userInfoBean) throws Exception {
-                if (userInfoBean.getCode() == 200) {
-                    userInfo = new UserInfo(String.valueOf(userInfoBean.getData().getUid()), userInfoBean.getData().getNickname(), Uri.parse(userInfoBean.getData().getAvatar()));
-                    RongIM.getInstance().refreshUserInfoCache(userInfo);
-                } else {
-                    //ToastUtils.showShort(myBlindBean.getMsg());
-                }
-
-            }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                ToastUtils.showShort("网络错误");
-            }
-        }));
     }
 
     @Override

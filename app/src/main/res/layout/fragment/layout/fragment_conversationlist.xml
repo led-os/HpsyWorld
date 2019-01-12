@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:id="@+id/top_lay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp">
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="30dp">
 
         <RadioGroup
             android:id="@+id/main_radiogroup"
@@ -52,11 +53,18 @@
 
     </RelativeLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vp_dy_detail"
+    <com.kuwai.ysy.widget.MultipleStatusView
+        android:id="@+id/multipleStatusView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/top_lay" />
+        app:errorView="@layout/layout_login_no"
+        android:layout_below="@id/top_lay">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_dy_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.kuwai.ysy.widget.MultipleStatusView>
 
     <!--<FrameLayout
         android:id="@+id/conversationlist"

@@ -301,9 +301,13 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
     public void loginResult(LoginBean loginBean, String type) {
         DialogUtil.dismissDialog(true);
         if (loginBean.getCode() == 200) {
+            SPManager.get().putString(C.SAN_FANG, type);
             SPManager.get().putString("uid", String.valueOf(loginBean.getData().getUid()));
             SPManager.get().putString("nickname", loginBean.getData().getNickname());
+            SPManager.get().putString("phone_", loginBean.getData().getPhone());
+            SPManager.get().putString("password_", Utils.encrypt32(mEtCode.getText().toString()));
             SPManager.get().putString("icon", loginBean.getData().getAvatar());
+            SPManager.get().putString("sex_", String.valueOf(loginBean.getData().getGender()));
             SPManager.get().putString(C.HAS_THIRD_PASS, String.valueOf(loginBean.getData().getPayment()));
             SPManager.get().putString("rongyun_token", loginBean.getData().getRongyun_token());
             SPManager.get().putString("token", loginBean.getData().getToken());

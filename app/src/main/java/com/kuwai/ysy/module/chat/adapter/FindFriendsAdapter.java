@@ -3,6 +3,7 @@ package com.kuwai.ysy.module.chat.adapter;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.allen.library.SuperButton;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.kuwai.ysy.R;
@@ -34,6 +35,24 @@ public class FindFriendsAdapter extends BaseQuickAdapter<MyFriends.DataBean, Bas
         helper.setText(R.id.tv_sign, "ID:" + item.getUid());
         helper.setText(R.id.tv_nick, item.getNickname());
         vipImg.setVisibility(item.getIs_vip() == 1 ? View.VISIBLE : View.GONE);
+
+        SuperButton add = helper.getView(R.id.btn_add_friend);
+        if (item.getFriends() == 1) {
+            add.setText("已添加");
+            add.setShapeSolidColor(mContext.getResources().getColor(R.color.gray_f2)).setShapeStrokeColor(mContext.getResources().getColor(R.color.gray_f2)).setUseShape();
+            add.setTextColor(mContext.getResources().getColor(R.color.gray_7b));
+            add.setEnabled(false);
+        } else if (item.getFriends() == -1) {
+            add.setShapeSolidColor(mContext.getResources().getColor(R.color.gray_f2)).setShapeStrokeColor(mContext.getResources().getColor(R.color.gray_f2)).setUseShape();
+            add.setText("已申请");
+            add.setTextColor(mContext.getResources().getColor(R.color.gray_7b));
+            add.setEnabled(false);
+        } else {
+            add.setShapeSolidColor(mContext.getResources().getColor(R.color.white)).setShapeStrokeColor(mContext.getResources().getColor(R.color.theme)).setUseShape();
+            add.setText("加好友");
+            add.setTextColor(mContext.getResources().getColor(R.color.theme));
+            add.setEnabled(true);
+        }
 
         if (item.getGender() == 1) {
             sexImg.setImageResource(R.drawable.ic_user_man);

@@ -117,10 +117,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/top_lay"
-            android:paddingTop="10dp"
-            android:maxLength="10"
             android:ellipsize="end"
-            android:layout_marginLeft="10dp"
+            android:maxLength="18"
+            android:paddingTop="10dp"
             android:textColor="@color/gray_7b"
             android:textSize="12sp" />
 
@@ -129,11 +128,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/tv_location"
-            android:layout_toRightOf="@id/tv_location"
-            android:layout_toLeftOf="@+id/tv_delete"
-            android:layout_marginTop="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_toLeftOf="@+id/tv_delete"
+            android:layout_toRightOf="@id/tv_location"
             android:textColor="@color/gray_7b"
             android:textSize="12sp" />
 
@@ -159,6 +157,7 @@
             android:layout_marginTop="12dp" />
 
         <TextView
+            android:id="@+id/tv_reward"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/line1"
@@ -168,6 +167,30 @@
             android:text="打赏"
             android:textColor="@color/gray_7b"
             android:textSize="12sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_reward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/line1"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/pre_reward"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/dyn_dyn_ic_reward_per" />
+
+            <com.kuwai.ysy.widget.PileLayout
+                android:id="@+id/round_head"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_toRightOf="@id/pre_reward">
+
+            </com.kuwai.ysy.widget.PileLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_like"

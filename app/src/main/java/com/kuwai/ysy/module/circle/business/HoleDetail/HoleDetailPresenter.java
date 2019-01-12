@@ -12,6 +12,7 @@ import com.kuwai.ysy.module.find.api.AppointApiFactory;
 import com.kuwai.ysy.module.find.bean.GiftPopBean;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import io.reactivex.functions.Consumer;
 

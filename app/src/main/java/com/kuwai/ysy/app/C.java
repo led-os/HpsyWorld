@@ -148,6 +148,7 @@ public class C {
     //通知
     public static final int MSG_LOGIN = 0x0000010;
 
+    public static final int MSG_LOG_OUT= 0x00000100;
     public static final int MSG_ZAN_DY = 0x00000101;
     public static final int MSG_COMMENT = 0x00000102;
     public static final int MSG_REWARD_DY = 0x00000103;
@@ -155,25 +156,27 @@ public class C {
     public static final int MSG_REWARD_HOLE = 0x00000105;
     public static final int MSG_FIND_TEXT_RUN = 0x00000106;
     public static final int MSG_GIFT_WITHDRAW_SUCC = 0x00000107;
+    public static final int MSG_FILTER_DATE = 0x00000108;
+    public static final int MSG_ZAN_REFRESH= 0x00000109;
 
     public static final int MSG_CHANGE_INFO = 0x000001001;
     public static final int MSG_RECHARGE_SUCC = 0x000001002;
     public static final int MSG_UPDATE_VIDEO = 0x000001003;
 
     //注册参数
-    public static final String REGIST_NAME = "RE_NAME";//全部动态
-    public static final String REGIST_AVATAR = "RE_AVATAR";//全部动态
-    public static final String REGIST_PHONE = "RE_PHONE";//全部动态
-    public static final String REGIST_PSD = "RE_PSD";//全部动态
-    public static final String REGIST_CODE = "RE_CODE";//全部动态
-    public static final String REGIST_LATITUDE = "RE_LATITUDE";//全部动态
-    public static final String REGIST_LONGITUDE = "RE_LONGITUDE";//全部动态
-    public static final String REGIST_REFER = "RE_REFER";//全部动态
-    public static final String REGIST_CITY = "RE_CITY";//全部动态
-    public static final String REGIST_GENDER = "RE_GENDER";//全部动态
-    public static final String REGIST_BIRTHDAY = "RE_BIR";//全部动态
-    public static final String REGIST_HEIGHT = "RE_HEIGHT";//全部动态
-    public static final String REGIST_INCOME = "RE_INCOME";//全部动态
-    public static final String REGIST_EDUCATION = "RE_EDUCATION";//全部动态
+    public static final String REGIST_NAME = "RE_NAME";//昵称
+    public static final String REGIST_AVATAR = "RE_AVATAR";//头像
+    public static final String REGIST_PHONE = "RE_PHONE";//手机
+    public static final String REGIST_PSD = "RE_PSD";//密码
+    public static final String REGIST_CODE = "RE_CODE";//验证码
+    public static final String REGIST_LATITUDE = "RE_LATITUDE";//
+    public static final String REGIST_LONGITUDE = "RE_LONGITUDE";//
+    public static final String REGIST_REFER = "RE_REFER";//推荐人
+    public static final String REGIST_CITY = "RE_CITY";//城市
+    public static final String REGIST_GENDER = "RE_GENDER";//性别
+    public static final String REGIST_BIRTHDAY = "RE_BIR";//生日
+    public static final String REGIST_HEIGHT = "RE_HEIGHT";//身高
+    public static final String REGIST_INCOME = "RE_INCOME";//收入
+    public static final String REGIST_EDUCATION = "RE_EDUCATION";//学历
 
 }

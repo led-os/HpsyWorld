@@ -121,7 +121,16 @@ public class PathLoadingView extends View implements Animator.AnimatorListener {
         } else if (isOk) {
             float stopD = mAnimatedValue * mOkLength;
             float startD = 0;
-            if (isStop && mAnimatedValue >= 0.98 && mOkValueAnimator.isRunning()) {
+            if (isStop && mOkValueAnimator.isRunning()) {
+                mOkValueAnimator.cancel();
+                ValueAnimator va = ObjectAnimator.ofFloat(this, "rotation", 0, 25, 0, -25, 0);
+                va.setRepeatCount(0);
+                va.setInterpolator(new OvershootInterpolator());
+                va.setDuration(0);
+                va.start();
+                va.addListener(this);
+            }
+            /*if (isStop && mAnimatedValue >= 0.98 && mOkValueAnimator.isRunning()) {
                 mOkValueAnimator.cancel();
                 ValueAnimator va = ObjectAnimator.ofFloat(this, "rotation", 0, 25, 0, -25, 0);
                 va.setRepeatCount(0);
@@ -129,14 +138,15 @@ public class PathLoadingView extends View implements Animator.AnimatorListener {
                 va.setDuration(1000);
                 va.start();
                 va.addListener(this);
-            }
+            }*/
             //获取当前进度的路径，同时赋值给传入的mDstPath
-            mOkPathMeasure.getSegment(startD, stopD, mDstPath, true);
+            //mCirclePathMeasure.getSegment(startD, stopD, mDstPath, true);
+            //mOkPathMeasure.getSegment(startD, stopD, mDstPath, true);
             canvas.save();
-            int widthCenter = this.getWidth() / 2;
+            /*int widthCenter = this.getWidth() / 2;
             int heightCenter = getHeight() / 2;
             canvas.translate(widthCenter - mRadius, heightCenter + mRadius / 4);
-            canvas.drawPath(mDstPath, mPaint);
+            canvas.drawPath(mDstPath, mPaint);*/
             canvas.restore();
         } else if (isX) {
             float stopD = mAnimatedValue * mXLength;

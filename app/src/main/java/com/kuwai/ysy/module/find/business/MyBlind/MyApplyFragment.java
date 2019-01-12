@@ -68,12 +68,12 @@ public class MyApplyFragment extends BaseFragment<MyblindPresenter> implements M
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.requestHomeData(page, (Integer.valueOf(SPManager.get().getStringValue("uid","1"))));
+        mPresenter.requestHomeData(page, (Integer.valueOf(SPManager.get().getStringValue("uid"))));
     }
 
     @Override
     public void setHomeData(MyBlindBean myBlindBean) {
-        mDateAdapter.addData(myBlindBean.getData());
+        mDateAdapter.replaceData(myBlindBean.getData());
     }
 
     @Override

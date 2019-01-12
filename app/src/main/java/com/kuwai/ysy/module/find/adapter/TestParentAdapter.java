@@ -16,7 +16,7 @@ import java.util.List;
 public class TestParentAdapter extends BaseQuickAdapter<MeetThemeBean, BaseViewHolder> {
     private TestChildAdapter cardAdapter;
 
-//    private List<HomeAppUavBean.DataBean.ClassBean> mList = null;
+    //    private List<HomeAppUavBean.DataBean.ClassBean> mList = null;
     private CallBack callBack;
 
     public void setCallBack(CallBack callBack) {
@@ -38,10 +38,8 @@ public class TestParentAdapter extends BaseQuickAdapter<MeetThemeBean, BaseViewH
         cardAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                for (int i = 0; i < mData.size(); i++) {
-                    for (MeetThemeBean.DataBean bean : mData.get(i).getData()) {
-                        bean.isCheck = false;
-                    }
+                for (int i = 0; i < item.getData().size(); i++) {
+                    item.getData().get(i).isCheck = false;
                 }
                 item.getData().get(position).isCheck = true;
                 notifyDataSetChanged();

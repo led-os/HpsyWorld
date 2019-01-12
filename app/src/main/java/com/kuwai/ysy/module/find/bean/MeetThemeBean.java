@@ -97,6 +97,20 @@ public class MeetThemeBean {
         public DataBean(String name) {
             this.name = name;
         }
+
+        public DataBean(String name, boolean isCheck) {
+            this.name = name;
+            this.isCheck = isCheck;
+        }
+
+        public DataBean(int s_id, String name, boolean isCheck) {
+            this.s_id = s_id;
+            this.name = name;
+            this.isCheck = isCheck;
+        }
+
+        public DataBean() {
+        }
     }
 
 }

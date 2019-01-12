@@ -65,7 +65,7 @@
             android:drawableRight="@drawable/ic_list_arrow_down"
             android:gravity="center_vertical"
             android:paddingLeft="16dp"
-            android:text="苏州"
+            android:text="苏州市"
             android:textColor="@color/balck_28"
             android:textSize="16dp" />
 
@@ -75,6 +75,7 @@
             android:layout_weight="1" />
 
         <TextView
+            android:id="@+id/tv_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableRight="@drawable/ic_city_list_filter_nor"
@@ -85,11 +86,16 @@
             android:textSize="16dp" />
     </LinearLayout>
 
-    <View style="@style/horizontal_line"/>
+    <View style="@style/horizontal_line" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/mRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="56dp"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

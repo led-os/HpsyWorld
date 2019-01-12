@@ -48,6 +48,9 @@ public class UploadHelper {
         } else if (o instanceof File) {
             body = RequestBody.create(MediaType.parse("multipart/form-data"), (File) o);
         }
+        /*else if(o instanceof Integer){
+            body = RequestBody.create(MediaType.parse("text/plain"), String.valueOf((int) o));
+        }*/
         params.put(key, body);
         return this;
     }

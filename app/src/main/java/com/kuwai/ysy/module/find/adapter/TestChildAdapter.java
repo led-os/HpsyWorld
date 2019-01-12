@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.module.find.bean.HomeAppUavBean;
 import com.kuwai.ysy.module.find.bean.MeetThemeBean;
+import com.kuwai.ysy.utils.Utils;
 
 import java.util.List;
 
@@ -22,7 +23,11 @@ public class TestChildAdapter extends BaseQuickAdapter<MeetThemeBean.DataBean, B
     protected void convert(BaseViewHolder helper, MeetThemeBean.DataBean item) {
         //helper.setText(R.id.tv_home_message, item.getClass_name());
         SuperButton button = (SuperButton) helper.getView(R.id.tv_type_date);
-        button.setText(item.getName());
+        if(Utils.isNullString(item.getImg())){
+            button.setText(item.getName());
+        }else{
+            button.setText(item.getName() + "(" + item.getCount() + ")");
+        }
         helper.addOnClickListener(R.id.tv_type_date);
         if (item.isCheck) {
             button.setShapeStrokeColor(mContext.getResources().getColor(R.color.filter_text_select)).setShapeSolidColor(mContext.getResources().getColor(R.color.filter_solid_select)).setUseShape();

@@ -61,7 +61,7 @@ public class ChangePhoneFragment extends BaseFragment<ChangePhonePresenter> impl
                 if (StringUtils.isLegalPhone(mnewphone)) {
                     mTvCountDown.start();
                     getCode(mnewphone, C.CODE_REGIST);
-                }else {
+                } else {
                     ToastUtils.showShort("手机号不合法");
                 }
                 break;
@@ -75,8 +75,7 @@ public class ChangePhoneFragment extends BaseFragment<ChangePhonePresenter> impl
         navigationLayout = mRootView.findViewById(R.id.navigation);
         TextView mtip = mRootView.findViewById(R.id.tv_tip);
         mtip.setText("更换手机后，下次登录可使用新手机号登录。当前手机号为："
-                + SPManager.get().getStringValue("phone", "12345678901").substring(0, 3) + "****"
-                + SPManager.get().getStringValue("phone", "12345678901").substring(7, 11));
+                + SPManager.get().getStringValue("phone_").substring(0, 3) + "****" + SPManager.get().getStringValue("phone_").substring(7, 11));
         mTvPhone = mRootView.findViewById(R.id.tv_phone);
         mtvNewPhone = mRootView.findViewById(R.id.tv_newphone);
         vcode = mRootView.findViewById(R.id.et_code);
@@ -158,7 +157,10 @@ public class ChangePhoneFragment extends BaseFragment<ChangePhonePresenter> impl
 
     @Override
     public void setHomeData(SimpleResponse response) {
-
+        if(response.code == 200){
+            pop();
+        }
+        ToastUtils.showShort(response.msg);
     }
 
     @Override

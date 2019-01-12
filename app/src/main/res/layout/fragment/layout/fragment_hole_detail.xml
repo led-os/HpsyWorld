@@ -31,7 +31,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:text="这件事想说很久了"
+            android:text="详情"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
@@ -42,6 +42,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="16dp"
+            android:visibility="gone"
             android:src="@drawable/dyn_tree_ic_more" />
 
     </RelativeLayout>
@@ -123,6 +124,7 @@
                             android:textColor="@color/theme"
                             android:textSize="15sp"
                             app:sCornersRadius="14dp"
+                            android:visibility="gone"
                             app:sSolidColor="@color/white"
                             app:sStrokeColor="@color/theme"
                             app:sStrokeWidth="1px" />
@@ -227,7 +229,7 @@
         android:layout_height="48dp"
         android:layout_below="@id/top"
         android:layout_alignParentBottom="true"
-        android:text="提交"
+        android:text="打赏"
         android:textColor="@color/white"
         android:textSize="14sp"
         app:sGradientEndColor="#bfb5ea"

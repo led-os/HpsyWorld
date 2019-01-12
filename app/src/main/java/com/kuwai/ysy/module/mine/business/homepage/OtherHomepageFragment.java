@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.mine.business.homepage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.allen.library.CircleImageView;
 import com.allen.library.SuperButton;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -23,6 +25,7 @@ import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.circle.VideoPlayActivity;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.business.dongtai.DongtaiMainFragment;
 import com.kuwai.ysy.module.mine.adapter.PicAdapter;
@@ -30,7 +33,9 @@ import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.kuwai.ysy.module.mine.bean.TabEntity;
 import com.kuwai.ysy.module.mine.bean.vip.GallaryBean;
 import com.kuwai.ysy.utils.EventBusUtil;
+import com.kuwai.ysy.utils.Utils;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
@@ -40,7 +45,9 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.SynchronousQueue;
 
+import cc.shinichi.library.ImagePreview;
 import io.rong.imkit.RongIM;
 
 public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> implements OtherHomepageContract.IHomeView, View.OnClickListener {
@@ -75,7 +82,7 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
     private String otherid;
     private PersolHomePageBean mPersolHomePageBean;
 
-    private List<GallaryBean> gallaryBeanList = new ArrayList<>();
+    private ArrayList<PersolHomePageBean.DataBean.InfoBean.VideoBean> videos = new ArrayList<>();
 
     public static OtherHomepageFragment newInstance(String id) {
         Bundle bundle = new Bundle();
@@ -107,10 +114,14 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
                 //信用度
                 break;
             case R.id.btn_like:
-                if ("喜欢".equals(mBtnLike.getText().toString())) {
-                    mPresenter.like(SPManager.get().getStringValue("uid"), otherid, 1);
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    if ("喜欢".equals(mBtnLike.getText().toString())) {
+                        mPresenter.like(SPManager.get().getStringValue("uid"), otherid, 1);
+                    } else {
+                        mPresenter.like(SPManager.get().getStringValue("uid"), otherid, 2);
+                    }
                 } else {
-                    mPresenter.like(SPManager.get().getStringValue("uid"), otherid, 2);
+                    ToastUtils.showShort(R.string.login_error);
                 }
                 //喜欢
                 break;
@@ -128,7 +139,7 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
         mLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pop();
+                getActivity().finish();
             }
         });
         mTitle = mRootView.findViewById(R.id.title);
@@ -207,6 +218,48 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
 
             }
         });
+
+        mDateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (Utils.isNullString(videos.get(position).getVideo_id())) {
+                    //图片
+                    ImagePreview
+                            .getInstance()
+                            // 上下文，必须是activity，不需要担心内存泄漏，本框架已经处理好
+                            .setContext(getActivity())
+                            // 从第几张图片开始，索引从0开始哦~
+                            .setIndex(0)
+                            // 只有一张图片的情况，可以直接传入这张图片的url
+                            .setImage(videos.get(position).getAttach())
+                            // 加载策略，详细说明见下面“加载策略介绍”。默认为手动模式
+                            .setLoadStrategy(ImagePreview.LoadStrategy.AlwaysThumb)
+                            // 保存的文件夹名称，会在SD卡根目录进行文件夹的新建。
+                            // (你也可设置嵌套模式，比如："BigImageView/Download"，会在SD卡根目录新建BigImageView文件夹，并在BigImageView文件夹中新建Download文件夹)
+                            .setFolderName("YsyDownload")
+                            // 缩放动画时长，单位ms
+                            .setZoomTransitionDuration(300)
+                            // 是否启用上拉/下拉关闭。默认不启用
+                            .setEnableDragClose(true)
+                            // 是否显示下载按钮，在页面右下角。默认显示
+                            .setShowDownButton(false)
+                            // 设置是否显示顶部的指示器（1/9）默认显示
+                            //.setShowIndicator(false)
+                            // 设置失败时的占位图，默认为R.drawable.load_failed，设置为 0 时不显示
+                            .setErrorPlaceHolder(R.drawable.load_failed)
+                            // 开启预览
+                            .start();
+                } else {
+                    //视频
+                    Intent intent = new Intent(getActivity(), VideoPlayActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("vid", videos.get(position).getVideo_id());
+                    bundle.putString("imgurl", videos.get(position).getAttach());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
@@ -262,14 +315,16 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
         }
         mTvSign.setText(StringUtils.join(info.toArray(), "|"));
 
-
-        //mDateAdapter.addData(persolHomePageBean.getData().getInfo().getAttach());
-        for (int i = 0; i < persolHomePageBean.getData().getInfo().getVideo().size(); i++) {
-            gallaryBeanList.add(new GallaryBean(persolHomePageBean.getData().getInfo().getVideo().get(i).getAttach(),
-                    persolHomePageBean.getData().getInfo().getIs_vip() == 1 ? true : false,
-                    persolHomePageBean.getData().getView_face() == 1 ? true : false));
+        videos.clear();
+        for (PersolHomePageBean.DataBean.InfoBean.VideoBean img : persolHomePageBean.getData().getInfo().getVideo()) {
+            videos.add(img);
         }
-        mDateAdapter.addData(gallaryBeanList);
+        for (PersolHomePageBean.DataBean.InfoBean.ImageBean img : persolHomePageBean.getData().getInfo().getImage()) {
+            PersolHomePageBean.DataBean.InfoBean.VideoBean bean = new PersolHomePageBean.DataBean.InfoBean.VideoBean();
+            bean.setAttach(img.getImg());
+            videos.add(bean);
+        }
+        mDateAdapter.replaceData(videos);
     }
 
     @Override

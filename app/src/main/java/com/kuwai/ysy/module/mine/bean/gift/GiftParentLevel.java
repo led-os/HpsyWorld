@@ -3,8 +3,6 @@ package com.kuwai.ysy.module.mine.bean.gift;
 import com.chad.library.adapter.base.entity.AbstractExpandableItem;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.kuwai.ysy.module.mine.adapter.ExpandableGiftAdapter;
-import com.kuwai.ysy.module.mine.adapter.ExpandableItemAdapter;
-import com.kuwai.ysy.module.mine.bean.TodayBean;
 
 /**
  * Created by luoxw on 2016/8/10.

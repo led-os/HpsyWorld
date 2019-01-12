@@ -21,7 +21,7 @@ public class FoundActivityAdapter extends BaseQuickAdapter<FoundBean.DataBean.Ac
     @Override
     protected void convert(BaseViewHolder helper, FoundBean.DataBean.ActivityBean item) {
         helper.setText(R.id.tv_title, item.getTitle());
-        helper.setText(R.id.sb_nums, String.valueOf(item.getEnrolment()));
+        helper.setText(R.id.sb_nums, item.getEnrolment() + "人");
         Glide.with(mContext).load(item.getAttach()).into((ImageView) helper.getView(R.id.iv_ad));
 
         switch (item.getStatus()) {

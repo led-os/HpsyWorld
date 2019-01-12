@@ -49,16 +49,16 @@
 
                     <TextView
                         android:id="@+id/tv_nick"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:layout_marginLeft="8dp"
                         android:layout_toRightOf="@id/img_head"
                         android:textColor="@color/balck_28" />
 
                     <ImageView
                         android:id="@+id/iv_sex"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:layout_marginLeft="6dp"
                         android:layout_toRightOf="@id/tv_nick" />
 
@@ -139,7 +139,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/top_lay"
-                        android:layout_marginLeft="16dp"
                         android:layout_toRightOf="@id/tv_location"
                         android:textColor="@color/gray_7b"
                         android:textSize="12sp" />
@@ -168,7 +167,7 @@
                     android:button="@null"
                     android:checked="true"
                     android:gravity="center"
-                    android:text="打赏(20)"
+                    android:text="打赏"
                     android:textColor="@color/radio_color"
                     android:textSize="16sp" />
 
@@ -180,7 +179,7 @@
                     android:background="@drawable/radiobutton_background"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="评论(10)"
+                    android:text="评论"
                     android:textColor="@color/radio_color"
                     android:textSize="16sp" />
 
@@ -192,7 +191,7 @@
                     android:background="@drawable/radiobutton_background"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="点赞(5)"
+                    android:text="点赞"
                     android:textColor="@color/radio_color"
                     android:textSize="16sp" />
 

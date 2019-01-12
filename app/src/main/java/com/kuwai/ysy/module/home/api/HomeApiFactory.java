@@ -12,6 +12,7 @@ import com.rayhahah.rbase.utils.useful.RxSchedulers;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 
 public class HomeApiFactory {
 
@@ -50,14 +51,14 @@ public class HomeApiFactory {
                 .compose(RxSchedulers.<LoginBean>ioMain());
     }
 
-    public static Observable<SimpleResponse> regist(Map<String, String> num) {
+    public static Observable<SimpleResponse> regist(Map<String, RequestBody> num) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(HomeService.class)
                 .regist(num)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
-    public static Observable<HomeVideoBean> getHomeData(Map<String, String> num) {
+    public static Observable<HomeVideoBean> getHomeData(Map<String, Object> num) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(HomeService.class)
                 .getHomeData(num)

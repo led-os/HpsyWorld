@@ -172,6 +172,7 @@ public class CommicDetailMyFragment extends BaseFragment<MyCommisDetailPresenter
                             .setView(pannel)
                             .setTouchOutside(true)
                             .setItemHeight(0.2f)
+                            .setItemWidth(0.7f)
                             .setDialogGravity(Gravity.CENTER)
                             .build();
                 }

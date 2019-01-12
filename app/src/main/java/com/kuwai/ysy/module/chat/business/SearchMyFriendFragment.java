@@ -14,6 +14,7 @@ import com.kuwai.ysy.module.chat.adapter.MyFriendsAdapter;
 import com.kuwai.ysy.module.chat.api.ChatApiFactory;
 import com.kuwai.ysy.module.chat.bean.MyFriends;
 import com.kuwai.ysy.utils.Utils;
+import com.kuwai.ysy.widget.MyEditText;
 import com.kuwai.ysy.widget.MyRecycleViewDivider;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
@@ -32,6 +33,7 @@ public class SearchMyFriendFragment extends BaseFragment implements View.OnClick
     private TextView search;
     private RecyclerView mFriendRl;
     private MyFriendsAdapter myFriendsAdapter;
+    private MyEditText et_search;
     private List<MyFriends.DataBean> mDatalist = new ArrayList<>();
 
     public static SearchMyFriendFragment newInstance() {
@@ -67,6 +69,7 @@ public class SearchMyFriendFragment extends BaseFragment implements View.OnClick
         search = mRootView.findViewById(R.id.search);
         mFriendRl = mRootView.findViewById(R.id.rl_my_friend);
         myFriendsAdapter = new MyFriendsAdapter(mDatalist);
+        et_search = mRootView.findViewById(R.id.et_search);
         mFriendRl.setAdapter(myFriendsAdapter);
         mFriendRl.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mFriendRl.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 1), R.color.line_color));
@@ -86,8 +89,8 @@ public class SearchMyFriendFragment extends BaseFragment implements View.OnClick
     void getFriends() {
         Map<String, String> param = new HashMap<>();
         param.put("uid", SPManager.get().getStringValue("uid"));
-        if (!Utils.isNullString(search.getText().toString())) {
-            param.put("search", "");
+        if (!Utils.isNullString(et_search.getText().toString())) {
+            param.put("search", et_search.getText().toString());
         }
         addSubscription(ChatApiFactory.getFriends(param).subscribe(new Consumer<MyFriends>() {
             @Override
@@ -95,6 +98,8 @@ public class SearchMyFriendFragment extends BaseFragment implements View.OnClick
                 if (myBlindBean.getCode() == 200) {
                     myFriendsAdapter.replaceData(myBlindBean.getData());
                 } else {
+                    myFriendsAdapter.getData().clear();
+                    myFriendsAdapter.notifyDataSetChanged();
                     ToastUtils.showShort(myBlindBean.getMsg());
                 }
 

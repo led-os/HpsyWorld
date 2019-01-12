@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 
 public class FoundApiFactory {
 
@@ -43,10 +44,10 @@ public class FoundApiFactory {
                 .compose(RxSchedulers.<LocalNextBean>ioMain());
     }
 
-    public static Observable<CityMeetBean> getCityMeetList(int page, String city) {
+    public static Observable<CityMeetBean> getCityMeetList(Map<String,Object> params) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(FoundService.class)
-                .getMeetListData(page, city)
+                .getMeetListData(params)
                 .compose(RxSchedulers.<CityMeetBean>ioMain());
     }
 
@@ -113,10 +114,10 @@ public class FoundApiFactory {
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
-    public static Observable<TuoDanBean> getTuoDanList(int page) {
+    public static Observable<TuoDanBean> getTuoDanList(Map<String,Object> param) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(FoundService.class)
-                .getTuoDanData(page)
+                .getTuoDanData(param)
                 .compose(RxSchedulers.<TuoDanBean>ioMain());
     }
 
@@ -127,7 +128,7 @@ public class FoundApiFactory {
                 .compose(RxSchedulers.<MyBlindBean>ioMain());
     }
 
-    public static Observable<BlindBean> sendBlind(HashMap<String, Object> params) {
+    public static Observable<BlindBean> sendBlind(HashMap<String, RequestBody> params) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(FoundService.class)
                 .sendBlind(params)

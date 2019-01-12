@@ -12,6 +12,7 @@ import com.kuwai.ysy.R;
 public class CircleTextView extends AppCompatTextView {
 
     private Paint mBgPaint = new Paint();
+    private Paint mCirclePaint = new Paint();
 
     public CircleTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -28,10 +29,15 @@ public class CircleTextView extends AppCompatTextView {
         initPaint(context);
     }
 
-    private void initPaint(Context context){
-        mBgPaint.setColor(context.getResources().getColor(R.color.theme_light));
+    private void initPaint(Context context) {
+        mBgPaint.setColor(context.getResources().getColor(R.color.bg_circle));
         mBgPaint.setStyle(Paint.Style.FILL);
         mBgPaint.setAntiAlias(true);
+
+        mCirclePaint.setColor(context.getResources().getColor(R.color.white));
+        mCirclePaint.setStyle(Paint.Style.FILL);
+        mCirclePaint.setAntiAlias(true);
+
     }
 
     @Override
@@ -50,7 +56,8 @@ public class CircleTextView extends AppCompatTextView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, Math.max(getWidth(), getHeight()) / 2, mBgPaint);
+        canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, Math.max(getWidth(), getHeight()) / 2, mCirclePaint);
+        canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, Math.max(getWidth(), getHeight()) / 2 - 2, mBgPaint);
         super.onDraw(canvas);
     }
 

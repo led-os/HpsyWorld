@@ -95,7 +95,7 @@ public class QuestionFragment extends BaseFragment<AskPresenter> implements AskC
         ((NavigationLayout) mRootView.findViewById(R.id.navigation)).setLeftClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               getActivity().finish();
+                getActivity().finish();
             }
         });
 
@@ -208,52 +208,57 @@ public class QuestionFragment extends BaseFragment<AskPresenter> implements AskC
     }
 
     private void popAnswer(final String answer, final int position) {
-            View pannel = View.inflate(getActivity(), R.layout.dialog_question, null);
-            ImageView imageDel = pannel.findViewById(R.id.top_del);
-            TextView title = pannel.findViewById(R.id.top);
-            SuperButton submit = pannel.findViewById(R.id.submit);
-            title.setText("添加回答");
-            final EditText etContent = pannel.findViewById(R.id.dialog_comment_et);
+        View pannel = View.inflate(getActivity(), R.layout.dialog_question, null);
+        ImageView imageDel = pannel.findViewById(R.id.top_del);
+        TextView title = pannel.findViewById(R.id.top);
+        SuperButton submit = pannel.findViewById(R.id.submit);
+        title.setText("添加回答");
+        final EditText etContent = pannel.findViewById(R.id.dialog_comment_et);
 
-            etContent.setHint("请输入您的回答内容...");
-            if (!Utils.isNullString(answer)) {
-                etContent.setText(answer);
-                title.setText("修改回答");
-            }
+        etContent.setHint("请输入您的回答内容...");
+        if (!Utils.isNullString(answer)) {
+            etContent.setText(answer);
+            title.setText("修改回答");
+        }
 
-            imageDel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (answerDialog != null) {
-                        answerDialog.dismiss();
-                    }
-                }
-            });
-
-            submit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        imageDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (answerDialog != null) {
                     answerDialog.dismiss();
-                    MyAskBean.DataBean data = mMyaskBean.getData().get(position);
-                    mPresenter.getUpdateProblem(SPManager.get().getStringValue("uid"), data.getP_id(), "", etContent.getText().toString());
                 }
-            });
+            }
+        });
 
-            answerDialog = new CustomDialog.Builder(getActivity())
-                    .setView(pannel)
-                    .setTouchOutside(true)
-                    .setDialogGravity(Gravity.CENTER)
-                    .build();
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                answerDialog.dismiss();
+                MyAskBean.DataBean data = mMyaskBean.getData().get(position);
+                mPresenter.getUpdateProblem(SPManager.get().getStringValue("uid"), data.getP_id(), "", etContent.getText().toString());
+            }
+        });
+
+        answerDialog = new CustomDialog.Builder(getActivity())
+                .setView(pannel)
+                .setTouchOutside(true)
+                .setDialogGravity(Gravity.CENTER)
+                .build();
         answerDialog.show();
     }
 
     @Override
     public void setHomeData(MyAskBean askBean) {
         mMyaskBean = askBean;
-        if (mMyaskBean.getData().size() > 2) {
-            btn_add_question.setVisibility(View.GONE);
+        if (askBean.getCode() == 200) {
+            if (mMyaskBean.getData() != null && mMyaskBean.getData().size() > 2) {
+                btn_add_question.setVisibility(View.GONE);
+            }
+            questionAdapter.replaceData(askBean.getData());
+        } else {
+            questionAdapter.getData().clear();
+            questionAdapter.notifyDataSetChanged();
         }
-        questionAdapter.replaceData(askBean.getData());
     }
 
     @Override

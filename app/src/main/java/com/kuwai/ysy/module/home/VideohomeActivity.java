@@ -35,7 +35,9 @@ import com.kuwai.ysy.module.home.bean.HomeVideoBean;
 import com.kuwai.ysy.module.home.bean.VideoBean;
 import com.kuwai.ysy.module.home.bean.login.LoginBean;
 import com.kuwai.ysy.module.home.business.HomeActivity;
+import com.kuwai.ysy.utils.DialogUtil;
 import com.kuwai.ysy.utils.EventBusUtil;
+import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.StaggeredDividerItemDecoration;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
@@ -69,6 +71,7 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
     private View mLine;
     private RadioButton mTvNear;
     HomePicAdapter mPicAdapter;
+    private int videoPage = 1;
 
     private PlayerManager playerManager;
 
@@ -178,7 +181,12 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
         rvPage2.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
+                int itemCount = recyclerView.getAdapter().getItemCount();
+                int lastVisualItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                //此处表示剩余4个item时加载数据,可自己设置
+                if (itemCount - 4 <= lastVisualItem) {
+                    getMoreVideo();
+                }
             }
 
             @Override
@@ -237,6 +245,7 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
+        DialogUtil.showLoadingDialog(getActivity(), "", getResources().getColor(R.color.theme));
         getHomeData();
         getNearData();
     }
@@ -376,22 +385,28 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_date:
-                Intent intent = new Intent(getActivity(), WebviewH5Activity.class);
-                intent.putExtra("type", "yunshi");
-                intent.putExtra(C.H5_FLAG, C.H5_URL + C.YUNSHI + SPManager.get().getStringValue("uid"));
-                startActivity(intent);
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    Intent intent = new Intent(getActivity(), WebviewH5Activity.class);
+                    intent.putExtra("type", "yunshi");
+                    intent.putExtra(C.H5_FLAG, C.H5_URL + C.YUNSHI + SPManager.get().getStringValue("uid"));
+                    startActivity(intent);
+                } else {
+                    ToastUtils.showShort(R.string.login_error);
+                }
                 break;
             case R.id.tv_filter:
-                startActivity(new Intent(getActivity(),FilterActivity.class));
+                startActivity(new Intent(getActivity(), FilterActivity.class));
                 break;
         }
     }
 
     void getHomeData() {
-        HashMap<String, String> param = new HashMap<>();
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("page", videoPage);
         addSubscription(HomeApiFactory.getHomeData(param).subscribe(new Consumer<HomeVideoBean>() {
             @Override
             public void accept(HomeVideoBean homeVideoBean) throws Exception {
+                DialogUtil.dismissDialog(true);
                 if (homeVideoBean.getCode() == 200) {
                     urlList.clear();
                     urlList.addAll(homeVideoBean.getData());
@@ -405,13 +420,40 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                Log.i("", "accept: " + throwable);
+                DialogUtil.dismissDialog(true);
+                ToastUtils.showShort(R.string.server_error);
+            }
+        }));
+    }
+
+    void getMoreVideo() {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("page", videoPage + 1);
+        addSubscription(HomeApiFactory.getHomeData(param).subscribe(new Consumer<HomeVideoBean>() {
+            @Override
+            public void accept(HomeVideoBean homeVideoBean) throws Exception {
+                if (homeVideoBean.getCode() == 200) {
+                    if (homeVideoBean.getData() != null && homeVideoBean.getData().size() > 0) {
+                        videoPage++;
+                        urlList.addAll(homeVideoBean.getData());
+                        playerManager.setData(urlList);
+                        videoAdapter.notifyItemRangeInserted(urlList.size() - homeVideoBean.getData().size(), homeVideoBean.getData().size());
+                    }
+                } else {
+                    ToastUtils.showShort(homeVideoBean.getMsg());
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                DialogUtil.dismissDialog(true);
+                ToastUtils.showShort(R.string.server_error);
             }
         }));
     }
 
     void getNearData() {
-        HashMap<String, String> param = new HashMap<>();
+        HashMap<String, Object> param = new HashMap<>();
         param.put("longitude", SPManager.get().getStringValue("longitude"));
         param.put("latitude", SPManager.get().getStringValue("longitude"));
         addSubscription(HomeApiFactory.getHomeData(param).subscribe(new Consumer<HomeVideoBean>() {

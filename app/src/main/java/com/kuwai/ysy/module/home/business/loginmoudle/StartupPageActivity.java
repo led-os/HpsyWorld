@@ -9,12 +9,17 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.common.BaseActivity;
+import com.kuwai.ysy.module.chat.api.ChatApiFactory;
+import com.kuwai.ysy.module.chat.bean.StsBean;
 import com.kuwai.ysy.module.circle.AddressChooseActivity;
 import com.kuwai.ysy.module.circle.business.publishdy.PublishDyActivity;
+import com.kuwai.ysy.module.home.business.HomeActivity;
 import com.kuwai.ysy.module.home.business.loginmoudle.login.LoginActivity;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
+import com.rayhahah.rbase.utils.useful.SPManager;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import io.reactivex.functions.Consumer;
@@ -47,13 +52,12 @@ public class StartupPageActivity extends BaseActivity implements Animation.Anima
     protected void initView() {
         splashImage = (ImageView) findViewById(R.id.back_logo);
         TxtImg = findViewById(R.id.normal_img);
+
         Glide.with(StartupPageActivity.this)
                 .load(R.drawable.bg_start)
                 .into(splashImage);
 
-            /*Glide.with(StartupPageActivity.this)
-                    .load(R.drawable.bg_start)
-                    .into(TxtImg);*/
+        getSts();
 
         Animation animation = new ScaleAnimation(1.0f, 1.1f, 1.0f, 1.1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); // 将图片放大1.2倍，从中心开始缩放
         animation.setDuration(SPLASH_TIME_OUT); // 动画持续时间
@@ -62,6 +66,26 @@ public class StartupPageActivity extends BaseActivity implements Animation.Anima
         splashImage.startAnimation(animation);
     }
 
+    void getSts() {
+        addSubscription(ChatApiFactory.getSts().subscribe(new Consumer<StsBean>() {
+            @Override
+            public void accept(StsBean stsBean) throws Exception {
+                if (stsBean.getCode() == 200) {
+                    SPManager.get().putString(C.ALI_ACID, stsBean.getData().getAccessKeyId());
+                    SPManager.get().putString(C.ALI_SECRET, stsBean.getData().getAccessKeySecret());
+                    SPManager.get().putString(C.ALI_TOKEN, stsBean.getData().getSecurityToken());
+                } else {
+                    //ToastUtils.showShort(stsBean.getMsg());
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: "+throwable);
+                //ToastUtils.showShort("网络错误");
+            }
+        }));
+    }
 
     @Override
     public void onAnimationStart(Animation animation) {
@@ -80,7 +104,7 @@ public class StartupPageActivity extends BaseActivity implements Animation.Anima
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
-                        Intent i = new Intent(StartupPageActivity.this, LoginActivity.class);
+                        Intent i = new Intent(StartupPageActivity.this, HomeActivity.class);
                         startActivity(i);
                         finish();
                         if (aBoolean) {

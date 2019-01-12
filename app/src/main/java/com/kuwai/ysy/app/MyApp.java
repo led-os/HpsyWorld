@@ -14,6 +14,7 @@ import com.kuwai.ysy.net.ApiClient;
 import com.kuwai.ysy.rong.ExtensionModule;
 import com.kuwai.ysy.rong.GiftSendMessage;
 import com.kuwai.ysy.rong.GiftSendMessageItemProvider;
+import com.kuwai.ysy.rong.MyGroupConversationProvider;
 import com.kuwai.ysy.rong.MyTextMessageItemProvider;
 import com.kuwai.ysy.rong.QuestionMessage;
 import com.kuwai.ysy.rong.QuestionMessageItemProvider;
@@ -70,6 +71,7 @@ public class MyApp extends BaseApplication {
 
     private void initRong() {
         RongIM.init(this);
+        RongIM.getInstance().registerConversationTemplate(new MyGroupConversationProvider());
         RongIM.getInstance().registerMessageTemplate(new MyTextMessageItemProvider());
         RongIM.registerMessageType(QuestionMessage.class);
         RongIM.getInstance().registerMessageTemplate(new QuestionMessageItemProvider());
@@ -90,7 +92,7 @@ public class MyApp extends BaseApplication {
 
         UMConfigure.init(this, "5bdf9e6af1f556220800009b", "umeng", UMConfigure.DEVICE_TYPE_PHONE, "");
         PlatformConfig.setWeixin("wx061451b819a2c377", "a2ede8246092bd70ac33cac9dc24d69f");
-        PlatformConfig.setSinaWeibo("240524518", "cc4933f41b939f5188e3ec06c5c921d9","http://sns.whalecloud.com");
+        PlatformConfig.setSinaWeibo("240524518", "cc4933f41b939f5188e3ec06c5c921d9","api.yushuiyuan.cn/api/user/weibo");
         PlatformConfig.setQQZone("101511982", "cae47898315b8ce1a93cf51bc2de7354");
 
         //腾讯x5

@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_margin="10dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
-    <com.kuwai.ysy.widget.NiceImageView
+    <ImageView
         android:id="@+id/img_pic"
         android:layout_width="150dp"
         android:layout_height="120dp"
-        app:corner_radius="4dp"
-        android:layout_marginRight="3dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="8dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/banner"/>
+        android:scaleType="centerCrop"/>
+
+    <ImageView
+        android:id="@+id/iv_video"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:background="@drawable/ic_mine_msg_film" />
+
 </RelativeLayout>

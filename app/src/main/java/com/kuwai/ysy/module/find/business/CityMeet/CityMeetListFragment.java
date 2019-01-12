@@ -13,11 +13,15 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.allen.library.SuperButton;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.circle.bean.DyMainListBean;
+import com.kuwai.ysy.module.find.api.FoundApiFactory;
 import com.kuwai.ysy.module.find.bean.BlindBean;
 import com.kuwai.ysy.module.find.bean.CityMeetBean;
+import com.kuwai.ysy.module.find.bean.FoundHome.LocalNextBean;
 import com.kuwai.ysy.module.find.bean.MeetThemeBean;
 import com.kuwai.ysy.module.find.business.MyCommicDetail.CommicDetailMyFragment;
 import com.kuwai.ysy.module.find.business.CommisDetail.CommisDetailFragment;
@@ -26,13 +30,23 @@ import com.kuwai.ysy.module.find.adapter.CityAdapter;
 import com.kuwai.ysy.module.find.adapter.CityMeetAdapter;
 import com.kuwai.ysy.module.find.adapter.TestParentAdapter;
 import com.kuwai.ysy.module.find.business.MyDateFragment;
+import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.kuwai.ysy.widget.popwindow.YsyPopWindow;
 import com.rayhahah.rbase.utils.useful.SPManager;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import io.reactivex.functions.Consumer;
 
 public class CityMeetListFragment extends BaseFragment<CityMeetPresenter> implements CityMeetContract.IHomeView, View.OnClickListener {
 
@@ -42,14 +56,22 @@ public class CityMeetListFragment extends BaseFragment<CityMeetPresenter> implem
     private TextView mCityTv;
     //    private List<CategoryBean> mDataList = new ArrayList<>();
     private YsyPopWindow mListPopWindow;
-    private List<String> mCityList = new ArrayList<>();
+    private List<LocalNextBean.DataBean> mCityList = new ArrayList<>();
     private TextView mFilterTv;
     private TextView floatButton;
+    private SmartRefreshLayout mRefreshLayout;
+    private int mPage = 1;
+    Map<String, Object> param = new HashMap<>();
 
     private PopupWindow popupWindow;
     RecyclerView mTypeList = null;
     private TestParentAdapter cardAdapter;
     private CityMeetBean mcityMeetBean;
+    private List<MeetThemeBean.DataBean> mDataList = new ArrayList<>();
+    MeetThemeBean meetThemeBean1, meetThemeBean2, meetThemeBean3;
+    private String themeId, costType;
+    private int otherType;
+    private String areaName = "";
 //    private List<HomeAppUavBean.DataBean.ClassBean> mList = new ArrayList<>();
 
     public static CityMeetListFragment newInstance() {
@@ -88,6 +110,26 @@ public class CityMeetListFragment extends BaseFragment<CityMeetPresenter> implem
         mFilterTv = mRootView.findViewById(R.id.tv_filter);
         floatButton = mRootView.findViewById(R.id.publish);
         navigationLayout = mRootView.findViewById(R.id.navigation);
+
+        mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
+        mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
+        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                mPage = 1;
+                mPresenter.requestHomeData(param);
+            }
+        });
+
+        mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                param.put("page", mPage + 1);
+                getMore(param);
+            }
+        });
+
+
         navigationLayout.setLeftClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,8 +144,6 @@ public class CityMeetListFragment extends BaseFragment<CityMeetPresenter> implem
         });
         mCityTv.setOnClickListener(this);
         mFilterTv.setOnClickListener(this);
-//        mDataList.add(new CategoryBean());
-//        mDataList.add(new CategoryBean());
         mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mDongtaiAdapter = new CityMeetAdapter();
         mDongtaiList.setAdapter(mDongtaiAdapter);
@@ -118,10 +158,10 @@ public class CityMeetListFragment extends BaseFragment<CityMeetPresenter> implem
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putInt("rid", mcityMeetBean.getData().get(position).getR_id());
-                bundle.putString("uid",String.valueOf(mcityMeetBean.getData().get(position).getUid()));
+                bundle.putInt("rid", mDongtaiAdapter.getData().get(position).getR_id());
+                bundle.putString("uid", String.valueOf(mDongtaiAdapter.getData().get(position).getUid()));
 
-                if (Integer.valueOf(SPManager.get().getStringValue("uid")) == (mcityMeetBean.getData().get(position).getUid())) {
+                if (Integer.valueOf(SPManager.get().getStringValue("uid")) == (mDongtaiAdapter.getData().get(position).getUid())) {
                     start(CommicDetailMyFragment.newInstance(bundle));
                 } else {
                     start(CommisDetailFragment.newInstance(bundle));
@@ -133,16 +173,17 @@ public class CityMeetListFragment extends BaseFragment<CityMeetPresenter> implem
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-
         cardAdapter = new TestParentAdapter();
-        mPresenter.requestHomeData();
+        param.put("page", mPage);
+        param.put("city", SPManager.get().getStringValue("cityName"));
+        mPresenter.requestHomeData(param);
         mPresenter.getMeetfilter();
+        getAreaData(Integer.parseInt(SPManager.get().getStringValue("cityId")));
     }
 
     private void showPopListView() {
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.pop_city_list, null);
         //处理popWindow 显示内容
-        mCityList.clear();
         handleListView(contentView);
         //创建并显示popWindow
         mListPopWindow = new YsyPopWindow.PopupWindowBuilder(getActivity())
@@ -159,12 +200,28 @@ public class CityMeetListFragment extends BaseFragment<CityMeetPresenter> implem
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(manager);
-        mCityList.add("");
-        mCityList.add("");
-        mCityList.add("");
-        mCityList.add("");
         CityAdapter adapter = new CityAdapter(mCityList);
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+                for (LocalNextBean.DataBean bean : mCityList) {
+                    bean.ischecked = false;
+                }
+                mCityList.get(position).ischecked = true;
+
+                areaName = mCityList.get(position).getRegion_name();
+                param.put("area", areaName);
+                if ("全城".equals(areaName)) {
+                    param.remove("area");
+                }
+                mCityTv.setText(areaName);
+                mPresenter.requestHomeData(param);
+                adapter.notifyDataSetChanged();
+                mListPopWindow.dissmiss();
+            }
+        });
         dissmiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,23 +236,66 @@ public class CityMeetListFragment extends BaseFragment<CityMeetPresenter> implem
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.pop_test, null);
         popupWindow = new PopupWindow(view, Utils.dp2px(320),
                 WindowManager.LayoutParams.MATCH_PARENT, true);
+        SuperButton btnSure = view.findViewById(R.id.btnSure);
+        SuperButton btnChong = view.findViewById(R.id.btn_chong);
 
-        mTypeList = view.findViewById(R.id.parent_list);
-
-
-        //cardAdapter.setNewData(homeAppUavBean.getData().getClassX());
-
-        cardAdapter.setCallBack(new TestParentAdapter.CallBack() {
+        btnChong.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void getId(String id) {
-                /*if (popupWindow != null && popupWindow.isShowing()) {
-                    popupWindow.dismiss();
-                }*/
-                //btnSelect.setTextColor(getContext().getResources().getColor(R.color.text_green));
-                //btnAll.setTextColor(getContext().getResources().getColor(R.color.bar_grey));
-                //getData(id);
+            public void onClick(View v) {
+                for (int i = 0; i < meetThemeBean1.getData().size(); i++) {
+                    meetThemeBean1.getData().get(i).isCheck = false;
+                }
+                meetThemeBean1.getData().get(0).isCheck = true;
+                for (int j = 0; j < meetThemeBean2.getData().size(); j++) {
+                    meetThemeBean2.getData().get(j).isCheck = false;
+                }
+                meetThemeBean2.getData().get(0).isCheck = true;
+                for (int k = 0; k < meetThemeBean3.getData().size(); k++) {
+                    meetThemeBean3.getData().get(k).isCheck = false;
+                }
+                meetThemeBean3.getData().get(0).isCheck = true;
+                cardAdapter.notifyDataSetChanged();
             }
         });
+
+        btnSure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (MeetThemeBean.DataBean data : meetThemeBean1.getData()) {
+                    if (data.isCheck) {
+                        themeId = data.getName();
+                    }
+                }
+                for (MeetThemeBean.DataBean data : meetThemeBean2.getData()) {
+                    if (data.isCheck) {
+                        costType = String.valueOf(data.getS_id());
+                    }
+                }
+                for (MeetThemeBean.DataBean data : meetThemeBean3.getData()) {
+                    if (data.isCheck) {
+                        otherType = data.getS_id();
+                    }
+                }
+                mPage = 1;
+                if (!"全部".equals(themeId)) {
+                    param.put("sincerity", themeId);
+                } else {
+                    param.remove("sincerity");
+                }
+                param.put("consumption_type", costType);
+                if (otherType == 0 || otherType == 1 || otherType == 2) {
+                    param.put("girl_friend", otherType);
+                } else if (otherType == 3) {
+                    param.put("earnest_money", "1");
+                } else if (otherType == 4) {
+                    param.put("gift", "1");
+                }
+                mPresenter.requestHomeData(param);
+                popupWindow.dismiss();
+            }
+        });
+
+        mTypeList = view.findViewById(R.id.parent_list);
 
         LinearLayoutManager cateGridLayoutManager = new LinearLayoutManager(getActivity());
         mTypeList.setLayoutManager(cateGridLayoutManager);
@@ -213,32 +313,55 @@ public class CityMeetListFragment extends BaseFragment<CityMeetPresenter> implem
     @Override
     public void setHomeData(CityMeetBean cityMeetBean) {
         mcityMeetBean = cityMeetBean;
-        mDongtaiAdapter.addData(cityMeetBean.getData());
+        mRefreshLayout.finishRefresh();
+        if (cityMeetBean.getCode() == 200) {
+            mDongtaiAdapter.replaceData(cityMeetBean.getData());
+        } else {
+            mDongtaiAdapter.getData().clear();
+            mDongtaiAdapter.notifyDataSetChanged();
+        }
+
     }
 
     @Override
     public void setMeetfilter(MeetThemeBean meetThemeBean) {
 
-        MeetThemeBean meetThemeBean1 = new MeetThemeBean();
+        meetThemeBean1 = new MeetThemeBean();
         meetThemeBean1.setTitle("约会主题");
-        meetThemeBean1.setData(meetThemeBean.getData());
+        mDataList.clear();
+        //meetThemeBean1.setData(meetThemeBean.getData());
+        int sum = 0;
+        for (MeetThemeBean.DataBean beans : meetThemeBean.getData()) {
+            sum += beans.getCount();
+            beans.setImg("img");
+        }
+        MeetThemeBean.DataBean bean = new MeetThemeBean.DataBean();
+        bean.setS_id(-1);
+        bean.setName("全部");
+        bean.setCount(sum);
+        bean.setImg("img");
+        bean.isCheck = true;
+        mDataList.add(bean);
+        mDataList.addAll(meetThemeBean.getData());
+        meetThemeBean1.setData(mDataList);
 
-        MeetThemeBean meetThemeBean2 = new MeetThemeBean();
+        meetThemeBean2 = new MeetThemeBean();
         List<MeetThemeBean.DataBean> mList1 = new ArrayList<>();
         meetThemeBean2.setTitle("消费类型");
-        mList1.add(new MeetThemeBean.DataBean("全部"));
-        mList1.add(new MeetThemeBean.DataBean("TA买单"));
-        mList1.add(new MeetThemeBean.DataBean("我买单"));
-        mList1.add(new MeetThemeBean.DataBean("AA制"));
+        mList1.add(new MeetThemeBean.DataBean(3, "全部", true));
+        mList1.add(new MeetThemeBean.DataBean(2, "TA买单", false));
+        mList1.add(new MeetThemeBean.DataBean(1, "我买单", false));
+        mList1.add(new MeetThemeBean.DataBean(0, "AA制", false));
         meetThemeBean2.setData(mList1);
 
-        MeetThemeBean meetThemeBean3 = new MeetThemeBean();
+        meetThemeBean3 = new MeetThemeBean();
         List<MeetThemeBean.DataBean> mList2 = new ArrayList<>();
         meetThemeBean3.setTitle("其他");
-        mList2.add(new MeetThemeBean.DataBean("全部"));
-        mList2.add(new MeetThemeBean.DataBean("只看男生"));
-        mList2.add(new MeetThemeBean.DataBean("只看女生"));
-        mList2.add(new MeetThemeBean.DataBean("有诚意金"));
+        mList2.add(new MeetThemeBean.DataBean(0, "全部", true));
+        mList2.add(new MeetThemeBean.DataBean(1, "只看男生", false));
+        mList2.add(new MeetThemeBean.DataBean(2, "只看女生", false));
+        mList2.add(new MeetThemeBean.DataBean(3, "有诚意金", false));
+        mList2.add(new MeetThemeBean.DataBean(4, "礼物赠送", false));
         meetThemeBean3.setData(mList2);
 
         cardAdapter.addData(meetThemeBean1);
@@ -284,5 +407,43 @@ public class CityMeetListFragment extends BaseFragment<CityMeetPresenter> implem
         WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         getActivity().getWindow().setAttributes(lp);
+    }
+
+    private void getMore(Map<String, Object> param) {
+
+        addSubscription(FoundApiFactory.getCityMeetList(param).subscribe(new Consumer<CityMeetBean>() {
+            @Override
+            public void accept(CityMeetBean cityMeetBean) throws Exception {
+                if (cityMeetBean.getData() != null) {
+                    mPage++;
+                }
+                mRefreshLayout.finishLoadmore();
+                mDongtaiAdapter.addData(cityMeetBean.getData());
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: " + throwable);
+            }
+        }));
+    }
+
+    public void getAreaData(int id) {
+        addSubscription(FoundApiFactory.getLocalNextList(id).subscribe(new Consumer<LocalNextBean>() {
+            @Override
+            public void accept(LocalNextBean localNextBean) throws Exception {
+                mCityList.clear();
+                LocalNextBean.DataBean dataBean = new LocalNextBean.DataBean();
+                dataBean.setRegion_name("全城");
+                dataBean.setRegion_id(-1);
+                mCityList.add(dataBean);
+                mCityList.addAll(localNextBean.getData());
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: "+throwable);
+            }
+        }));
     }
 }

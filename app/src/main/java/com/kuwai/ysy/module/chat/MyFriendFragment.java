@@ -155,6 +155,8 @@ public class MyFriendFragment extends BaseFragment implements View.OnClickListen
                 if (myBlindBean.getCode() == 200) {
                     myFriendsAdapter.replaceData(myBlindBean.getData());
                 } else {
+                    myFriendsAdapter.getData().clear();
+                    myFriendsAdapter.notifyDataSetChanged();
                     ToastUtils.showShort(myBlindBean.getMsg());
                 }
             }
@@ -193,6 +195,8 @@ public class MyFriendFragment extends BaseFragment implements View.OnClickListen
             public void accept(SimpleResponse response) throws Exception {
                 if (response.code == 200) {
                     //newFriendsAdapter.replaceData(myBlindBean.getData());
+                    getFriends();
+                    getNewFriends();
                 }
                 ToastUtils.showShort(response.msg);
             }

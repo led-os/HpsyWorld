@@ -22,6 +22,7 @@ import com.kuwai.ysy.module.home.bean.login.LoginBean;
 import com.kuwai.ysy.module.home.business.HomeActivity;
 import com.kuwai.ysy.module.mine.MyPointActivity;
 import com.kuwai.ysy.net.glide.ProgressInterceptor;
+import com.kuwai.ysy.utils.DialogUtil;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.CountDownTextView;
@@ -79,6 +80,7 @@ public class Regist2Fragment extends BaseFragment implements View.OnClickListene
             case R.id.btn_next:
                 if (isSanFang) {
                     //三方登录验证是否已完善过信息
+                    DialogUtil.showLoadingDialog(getActivity(),"",getResources().getColor(R.color.theme));
                     String type = SPManager.get().getStringValue(C.SAN_FANG);
                     String id = SPManager.get().getStringValue(C.SAN_FANG_ID);
                     HashMap<String, String> param = new HashMap<>();
@@ -189,10 +191,13 @@ public class Regist2Fragment extends BaseFragment implements View.OnClickListene
         addSubscription(HomeApiFactory.codeAuth(param).subscribe(new Consumer<LoginBean>() {
             @Override
             public void accept(LoginBean loginBean) throws Exception {
+                DialogUtil.dismissDialog(true);
                 if (loginBean.getCode() == 200) {
                     SPManager.get().putString("uid", String.valueOf(loginBean.getData().getUid()));
                     SPManager.get().putString("rongyun_token", loginBean.getData().getRongyun_token());
                     SPManager.get().putString("nickname", loginBean.getData().getNickname());
+                    SPManager.get().putString("phone_", loginBean.getData().getPhone());
+                    SPManager.get().putString("sex_", String.valueOf(loginBean.getData().getGender()));
                     SPManager.get().putString("icon", loginBean.getData().getAvatar());
                     SPManager.get().putString("token", loginBean.getData().getToken());
                     SPManager.get().putString(C.HAS_THIRD_PASS, String.valueOf(loginBean.getData().getPayment()));
@@ -210,6 +215,7 @@ public class Regist2Fragment extends BaseFragment implements View.OnClickListene
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
+                DialogUtil.dismissDialog(true);
                 ToastUtils.showShort(R.string.server_error);
             }
         }));
