@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +36,8 @@ import com.kuwai.ysy.module.home.bean.HomeVideoBean;
 import com.kuwai.ysy.module.home.bean.VideoBean;
 import com.kuwai.ysy.module.home.bean.login.LoginBean;
 import com.kuwai.ysy.module.home.business.HomeActivity;
+import com.kuwai.ysy.module.mine.api.MineApiFactory;
+import com.kuwai.ysy.module.mine.bean.LikeEach;
 import com.kuwai.ysy.utils.DialogUtil;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
@@ -42,6 +45,12 @@ import com.kuwai.ysy.widget.StaggeredDividerItemDecoration;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,7 +68,6 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
     RecyclerView rvPic;
     private List<HomeVideoBean.DataBean> urlList;
 
-    private List<HomeVideoBean.DataBean> mNearList;
     private ListVideoAdapter videoAdapter;
     private PagerSnapHelper snapHelper;
     private LinearLayoutManager layoutManager;
@@ -74,6 +82,8 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
     private int videoPage = 1;
 
     private PlayerManager playerManager;
+    private int nearPage = 1;
+    private SwipeRefreshLayout mRefreshLayout;
 
     public static VideohomeActivity newInstance() {
         Bundle args = new Bundle();
@@ -96,7 +106,26 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
     public void initView(Bundle savedInstanceState) {
         mTvFilter = mRootView.findViewById(R.id.tv_filter);
         rvPic = mRootView.findViewById(R.id.rv_pic);
+        rvPic.addOnScrollListener(new HomeActivity.ListScrollListener());
         mTvDate = mRootView.findViewById(R.id.tv_date);
+
+        mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
+     /*   mRefreshLayout.setRefreshHeader(new BezierRadarHeader(getActivity()));
+        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                nearPage = 1;
+                getNearData();
+            }
+        });*/
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                nearPage = 1;
+                getNearData();
+            }
+        });
+
         mTvDate.setOnClickListener(this);
         mTvFilter.setOnClickListener(this);
         mMainRadiogroup = mRootView.findViewById(R.id.main_radiogroup);
@@ -105,8 +134,8 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
         mTvTui.setTextSize(20);
         mTvNear = mRootView.findViewById(R.id.tv_near);
         rvPage2 = mRootView.findViewById(R.id.rv_page2);
+        rvPage2.addOnScrollListener(new HomeActivity.ListScrollListener());
         urlList = new ArrayList<>();
-        mNearList = new ArrayList<>();
         //rvPage2.addOnScrollListener(new HomeActivity.ListScrollListener());
         //rvPic.addOnScrollListener(new HomeActivity.ListScrollListener());
         playerManager = new PlayerManager(getActivity(), new AliyunVodPlayer(getActivity()));
@@ -121,6 +150,12 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
         rvPic.setLayoutManager(layoutManager1);
         mPicAdapter = new HomePicAdapter();
         rvPic.setAdapter(mPicAdapter);
+        mPicAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                getMoreNear();
+            }
+        }, rvPic);
 
         snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(rvPage2);
@@ -136,8 +171,8 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getActivity(), VideoPlayActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("vid", mNearList.get(position).getVideo_id());
-                bundle.putString("imgurl", mNearList.get(position).getVideo_attach());
+                bundle.putString("vid", mPicAdapter.getData().get(position).getVideo_id());
+                bundle.putString("imgurl", mPicAdapter.getData().get(position).getVideo_attach());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -155,6 +190,7 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
                         mTvNear.setTextSize(16);
                         rvPage2.setVisibility(View.VISIBLE);
                         rvPic.setVisibility(View.GONE);
+                        mRefreshLayout.setVisibility(View.GONE);
                         mTvFilter.setImageDrawable(getResources().getDrawable(R.drawable.home_home_ic_filter));
                         mTvDate.setImageDrawable(getResources().getDrawable(R.drawable.home_home_ic_date));
                         mLine.setBackgroundColor(getResources().getColor(R.color.white));
@@ -167,6 +203,7 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
                         mTvTui.setTextSize(16);
                         rvPage2.setVisibility(View.GONE);
                         rvPic.setVisibility(View.VISIBLE);
+                        mRefreshLayout.setVisibility(View.VISIBLE);
                         mTvFilter.setImageDrawable(getResources().getDrawable(R.mipmap.home_nearby_ic_filter));
                         mTvDate.setImageDrawable(getResources().getDrawable(R.mipmap.home_nearby_ic_date));
                         mTvTui.setTextColor(getResources().getColor(R.color.gray_d2));
@@ -223,7 +260,9 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
                                     }
                                 });
 
-                                ((ListVideoAdapter.VideoViewHolder) viewHolder).addTextureView(textureView);
+                                if (((ListVideoAdapter.VideoViewHolder) viewHolder).getTips() == null) {
+                                    ((ListVideoAdapter.VideoViewHolder) viewHolder).addTextureView(textureView);
+                                }
                             }
                         }
                         break;
@@ -246,6 +285,7 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         DialogUtil.showLoadingDialog(getActivity(), "", getResources().getColor(R.color.theme));
+        nearPage = 1;
         getHomeData();
         getNearData();
     }
@@ -364,7 +404,10 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
                     }
                 });
 
-                ((ListVideoAdapter.VideoViewHolder) viewHolder).addTextureView(textureView);
+                if (((ListVideoAdapter.VideoViewHolder) viewHolder).getTips() == null) {
+                    ((ListVideoAdapter.VideoViewHolder) viewHolder).addTextureView(textureView);
+                }
+                // ((ListVideoAdapter.VideoViewHolder) viewHolder).addTextureView(textureView);
             }
         }
         //AovPlayerView.releaseAllVideos();
@@ -456,15 +499,42 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
         HashMap<String, Object> param = new HashMap<>();
         param.put("longitude", SPManager.get().getStringValue("longitude"));
         param.put("latitude", SPManager.get().getStringValue("longitude"));
+        param.put("page", nearPage);
+        addSubscription(HomeApiFactory.getHomeData(param).subscribe(new Consumer<HomeVideoBean>() {
+            @Override
+            public void accept(HomeVideoBean homeVideoBean) throws Exception {
+                mRefreshLayout.setRefreshing(false);
+                if (homeVideoBean.getCode() == 200) {
+                    mPicAdapter.replaceData(homeVideoBean.getData());
+                } else {
+                    ToastUtils.showShort(homeVideoBean.getMsg());
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.i("", "accept: " + throwable);
+            }
+        }));
+    }
+
+    void getMoreNear() {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("longitude", SPManager.get().getStringValue("longitude"));
+        param.put("latitude", SPManager.get().getStringValue("longitude"));
+        param.put("page", nearPage + 1);
         addSubscription(HomeApiFactory.getHomeData(param).subscribe(new Consumer<HomeVideoBean>() {
             @Override
             public void accept(HomeVideoBean homeVideoBean) throws Exception {
                 if (homeVideoBean.getCode() == 200) {
-                    mNearList.clear();
-                    mNearList.addAll(homeVideoBean.getData());
-                    mPicAdapter.replaceData(mNearList);
+                    if (homeVideoBean.getData() != null && homeVideoBean.getData().size() > 0) {
+                        nearPage++;
+                    }
+                    mPicAdapter.addData(homeVideoBean.getData());
+                    mPicAdapter.loadMoreComplete();
                 } else {
-                    ToastUtils.showShort(homeVideoBean.getMsg());
+                    mPicAdapter.loadMoreEnd();
+                    // ToastUtils.showShort(homeVideoBean.getMsg());
                 }
             }
         }, new Consumer<Throwable>() {

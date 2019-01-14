@@ -119,8 +119,8 @@ dependencies {
 
     //高德地图
     api 'com.amap.api:location:latest.integration'
-    api 'com.amap.api:map2d:latest.integration'
-    api 'com.amap.api:search:latest.integration'
+    //api 'com.amap.api:map2d:latest.integration'
+    //api 'com.amap.api:search:latest.integration'
 
     implementation('com.aliyun.ams:alicloud-android-hotfix:3.2.3') {
         exclude(module: 'alicloud-android-utdid')

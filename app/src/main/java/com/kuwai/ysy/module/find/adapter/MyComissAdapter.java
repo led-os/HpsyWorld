@@ -22,8 +22,8 @@ import java.util.List;
 public class MyComissAdapter extends BaseQuickAdapter<MyCommis.DataBean, BaseViewHolder> {
 
 
-    public MyComissAdapter(List data) {
-        super(R.layout.item_my_comiss, data);
+    public MyComissAdapter() {
+        super(R.layout.item_my_comiss);
     }
 
     @Override

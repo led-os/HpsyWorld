@@ -129,14 +129,15 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
             //三方登陆
             param.put("type", SPManager.get().getStringValue(C.SAN_FANG));
             param.put("login_type", "1"); //1代表android
-            param.put(SPManager.get().getStringValue(C.SAN_FANG), SPManager.get().getStringValue(C.SAN_FANG_ID));
+            //param.put(SPManager.get().getStringValue(C.SAN_FANG), SPManager.get().getStringValue(C.SAN_FANG_ID));
             login(param, SPManager.get().getStringValue(C.SAN_FANG));
-        } else if (!Utils.isNullString("token")) {
+        } else if (!Utils.isNullString(SPManager.get().getStringValue("token"))) {
             //验证码登录
             param.put("type", "token");
             param.put("login_type", "1"); //1代表android
             param.put("phone", SPManager.get().getStringValue("phone_"));
             param.put("token", SPManager.get().getStringValue("token"));
+            login(param, "");
         }
     }
 
@@ -165,7 +166,7 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
                     } else if (C.LOGIN_WECHAT.equals(SPManager.get().getStringValue(C.SAN_FANG))) {
                         UMShareAPI.get(mContext).deleteOauth(HomeActivity.this, SHARE_MEDIA.WEIXIN, null);
                     }
-                    SPManager.clear();
+                    //SPManager.clear();
                     RongIM.getInstance().disconnect();
                     //startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                 }

@@ -18,7 +18,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="14dp"
         android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@id/tv_time"
         android:layout_toRightOf="@id/img_head"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:text="您有一条新的物流消息"
         android:textColor="@color/balck_28"
         android:textSize="15sp" />

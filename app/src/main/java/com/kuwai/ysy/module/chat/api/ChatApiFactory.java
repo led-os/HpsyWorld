@@ -4,6 +4,7 @@ import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.chat.bean.MyFriends;
 import com.kuwai.ysy.module.chat.bean.NoticeBean;
+import com.kuwai.ysy.module.chat.bean.NoticeDateBean;
 import com.kuwai.ysy.module.chat.bean.ReceiveBean;
 import com.kuwai.ysy.module.chat.bean.RedMySendBean;
 import com.kuwai.ysy.module.chat.bean.RedRecordBean;
@@ -147,11 +148,11 @@ public class ChatApiFactory {
                 .compose(RxSchedulers.<NoticeBean>ioMain());
     }
 
-    public static Observable<NoticeBean> getDateNotice(String uid) {
+    public static Observable<NoticeDateBean> getDateNotice(String uid) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
                 .getDateNotice(uid)
-                .compose(RxSchedulers.<NoticeBean>ioMain());
+                .compose(RxSchedulers.<NoticeDateBean>ioMain());
     }
 
     public static Observable<StsBean> getSts() {

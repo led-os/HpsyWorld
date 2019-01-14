@@ -27,9 +27,9 @@ public class MyPromisePresenter extends RBasePresenter<MyPromiseContract.MyCommi
     }
 
     @Override
-    public void getMyCommis(String uid, int page) {
+    public void getMyCommis(String uid, int page,int state) {
         mView.showViewLoading();
-        addSubscription(AppointApiFactory.getMyCommis(uid, page)
+        addSubscription(AppointApiFactory.getMyCommis(uid, page,state)
                 .subscribe(new Consumer<MyCommis>() {
                     @Override
                     public void accept(@NonNull MyCommis appointMent) throws Exception {

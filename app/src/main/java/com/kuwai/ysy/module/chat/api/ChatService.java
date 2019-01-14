@@ -5,6 +5,7 @@ import com.kuwai.ysy.bean.AliOrderInfoBean;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.chat.bean.MyFriends;
 import com.kuwai.ysy.module.chat.bean.NoticeBean;
+import com.kuwai.ysy.module.chat.bean.NoticeDateBean;
 import com.kuwai.ysy.module.chat.bean.ReceiveBean;
 import com.kuwai.ysy.module.chat.bean.RedMySendBean;
 import com.kuwai.ysy.module.chat.bean.RedRecordBean;
@@ -143,7 +144,7 @@ public interface ChatService {
     //约会通知列表
     @FormUrlEncoded
     @POST("Chat/ReleaseDataNoticeList")
-    Observable<NoticeBean> getDateNotice(@Field("uid") String uid);
+    Observable<NoticeDateBean> getDateNotice(@Field("uid") String uid);
 
     //打赏人
     @FormUrlEncoded

@@ -22,7 +22,7 @@ public interface AppointService {
     //获取我的应约
     @FormUrlEncoded
     @POST("Appointment/Byappointment")
-    Observable<MyCommis> getMyCommis(@Field("uid") String uid, @Field("page") int page);
+    Observable<MyCommis> getMyCommis(@Field("uid") String uid, @Field("page") int page, @Field("status") int status);
 
     //获取所有约会主题
     @FormUrlEncoded

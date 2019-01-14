@@ -60,7 +60,9 @@ public class PlayerManager {
         vodPlayer.setOnPreparedListener(new IAliyunVodPlayer.OnPreparedListener() {
             @Override
             public void onPrepared() {
-                holder.tipsView.hideNetLoadingTipView();
+                if(holder.getTips()!=null){
+                    holder.tipsView.hideNetLoadingTipView();
+                }
                 vodPlayer.start();
             }
 

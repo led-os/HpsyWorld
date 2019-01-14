@@ -3,6 +3,7 @@ package com.kuwai.ysy.module.mine.business.like;
 import android.util.Log;
 
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
+import com.kuwai.ysy.module.mine.bean.LikeParentBean;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
 import com.rayhahah.rbase.base.RBasePresenter;
 
@@ -23,9 +24,9 @@ public class ILikePresenter extends RBasePresenter<ILikeContract.IHomeView> impl
 
     @Override
     public void requestHomeData(String uid) {
-        addSubscription(MineApiFactory.getILike(uid).subscribe(new Consumer<VisitorBean>() {
+        addSubscription(MineApiFactory.getILike(uid).subscribe(new Consumer<LikeParentBean>() {
             @Override
-            public void accept(VisitorBean giftBean) throws Exception {
+            public void accept(LikeParentBean giftBean) throws Exception {
                 mView.setHomeData(giftBean);
             }
         }, new Consumer<Throwable>() {

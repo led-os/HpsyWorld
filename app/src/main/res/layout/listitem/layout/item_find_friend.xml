@@ -25,21 +25,21 @@
 
     <ImageView
         android:id="@+id/img_sex"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
         android:layout_marginLeft="6dp"
-        android:layout_alignBottom="@id/tv_nick"
+        android:layout_marginTop="12dp"
         android:layout_toRightOf="@id/tv_nick" />
 
     <ImageView
         android:id="@+id/is_vip"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/tv_nick"
-        android:layout_toRightOf="@id/img_sex"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginTop="12dp"
         android:layout_marginLeft="6dp"
-        android:src="@drawable/ic_user_vip" />
+        android:layout_toRightOf="@id/img_sex"
+        android:src="@drawable/ic_user_vip"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_sign"

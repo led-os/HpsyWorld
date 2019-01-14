@@ -4,29 +4,33 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
+import com.google.gson.Gson;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.module.chat.business.redpack.SendRedActivity;
+import com.kuwai.ysy.module.home.WebviewH5Activity;
+import com.kuwai.ysy.utils.Utils;
+
+import io.rong.push.PushType;
 import io.rong.push.notification.PushMessageReceiver;
 import io.rong.push.notification.PushNotificationMessage;
 
 public class MyMessageReceiver extends PushMessageReceiver {
+
     @Override
-    public boolean onNotificationMessageArrived(Context context, PushNotificationMessage pushNotificationMessage) {
-        //消息到达客户端时触发
+    public boolean onNotificationMessageArrived(Context context, PushType pushType, PushNotificationMessage pushNotificationMessage) {
         return false;
     }
 
     @Override
-    public boolean onNotificationMessageClicked(Context context, PushNotificationMessage pushNotificationMessage) {
-        //用户点击通知栏消息时触发  如果需要自定义点击通知时的跳转，return true即可
-        /*Intent intent = new Intent();
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Uri.Builder builder = Uri.parse("rong://" + this.getPackageName()).buildUpon();
-
-        builder.appendPath("conversation").appendPath(type.getName())
-                .appendQueryParameter("targetId", targetId)
-                .appendQueryParameter("title", targetName);
-        uri = builder.build();
-        intent.setData(uri);
-        startActivity(intent);*/
-        return false;
+    public boolean onNotificationMessageClicked(Context context, PushType pushType, PushNotificationMessage pushNotificationMessage) {
+        String jsonStr = pushNotificationMessage.getExtra();
+        Gson gson = new Gson();
+        PushContent p = gson.fromJson(jsonStr, PushContent.class);
+        if (!Utils.isNullString(p.getUrl())) {
+            Intent intent = new Intent(context, WebviewH5Activity.class);
+            intent.putExtra(C.H5_FLAG, p.getUrl());
+            context.startActivity(intent);
+        }
+        return true;
     }
 }

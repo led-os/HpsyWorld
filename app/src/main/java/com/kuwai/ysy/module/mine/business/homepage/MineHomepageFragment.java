@@ -31,6 +31,7 @@ import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.VideoPlayActivity;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
+import com.kuwai.ysy.module.home.WebviewH5Activity;
 import com.kuwai.ysy.module.home.business.MyFragment;
 import com.kuwai.ysy.module.mine.MinePicAdapter;
 import com.kuwai.ysy.module.mine.adapter.HomePageVideoAdapter;
@@ -118,6 +119,11 @@ public class MineHomepageFragment extends BaseFragment<MineHomepagePresenter> im
         switch (v.getId()) {
             case R.id.img_head:
                 showSelectdialog(PHOTO_RESULT);
+                break;
+            case R.id.tv_level:
+                Intent intent = new Intent(getActivity(), WebviewH5Activity.class);
+                intent.putExtra(C.H5_FLAG, C.H5_URL + C.MEILILEVEL + "?uid=" + SPManager.get().getStringValue("uid"));
+                startActivity(intent);
                 break;
         }
     }
@@ -295,6 +301,7 @@ public class MineHomepageFragment extends BaseFragment<MineHomepagePresenter> im
         mTvNick = mRootView.findViewById(R.id.tv_nick);
         mImgVip = mRootView.findViewById(R.id.img_vip);
         mTvLevel = mRootView.findViewById(R.id.tv_level);
+        mTvLevel.setOnClickListener(this);
         mTvSign = mRootView.findViewById(R.id.tv_sign);
         mImgHead.setOnClickListener(this);
         mImgRight = mRootView.findViewById(R.id.img_right);

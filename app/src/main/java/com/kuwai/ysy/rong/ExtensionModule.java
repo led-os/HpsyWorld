@@ -12,7 +12,6 @@ public class ExtensionModule extends DefaultExtensionModule {
     @Override
     public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType) {
         List<IPluginModule> pluginModules = super.getPluginModules(conversationType);
-        pluginModules.add(new LocationPlugin());
         pluginModules.add(new GiftPlugin());
         pluginModules.add(new RedPackPlugin());
 

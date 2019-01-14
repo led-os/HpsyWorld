@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="70dp">
+    android:layout_height="wrap_content">
 
     <com.kuwai.ysy.widget.TextImageView
         android:id="@+id/img_head"
@@ -58,6 +58,7 @@
         android:layout_below="@id/tv_info"
         android:layout_marginLeft="14dp"
         android:layout_marginTop="4dp"
+        android:layout_marginBottom="6dp"
         android:layout_toRightOf="@id/img_head"
         android:text="淡然看人生！"
         android:textColor="@color/balck_28"

@@ -141,6 +141,7 @@ public class ListVideoAdapter extends BaseRecAdapter<HomeVideoBean.DataBean, Bas
         }
 
         public void removeTextureView() {
+            tipsView = null;
             View firstChildView = ((RelativeLayout) VideoViewHolder.this.itemView).getChildAt(0);
             if (firstChildView instanceof TextureView) {
                 ((RelativeLayout) VideoViewHolder.this.itemView).removeView(firstChildView);
@@ -150,6 +151,10 @@ public class ListVideoAdapter extends BaseRecAdapter<HomeVideoBean.DataBean, Bas
             if (secondChild instanceof TipsView) {
                 ((RelativeLayout) VideoViewHolder.this.itemView).removeView(secondChild);
             }
+        }
+
+        public TipsView getTips(){
+            return tipsView;
         }
 
         public void setTag(int position) {

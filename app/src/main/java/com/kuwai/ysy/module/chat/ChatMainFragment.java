@@ -97,9 +97,11 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
         imgChat.setOnClickListener(this);
         radioButtonLookme.setTextSize(22);
 
-        refreshContent();
+        //refreshContent();
 
-        //会话列表
+
+        fragments = new ArrayList<>();
+       /* //会话列表
         ConversationListFragment conversationListFragment = new ConversationListFragment();
         Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
@@ -110,10 +112,8 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
                 //.appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//设置系统会话，该会话非聚合显示
                 .build();
         conversationListFragment.setUri(uri);
-
-        fragments = new ArrayList<>();
         fragments.add(conversationListFragment);
-        fragments.add(NoticeFragment.newInstance());
+        fragments.add(NoticeFragment.newInstance());*/
 
         RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
 
@@ -125,18 +125,6 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
 
         }, true);
 
-        pager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
-
-            @Override
-            public int getCount() {
-                return fragments.size();
-            }
-
-            @Override
-            public Fragment getItem(int arg0) {
-                return fragments.get(arg0);
-            }
-        });
         // 添加页面切换事件的监听器
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -185,8 +173,34 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
     }
 
     private void refreshContent() {
-        if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+        if (!Utils.isNullString(SPManager.get().getStringValue("uid")) && fragments != null) {
             mLayoutStatusView.showContent();
+            fragments.clear();
+            //会话列表
+            ConversationListFragment conversationListFragment = new ConversationListFragment();
+            Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
+                    .appendPath("conversationlist")
+                    .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话，该会话聚合显示
+                    .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "true")
+//                .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "false")
+                    //.appendQueryParameter(Conversation.ConversationType.PUBLIC_SERVICE.getName(), "true")
+                    //.appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//设置系统会话，该会话非聚合显示
+                    .build();
+            conversationListFragment.setUri(uri);
+            fragments.add(conversationListFragment);
+            fragments.add(NoticeFragment.newInstance());
+            pager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
+
+                @Override
+                public int getCount() {
+                    return fragments.size();
+                }
+
+                @Override
+                public Fragment getItem(int arg0) {
+                    return fragments.get(arg0);
+                }
+            });
         } else {
             mLayoutStatusView.showError();
         }
@@ -196,6 +210,7 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         //getConversation();
+        refreshContent();
     }
 
     //该方法不建议放在有生命周期的地方

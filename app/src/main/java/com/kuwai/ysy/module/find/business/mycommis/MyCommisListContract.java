@@ -16,6 +16,6 @@ public class MyCommisListContract {
 
     public interface MyCommisListPresenter {
 
-        void getMyCommis(String uid, int page);
+        void getMyCommis(String uid, int page,int state);
     }
 }

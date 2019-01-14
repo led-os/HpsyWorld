@@ -19,7 +19,7 @@ public class MyPromiseContract {
 
     public interface MyCommisListPresenter {
 
-        void getMyCommis(String uid, int page);
+        void getMyCommis(String uid, int page,int state);
 
         void getCancelApply(int rdid, int uid);
     }

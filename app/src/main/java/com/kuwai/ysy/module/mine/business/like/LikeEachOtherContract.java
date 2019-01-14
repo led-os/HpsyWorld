@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.mine.business.like;
 
+import com.kuwai.ysy.module.mine.bean.LikeEach;
 import com.kuwai.ysy.module.mine.bean.TodayBean;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
 import com.rayhahah.rbase.base.IRBaseView;
@@ -11,7 +12,7 @@ public class LikeEachOtherContract {
         /**
          * 设置第一次请求的数据
          */
-        void setHomeData(TodayBean todayBean);
+        void setHomeData(LikeEach todayBean);
 
         /**
          * 设置加载更多的数据

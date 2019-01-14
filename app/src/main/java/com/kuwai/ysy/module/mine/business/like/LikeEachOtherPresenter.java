@@ -3,6 +3,7 @@ package com.kuwai.ysy.module.mine.business.like;
 import android.util.Log;
 
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
+import com.kuwai.ysy.module.mine.bean.LikeEach;
 import com.kuwai.ysy.module.mine.bean.TodayBean;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
 import com.rayhahah.rbase.base.RBasePresenter;
@@ -24,10 +25,10 @@ public class LikeEachOtherPresenter extends RBasePresenter<LikeEachOtherContract
 
     @Override
     public void requestHomeData(String uid,int page) {
-        addSubscription(MineApiFactory.getLikeEachOther(uid,page).subscribe(new Consumer<TodayBean>() {
+        addSubscription(MineApiFactory.getLikeEachOther(uid,page).subscribe(new Consumer<LikeEach>() {
             @Override
-            public void accept(TodayBean todayBean) throws Exception {
-                mView.setHomeData(todayBean);
+            public void accept(LikeEach likeEach) throws Exception {
+                mView.setHomeData(likeEach);
             }
         }, new Consumer<Throwable>() {
             @Override

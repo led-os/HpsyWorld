@@ -71,6 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_info"
             android:layout_marginTop="18dp"
+            android:layout_marginRight="16dp"
             android:textColor="@color/balck_28"
             android:textSize="14sp" />
 

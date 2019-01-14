@@ -337,8 +337,9 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
         if (response.code == 200) {
             if ("喜欢".equals(mBtnLike.getText().toString())) {
                 mBtnLike.setText("取消喜欢");
+                ToastUtils.showShort("喜欢成功");
             } else {
-                mBtnLike.setText("喜欢");
+                mBtnLike.setText("取消成功");
             }
         }
     }

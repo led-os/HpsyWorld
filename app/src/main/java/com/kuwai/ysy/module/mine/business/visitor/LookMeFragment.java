@@ -7,24 +7,25 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.callback.LookmeCallback;
 import com.kuwai.ysy.common.BaseFragment;
-import com.kuwai.ysy.module.mine.adapter.ExpandableItemAdapter;
-import com.kuwai.ysy.module.mine.adapter.ExpandableMyLookAdapter;
 import com.kuwai.ysy.module.mine.adapter.ExpandableVisitorAdapter;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
-import com.kuwai.ysy.module.mine.bean.TodayBean;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
-import com.kuwai.ysy.module.mine.bean.like.ChildLevel;
+import com.kuwai.ysy.module.mine.bean.VisitorMore;
 import com.kuwai.ysy.module.mine.bean.like.ParentLevel;
 import com.rayhahah.dialoglib.CustomDialog;
-import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 
@@ -40,6 +41,8 @@ public class LookMeFragment extends BaseFragment<LookMePresenter> implements Loo
     private TextView mTvTodayLook;
     private CustomDialog moreDialog;
     private VisitorBean.DataBean dataBean;
+    private int mPage = 1;
+    private SmartRefreshLayout mRefreshLayout;
 
     public static LookMeFragment newInstance() {
         Bundle args = new Bundle();
@@ -70,6 +73,22 @@ public class LookMeFragment extends BaseFragment<LookMePresenter> implements Loo
         mTvTodayLook = mRootView.findViewById(R.id.tv_today_look);
         mRecyclerView = mRootView.findViewById(R.id.recyclerView);
 
+        mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
+        mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
+        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                mPage = 1;
+                mPresenter.requestHomeData(SPManager.get().getStringValue("uid"), C.LOOK_ME);
+            }
+        });
+        mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                getMore();
+            }
+        });
+
         adapter = new ExpandableVisitorAdapter(list);
 
         mRecyclerView.setAdapter(adapter);
@@ -89,6 +108,7 @@ public class LookMeFragment extends BaseFragment<LookMePresenter> implements Loo
 
     @Override
     public void setHomeData(VisitorBean visitorBean) {
+        mRefreshLayout.finishRefresh();
         dataBean = visitorBean.getData();
         mTvTotalLook.setText(String.valueOf(visitorBean.getData().getSum()));
         mTvTodayVisitor.setText(String.valueOf(visitorBean.getData().getToday().size()));
@@ -149,6 +169,8 @@ public class LookMeFragment extends BaseFragment<LookMePresenter> implements Loo
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
+                mRefreshLayout.finishRefresh();
+                ToastUtils.showShort(R.string.server_error);
                 // Log.i(TAG, "accept: "+throwable);
             }
         }));
@@ -172,5 +194,34 @@ public class LookMeFragment extends BaseFragment<LookMePresenter> implements Loo
     @Override
     public void showViewError(Throwable t) {
 
+    }
+
+    private void getMore() {
+        addSubscription(MineApiFactory.getVisitorEarlier(SPManager.get().getStringValue("uid"), 1, mPage + 1).subscribe(new Consumer<VisitorMore>() {
+            @Override
+            public void accept(VisitorMore visitorBean) throws Exception {
+                mRefreshLayout.finishLoadmore();
+                if (visitorBean.getCode() == 200) {
+                    if (visitorBean.getData() != null) {
+                        mPage++;
+                    }
+
+                    for (int j = 0; j < visitorBean.getData().size(); j++) {
+                        list.add(visitorBean.getData().get(j));
+                        //((ParentLevel) list.get(topSize + 1)).addSubItem(visitorBean.getData().get(j));
+                    }
+                    adapter.replaceData(list);
+                } else if (visitorBean.getCode() == 400) {
+
+                }
+
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: " + throwable);
+                ToastUtils.showShort(R.string.server_error);
+            }
+        }));
     }
 }

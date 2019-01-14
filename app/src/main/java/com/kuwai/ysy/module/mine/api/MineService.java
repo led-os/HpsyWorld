@@ -16,6 +16,9 @@ import com.kuwai.ysy.module.mine.bean.GiftBoxBean;
 import com.kuwai.ysy.module.mine.bean.GiftExchangeBean;
 import com.kuwai.ysy.module.mine.bean.GiftWithdrawalsBean;
 import com.kuwai.ysy.module.mine.bean.IntegralDetailBean;
+import com.kuwai.ysy.module.mine.bean.LikeEach;
+import com.kuwai.ysy.module.mine.bean.LikeParent;
+import com.kuwai.ysy.module.mine.bean.LikeParentBean;
 import com.kuwai.ysy.module.mine.bean.MyAskBean;
 import com.kuwai.ysy.module.mine.bean.MyWalletBean;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
@@ -26,6 +29,7 @@ import com.kuwai.ysy.module.mine.bean.TaGiftBean;
 import com.kuwai.ysy.module.mine.bean.TodayBean;
 import com.kuwai.ysy.module.mine.bean.TodayIntegral;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
+import com.kuwai.ysy.module.mine.bean.VisitorMore;
 import com.kuwai.ysy.module.mine.bean.WallBean;
 import com.kuwai.ysy.module.mine.bean.WalletDetailsBean;
 import com.kuwai.ysy.module.mine.bean.WithdrawalsRecordBean;
@@ -161,8 +165,8 @@ public interface MineService {
      * @param type 1:谁看过我，2:是我看过谁
      */
     @FormUrlEncoded
-    @POST("My/VisitorsRecordSeenMe")
-    Observable<VisitorBean> getVisitorsEarlier(@Field("uid") String uid,
+    @POST("My/VisitorsRecordSeenMeEarlier")
+    Observable<VisitorMore> getVisitorsEarlier(@Field("uid") String uid,
                                                @Field("type") int type,
                                                @Field("page") int page);
 
@@ -182,14 +186,14 @@ public interface MineService {
      */
     @FormUrlEncoded
     @POST("My/UserLoveMe")
-    Observable<VisitorBean> getIlike(@Field("uid") String uid);
+    Observable<LikeParentBean> getIlike(@Field("uid") String uid);
 
     /**
      * 我喜欢的-更早-分页
      */
     @FormUrlEncoded
     @POST("My/UserLoveMeEarlier")
-    Observable<EarlierBean> getUserLoveMeEarlier(@Field("uid") String uid,
+    Observable<EarlierBean> getIloveEarlier(@Field("uid") String uid,
                                                  @Field("page") int page);
 
     /**
@@ -197,7 +201,7 @@ public interface MineService {
      */
     @FormUrlEncoded
     @POST("My/UserILikeIt")
-    Observable<VisitorBean> getLikeMe(@Field("uid") String uid);
+    Observable<LikeParentBean> getLikeMe(@Field("uid") String uid);
 
     /**
      * 喜欢我的-更早-分页
@@ -207,12 +211,13 @@ public interface MineService {
     Observable<EarlierBean> getUserILikeItEarlier(@Field("uid") String uid,
                                                   @Field("page") int page);
 
+
     /**
      * 互相喜欢的（好友）
      */
     @FormUrlEncoded
     @POST("My/UserLikeEachOther")
-    Observable<TodayBean> getLikeEach(@Field("uid") String uid, @Field("uid") int page);
+    Observable<LikeEach> getLikeEach(@Field("uid") String uid, @Field("page") int page);
 
     /**
      * 修改昵称

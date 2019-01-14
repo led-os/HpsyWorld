@@ -63,6 +63,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import cc.shinichi.library.ImagePreview;
 import io.rong.imkit.MainActivity;
 
 public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implements DyDetailContract.IHomeView, View.OnClickListener, GiftClickCallback {
@@ -230,7 +231,31 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
         nineGridView.setOnImageClickListener(new NineGridView.OnImageClickListener() {
             @Override
             public void onImageClick(int position, View view) {
-
+                ImagePreview
+                        .getInstance()
+                        // 上下文，必须是activity，不需要担心内存泄漏，本框架已经处理好
+                        .setContext(getActivity())
+                        // 从第几张图片开始，索引从0开始哦~
+                        .setIndex(position)
+                        // 只有一张图片的情况，可以直接传入这张图片的url
+                        .setImageList(mDyDetailBean.getData().getAttach())
+                        // 加载策略，详细说明见下面“加载策略介绍”。默认为手动模式
+                        .setLoadStrategy(ImagePreview.LoadStrategy.AlwaysThumb)
+                        // 保存的文件夹名称，会在SD卡根目录进行文件夹的新建。
+                        // (你也可设置嵌套模式，比如："BigImageView/Download"，会在SD卡根目录新建BigImageView文件夹，并在BigImageView文件夹中新建Download文件夹)
+                        .setFolderName("YsyDownload")
+                        // 缩放动画时长，单位ms
+                        .setZoomTransitionDuration(300)
+                        // 是否启用上拉/下拉关闭。默认不启用
+                        .setEnableDragClose(true)
+                        // 是否显示下载按钮，在页面右下角。默认显示
+                        .setShowDownButton(false)
+                        // 设置是否显示顶部的指示器（1/9）默认显示
+                        .setShowIndicator(false)
+                        // 设置失败时的占位图，默认为R.drawable.load_failed，设置为 0 时不显示
+                        .setErrorPlaceHolder(R.drawable.load_failed)
+                        // 开启预览
+                        .start();
             }
         });
 
@@ -501,10 +526,10 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
         isLike = !isLike;
         if (isLike) {
             mDshangBtn.setText("取消赞");
-            EventBusUtil.sendEvent(new MessageEvent(C.MSG_ZAN_DY,"1"));
+            EventBusUtil.sendEvent(new MessageEvent(C.MSG_ZAN_DY, "1"));
         } else {
             mDshangBtn.setText("赞一下");
-            EventBusUtil.sendEvent(new MessageEvent(C.MSG_ZAN_DY,"0"));
+            EventBusUtil.sendEvent(new MessageEvent(C.MSG_ZAN_DY, "0"));
         }
     }
 

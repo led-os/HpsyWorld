@@ -8,10 +8,8 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.kuwai.ysy.R;
-import com.kuwai.ysy.module.mine.bean.TodayBean;
-import com.kuwai.ysy.module.mine.bean.like.ChildLevel;
-import com.kuwai.ysy.module.mine.bean.like.ParentLevel;
-import com.rayhahah.rbase.utils.base.DateTimeUitl;
+import com.kuwai.ysy.module.mine.bean.LikeBean;
+import com.kuwai.ysy.module.mine.bean.LikeParent;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
 
 import java.util.List;
@@ -44,7 +42,7 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
 
         switch (holder.getItemViewType()) {
             case TYPE_LEVEL_0:
-                final ParentLevel lv0 = (ParentLevel) item;
+                final LikeParent lv0 = (LikeParent) item;
                 holder.setText(R.id.title, lv0.title);
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -60,11 +58,11 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
                 });
                 break;
             case TYPE_LEVEL_1:
-                TodayBean todayBean = (TodayBean) item;
-                if(item!=null){
-                    GlideUtil.load(mContext, ((TodayBean) item).getAvatar(), (ImageView) holder.getView(R.id.img_head));
-                    holder.setText(R.id.tv_nick, todayBean.getNickname());
-                    switch (((TodayBean) item).getGender()) {
+                LikeBean likeBean = (LikeBean) item;
+                if (item != null) {
+                    GlideUtil.load(mContext, likeBean.getAvatar(), (ImageView) holder.getView(R.id.img_head));
+                    holder.setText(R.id.tv_nick, likeBean.getNickname());
+                    switch (likeBean.getGender()) {
                         case 1:
                             GlideUtil.load(mContext, R.drawable.ic_user_man, (ImageView) holder.getView(R.id.img_sex));
                             break;
@@ -73,7 +71,7 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
                             break;
                     }
 
-                    switch (((TodayBean) item).getIs_vip()) {
+                    switch (likeBean.getIs_vip()) {
                         case 0:
                             holder.getView(R.id.is_vip).setVisibility(View.GONE);
                             break;
@@ -82,20 +80,8 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
                             break;
                     }
 
-                    holder.setText(R.id.tv_sign, "ID:"+ ((TodayBean) item).getUid());
+                    holder.setText(R.id.tv_sign, "ID:" + likeBean.getUid());
                 }
-
-
-
-//                final ChildLevel lv1 = (ChildLevel) item;
-//                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//                    @Override
-//                    public boolean onLongClick(View v) {
-//                        int pos = holder.getAdapterPosition();
-//                        remove(pos);
-//                        return true;
-//                    }
-//                });
                 break;
         }
     }

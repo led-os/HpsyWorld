@@ -162,6 +162,7 @@ public class C {
     public static final int MSG_CHANGE_INFO = 0x000001001;
     public static final int MSG_RECHARGE_SUCC = 0x000001002;
     public static final int MSG_UPDATE_VIDEO = 0x000001003;
+    public static final int MSG_UPDATE_NOTICE = 0x000001004;
 
     //注册参数
     public static final String REGIST_NAME = "RE_NAME";//昵称

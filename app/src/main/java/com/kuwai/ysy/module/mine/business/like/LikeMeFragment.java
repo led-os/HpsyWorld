@@ -10,20 +10,35 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.mine.adapter.ExpandableItemAdapter;
+import com.kuwai.ysy.module.mine.api.MineApiFactory;
+import com.kuwai.ysy.module.mine.bean.EarlierBean;
+import com.kuwai.ysy.module.mine.bean.LikeParent;
+import com.kuwai.ysy.module.mine.bean.LikeParentBean;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
 import com.kuwai.ysy.module.mine.bean.like.ChildLevel;
 import com.kuwai.ysy.module.mine.bean.like.ParentLevel;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import io.reactivex.functions.Consumer;
 
 public class LikeMeFragment extends BaseFragment<LikeMePresenter> implements LikeMeContract.IHomeView, View.OnClickListener {
 
     RecyclerView mRecyclerView;
     ExpandableItemAdapter adapter;
-    ArrayList<MultiItemEntity> list;
+    ArrayList<MultiItemEntity> res = new ArrayList<>();
+
+    private int mPage = 1;
+    private SmartRefreshLayout mRefreshLayout;
 
     public static LikeMeFragment newInstance() {
         Bundle args = new Bundle();
@@ -34,7 +49,7 @@ public class LikeMeFragment extends BaseFragment<LikeMePresenter> implements Lik
 
     @Override
     protected int setFragmentLayoutRes() {
-        return R.layout.recyclerview;
+        return R.layout.smart_refresh;
     }
 
     @Override
@@ -51,8 +66,23 @@ public class LikeMeFragment extends BaseFragment<LikeMePresenter> implements Lik
     public void initView(Bundle savedInstanceState) {
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recyclerView);
 
-        adapter = new ExpandableItemAdapter(list);
+        mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
+        mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
+        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                mPage = 1;
+                mPresenter.requestHomeData(SPManager.get().getStringValue("uid"));
+            }
+        });
+        mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                getMore();
+            }
+        });
 
+        adapter = new ExpandableItemAdapter(res);
         mRecyclerView.setAdapter(adapter);
 
         // important! setLayoutManager should be called after setAdapter
@@ -67,24 +97,24 @@ public class LikeMeFragment extends BaseFragment<LikeMePresenter> implements Lik
     }
 
     @Override
-    public void setHomeData(VisitorBean visitorBean) {
+    public void setHomeData(LikeParentBean visitorBean) {
+        mRefreshLayout.finishRefresh();
         int earlyDataSize = visitorBean.getData().getEarlier().size();
         int todayDataSize = visitorBean.getData().getToday().size();
-
-        ArrayList<MultiItemEntity> res = new ArrayList<>();
-        ParentLevel today = new ParentLevel("今天", "");
+        res.clear();
+        LikeParent today = new LikeParent("今天", "");
         for (int i = 0; i < todayDataSize; i++) {
             today.addSubItem(visitorBean.getData().getToday().get(i));
         }
         res.add(today);
 
-        ParentLevel lv0 = new ParentLevel("更早", "");
+        LikeParent lv0 = new LikeParent("更早", "");
         for (int j = 0; j < earlyDataSize; j++) {
             lv0.addSubItem(visitorBean.getData().getEarlier().get(j));
         }
         res.add(lv0);
 
-        adapter.addData(res);
+        adapter.replaceData(res);
         adapter.expandAll();
     }
 
@@ -108,20 +138,32 @@ public class LikeMeFragment extends BaseFragment<LikeMePresenter> implements Lik
 
     }
 
-//    private ArrayList<MultiItemEntity> generateData() {
-//        int lv0Count = 6;
-//        int lv1Count = 3;
-//
-//        ArrayList<MultiItemEntity> res = new ArrayList<>();
-//        for (int i = 0; i < lv0Count; i++) {
-//            ParentLevel lv0 = new ParentLevel("This is " + i + "th item in Level 0", "subtitle of " + i);
-//            for (int j = 0; j < lv1Count; j++) {
-//                ChildLevel lv1 = new ChildLevel("Level 1 item: " + j, "(no animation)");
-//                lv0.addSubItem(lv1);
-//            }
-//            res.add(lv0);
-//        }
-//        //res.add(new  ParentLevel("This is " + lv0Count + "th item in Level 0", "subtitle of " + lv0Count));
-//        return res;
-//    }
+    private void getMore() {
+        addSubscription(MineApiFactory.getUserLikemeItEarlier(SPManager.get().getStringValue("uid"), mPage + 1).subscribe(new Consumer<EarlierBean>() {
+            @Override
+            public void accept(EarlierBean visitorBean) throws Exception {
+                mRefreshLayout.finishLoadmore();
+                if (visitorBean.getCode() == 200) {
+                    if (visitorBean.getData() != null) {
+                        mPage++;
+                    }
+                    for (int j = 0; j < visitorBean.getData().size(); j++) {
+                        res.add(visitorBean.getData().get(j));
+                        //((ParentLevel) list.get(topSize + 1)).addSubItem(visitorBean.getData().get(j));
+                    }
+                    adapter.replaceData(res);
+                    adapter.expandAll();
+                } else if (visitorBean.getCode() == 400) {
+
+                }
+
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: " + throwable);
+                ToastUtils.showShort(R.string.server_error);
+            }
+        }));
+    }
 }

@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.chat.business;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,14 +11,21 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.chat.adapter.FindFriendsAdapter;
+import com.kuwai.ysy.module.chat.adapter.NoticeDateAdapter;
 import com.kuwai.ysy.module.chat.adapter.NoticeTransAdapter;
 import com.kuwai.ysy.module.chat.api.ChatApiFactory;
 import com.kuwai.ysy.module.chat.bean.MyFriends;
 import com.kuwai.ysy.module.chat.bean.NoticeBean;
+import com.kuwai.ysy.module.chat.bean.NoticeDateBean;
+import com.kuwai.ysy.module.chat.business.redpack.SendRedActivity;
+import com.kuwai.ysy.module.home.WebviewH5Activity;
 import com.kuwai.ysy.module.home.bean.HomeVideoBean;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.MyEditText;
 import com.kuwai.ysy.widget.MyRecycleViewDivider;
@@ -30,10 +38,14 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.functions.Consumer;
+import io.rong.imkit.RongIM;
 
 public class NoticeFragment extends BaseFragment implements View.OnClickListener {
 
@@ -44,6 +56,7 @@ public class NoticeFragment extends BaseFragment implements View.OnClickListener
     private RecyclerView mRlSystem;
 
     private NoticeTransAdapter myFriendsAdapter;
+    private NoticeDateAdapter dateAdapter;
     private List<NoticeBean.DataBean> mDatalist = new ArrayList<>();
 
     private SmartRefreshLayout mRefreshLayout;
@@ -74,6 +87,7 @@ public class NoticeFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        EventBusUtil.register(this);
         mDownDate = mRootView.findViewById(R.id.down_date);
         mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
         mRlDate = mRootView.findViewById(R.id.rl_date);
@@ -81,9 +95,29 @@ public class NoticeFragment extends BaseFragment implements View.OnClickListener
         mMRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
         mRlSystem = mRootView.findViewById(R.id.rl_system);
         myFriendsAdapter = new NoticeTransAdapter();
+        dateAdapter = new NoticeDateAdapter();
+        mRlDate.setAdapter(dateAdapter);
         mRlSystem.setAdapter(myFriendsAdapter);
         mRlSystem.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mRlSystem.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 1), R.color.line_color));
+        mRlDate.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        mRlDate.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 1), R.color.line_color));
+
+        dateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                RongIM.getInstance().startPrivateChat(getActivity(), String.valueOf(dateAdapter.getData().get(position).getUid()), dateAdapter.getData().get(position).getNickname());
+            }
+        });
+
+        myFriendsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(getActivity(), WebviewH5Activity.class);
+                intent.putExtra(C.H5_FLAG, myFriendsAdapter.getData().get(position).getUrl() + "?uid=" + SPManager.get().getStringValue("uid") + "&nid=" + myFriendsAdapter.getData().get(position).getNid());
+                startActivity(intent);
+            }
+        });
 
         mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
@@ -92,6 +126,7 @@ public class NoticeFragment extends BaseFragment implements View.OnClickListener
             public void onRefresh(RefreshLayout refreshlayout) {
                 mPage = 1;
                 getFriends();
+                getNotice();
             }
         });
         mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
@@ -117,9 +152,10 @@ public class NoticeFragment extends BaseFragment implements View.OnClickListener
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         uid = SPManager.get().getStringValue("uid");
-        if(!Utils.isNullString(uid)){
+        if (!Utils.isNullString(uid)) {
             getFriends();
-        }else{
+            getNotice();
+        } else {
         }
     }
 
@@ -132,6 +168,23 @@ public class NoticeFragment extends BaseFragment implements View.OnClickListener
                     myFriendsAdapter.replaceData(noticeBean.getData());
                 } else {
                     ToastUtils.showShort(noticeBean.getMsg());
+                }
+
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //ToastUtils.showShort("网络错误");
+            }
+        }));
+    }
+
+    void getNotice() {
+        addSubscription(ChatApiFactory.getDateNotice(uid).subscribe(new Consumer<NoticeDateBean>() {
+            @Override
+            public void accept(NoticeDateBean noticeBean) throws Exception {
+                if (noticeBean.getCode() == 200) {
+                    dateAdapter.replaceData(noticeBean.getData());
                 }
 
             }
@@ -159,5 +212,19 @@ public class NoticeFragment extends BaseFragment implements View.OnClickListener
                 //Log.i(TAG, "accept: " + throwable);
             }
         }));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBusUtil.unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void isLogin(MessageEvent event) {
+        if (C.MSG_UPDATE_NOTICE == event.getCode()) {
+            getFriends();
+            getNotice();
+        }
     }
 }

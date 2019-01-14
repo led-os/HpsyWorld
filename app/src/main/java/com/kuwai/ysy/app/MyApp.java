@@ -9,7 +9,9 @@ import android.content.res.Configuration;
 import android.os.Process;
 import android.support.multidex.MultiDex;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.net.ApiClient;
 import com.kuwai.ysy.rong.ExtensionModule;
 import com.kuwai.ysy.rong.GiftSendMessage;
@@ -22,6 +24,7 @@ import com.kuwai.ysy.rong.RedReceiveMessage;
 import com.kuwai.ysy.rong.RedReceiveMessageItemProvider;
 import com.kuwai.ysy.rong.RedSendMessage;
 import com.kuwai.ysy.rong.RedSendMessageItemProvider;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.language.LocalManageUtil;
 import com.rayhahah.rbase.BaseApplication;
 import com.rayhahah.rbase.net.OkHttpManager;
@@ -42,6 +45,8 @@ import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Message;
 import okhttp3.OkHttpClient;
 
 public class MyApp extends BaseApplication {
@@ -82,6 +87,17 @@ public class MyApp extends BaseApplication {
         RongIM.registerMessageType(GiftSendMessage.class);
         RongIM.getInstance().registerMessageTemplate(new GiftSendMessageItemProvider());
         setMyExtensionModule();
+
+        RongIM.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageListener() {
+            @Override
+            public boolean onReceived(Message message, int i) {
+                Log.e("", "");
+                if ("TxtMsg".equals(message.getObjectName())) {
+                    EventBusUtil.sendEvent(new MessageEvent(C.MSG_UPDATE_NOTICE));
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -92,7 +108,7 @@ public class MyApp extends BaseApplication {
 
         UMConfigure.init(this, "5bdf9e6af1f556220800009b", "umeng", UMConfigure.DEVICE_TYPE_PHONE, "");
         PlatformConfig.setWeixin("wx061451b819a2c377", "a2ede8246092bd70ac33cac9dc24d69f");
-        PlatformConfig.setSinaWeibo("240524518", "cc4933f41b939f5188e3ec06c5c921d9","api.yushuiyuan.cn/api/user/weibo");
+        PlatformConfig.setSinaWeibo("240524518", "cc4933f41b939f5188e3ec06c5c921d9", "api.yushuiyuan.cn/api/user/weibo");
         PlatformConfig.setQQZone("101511982", "cae47898315b8ce1a93cf51bc2de7354");
 
         //腾讯x5

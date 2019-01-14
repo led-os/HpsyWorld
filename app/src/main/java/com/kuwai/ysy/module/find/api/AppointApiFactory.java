@@ -20,10 +20,10 @@ public class AppointApiFactory {
                 .compose(RxSchedulers.<MyAppointMent>ioMain());
     }
 
-    public static Observable<MyCommis> getMyCommis(String uid, int page) {
+    public static Observable<MyCommis> getMyCommis(String uid, int page,int state) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(AppointService.class)
-                .getMyCommis(uid, page)
+                .getMyCommis(uid, page,state)
                 .compose(RxSchedulers.<MyCommis>ioMain());
     }
 

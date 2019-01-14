@@ -22,7 +22,6 @@ public class MyCommisMainFragment extends BaseFragment<MyCommisListPresenter> im
 
     private MyComissAdapter mDateAdapter;
     private RecyclerView mDongtaiList;
-    private List<MyCommis.DataBean> mDataList = new ArrayList<>();
 
     public static MyCommisMainFragment newInstance() {
         Bundle args = new Bundle();
@@ -51,20 +50,20 @@ public class MyCommisMainFragment extends BaseFragment<MyCommisListPresenter> im
         mDongtaiList = mRootView.findViewById(R.id.recyclerView);
         mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mDongtaiList.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 1), R.color.line_color));
-        mDateAdapter = new MyComissAdapter(mDataList);
-        mDongtaiList.setAdapter(mDateAdapter);
+       // mDateAdapter = new MyComissAdapter(mDataList);
+       // mDongtaiList.setAdapter(mDateAdapter);
     }
 
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.getMyCommis("1", 1);
+       // mPresenter.getMyCommis("1", 1);
     }
 
     @Override
     public void getMyCommis(MyCommis myCommis) {
-        mDataList.addAll(myCommis.getData());
-        mDateAdapter.notifyDataSetChanged();
+        //mDataList.addAll(myCommis.getData());
+        //mDateAdapter.notifyDataSetChanged();
     }
 
     @Override

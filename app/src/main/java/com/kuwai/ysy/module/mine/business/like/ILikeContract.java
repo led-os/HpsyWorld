@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.mine.business.like;
 
+import com.kuwai.ysy.module.mine.bean.LikeParentBean;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
 import com.rayhahah.rbase.base.IRBaseView;
 
@@ -10,7 +11,7 @@ public class ILikeContract {
         /**
          * 设置第一次请求的数据
          */
-        void setHomeData(VisitorBean visitorBean);
+        void setHomeData(LikeParentBean visitorBean);
 
         /**
          * 设置加载更多的数据
