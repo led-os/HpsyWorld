@@ -111,7 +111,7 @@
             android:drawableLeft="@drawable/ic_list_tab"
             android:drawablePadding="4dp"
             android:gravity="center_vertical"
-            android:text="基本资料(3/8)"
+            android:text="基本资料"
             android:textColor="@color/balck_28"
             android:textSize="14sp"
             android:textStyle="bold" />

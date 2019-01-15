@@ -10,19 +10,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kuwai.ysy.R;
+import com.luck.picture.lib.entity.LocalMedia;
+import com.rayhahah.rbase.utils.useful.GlideUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ImgReportAdapter extends RecyclerView.Adapter<ImgReportAdapter.ViewHolder> {
 
     private static final int TYPE_ADD = 1;
     private static final int TYPE_PIC = 2;
-    private final List<String> mList;
+    private  List<LocalMedia> mList = new ArrayList<>();
     private Context context;
     private static final int MAX_SIZE = 6;
 
-    public ImgReportAdapter(List<String> mList, OnItemClickListener itemClickListener) {
-        this.mList = mList;
+    public ImgReportAdapter(OnItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 
@@ -47,6 +49,11 @@ public class ImgReportAdapter extends RecyclerView.Adapter<ImgReportAdapter.View
             }
         });
         return viewHolder;
+    }
+
+    public void setData(List<LocalMedia> mData) {
+        this.mList = mData;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -76,7 +83,7 @@ public class ImgReportAdapter extends RecyclerView.Adapter<ImgReportAdapter.View
             holder.ivRemove.setVisibility(View.VISIBLE);
             holder.ivAdd.setVisibility(View.GONE);
             holder.ivPhoto.setVisibility(View.VISIBLE);
-            holder.ivPhoto.setImageResource(R.drawable.rc_img_camera);
+            GlideUtil.load(context, mList.get(position).getCompressPath(), holder.ivPhoto);
             //holder.ivPhoto.setImageBitmap(BitmapFactory.decodeFile(mList.get(position)));
         }
     }

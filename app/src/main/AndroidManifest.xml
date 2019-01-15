@@ -44,7 +44,8 @@
         //首页
         <activity
             android:name=".module.home.business.HomeActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".module.home.business.loginmoudle.login.LoginActivity" />
         <activity android:name=".module.home.WebviewH5Activity" />
         <activity android:name=".module.home.FilterActivity" />
@@ -66,6 +67,9 @@
             android:name=".module.circle.DyDetailActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".module.circle.HoleDetailActivity" />
+        <activity
+            android:name=".module.circle.ReportActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".module.find.VideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

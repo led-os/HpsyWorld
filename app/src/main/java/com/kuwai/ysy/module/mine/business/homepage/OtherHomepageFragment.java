@@ -1,7 +1,9 @@
 package com.kuwai.ysy.module.mine.business.homepage;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,10 +12,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aliyun.common.utils.ToastUtil;
 import com.allen.library.CircleImageView;
 import com.allen.library.SuperButton;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -24,16 +28,24 @@ import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.SimpleResponse;
+import com.kuwai.ysy.callback.GiftClickCallback;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.chat.api.ChatApiFactory;
 import com.kuwai.ysy.module.circle.VideoPlayActivity;
+import com.kuwai.ysy.module.circle.adapter.MyPagerAdapter;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.business.dongtai.DongtaiMainFragment;
+import com.kuwai.ysy.module.find.api.AppointApiFactory;
+import com.kuwai.ysy.module.find.bean.GiftPopBean;
 import com.kuwai.ysy.module.mine.adapter.PicAdapter;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.kuwai.ysy.module.mine.bean.TabEntity;
 import com.kuwai.ysy.module.mine.bean.vip.GallaryBean;
+import com.kuwai.ysy.rong.GiftPlugin;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
+import com.kuwai.ysy.widget.GiftPannelView;
+import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
@@ -44,13 +56,16 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.SynchronousQueue;
 
 import cc.shinichi.library.ImagePreview;
+import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 
-public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> implements OtherHomepageContract.IHomeView, View.OnClickListener {
+public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> implements OtherHomepageContract.IHomeView, View.OnClickListener, GiftClickCallback {
 
     private ImageView mLeft;
     private TextView mTitle;
@@ -110,6 +125,14 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
                 RongIM.getInstance().startPrivateChat(getActivity(), otherid, mTvNick.getText().toString());
                 //私聊
                 break;
+            case R.id.tv_shangxian:
+                if ("已提醒".equals(mTvShangxian.getText().toString())) {
+                    mPresenter.cancelRemind(SPManager.get().getStringValue("uid"), otherid);
+                } else {
+                    mPresenter.online(SPManager.get().getStringValue("uid"), otherid);
+                }
+
+                break;
             case R.id.tv_xinyong:
                 //信用度
                 break;
@@ -126,9 +149,36 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
                 //喜欢
                 break;
             case R.id.btn_send_gift:
+                createDialog(getActivity());
                 //弹出打赏
                 break;
         }
+    }
+
+    private CustomDialog customDialog;
+
+    private void createDialog(final Context context) {
+        addSubscription(AppointApiFactory.getAllGifts()
+                .subscribe(new Consumer<GiftPopBean>() {
+                    @Override
+                    public void accept(@NonNull GiftPopBean dateTheme) throws Exception {
+                        GiftPannelView pannelView = new GiftPannelView(context);
+                        pannelView.setData(dateTheme.getData(), context);
+                        pannelView.setGiftClickCallBack(OtherHomepageFragment.this);
+                        customDialog = new CustomDialog.Builder(context)
+                                .setView(pannelView)
+                                .setTouchOutside(true)
+                                .setDialogGravity(Gravity.BOTTOM)
+                                .build();
+                        customDialog.show();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        //mView.showViewError(throwable);
+                    }
+                }));
+        //View root = View.inflate(context, R.layout.dialog_gift, null);
     }
 
     @Override
@@ -164,6 +214,7 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
         mBtnChat.setOnClickListener(this);
         mTvXinyong.setOnClickListener(this);
         mBtnLike.setOnClickListener(this);
+        mTvShangxian.setOnClickListener(this);
         mBtnSendGift.setOnClickListener(this);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -272,7 +323,11 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
     @Override
     public void setHomeData(PersolHomePageBean persolHomePageBean) {
         mPersolHomePageBean = persolHomePageBean;
-
+        if (persolHomePageBean.getData().getReminding_online() == 1) {
+            mTvShangxian.setText("已提醒");
+        } else {
+            mTvShangxian.setText("上线提醒");
+        }
         mTitle.setText(persolHomePageBean.getData().getInfo().getNickname());
         if (persolHomePageBean.getData().getLove() == 1) {
             mBtnLike.setText("取消喜欢");
@@ -345,6 +400,22 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
     }
 
     @Override
+    public void onlineResult(SimpleResponse response) {
+        if (response.code == 200) {
+            mTvShangxian.setText("已提醒");
+        }
+        ToastUtils.showShort(response.msg);
+    }
+
+    @Override
+    public void cancelResult(SimpleResponse response) {
+        if (response.code == 200) {
+            mTvShangxian.setText("上线提醒");
+        }
+        ToastUtils.showShort(response.msg);
+    }
+
+    @Override
     public void showViewLoading() {
 
     }
@@ -357,6 +428,36 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
     @Override
     public void showViewError(Throwable t) {
 
+    }
+
+    @Override
+    public void giftClick(GiftPopBean.DataBean giftBean) {
+        customDialog.dismiss();
+        giftReward(giftBean);
+    }
+
+    private void giftReward(final GiftPopBean.DataBean gift) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("uid", SPManager.get().getStringValue("uid"));
+        param.put("other_uid", otherid);
+        param.put("g_id", gift.getG_id());
+        param.put("g_nums", gift.num);
+        param.put("message", "");
+        ChatApiFactory.rewardPe(param)
+                .subscribe(new Consumer<SimpleResponse>() {
+                    @Override
+                    public void accept(@NonNull SimpleResponse dateTheme) throws Exception {
+                        if (dateTheme.code == 200) {
+                            //ToastUtils.showShort("赠送成功");
+                        }
+                        ToastUtils.showShort(dateTheme.msg);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        //mView.showViewError(throwable);
+                    }
+                });
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {

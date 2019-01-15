@@ -56,6 +56,20 @@ public class MineApiFactory {
                 .compose(RxSchedulers.<UserInfo>ioMain());
     }
 
+    public static Observable<SimpleResponse> setReminder(String uid,String otherId) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getReminder(uid,otherId)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<SimpleResponse> setCancelReminder(String uid,String otherId) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getCancelReminder(uid,otherId)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
     public static Observable<PersolHomePageBean> getOtherHomepageInfo(String uid, String otherid) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)

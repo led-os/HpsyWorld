@@ -74,8 +74,8 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
     private boolean picClose = false;
     private boolean videoClose = false;
 
-    private static final int REQUST_CODE_PICTURE = 1001;
     private static final int REQUST_CODE_VIDEO = 1002;
+    private static final int REQUST_CODE_PICTURE = 1001;
     private List<LocalMedia> selectList = new ArrayList<>();
     private LocalMedia media;
     private String videoPath = "";

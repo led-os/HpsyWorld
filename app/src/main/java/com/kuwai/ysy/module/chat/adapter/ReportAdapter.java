@@ -1,5 +1,8 @@
 package com.kuwai.ysy.module.chat.adapter;
 
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.allen.library.SuperTextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -18,8 +21,8 @@ public class ReportAdapter extends BaseQuickAdapter<ReportBean, BaseViewHolder> 
 
     @Override
     protected void convert(BaseViewHolder helper, ReportBean item) {
-        ((SuperTextView) helper.getView(R.id.tv_reason)).setLeftString(item.getReason());
-        ((SuperTextView) helper.getView(R.id.tv_reason)).setRightIcon(item.isCheck() ? R.drawable.ic_list_select : R.drawable.ic_list_unselect);
+        ((TextView) helper.getView(R.id.tv_reason)).setText(item.getReason());
+        ((ImageView) helper.getView(R.id.img)).setImageResource(item.isCheck() ? R.drawable.ic_list_select : R.drawable.ic_list_unselect);
     }
 
 }

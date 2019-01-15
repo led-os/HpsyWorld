@@ -26,6 +26,7 @@ import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.chat.MyFriendActivity;
 import com.kuwai.ysy.module.circle.DyDetailActivity;
 import com.kuwai.ysy.module.circle.FriendsVideoFragment;
+import com.kuwai.ysy.module.circle.ReportActivity;
 import com.kuwai.ysy.module.circle.VideoPlayActivity;
 import com.kuwai.ysy.module.circle.business.publishdy.PublishDyActivity;
 import com.kuwai.ysy.module.circle.adapter.DongtaiAdapter;
@@ -33,6 +34,7 @@ import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.DyMainListBean;
 import com.kuwai.ysy.module.home.business.HomeActivity;
 import com.kuwai.ysy.module.mine.OtherHomeActivity;
+import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.module.mine.business.homepage.OtherHomepageFragment;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
@@ -176,7 +178,7 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
                         break;
                     case R.id.tv_more:
                         if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
-                            showMore();
+                            showMore(position);
                         } else {
                             ToastUtils.showShort(R.string.login_error);
                         }
@@ -299,8 +301,41 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
         });
     }
 
-    private void showMore() {
+    private void showMore(final int pos) {
         View pannel = View.inflate(getActivity(), R.layout.dialog_dongtai_item_more, null);
+        pannel.findViewById(R.id.tv_like).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                like(SPManager.get().getStringValue("uid"), String.valueOf(mDongtaiAdapter.getData().get(pos).getUid()), 1);
+            }
+        });
+        pannel.findViewById(R.id.tv_share).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                //like(SPManager.get().getStringValue("uid"), String.valueOf(mDongtaiAdapter.getData().get(pos).getUid()), 1);
+            }
+        });
+        pannel.findViewById(R.id.tv_report).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                Bundle bundle = new Bundle();
+                bundle.putString("module","0");
+                bundle.putString("p_id", String.valueOf(mDongtaiAdapter.getData().get(pos).getD_id()));
+                Intent intent = new Intent(getActivity(), ReportActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        pannel.findViewById(R.id.tv_ping).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                //like(SPManager.get().getStringValue("uid"), String.valueOf(mDongtaiAdapter.getData().get(pos).getUid()), 1);
+            }
+        });
         if (customDialog == null) {
             customDialog = new CustomDialog.Builder(getActivity())
                     .setView(pannel)
@@ -408,5 +443,23 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
             }
             mDongtaiAdapter.notifyItemChanged(index);
         }
+    }
+
+    public void like(String uid, String otherId, int type) {
+        addSubscription(MineApiFactory.getUserLike(uid, otherId, type).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse response) throws Exception {
+                if (response.code == 200) {
+                    ToastUtils.showShort("喜欢成功");
+                } else {
+                    ToastUtils.showShort(response.msg);
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: "+throwable);
+            }
+        }));
     }
 }

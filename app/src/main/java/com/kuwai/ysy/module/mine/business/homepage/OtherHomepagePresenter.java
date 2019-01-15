@@ -53,4 +53,34 @@ public class OtherHomepagePresenter extends RBasePresenter<OtherHomepageContract
             }
         }));
     }
+
+    @Override
+    public void online(String uid, String otherId) {
+        addSubscription(MineApiFactory.setReminder(uid,otherId).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse response) throws Exception {
+                mView.onlineResult(response);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.i(TAG, "accept: "+throwable);
+            }
+        }));
+    }
+
+    @Override
+    public void cancelRemind(String uid, String otherId) {
+        addSubscription(MineApiFactory.setCancelReminder(uid,otherId).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse response) throws Exception {
+                mView.cancelResult(response);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.i(TAG, "accept: "+throwable);
+            }
+        }));
+    }
 }

@@ -95,7 +95,7 @@ public interface ChatService {
     //加入黑名单
     @FormUrlEncoded
     @POST("Chat/Blacklist")
-    Observable<SimpleResponse> setBlack(@Field("uid") String uid,@Field("other_uid") String other_id);
+    Observable<SimpleResponse> setBlack(@Field("uid") String uid,@Field("other_id") String other_id);
 
     //取消黑名单
     @FormUrlEncoded

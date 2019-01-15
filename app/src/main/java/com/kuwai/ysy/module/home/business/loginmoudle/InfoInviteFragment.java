@@ -10,12 +10,15 @@ import android.widget.TextView;
 import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.home.api.HomeApiFactory;
 import com.kuwai.ysy.module.home.bean.login.CodeBean;
 import com.kuwai.ysy.module.home.business.HomeActivity;
+import com.kuwai.ysy.module.home.business.loginmoudle.login.LoginActivity;
 import com.kuwai.ysy.net.glide.ProgressInterceptor;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.UploadHelper;
 import com.kuwai.ysy.utils.Utils;
 import com.rayhahah.rbase.base.RBasePresenter;
@@ -125,7 +128,8 @@ public class InfoInviteFragment extends BaseFragment implements View.OnClickList
             @Override
             public void accept(SimpleResponse codeBean) throws Exception {
                 if (codeBean.code == 200) {
-                    startActivity(new Intent(getActivity(), HomeActivity.class));
+                    ToastUtils.showShort("注册成功");
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
                     getActivity().finish();
                 } else {
                     ToastUtils.showShort(codeBean.msg);

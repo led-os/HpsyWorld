@@ -14,7 +14,9 @@ import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 
 public interface HomeService {
@@ -41,9 +43,9 @@ public interface HomeService {
     @POST("User/ThirdPartyRegistration")
     Observable<LoginBean> codeAuth(@FieldMap Map<String, String> num);
 
-    @FormUrlEncoded
+    @Multipart
     @POST("User/register")
-    Observable<SimpleResponse> regist(@FieldMap Map<String, RequestBody> num);
+    Observable<SimpleResponse> regist(@PartMap Map<String, RequestBody> num);
 
     @FormUrlEncoded
     @POST("HomePage/HomePageList")

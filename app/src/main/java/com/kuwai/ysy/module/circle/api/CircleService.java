@@ -67,6 +67,13 @@ public interface CircleService {
     Observable<SimpleResponse> publishDy(@PartMap Map<String, RequestBody> map);
 
     /**
+     * 说说举报
+     */
+    @Multipart
+    @POST("Currency/InsertReportPost")
+    Observable<SimpleResponse> report(@PartMap Map<String, RequestBody> map);
+
+    /**
      * 视频sts
      */
     @FormUrlEncoded

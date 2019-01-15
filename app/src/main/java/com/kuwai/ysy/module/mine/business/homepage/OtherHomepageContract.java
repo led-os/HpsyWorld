@@ -24,6 +24,8 @@ public class OtherHomepageContract {
          */
         void showError(int errorCode, String msg);
         void likeResult(SimpleResponse response);
+        void onlineResult(SimpleResponse response);
+        void cancelResult(SimpleResponse response);
     }
 
     public interface IHomePresenter {
@@ -34,5 +36,9 @@ public class OtherHomepageContract {
         void requestHomeData(String uid ,String otherid);
 
         void like(String uid,String otherId,int type);
+
+        void online(String uid,String otherId);
+
+        void cancelRemind(String uid,String otherId);
     }
 }

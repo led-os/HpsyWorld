@@ -64,6 +64,13 @@ public class CircleApiFactory {
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
+    public static Observable<SimpleResponse> report(HashMap<String, RequestBody> map) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(CircleService.class)
+                .report(map)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
     public static Observable<StsBean> getVideoSts(String uid, String token) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(CircleService.class)
