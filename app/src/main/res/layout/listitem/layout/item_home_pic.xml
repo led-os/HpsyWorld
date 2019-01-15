@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="2dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sp_r16_f0f2f5">
+
+        <ImageView
+            android:id="@+id/top_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"/>
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="14dp"
+            android:src="@mipmap/home_nearby_ic_video"/>
+
+        <com.allen.library.CircleImageView
+            android:id="@+id/img_head"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_below="@id/top_img"
+            android:layout_margin="12dp"
+            android:src="@drawable/center_img_user_default"
+            />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_below="@id/top_img"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@id/img_head"
+            android:gravity="center"
+            android:text="小妖娱"
+            android:textColor="#ff282838"
+            android:textSize="10sp"/>
+
+        <com.allen.library.CircleImageView
+            android:id="@+id/img_sex"
+            android:layout_width="14dp"
+            android:layout_height="20dp"
+            android:layout_below="@id/top_img"
+            android:layout_centerVertical="true"
+            android:layout_margin="12dp"
+            android:layout_toRightOf="@id/tv_name"
+            android:src="@drawable/ic_user_woman"
+            />
+
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/top_img"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="12dp"
+            android:drawableLeft="@mipmap/home_nearby_ic_locate"
+            android:drawablePadding="6dp"
+            android:gravity="center"
+            android:text="1.5km"
+            android:textColor="#ff282838"
+            android:textSize="10sp"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
