@@ -180,4 +180,8 @@ public class C {
     public static final String REGIST_INCOME = "RE_INCOME";//收入
     public static final String REGIST_EDUCATION = "RE_EDUCATION";//学历
 
+
+    public static final String UpDate = "https://raw.githubusercontent.com/xuexiangjys/XUpdate/master/jsonapi/update_custom.json";//更新app
+
+
 }
