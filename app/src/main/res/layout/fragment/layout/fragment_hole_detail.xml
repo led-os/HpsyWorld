@@ -100,7 +100,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="16dp"
                             android:layout_toRightOf="@id/img_head"
-                            android:text="匿名用户"
+                            android:text="发布方"
                             android:textColor="@color/balck_28"
                             android:textSize="16sp" />
 

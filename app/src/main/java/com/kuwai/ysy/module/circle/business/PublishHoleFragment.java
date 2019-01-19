@@ -12,10 +12,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.api.CircleApiFactory;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.MyEditText;
 import com.rayhahah.rbase.base.RBasePresenter;
@@ -80,6 +83,7 @@ public class PublishHoleFragment extends BaseFragment implements View.OnClickLis
                     public void accept(SimpleResponse categoryBean) throws Exception {
                         if (categoryBean.code == 200) {
                             getActivity().finish();
+                            EventBusUtil.sendEvent(new MessageEvent(C.MSG_HOLE_REFRESH));
                         }
                         ToastUtils.showShort(categoryBean.msg);
                     }

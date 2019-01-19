@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.home.business.loginmoudle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -11,6 +12,8 @@ import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.chat.business.redpack.SendRedActivity;
+import com.kuwai.ysy.module.home.WebviewH5Activity;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.MyEditText;
 import com.rayhahah.rbase.base.RBasePresenter;
@@ -26,6 +29,7 @@ public class Regist1Fragment extends BaseFragment implements View.OnClickListene
     private View mLine1;
     private SuperButton mBtnNext;
     private TextView mToLogin;
+    private TextView tv_xieyi;
 
     public static Regist1Fragment newInstance() {
         Bundle args = new Bundle();
@@ -58,6 +62,11 @@ public class Regist1Fragment extends BaseFragment implements View.OnClickListene
             case R.id.to_login:
                 pop();
                 break;
+            case R.id.tv_xieyi:
+                Intent intent = new Intent(getActivity(), WebviewH5Activity.class);
+                intent.putExtra(C.H5_FLAG, C.H5_URL + C.XIEYI);
+                startActivity(intent);
+                break;
         }
     }
 
@@ -65,6 +74,7 @@ public class Regist1Fragment extends BaseFragment implements View.OnClickListene
     public void initView(Bundle savedInstanceState) {
         mTvRegistTitle = mRootView.findViewById(R.id.tv_regist_title);
         mTitle = mRootView.findViewById(R.id.title);
+        tv_xieyi = mRootView.findViewById(R.id.tv_xieyi);
         mEtTel = mRootView.findViewById(R.id.et_tel);
         mLine1 = mRootView.findViewById(R.id.line1);
         mBtnNext = mRootView.findViewById(R.id.btn_next);
@@ -72,6 +82,7 @@ public class Regist1Fragment extends BaseFragment implements View.OnClickListene
 
         mBtnNext.setOnClickListener(this);
         mToLogin.setOnClickListener(this);
+        tv_xieyi.setOnClickListener(this);
 
         mEtTel.addTextChangedListener(new TextWatcher() {
             @Override

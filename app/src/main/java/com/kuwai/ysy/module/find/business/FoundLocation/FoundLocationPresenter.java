@@ -37,7 +37,7 @@ public class FoundLocationPresenter extends RBasePresenter<FoundLocationContract
     }
 
     @Override
-    public void requestNextData(int id) {
+    public void requestNextData(String id) {
         addSubscription(FoundApiFactory.getLocalNextList(id).subscribe(new Consumer<LocalNextBean>() {
             @Override
             public void accept(LocalNextBean localNextBean) throws Exception {
@@ -52,7 +52,7 @@ public class FoundLocationPresenter extends RBasePresenter<FoundLocationContract
     }
 
     @Override
-    public void requestAreaData(int id) {
+    public void requestAreaData(String id) {
         addSubscription(FoundApiFactory.getLocalNextList(id).subscribe(new Consumer<LocalNextBean>() {
             @Override
             public void accept(LocalNextBean localNextBean) throws Exception {

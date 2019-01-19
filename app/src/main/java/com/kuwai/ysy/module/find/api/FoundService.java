@@ -41,7 +41,7 @@ public interface FoundService {
 
     //获取下一级地区列表
     @GET("Currency/getRegionInfoList")
-    Observable<LocalNextBean> getNextData(@Query("region_id") int num);
+    Observable<LocalNextBean> getNextData(@Query("region_name") String name);
 
     //同城约会
     @FormUrlEncoded
@@ -77,6 +77,11 @@ public interface FoundService {
     //约会详情页（对方看到）
     @POST("Appointment/OtherAppointmentDetails")
     Observable<CommisDetailBean> getCommisDetailData(@Query("r_id") int rid, @Query("uid") String uid);
+
+    //用户屏蔽
+    @FormUrlEncoded
+    @POST("Currency/InsertShield")
+    Observable<SimpleResponse> userPing(@Field("uid") String uid, @Field("other_uid") int other_uid);
 
     //约会详情页（自己）
     @POST("Appointment/MyAppointmentDetails")

@@ -37,14 +37,14 @@ public class FoundApiFactory {
                 .compose(RxSchedulers.<ProvincesAndCityBean>ioMain());
     }
 
-    public static Observable<LocalNextBean> getLocalNextList(int id) {
+    public static Observable<LocalNextBean> getLocalNextList(String name) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(FoundService.class)
-                .getNextData(id)
+                .getNextData(name)
                 .compose(RxSchedulers.<LocalNextBean>ioMain());
     }
 
-    public static Observable<CityMeetBean> getCityMeetList(Map<String,Object> params) {
+    public static Observable<CityMeetBean> getCityMeetList(Map<String, Object> params) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(FoundService.class)
                 .getMeetListData(params)
@@ -114,7 +114,14 @@ public class FoundApiFactory {
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
-    public static Observable<TuoDanBean> getTuoDanList(Map<String,Object> param) {
+    public static Observable<SimpleResponse> userPing(String uid, int other) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(FoundService.class)
+                .userPing(uid, other)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<TuoDanBean> getTuoDanList(Map<String, Object> param) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(FoundService.class)
                 .getTuoDanData(param)

@@ -18,6 +18,7 @@ import com.kuwai.ysy.module.home.bean.login.CodeBean;
 import com.kuwai.ysy.module.home.business.HomeActivity;
 import com.kuwai.ysy.module.home.business.loginmoudle.login.LoginActivity;
 import com.kuwai.ysy.net.glide.ProgressInterceptor;
+import com.kuwai.ysy.utils.DialogUtil;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.UploadHelper;
 import com.kuwai.ysy.utils.Utils;
@@ -71,6 +72,7 @@ public class InfoInviteFragment extends BaseFragment implements View.OnClickList
     }
 
     private void toRegist() {
+        DialogUtil.showLoadingDialog(getActivity(), "", getResources().getColor(R.color.theme));
         UploadHelper helper = UploadHelper.getInstance();
         helper.clear();
         helper.addParameter("phone", SPManager.get().getStringValue(C.REGIST_PHONE));
@@ -86,6 +88,11 @@ public class InfoInviteFragment extends BaseFragment implements View.OnClickList
             helper.addParameter("type", SPManager.get().getStringValue(C.SAN_FANG));
         } else {
             helper.addParameter("type", "phone");
+        }
+        String type = SPManager.get().getStringValue(C.SAN_FANG);
+        String id = SPManager.get().getStringValue(C.SAN_FANG_ID);
+        if (!Utils.isNullString(SPManager.get().getStringValue(C.SAN_FANG_ID))) {
+            helper.addParameter(type, id);
         }
         if (!Utils.isNullString(SPManager.get().getStringValue(C.REGIST_NAME))) {
             helper.addParameter("nickname", SPManager.get().getStringValue(C.REGIST_NAME));
@@ -127,6 +134,7 @@ public class InfoInviteFragment extends BaseFragment implements View.OnClickList
         addSubscription(HomeApiFactory.regist(param).subscribe(new Consumer<SimpleResponse>() {
             @Override
             public void accept(SimpleResponse codeBean) throws Exception {
+                DialogUtil.dismissDialog(true);
                 if (codeBean.code == 200) {
                     ToastUtils.showShort("注册成功");
                     startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -139,6 +147,7 @@ public class InfoInviteFragment extends BaseFragment implements View.OnClickList
             @Override
             public void accept(Throwable throwable) throws Exception {
                 //Log.i(TAG, "accept: " + throwable);
+                DialogUtil.dismissDialog(true);
                 ToastUtils.showShort(R.string.server_error);
             }
         }));

@@ -58,9 +58,10 @@
 
             <ImageView
                 android:id="@+id/img_sex"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
                 android:layout_marginLeft="2dp"
+                android:layout_alignBottom="@id/tv_nick"
                 android:layout_toRightOf="@id/tv_age" />
 
             <TextView

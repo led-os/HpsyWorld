@@ -51,6 +51,11 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -116,6 +121,7 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
         EventBusUtil.register(this);
         type = getArguments().getString("type");
 
+        mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
         mDongtaiList = mRootView.findViewById(R.id.recyclerView);
         mPublishTv = mRootView.findViewById(R.id.tv_edit);
         mImageWatcher = mRootView.findViewById(R.id.image_watcher);
@@ -127,9 +133,9 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
             public void onRefresh(RefreshLayout refreshlayout) {
                 page = 1;
                 if (TYPE_DY_ALL.equals(type)) {
-                    mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid"));
+                    mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid", "0"));
                 } else if (C.TYPE_DY_FRIEND.equals(type)) {
-                    mPresenter.requestFriendData(page, SPManager.get().getStringValue("uid"));
+                    mPresenter.requestFriendData(page, SPManager.get().getStringValue("uid", "0"));
                 }
             }
         });
@@ -234,9 +240,9 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         if (TYPE_DY_ALL.equals(type)) {
-            mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid"));
+            mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid", "0"));
         } else if (C.TYPE_DY_FRIEND.equals(type)) {
-            mPresenter.requestFriendData(page, SPManager.get().getStringValue("uid"));
+            mPresenter.requestFriendData(page, SPManager.get().getStringValue("uid", "0"));
         }
     }
 
@@ -314,6 +320,7 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
             @Override
             public void onClick(View v) {
                 customDialog.dismiss();
+                share(mDongtaiAdapter.getData().get(pos));
                 //like(SPManager.get().getStringValue("uid"), String.valueOf(mDongtaiAdapter.getData().get(pos).getUid()), 1);
             }
         });
@@ -322,7 +329,7 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
             public void onClick(View v) {
                 customDialog.dismiss();
                 Bundle bundle = new Bundle();
-                bundle.putString("module","0");
+                bundle.putString("module", "0");
                 bundle.putString("p_id", String.valueOf(mDongtaiAdapter.getData().get(pos).getD_id()));
                 Intent intent = new Intent(getActivity(), ReportActivity.class);
                 intent.putExtras(bundle);
@@ -333,6 +340,7 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
             @Override
             public void onClick(View v) {
                 customDialog.dismiss();
+                ping(SPManager.get().getStringValue("uid"), mDongtaiAdapter.getData().get(pos).getD_id(), 1);//1：动态，2：树洞，3：首页。。。
                 //like(SPManager.get().getStringValue("uid"), String.valueOf(mDongtaiAdapter.getData().get(pos).getUid()), 1);
             }
         });
@@ -380,7 +388,13 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
     public void setFriendData(DyMainListBean dyMainListBean) {
         mRefreshLayout.finishRefresh();
         mDyMainListBean = dyMainListBean;
-        mDongtaiAdapter.replaceData(dyMainListBean.getData());
+        if (dyMainListBean.getData() != null && dyMainListBean.getData().size() > 0) {
+            mDongtaiAdapter.replaceData(dyMainListBean.getData());
+            mLayoutStatusView.showContent();
+        } else {
+            mLayoutStatusView.showError();
+        }
+
     }
 
     @Override
@@ -442,6 +456,12 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
                 dataBean.setGood(dataBean.getGood() + 1);
             }
             mDongtaiAdapter.notifyItemChanged(index);
+        } else if (event.getCode() == C.MSG_DY_REFRESH) {
+            if (TYPE_DY_ALL.equals(type)) {
+                mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid", "0"));
+            } else if (C.TYPE_DY_FRIEND.equals(type)) {
+                mPresenter.requestFriendData(page, SPManager.get().getStringValue("uid", "0"));
+            }
         }
     }
 
@@ -462,4 +482,84 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
             }
         }));
     }
+
+    public void ping(String uid, int tid, int type) {
+        addSubscription(MineApiFactory.ping(uid, tid, type).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse response) throws Exception {
+                if (response.code == 200) {
+                    ToastUtils.showShort("屏蔽成功");
+                } else {
+                    ToastUtils.showShort(response.msg);
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: "+throwable);
+            }
+        }));
+    }
+
+    private void share(DyMainListBean.DataBean mDyDetailBean) {
+        /*UMImage image = new UMImage(getActivity(), R.drawable.center_mark_ic_more);//网络图片
+        //image.setThumb(image);
+        image.compressStyle = UMImage.CompressStyle.QUALITY;*/
+        UMImage image = null;
+        if (mDyDetailBean != null) {
+            if (mDyDetailBean.getAttach() != null && mDyDetailBean.getAttach().size() > 0) {
+                image = new UMImage(getActivity(), mDyDetailBean.getAttach().get(0));//网络图片
+            } else {
+                image = new UMImage(getActivity(), R.mipmap.ic_sading);//网络图片
+            }
+            String url = "http://api.yushuiyuan.cn/h5/trend-detail.html?did=" + mDyDetailBean.getD_id();
+            UMWeb web = new UMWeb(url);
+            web.setTitle("鱼水缘动态");//标题
+            web.setThumb(image);  //缩略图
+            web.setDescription(mDyDetailBean.getText());//描述
+            new ShareAction(getActivity())
+                    .withMedia(web)
+                    .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
+                    .setCallback(shareListener).open();
+        }
+
+    }
+
+    private UMShareListener shareListener = new UMShareListener() {
+        /**
+         * @descrption 分享开始的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+        }
+
+        /**
+         * @descrption 分享成功的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Toast.makeText(getActivity(), "分享成功", Toast.LENGTH_LONG).show();
+        }
+
+        /**
+         * @descrption 分享失败的回调
+         * @param platform 平台类型
+         * @param t 错误原因
+         */
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(getActivity(), "分享失败", Toast.LENGTH_LONG).show();
+        }
+
+        /**
+         * @descrption 分享取消的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(getActivity(), "分享取消", Toast.LENGTH_LONG).show();
+        }
+    };
 }

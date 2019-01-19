@@ -1,9 +1,13 @@
 package com.kuwai.ysy.utils.glide;
 
 import android.content.Context;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.annotation.GlideOption;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NiceImageView;
 import com.youth.banner.loader.ImageLoader;
@@ -25,8 +29,11 @@ public class GlideRoundLoader extends ImageLoader {
          */
 
         //Glide 加载图片简单用法
-        Glide.with(context).load(path).into(imageView);
 
+        RoundedCorners roundedCorners= new RoundedCorners(Utils.dp2px(10));
+
+        RequestOptions options=RequestOptions.bitmapTransform(roundedCorners);
+        Glide.with(context).load(path).apply(options).into(imageView);
         //Picasso 加载图片简单用法
 //        Picasso.with(context).load(path).into(imageView);
 
@@ -39,7 +46,7 @@ public class GlideRoundLoader extends ImageLoader {
     public ImageView createImageView(Context context) {
         //使用fresco，需要创建它提供的ImageView，当然你也可以用自己自定义的具有图片加载功能的ImageView
         NiceImageView simpleDraweeView = new NiceImageView(context);
-        simpleDraweeView.setCornerRadius(Utils.dp2px(4));
+        //simpleDraweeView.setCornerRadius(Utils.dp2px(10));
         return simpleDraweeView;
     }
 

@@ -311,7 +311,7 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
             SPManager.get().putString(C.HAS_THIRD_PASS, String.valueOf(loginBean.getData().getPayment()));
             SPManager.get().putString("rongyun_token", loginBean.getData().getRongyun_token());
             SPManager.get().putString("token", loginBean.getData().getToken());
-            SPManager.get().putString("cityName", "苏州市");
+            SPManager.get().putString("cityName", "苏州");
             SPManager.get().putString("cityId", "114");
             connectRongYun(loginBean.getData().getRongyun_token(), loginBean);
             EventBusUtil.sendEvent(new MessageEvent(MSG_LOGIN));

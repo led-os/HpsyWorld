@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,9 +24,11 @@ import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.listener.ITextBannerItemClickListener;
+import com.kuwai.ysy.module.chat.business.redpack.SendRedActivity;
 import com.kuwai.ysy.module.find.CityMeetActivity;
 import com.kuwai.ysy.module.find.CommisDetailOtherActivity;
 import com.kuwai.ysy.module.find.FoundLocationActivity;
+import com.kuwai.ysy.module.find.business.CityMeet.SearchMeetFragment;
 import com.kuwai.ysy.module.find.business.CommisDetail.CommisDetailFragment;
 import com.kuwai.ysy.module.find.business.CommisDetailMyActivity;
 import com.kuwai.ysy.module.find.business.FoundLocation.FoundLocationFragment;
@@ -45,13 +48,19 @@ import com.kuwai.ysy.utils.glide.GlideImageLoader;
 import com.kuwai.ysy.utils.glide.GlideRoundLoader;
 import com.kuwai.ysy.widget.BannerLayout;
 import com.kuwai.ysy.widget.BannerRound;
+import com.kuwai.ysy.widget.MyEditText;
 import com.kuwai.ysy.widget.TextBannerView;
 import com.kuwai.ysy.widget.ViewPagerIndicator;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
 import com.rayhahah.rbase.utils.useful.SPManager;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.WeakHandler;
+import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.view.BannerViewPager;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -62,6 +71,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import io.rong.imkit.RongIM;
 
 /**
  * Created by sunnysa on 2018/11/21.
@@ -86,6 +97,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
     private String city = "苏州";
 
     private TextView mCitymeetMore, mTuodanMore;
+    private MyEditText et_search;
     private FoundBean mFoundBean;
 
     BannerViewPager mViewpager;
@@ -94,6 +106,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
     private BannerAdapter mBannerAdapter;
     private BannerRound bannerRound;
     private List<String> mBannerList = new ArrayList<>();
+    private SmartRefreshLayout mRefreshLayout;
 
     @Override
     protected int setFragmentLayoutRes() {
@@ -120,6 +133,9 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
             case R.id.tv_location:
                 startActivityForResult(new Intent(getActivity(), FoundLocationFragment.class), 0);
                 break;
+            case R.id.et_search:
+                startActivity(new Intent(getActivity(), SearchMeetFragment.class));
+                break;
         }
     }
 
@@ -127,16 +143,39 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
     @Override
     public void initView(Bundle savedInstanceState) {
         EventBusUtil.register(this);
-        SPManager.get().putString("cityName", "苏州市");
+        SPManager.get().putString("cityName", "苏州");
         SPManager.get().putString("cityId", "114");
         mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
         mViewpager = mRootView.findViewById(R.id.bannerViewPager);
+        mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
+        et_search = mRootView.findViewById(R.id.et_search);
+        mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
+        //mRefreshLayout.setDragRate(3);
+        mRefreshLayout.setPrimaryColors(getResources().getColor(R.color.transparent));
         mIndicatorLine = mRootView.findViewById(R.id.indicator_line);
+
+        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refresh();
+            }
+        });
 
         mIndicatorLine = mRootView.findViewById(R.id.indicator_line);
         bannerRound = mRootView.findViewById(R.id.banner);
+        bannerRound.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    Intent intent = new Intent(getActivity(), WebviewH5Activity.class);
+                    intent.putExtra(C.H5_FLAG, C.H5_URL + C.INVITE + SPManager.get().getStringValue("uid"));
+                    startActivity(intent);
+                }
+            }
+        });
         scrollView = mRootView.findViewById(R.id.scrool);
         mLocationTv = mRootView.findViewById(R.id.tv_location);
+        et_search.setOnClickListener(this);
         mIvHuaban = mRootView.findViewById(R.id.iv_huaban);
         mIvHeadicon = mRootView.findViewById(R.id.iv_headicon);
         mTvCity = mRootView.findViewById(R.id.tv_city);
@@ -189,30 +228,40 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
         mfoundCityAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("rid", mFoundBean.getData().getAppointment().get(position).getR_id());
-                bundle.putString("uid", String.valueOf(mFoundBean.getData().getAppointment().get(position).getUid()));
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("rid", mFoundBean.getData().getAppointment().get(position).getR_id());
+                    bundle.putString("uid", String.valueOf(mFoundBean.getData().getAppointment().get(position).getUid()));
 
-                if (Integer.valueOf(SPManager.get().getStringValue("uid")) == (mFoundBean.getData().getAppointment().get(position).getUid())) {
-                    Intent intent = new Intent(getActivity(), CommisDetailMyActivity.class);
-                    intent.putExtra("data", bundle);
-                    startActivity(intent);
+                    if (Integer.valueOf(SPManager.get().getStringValue("uid")) == (mFoundBean.getData().getAppointment().get(position).getUid())) {
+                        Intent intent = new Intent(getActivity(), CommisDetailMyActivity.class);
+                        intent.putExtra("data", bundle);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(getActivity(), CommisDetailOtherActivity.class);
+                        intent.putExtra("data", bundle);
+                        startActivity(intent);
+                    }
                 } else {
-                    Intent intent = new Intent(getActivity(), CommisDetailOtherActivity.class);
-                    intent.putExtra("data", bundle);
-                    startActivity(intent);
+                    ToastUtils.showShort(R.string.login_error);
                 }
+
             }
         });
 
         mfoundActivityAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(getActivity(), WebviewH5Activity.class);
-                intent.putExtra("type", "huodong");
-                intent.putExtra("id", mfoundActivityAdapter.getData().get(position).getAid());
-                intent.putExtra(C.H5_FLAG, C.H5_URL + C.HUODONGXIANGQING + "uid=" + SPManager.get().getStringValue("uid") + "&aid=" + mfoundActivityAdapter.getData().get(position).getAid());
-                startActivity(intent);
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    Intent intent = new Intent(getActivity(), WebviewH5Activity.class);
+                    intent.putExtra("type", "huodong");
+                    intent.putExtra("id", mfoundActivityAdapter.getData().get(position).getAid());
+                    intent.putExtra(C.H5_FLAG, C.H5_URL + C.HUODONGXIANGQING + "uid=" + SPManager.get().getStringValue("uid") + "&aid=" + mfoundActivityAdapter.getData().get(position).getAid());
+                    startActivity(intent);
+                } else {
+                    ToastUtils.showShort(R.string.login_error);
+                }
+
             }
         });
     }
@@ -256,6 +305,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
 
     @Override
     public void setHomeData(FoundBean foundBean) {
+        mRefreshLayout.finishRefresh();
         mFoundBean = foundBean;
         mLayoutStatusView.showContent();
         mBannerList.clear();
@@ -264,6 +314,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
         }
         bannerRound.setImageLoader(new GlideRoundLoader());
         bannerRound.setImages(mBannerList);
+        bannerRound.setDelayTime(3500);
         bannerRound.setBannerStyle(BannerConfig.NOT_INDICATOR);
         mIndicatorLine.setViewPager(mViewpager, 4);
         bannerRound.start();
@@ -297,7 +348,17 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
         //longitude = SPManager.get().getStringValue("longitude");
         map.put("longitude", SPManager.get().getStringValue("longitude"));
         map.put("latitude", SPManager.get().getStringValue("latitude"));
+        showViewLoading();
+        mPresenter.requestHomeData(map);
+    }
 
+    private void refresh() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("city", city);
+        //latitude = SPManager.get().getStringValue("latitude");
+        //longitude = SPManager.get().getStringValue("longitude");
+        map.put("longitude", SPManager.get().getStringValue("longitude"));
+        map.put("latitude", SPManager.get().getStringValue("latitude"));
         mPresenter.requestHomeData(map);
     }
 

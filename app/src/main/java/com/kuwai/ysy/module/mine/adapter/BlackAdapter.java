@@ -29,7 +29,7 @@ public class BlackAdapter extends BaseQuickAdapter<BlackListBean.DataBean, BaseV
         CircleImageView head = helper.getView(R.id.iv_headicon);
         GlideUtil.load(mContext, item.getAvatar(), head);
 
-        helper.setText(R.id.msg, "操作于:" + DateTimeUitl.getIntegralTime(String.valueOf(item.getCreate_time())));
+        helper.setText(R.id.tv_msg, "操作于:" + DateTimeUitl.getIntegralTime(String.valueOf(item.getCreate_time())));
         helper.setText(R.id.tv_nickname, item.getNickname());
 
         switch (item.getIs_vip()) {

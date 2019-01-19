@@ -6,6 +6,7 @@ import android.net.Uri;
 
 import com.google.gson.Gson;
 import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.module.chat.MyFriendActivity;
 import com.kuwai.ysy.module.chat.business.redpack.SendRedActivity;
 import com.kuwai.ysy.module.home.WebviewH5Activity;
 import com.kuwai.ysy.module.home.business.HomeActivity;
@@ -46,6 +47,9 @@ public class MyMessageReceiver extends PushMessageReceiver {
 
         } else if (p.getType() == 7) {
             Intent intent = new Intent(context, HomeActivity.class);
+            context.startActivity(intent);
+        }else if(p.getType() == 8){
+            Intent intent = new Intent(context, MyFriendActivity.class);
             context.startActivity(intent);
         }
         return true;

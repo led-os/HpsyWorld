@@ -3,6 +3,7 @@ package com.kuwai.ysy.module.circle.business.TreeHoleMain;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -12,20 +13,27 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.DyDetailActivity;
 import com.kuwai.ysy.module.circle.HoleDetailActivity;
+import com.kuwai.ysy.module.circle.ReportActivity;
 import com.kuwai.ysy.module.circle.adapter.TreeHoleAdapter;
+import com.kuwai.ysy.module.circle.api.CircleApiFactory;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.HoleMainListBean;
 import com.kuwai.ysy.module.circle.business.PublishHoleActivity;
 import com.kuwai.ysy.module.home.business.HomeActivity;
+import com.kuwai.ysy.module.mine.api.MineApiFactory;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.utils.glide.GlideImageLoader;
 import com.kuwai.ysy.widget.MyRecycleViewDivider;
 import com.kuwai.ysy.widget.popwindow.YsyPopWindow;
 import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -34,9 +42,14 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import io.reactivex.functions.Consumer;
 
 public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> implements TreeHoleMainContract.IHomeView, View.OnClickListener {
 
@@ -52,7 +65,7 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
     private CustomDialog customDialog;
     private HoleMainListBean mHoleMainListBean;
 
-    private SmartRefreshLayout mRefreshLayout;
+    private SwipeRefreshLayout mRefreshLayout;
 
     public static TreeHoleMainFragment newInstance() {
         Bundle args = new Bundle();
@@ -82,33 +95,31 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        EventBusUtil.register(this);
         mDongtaiList = mRootView.findViewById(R.id.rl_tree_hole);
 
         mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
-        mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
 
         mPublishTv = mRootView.findViewById(R.id.tv_edit);
-        mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity()){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
         mDongtaiList.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 4), R.color.black));
         mDongtaiAdapter = new TreeHoleAdapter();
         mDongtaiList.addOnScrollListener(new HomeActivity.ListScrollListener());
         mDongtaiList.setAdapter(mDongtaiAdapter);
         mPublishTv.setOnClickListener(this);
 
-        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
+            public void onRefresh() {
                 page = 1;
-                mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid"));
+                mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid", "0"));
             }
         });
-
-     /*   mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-                mPresenter.requestMore(page + 1, SPManager.get().getStringValue("uid"));
-            }
-        });*/
 
         mDongtaiAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -122,7 +133,7 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
         mDongtaiAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                mPresenter.requestMore(page + 1, SPManager.get().getStringValue("uid"));
+                mPresenter.requestMore(page + 1, SPManager.get().getStringValue("uid", "0"));
             }
         }, mDongtaiList);
 
@@ -131,7 +142,7 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.img_more:
-                        showPopListView();
+                        showMore(position);
                         break;
                 }
             }
@@ -145,24 +156,56 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid"));
+        mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid", "0"));
     }
 
-    private void showPopListView() {
+    private void showMore(final int pos) {
         View pannel = View.inflate(getActivity(), R.layout.dialog_tree_item_more, null);
-        if (customDialog == null) {
-            customDialog = new CustomDialog.Builder(getActivity())
-                    .setView(pannel)
-                    .setTouchOutside(true)
-                    .setDialogGravity(Gravity.CENTER)
-                    .build();
+        if (SPManager.get().getStringValue("uid").equals(mDongtaiAdapter.getData().get(pos).getUid())) {
+            pannel.findViewById(R.id.tv_delete).setVisibility(View.VISIBLE);
+            pannel.findViewById(R.id.line2).setVisibility(View.VISIBLE);
+        } else {
+            pannel.findViewById(R.id.tv_delete).setVisibility(View.GONE);
+            pannel.findViewById(R.id.line2).setVisibility(View.GONE);
         }
+        pannel.findViewById(R.id.tv_report).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                Bundle bundle = new Bundle();
+                bundle.putString("module", "2");
+                bundle.putString("p_id", String.valueOf(mDongtaiAdapter.getData().get(pos).getT_id()));
+                Intent intent = new Intent(getActivity(), ReportActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        pannel.findViewById(R.id.tv_ping).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                ping(SPManager.get().getStringValue("uid"), mDongtaiAdapter.getData().get(pos).getT_id(), 2);//1：动态，2：树洞，3：首页。。。
+                //like(SPManager.get().getStringValue("uid"), String.valueOf(mDongtaiAdapter.getData().get(pos).getUid()), 1);
+            }
+        });
+        pannel.findViewById(R.id.tv_delete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                delete(SPManager.get().getStringValue("uid"), String.valueOf(mDongtaiAdapter.getData().get(pos).getT_id()), pos);//1：动态，2：树洞，3：首页。。。
+            }
+        });
+        customDialog = new CustomDialog.Builder(getActivity())
+                .setView(pannel)
+                .setTouchOutside(true)
+                .setDialogGravity(Gravity.CENTER)
+                .build();
         customDialog.show();
     }
 
     @Override
     public void setHomeData(HoleMainListBean holeMainListBean) {
-        mRefreshLayout.finishRefresh();
+        mRefreshLayout.setRefreshing(false);
         mHoleMainListBean = holeMainListBean;
         mDongtaiAdapter.replaceData(holeMainListBean.getData().getTreeHoleList());
         imgList.clear();
@@ -175,11 +218,13 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
 
     @Override
     public void setMoreData(HoleMainListBean dyMainListBean) {
-        mDongtaiAdapter.loadMoreEnd();
         if (dyMainListBean.getData().getTreeHoleList().size() > 0) {
+            mDongtaiAdapter.loadMoreComplete();
             page++;
             mHoleMainListBean.getData().getTreeHoleList().addAll(dyMainListBean.getData().getTreeHoleList());
             mDongtaiAdapter.addData(dyMainListBean.getData().getTreeHoleList());
+        } else {
+            mDongtaiAdapter.loadMoreEnd();
         }
     }
 
@@ -215,5 +260,56 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
         super.onStop();
         //结束轮播
         mBanner.stopAutoPlay();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBusUtil.unregister(this);
+    }
+
+    public void ping(String uid, int tid, int type) {
+        addSubscription(MineApiFactory.ping(uid, tid, type).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse response) throws Exception {
+                if (response.code == 200) {
+                    ToastUtils.showShort("屏蔽成功");
+                } else {
+                    ToastUtils.showShort(response.msg);
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: "+throwable);
+            }
+        }));
+    }
+
+    public void delete(String uid, String tid, final int pos) {
+        addSubscription(CircleApiFactory.deleteHole(tid, uid).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse response) throws Exception {
+                if (response.code == 200) {
+                    ToastUtils.showShort("删除成功");
+                    mDongtaiAdapter.remove(pos);
+                } else {
+                    ToastUtils.showShort(response.msg);
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: "+throwable);
+            }
+        }));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void isLogin(MessageEvent event) {
+        if (event.getCode() == C.MSG_HOLE_REFRESH) {
+            page = 1;
+            mPresenter.requestHomeData(page, SPManager.get().getStringValue("uid", "0"));
+        }
     }
 }

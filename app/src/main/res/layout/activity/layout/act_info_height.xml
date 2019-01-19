@@ -64,7 +64,7 @@
         android:layout_below="@id/tv_year_income"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:text="50-80万"
+        android:text="8-10W"
         android:textColor="#ff282838"
         android:textSize="27sp" />
 

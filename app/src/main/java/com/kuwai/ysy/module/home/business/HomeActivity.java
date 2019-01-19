@@ -265,6 +265,7 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
             mlocationClient.onDestroy();
         }
         mlocationClient = null;
+        UMShareAPI.get(this).release();
     }
 
     /**
@@ -345,4 +346,9 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+    }
 }

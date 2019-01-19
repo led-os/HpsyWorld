@@ -13,8 +13,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aliyun.common.utils.ToastUtil;
@@ -30,12 +33,15 @@ import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.callback.GiftClickCallback;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.chat.MyFriendFragment;
 import com.kuwai.ysy.module.chat.api.ChatApiFactory;
+import com.kuwai.ysy.module.circle.ReportActivity;
 import com.kuwai.ysy.module.circle.VideoPlayActivity;
 import com.kuwai.ysy.module.circle.adapter.MyPagerAdapter;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.business.dongtai.DongtaiMainFragment;
 import com.kuwai.ysy.module.find.api.AppointApiFactory;
+import com.kuwai.ysy.module.find.api.FoundApiFactory;
 import com.kuwai.ysy.module.find.bean.GiftPopBean;
 import com.kuwai.ysy.module.mine.adapter.PicAdapter;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
@@ -45,6 +51,7 @@ import com.kuwai.ysy.rong.GiftPlugin;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.GiftPannelView;
+import com.kuwai.ysy.widget.popwindow.YsyPopWindow;
 import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
@@ -87,6 +94,8 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
     private SuperButton mBtnSendGift;
     private RecyclerView mRlPic;
     private PicAdapter mDateAdapter;
+    private LinearLayout lay_has_pic;
+    private SuperButton mUpdateBtn;
 
     private ViewPager viewPager;
     private final String[] mTitles = {"资料信息", "动态"};
@@ -96,8 +105,10 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
     private MyPagerAdapter mAdapter;
     private String otherid;
     private PersolHomePageBean mPersolHomePageBean;
+    private ImageView right;
 
     private ArrayList<PersolHomePageBean.DataBean.InfoBean.VideoBean> videos = new ArrayList<>();
+    private YsyPopWindow mListPopWindow;
 
     public static OtherHomepageFragment newInstance(String id) {
         Bundle bundle = new Bundle();
@@ -152,7 +163,54 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
                 createDialog(getActivity());
                 //弹出打赏
                 break;
+            case R.id.btn_update:
+                ToastUtils.showShort("提醒成功");
+                break;
+            case R.id.right:
+                showPopListView();
+                break;
         }
+    }
+
+    private void showPopListView() {
+        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_page_more, null);
+
+        //处理popWindow 显示内容
+        handleListView(contentView);
+        //创建并显示popWindow
+        mListPopWindow = new YsyPopWindow.PopupWindowBuilder(getActivity())
+                .setView(contentView)
+                .enableBackgroundDark(true)
+                .size(Utils.dp2px(180), ViewGroup.LayoutParams.WRAP_CONTENT)//显示大小
+                .create()
+                .showAsDropDown(right, (Utils.dp2px(-120)), (Utils.dp2px(-20)));
+
+    }
+
+    private void handleListView(View contentView) {
+        TextView report = contentView.findViewById(R.id.tv_report);
+        TextView ping = contentView.findViewById(R.id.tv_ping);
+        report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("module", "-1");
+                bundle.putString("p_id", otherid);
+                Intent intent = new Intent(getActivity(), ReportActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                mListPopWindow.dissmiss();
+            }
+        });
+        ping.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!Utils.isNullString(otherid)) {
+                    ping(SPManager.get().getStringValue("uid"), Integer.parseInt(otherid));
+                }
+                mListPopWindow.dissmiss();
+            }
+        });
     }
 
     private CustomDialog customDialog;
@@ -193,8 +251,11 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
             }
         });
         mTitle = mRootView.findViewById(R.id.title);
+        right = mRootView.findViewById(R.id.right);
         mSubTitle = mRootView.findViewById(R.id.sub_title);
         mRight = mRootView.findViewById(R.id.right);
+        lay_has_pic = mRootView.findViewById(R.id.lay_has_pic);
+        mUpdateBtn = mRootView.findViewById(R.id.btn_update);
         mImgHead = mRootView.findViewById(R.id.img_head);
         mTvNick = mRootView.findViewById(R.id.tv_nick);
         mImgVip = mRootView.findViewById(R.id.img_vip);
@@ -215,7 +276,9 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
         mTvXinyong.setOnClickListener(this);
         mBtnLike.setOnClickListener(this);
         mTvShangxian.setOnClickListener(this);
+        right.setOnClickListener(this);
         mBtnSendGift.setOnClickListener(this);
+        mUpdateBtn.setOnClickListener(this);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -379,7 +442,11 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
             bean.setAttach(img.getImg());
             videos.add(bean);
         }
-        mDateAdapter.replaceData(videos);
+        if (videos.size() > 0) {
+            mRlPic.setVisibility(View.VISIBLE);
+            lay_has_pic.setVisibility(View.GONE);
+            mDateAdapter.replaceData(videos);
+        }
     }
 
     @Override
@@ -479,5 +546,23 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
         public Fragment getItem(int position) {
             return mFragments.get(position);
         }
+    }
+
+    public void ping(String uid, int tid) {
+        addSubscription(FoundApiFactory.userPing(uid, tid).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse response) throws Exception {
+                if (response.code == 200) {
+                    ToastUtils.showShort("屏蔽成功");
+                } else {
+                    ToastUtils.showShort(response.msg);
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: "+throwable);
+            }
+        }));
     }
 }

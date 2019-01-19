@@ -247,7 +247,7 @@ public class BlindListFragment extends BaseFragment<TuoDanPresenter> implements 
         super.onLazyInitView(savedInstanceState);
         param.put("page", mPage);
         mPresenter.requestHomeData(param);
-        getAreaData(Integer.parseInt(SPManager.get().getStringValue("cityId")));
+        getAreaData(SPManager.get().getStringValue("cityName"));
     }
 
     @Override
@@ -300,7 +300,7 @@ public class BlindListFragment extends BaseFragment<TuoDanPresenter> implements 
         }));
     }
 
-    public void getAreaData(int id) {
+    public void getAreaData(String id) {
         addSubscription(FoundApiFactory.getLocalNextList(id).subscribe(new Consumer<LocalNextBean>() {
             @Override
             public void accept(LocalNextBean localNextBean) throws Exception {

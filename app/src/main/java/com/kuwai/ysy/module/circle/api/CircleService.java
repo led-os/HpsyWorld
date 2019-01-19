@@ -14,6 +14,7 @@ import com.kuwai.ysy.module.circle.bean.DyRewardlistBean;
 import com.kuwai.ysy.module.circle.bean.HoleCommentListBean;
 import com.kuwai.ysy.module.circle.bean.HoleDetailBean;
 import com.kuwai.ysy.module.circle.bean.HoleMainListBean;
+import com.kuwai.ysy.module.circle.bean.UnreadBean;
 import com.kuwai.ysy.module.mine.bean.ChangeHeadBean;
 
 import java.util.ArrayList;
@@ -72,6 +73,13 @@ public interface CircleService {
     @Multipart
     @POST("Currency/InsertReportPost")
     Observable<SimpleResponse> report(@PartMap Map<String, RequestBody> map);
+
+    /**
+     * 用户举报
+     */
+    @Multipart
+    @POST("Chat/ReportUser")
+    Observable<SimpleResponse> userReport(@PartMap Map<String, RequestBody> map);
 
     /**
      * 视频sts
@@ -282,4 +290,11 @@ public interface CircleService {
     @FormUrlEncoded
     @POST("Dynamic/TreeHoleCommentGood")
     Observable<SimpleResponse> holeLikeOrNot(@FieldMap Map<String, Object> map);
+
+    /**
+     * 说说点赞列表
+     */
+    @FormUrlEncoded
+    @POST("Dynamic/getUnreadMessageSum")
+    Observable<UnreadBean> getUnreadData(@Field("uid") String uid);
 }

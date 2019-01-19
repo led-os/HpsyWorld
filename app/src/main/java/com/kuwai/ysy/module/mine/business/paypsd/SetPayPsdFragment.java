@@ -68,7 +68,7 @@ public class SetPayPsdFragment extends BaseFragment<SetPayPsdPresenter> implemen
         navigationLayout.setLeftClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pop();
+                getActivity().finish();
             }
         });
         navigationLayout.setRightClick(new View.OnClickListener() {

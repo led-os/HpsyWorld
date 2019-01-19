@@ -246,7 +246,7 @@ public class FilterFragment extends BaseFragment implements View.OnClickListener
                 mTvAddress.setText(province.getAreaName() + "省" + city.getAreaName());
             }
         });
-        task.execute("四川", "阿坝");
+        task.execute("江苏", "苏州市");
         //得到选择器视图，可内嵌到其他视图容器，不需要调用show方法
         //layout.addView(task.getContentView());
 

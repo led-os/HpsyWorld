@@ -15,6 +15,7 @@ import com.kuwai.ysy.module.circle.bean.DyRewardlistBean;
 import com.kuwai.ysy.module.circle.bean.HoleCommentListBean;
 import com.kuwai.ysy.module.circle.bean.HoleDetailBean;
 import com.kuwai.ysy.module.circle.bean.HoleMainListBean;
+import com.kuwai.ysy.module.circle.bean.UnreadBean;
 import com.kuwai.ysy.module.mine.bean.ChangeHeadBean;
 import com.kuwai.ysy.net.ApiClient;
 import com.rayhahah.rbase.utils.useful.RxSchedulers;
@@ -68,6 +69,13 @@ public class CircleApiFactory {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(CircleService.class)
                 .report(map)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<SimpleResponse> userReport(HashMap<String, RequestBody> map) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(CircleService.class)
+                .userReport(map)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
@@ -274,4 +282,10 @@ public class CircleApiFactory {
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
+    public static Observable<UnreadBean> getUnreadData(String uid) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(CircleService.class)
+                .getUnreadData(uid)
+                .compose(RxSchedulers.<UnreadBean>ioMain());
+    }
 }

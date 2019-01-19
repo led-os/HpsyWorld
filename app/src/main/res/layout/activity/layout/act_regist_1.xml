@@ -59,24 +59,39 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginTop="20dp"
+        android:enabled="false"
         android:text="下一步，验证手机号"
         android:textColor="@color/gray_7b"
         android:textSize="16sp"
-        android:enabled="false"
-        app:sUseSelector="true"
-        app:sSelectorNormalColor="@color/theme_light"
         app:sSelectorDisableColor="@color/line_color"
-        app:sSolidColor="@color/line_color" />
+        app:sSelectorNormalColor="@color/theme_light"
+        app:sSolidColor="@color/line_color"
+        app:sUseSelector="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_next"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="注册即视为同意《鱼水缘用户协议》"
-        android:textColor="#ff7b7b7b"
-        android:textSize="13sp" />
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="注册即视为同意"
+            android:textColor="#ff7b7b7b"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_xieyi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="《鱼水缘用户协议》"
+            android:textColor="@color/theme"
+            android:textSize="13sp" />
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/to_login"

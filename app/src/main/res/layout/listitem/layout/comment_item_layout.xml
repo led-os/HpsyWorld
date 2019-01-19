@@ -27,18 +27,18 @@
 
     <ImageView
         android:id="@+id/vip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="20dp"
         android:layout_toRightOf="@id/comment_item_userName"
         android:src="@drawable/ic_user_vip" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/comment_item_userName"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
         android:layout_marginLeft="6dp"
+        android:layout_marginTop="20dp"
         android:layout_toRightOf="@id/vip"
         android:src="@drawable/ic_user_man" />
 

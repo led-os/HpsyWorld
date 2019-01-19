@@ -29,6 +29,8 @@ import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.PayResult;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NavigationLayout;
+import com.rayhahah.dialoglib.DialogInterface;
+import com.rayhahah.dialoglib.NormalAlertDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
@@ -75,7 +77,7 @@ public class RechargeFragment extends BaseFragment implements View.OnClickListen
                         //ToastUtils.showShort(getString(R.string.pay_success) + payResult);
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
-                        ToastUtils.showShort(getString(R.string.pay_failed) + payResult);
+                        ToastUtils.showShort(getString(R.string.pay_failed));
                     }
                     break;
                 }
@@ -130,6 +132,22 @@ public class RechargeFragment extends BaseFragment implements View.OnClickListen
                 });
     }
 
+    private void initGiftDialog() {
+        new NormalAlertDialog.Builder(getActivity())
+                .setTitleText("常见问题")
+                .setContentText(getResources().getString(R.string.tip_recharge))
+                .setSingleButtonText("好的，知道了")
+                .setSingleMode(true)
+                .setSingleListener(new DialogInterface.OnSingleClickListener<NormalAlertDialog>() {
+                    @Override
+                    public void clickSingleButton(NormalAlertDialog dialog, View view) {
+                        dialog.dismiss();
+                    }
+                })
+                .setCanceledOnTouchOutside(true)
+                .build().show();
+    }
+
     @Override
     public void initView(Bundle savedInstanceState) {
 
@@ -140,6 +158,12 @@ public class RechargeFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onClick(View v) {
                 pop();
+            }
+        });
+        mNavigation.setRightClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initGiftDialog();
             }
         });
         mTvCurrent = mRootView.findViewById(R.id.tv_current);
@@ -181,12 +205,12 @@ public class RechargeFragment extends BaseFragment implements View.OnClickListen
     }
 
     private void recharge() {
-        addSubscription(MineApiFactory.getAliOrderInfo(SPManager.get().getStringValue("uid"), "0.01").subscribe(new Consumer<AliOrderInfoBean>() {
+        addSubscription(MineApiFactory.getAliOrderInfo(SPManager.get().getStringValue("uid"), money).subscribe(new Consumer<AliOrderInfoBean>() {
             @Override
             public void accept(AliOrderInfoBean infoBean) throws Exception {
                 //mView.setAliOrderInfo(infoBean);
                 toAliPay(infoBean);
-                ToastUtils.showShort(infoBean.toString());
+                //ToastUtils.showShort(infoBean.toString());
             }
         }, new Consumer<Throwable>() {
             @Override

@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.mine.business.paypsd;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,7 @@ import com.allen.library.SuperTextView;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.mine.SetPayPassActivity;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.useful.SPManager;
@@ -44,7 +46,8 @@ public class PayPsdFragment extends BaseFragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.st_set_payfor_psd:
-                start(SetPayPsdFragment.newInstance());
+                startActivity(new Intent(getActivity(), SetPayPassActivity.class));
+                //start(SetPayPsdFragment.newInstance());
                 //RongIM.getInstance().deleteMessages();
                 break;
             case R.id.st_change_payfor_psd:

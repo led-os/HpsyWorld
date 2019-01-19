@@ -34,7 +34,7 @@ public class FoundLocationContract {
          * 获取首页精选数据
          */
         void requestHomeData();
-        void requestNextData(int id);
-        void requestAreaData(int id);
+        void requestNextData(String id);
+        void requestAreaData(String id);
     }
 }

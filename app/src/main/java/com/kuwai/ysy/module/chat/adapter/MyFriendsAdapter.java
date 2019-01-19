@@ -23,13 +23,14 @@ public class MyFriendsAdapter extends BaseQuickAdapter<MyFriends.DataBean, BaseV
     @Override
     protected void convert(BaseViewHolder helper, MyFriends.DataBean item) {
         //0在线   1离线
+        helper.addOnClickListener(R.id.img_head);
         ((TextImageView) helper.getView(R.id.img_head)).setOnlineState(0);
-        ImageView vipImg = helper.getView(R.id.img_vip);
-        ImageView sexImg = helper.getView(R.id.img_sex);
         GlideUtil.loadRound(mContext, item.getAvatar(), (TextImageView) helper.getView(R.id.img_head));
         helper.setText(R.id.tv_info, item.getAge() + "岁|" + item.getHeight() + "cm|" + item.getEducation() + "|" + item.getAnnual_income() + "万元");
         helper.setText(R.id.tv_sign, item.getSig());
         helper.setText(R.id.tv_nick,item.getNickname());
+        ImageView vipImg = helper.getView(R.id.img_vip);
+        ImageView sexImg = helper.getView(R.id.img_sex);
         vipImg.setVisibility(item.getIs_vip() == 1 ? View.VISIBLE : View.GONE);
 
         if (item.getGender() == 1) {

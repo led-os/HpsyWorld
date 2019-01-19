@@ -1,5 +1,7 @@
 package com.kuwai.ysy.module.mine.bean.vip;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -40,6 +42,10 @@ public class VipBean {
     }
 
     public static class DataBean implements Serializable {
+
+        public static final int TITLE = 1;
+        public static final int CONTENT = 2;
+
         /**
          * v_id : 1
          * vip_name : 黄金会员
@@ -48,7 +54,6 @@ public class VipBean {
          * year_card : 216
          * privilege : [{"classification":"内容特权","arr":[{"p_id":1,"privilege_name":"优质用户推荐","privilege_img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"p_id":2,"privilege_name":"访客记录查看","privilege_img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"p_id":3,"privilege_name":"精准筛选","privilege_img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"p_id":4,"privilege_name":"信用查看","privilege_img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"p_id":5,"privilege_name":"免费详细资料","privilege_img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"p_id":6,"privilege_name":"喜欢人数提升","privilege_img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"}]},{"classification":"身份特权","arr":[{"p_id":7,"privilege_name":"5倍曝光机会","privilege_img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"p_id":11,"privilege_name":"专属头衔","privilege_img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"}]},{"classification":"活动特权","arr":[{"p_id":15,"privilege_name":"优质活动免费","privilege_img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"p_id":16,"privilege_name":"折扣优惠","privilege_img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"p_id":17,"privilege_name":"免费礼物券","privilege_img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"}]}]
          */
-
         private int v_id;
         private String vip_name;
         private int monthly_card;

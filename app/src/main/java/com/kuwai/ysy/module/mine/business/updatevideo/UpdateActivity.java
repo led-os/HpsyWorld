@@ -266,10 +266,10 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
                 .maxSelectNum(maxSelectNum)// 最大图片选择数量
                 .minSelectNum(1)// 最小选择数量
                 .imageSpanCount(4)// 每行显示个数
+                .previewVideo(true)// 是否可预览视频
                 .selectionMode(type == 1 ? PictureConfig.MULTIPLE : PictureConfig.SINGLE)// 多选 or 单选
                 .previewImage(true)// 是否可预览图片
-                .previewVideo(true)// 是否可预览视频
-                .enablePreviewAudio(false) // 是否可播放音频
+                //.enablePreviewAudio(false) // 是否可播放音频
                 .isCamera(true)// 是否显示拍照按钮
                 .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
                 //.imageFormat(PictureMimeType.PNG)// 拍照保存图片格式后缀,默认jpeg

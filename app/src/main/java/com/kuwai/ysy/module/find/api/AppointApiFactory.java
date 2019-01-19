@@ -3,6 +3,7 @@ package com.kuwai.ysy.module.find.api;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.find.bean.GiftPopBean;
+import com.kuwai.ysy.module.find.bean.SearchCityBean;
 import com.kuwai.ysy.module.find.bean.appointment.MyAppointMent;
 import com.kuwai.ysy.module.find.bean.appointment.MyCommis;
 import com.kuwai.ysy.module.find.bean.theme.DateTheme;
@@ -46,5 +47,12 @@ public class AppointApiFactory {
                 .create(AppointService.class)
                 .delCustomTheme(uid,sid)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<SearchCityBean> searchCity(String city) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(AppointService.class)
+                .searchCity(city)
+                .compose(RxSchedulers.<SearchCityBean>ioMain());
     }
 }

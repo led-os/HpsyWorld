@@ -122,7 +122,7 @@ public class BlackFragment extends BaseFragment implements View.OnClickListener 
                         if (type == 1) {
                             cancelBlack(String.valueOf(mBlackListBean.getData().get(position).getUid()));
                         } else {
-                            cancelPing(String.valueOf(mBlackListBean.getData().get(position).getUid()));
+                            cancelPing(String.valueOf(mBlackListBean.getData().get(position).getS_id()));
                         }
 
                         break;
@@ -219,7 +219,7 @@ public class BlackFragment extends BaseFragment implements View.OnClickListener 
     }
 
     private void getMorePing() {
-        addSubscription(MineApiFactory.getBlackList(SPManager.get().getStringValue("uid"), mPage + 1).subscribe(new Consumer<BlackListBean>() {
+        addSubscription(MineApiFactory.getPingList(SPManager.get().getStringValue("uid"), mPage + 1).subscribe(new Consumer<BlackListBean>() {
             @Override
             public void accept(BlackListBean myFriends) throws Exception {
                 if (myFriends.getData() != null) {

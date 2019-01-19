@@ -23,9 +23,17 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="36dp"
         android:layout_marginRight="14dp"
+        android:layout_marginTop="36dp"
         android:src="@drawable/dyn_dyn_ic_notice" />
+
+    <com.kuwai.ysy.widget.pageitem.RoundMessageView
+        android:id="@+id/red_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="33dp"></com.kuwai.ysy.widget.pageitem.RoundMessageView>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"

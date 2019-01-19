@@ -18,6 +18,7 @@ import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.module.chat.api.ChatApiFactory;
 import com.kuwai.ysy.module.home.WebviewH5Activity;
+import com.kuwai.ysy.module.mine.SetPayPassActivity;
 import com.kuwai.ysy.rong.RedSendMessage;
 import com.kuwai.ysy.rong.bean.RedBean;
 import com.kuwai.ysy.utils.Utils;
@@ -113,7 +114,8 @@ public class SendRedActivity extends BaseActivity implements View.OnClickListene
                 } else if (Utils.isNullString(mEtRedContent.getText().toString())) {
                     ToastUtils.showShort("请输入寄语");
                 } else if (!"1".equals(SPManager.get().getStringValue(C.HAS_THIRD_PASS))) {
-                    ToastUtils.showShort("请前往个人中心设置支付密码");
+                    ToastUtils.showShort("请设置支付密码");
+                    startActivity(new Intent(this, SetPayPassActivity.class));
                 } else {
                     popCostCustom(mEtRedNum.getText().toString());
                 }

@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.find.business.CommisDetail;
 
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.allen.library.CircleImageView;
 import com.allen.library.SuperButton;
@@ -18,11 +20,14 @@ import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.circle.ReportActivity;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.find.adapter.DialogGiftAdapter;
 import com.kuwai.ysy.module.find.adapter.DialogOtherGiftAdapter;
+import com.kuwai.ysy.module.find.api.FoundApiFactory;
 import com.kuwai.ysy.module.find.bean.BlindBean;
 import com.kuwai.ysy.module.find.bean.CommisDetailBean;
+import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.module.mine.business.homepage.OtherHomepageFragment;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NavigationLayout;
@@ -35,10 +40,16 @@ import com.rayhahah.rbase.utils.base.DateTimeUitl;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
 import com.rayhahah.rbase.utils.useful.SPManager;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 
 public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> implements CommisDetailContract.IHomeView, View.OnClickListener {
@@ -187,6 +198,42 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
 
     private void showMore() {
         View pannel = View.inflate(getActivity(), R.layout.dialog_dongtai_item_more, null);
+        pannel.findViewById(R.id.tv_like).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                like(SPManager.get().getStringValue("uid"), String.valueOf(mcCommisDetailBean.getData().getUid()), 1);
+            }
+        });
+        pannel.findViewById(R.id.tv_share).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                share();
+                //share(mDongtaiAdapter.getData().get(pos));
+                //like(SPManager.get().getStringValue("uid"), String.valueOf(mDongtaiAdapter.getData().get(pos).getUid()), 1);
+            }
+        });
+        pannel.findViewById(R.id.tv_report).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                Bundle bundle = new Bundle();
+                bundle.putString("module", "3");
+                bundle.putString("p_id", String.valueOf(mcCommisDetailBean.getData().getR_id()));
+                Intent intent = new Intent(getActivity(), ReportActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        pannel.findViewById(R.id.tv_ping).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                ping(SPManager.get().getStringValue("uid"), mcCommisDetailBean.getData().getUid());//1：动态，2：树洞，3：首页。。。
+                //like(SPManager.get().getStringValue("uid"), String.valueOf(mDongtaiAdapter.getData().get(pos).getUid()), 1);
+            }
+        });
         if (customDialog == null) {
             customDialog = new CustomDialog.Builder(getActivity())
                     .setView(pannel)
@@ -417,4 +464,102 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
     public void showViewError(Throwable t) {
         mLayoutStatusView.showError();
     }
+
+    public void like(String uid, String otherId, int type) {
+        addSubscription(MineApiFactory.getUserLike(uid, otherId, type).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse response) throws Exception {
+                if (response.code == 200) {
+                    ToastUtils.showShort("喜欢成功");
+                } else {
+                    ToastUtils.showShort(response.msg);
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: "+throwable);
+            }
+        }));
+    }
+
+    public void ping(String uid, int tid) {
+        addSubscription(FoundApiFactory.userPing(uid, tid).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse response) throws Exception {
+                if (response.code == 200) {
+                    ToastUtils.showShort("屏蔽成功");
+                } else {
+                    ToastUtils.showShort(response.msg);
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: "+throwable);
+            }
+        }));
+    }
+
+    private void share() {
+        /*UMImage image = new UMImage(getActivity(), R.drawable.center_mark_ic_more);//网络图片
+        //image.setThumb(image);
+        image.compressStyle = UMImage.CompressStyle.QUALITY;*/
+        UMImage image = null;
+        if (mcCommisDetailBean != null) {
+            if (!Utils.isNullString(mcCommisDetailBean.getData().getR_img())) {
+                image = new UMImage(getActivity(), mcCommisDetailBean.getData().getR_img());//网络图片
+            } else {
+                image = new UMImage(getActivity(), R.mipmap.ic_sading);//网络图片
+            }
+            String url = "http://api.yushuiyuan.cn/h5/appointment-detail.html?aid=" + mcCommisDetailBean.getData().getR_id();
+            UMWeb web = new UMWeb(url);
+            web.setTitle("鱼水缘约会");//标题
+            web.setThumb(image);  //缩略图
+            web.setDescription(mcCommisDetailBean.getData().getMessage());//描述
+            new ShareAction(getActivity())
+                    .withMedia(web)
+                    .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
+                    .setCallback(shareListener).open();
+        }
+
+    }
+
+    private UMShareListener shareListener = new UMShareListener() {
+        /**
+         * @descrption 分享开始的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+        }
+
+        /**
+         * @descrption 分享成功的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            //Toast.makeText(getActivity(), "成功了", Toast.LENGTH_LONG).show();
+        }
+
+        /**
+         * @descrption 分享失败的回调
+         * @param platform 平台类型
+         * @param t 错误原因
+         */
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(getActivity(), "分享失败", Toast.LENGTH_LONG).show();
+        }
+
+        /**
+         * @descrption 分享取消的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(getActivity(), "分享取消", Toast.LENGTH_LONG).show();
+        }
+    };
 }

@@ -16,6 +16,7 @@
         tools:ignore="ProtectedPermissions" />
     <!-- 允许获取通讯录 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <!-- 获取sd卡写的权限，用于文件上传和下载 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -58,6 +59,7 @@
         <activity android:name=".module.chat.business.redpack.RedRecordActivity" />
         <activity android:name=".module.chat.business.redpack.RedReceiveActivity" />
         <activity android:name=".module.chat.business.redpack.RedSendMyActivity" />
+        <activity android:name=".module.mine.SetPayPassActivity" />
 
         //动态
         <activity
@@ -84,12 +86,15 @@
         <activity android:name=".module.circle.aliyun.AlivcRecorderActivity" />
 
         //发现
-        <activity android:name=".module.find.business.FoundLocation.FoundLocationFragment"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+            android:name=".module.find.business.FoundLocation.FoundLocationFragment"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".module.find.business.TuoDan.TuodanActivity" />
+        <activity android:name=".module.find.business.CityMeet.SearchMeetFragment" />
         <activity android:name=".module.find.CityMeetActivity" />
         <activity android:name=".module.find.CommisDetailOtherActivity" />
         <activity android:name=".module.find.business.CommisDetailMyActivity" />
+        <activity android:name=".module.find.business.FoundLocation.SearchCityFragment" />
 
         //我的
         <activity

@@ -3,13 +3,16 @@ package com.kuwai.ysy.module.home;
 import android.content.Intent;
 import android.graphics.SurfaceTexture;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,12 +26,18 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.MessageEvent;
+import com.kuwai.ysy.bean.SimpleResponse;
+import com.kuwai.ysy.callback.GiftClickCallback;
+import com.kuwai.ysy.callback.HomeCallBack;
 import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.listener.PlayerManager;
+import com.kuwai.ysy.module.chat.api.ChatApiFactory;
 import com.kuwai.ysy.module.circle.VideoPlayActivity;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.business.DongtaiFragment;
+import com.kuwai.ysy.module.find.api.AppointApiFactory;
+import com.kuwai.ysy.module.find.bean.GiftPopBean;
 import com.kuwai.ysy.module.home.adapter.HomePicAdapter;
 import com.kuwai.ysy.module.home.adapter.ListVideoAdapter;
 import com.kuwai.ysy.module.home.api.HomeApiFactory;
@@ -41,7 +50,9 @@ import com.kuwai.ysy.module.mine.bean.LikeEach;
 import com.kuwai.ysy.utils.DialogUtil;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
+import com.kuwai.ysy.widget.GiftPannelView;
 import com.kuwai.ysy.widget.StaggeredDividerItemDecoration;
+import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
@@ -55,6 +66,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.functions.Consumer;
 
@@ -62,11 +74,12 @@ import io.reactivex.functions.Consumer;
 /**
  * 翻页2
  */
-public class VideohomeActivity extends BaseFragment implements View.OnClickListener {
+public class VideohomeActivity extends BaseFragment implements View.OnClickListener, HomeCallBack, GiftClickCallback {
 
     RecyclerView rvPage2;
     RecyclerView rvPic;
     private List<HomeVideoBean.DataBean> urlList;
+    private GiftPopBean giftPopBean;
 
     private ListVideoAdapter videoAdapter;
     private PagerSnapHelper snapHelper;
@@ -84,6 +97,8 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
     private PlayerManager playerManager;
     private int nearPage = 1;
     private SwipeRefreshLayout mRefreshLayout;
+    private CustomDialog customDialog;
+    private int checkPos = 0;
 
     public static VideohomeActivity newInstance() {
         Bundle args = new Bundle();
@@ -135,6 +150,7 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
         mTvNear = mRootView.findViewById(R.id.tv_near);
         rvPage2 = mRootView.findViewById(R.id.rv_page2);
         rvPage2.addOnScrollListener(new HomeActivity.ListScrollListener());
+        ((SimpleItemAnimator) rvPage2.getItemAnimator()).setSupportsChangeAnimations(false);
         urlList = new ArrayList<>();
         //rvPage2.addOnScrollListener(new HomeActivity.ListScrollListener());
         //rvPic.addOnScrollListener(new HomeActivity.ListScrollListener());
@@ -161,6 +177,7 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
         snapHelper.attachToRecyclerView(rvPage2);
 
         videoAdapter = new ListVideoAdapter(urlList, playerManager);
+        videoAdapter.setCallBack(this);
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         rvPage2.setLayoutManager(layoutManager);
         rvPage2.setAdapter(videoAdapter);
@@ -288,6 +305,7 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
         nearPage = 1;
         getHomeData();
         getNearData();
+        getAllGifts();
     }
 
     @Override
@@ -445,6 +463,9 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
 
     void getHomeData() {
         HashMap<String, Object> param = new HashMap<>();
+        if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+            param.put("uid", SPManager.get().getStringValue("uid"));
+        }
         param.put("page", videoPage);
         addSubscription(HomeApiFactory.getHomeData(param).subscribe(new Consumer<HomeVideoBean>() {
             @Override
@@ -471,6 +492,9 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
 
     void getMoreVideo() {
         HashMap<String, Object> param = new HashMap<>();
+        if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+            param.put("uid", SPManager.get().getStringValue("uid"));
+        }
         param.put("page", videoPage + 1);
         addSubscription(HomeApiFactory.getHomeData(param).subscribe(new Consumer<HomeVideoBean>() {
             @Override
@@ -497,6 +521,9 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
 
     void getNearData() {
         HashMap<String, Object> param = new HashMap<>();
+        if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+            param.put("uid", SPManager.get().getStringValue("uid"));
+        }
         param.put("longitude", SPManager.get().getStringValue("longitude"));
         param.put("latitude", SPManager.get().getStringValue("longitude"));
         param.put("page", nearPage);
@@ -520,6 +547,9 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
 
     void getMoreNear() {
         HashMap<String, Object> param = new HashMap<>();
+        if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+            param.put("uid", SPManager.get().getStringValue("uid"));
+        }
         param.put("longitude", SPManager.get().getStringValue("longitude"));
         param.put("latitude", SPManager.get().getStringValue("longitude"));
         param.put("page", nearPage + 1);
@@ -549,5 +579,120 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
     public void onDestroy() {
         super.onDestroy();
         playerManager.release();
+    }
+
+    @Override
+    public void giftClick(int pos) {
+        if (giftPopBean != null) {
+            checkPos = pos;
+            GiftPannelView pannelView = new GiftPannelView(getActivity());
+            pannelView.setData(giftPopBean.getData(), getActivity());
+            pannelView.setGiftClickCallBack(this);
+            if (customDialog == null) {
+                customDialog = new CustomDialog.Builder(getActivity())
+                        .setView(pannelView)
+                        .setTouchOutside(true)
+                        .setItemHeight(0.4f)
+                        .setDialogGravity(Gravity.BOTTOM)
+                        .build();
+            }
+            customDialog.show();
+        }
+    }
+
+    @Override
+    public void heartClick(int pos) {
+        checkPos = pos;
+        if (urlList.get(pos).getLove() == 1) {
+            like(SPManager.get().getStringValue("uid"), String.valueOf(urlList.get(checkPos).getUid()), 2);
+        } else {
+            like(SPManager.get().getStringValue("uid"), String.valueOf(urlList.get(checkPos).getUid()), 1);
+        }
+    }
+
+    public void like(String uid, String otherId, int type) {
+        addSubscription(MineApiFactory.getUserLike(uid, otherId, type).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse response) throws Exception {
+                if (response.code == 200) {
+                    if (urlList.get(checkPos).getLove() == 1) {
+                        urlList.get(checkPos).setLove(0);
+                        if (urlList.get(checkPos).getLove_sum() > 1) {
+                            urlList.get(checkPos).setLove_sum(urlList.get(checkPos).getLove_sum() - 1);
+                        } else {
+                            urlList.get(checkPos).setLove_sum(0);
+                        }
+                    } else {
+                        urlList.get(checkPos).setLove(1);
+                        urlList.get(checkPos).setLove_sum(urlList.get(checkPos).getLove_sum() + 1);
+                    }
+                    if (checkPos == 0) {
+                        urlList.get(checkPos).setPlay(false);
+                    }
+                    videoAdapter.notifyItemChanged(checkPos);
+                } else {
+                    ToastUtils.showShort(response.msg);
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: "+throwable);
+            }
+        }));
+    }
+
+    @Override
+    public void giftClick(GiftPopBean.DataBean giftBean) {
+        if (customDialog != null) {
+            customDialog.dismiss();
+        }
+        giftReward(giftBean);
+    }
+
+    public void getAllGifts() {
+        addSubscription(AppointApiFactory.getAllGifts()
+                .subscribe(new Consumer<GiftPopBean>() {
+                    @Override
+                    public void accept(@NonNull GiftPopBean dateTheme) throws Exception {
+                        if (dateTheme != null) {
+                            giftPopBean = dateTheme;
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        //mView.showViewError(throwable);
+                    }
+                }));
+    }
+
+    private void giftReward(final GiftPopBean.DataBean gift) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("uid", SPManager.get().getStringValue("uid"));
+        param.put("other_uid", urlList.get(checkPos).getUid());
+        param.put("g_id", gift.getG_id());
+        param.put("g_nums", gift.num);
+        param.put("message", "");
+        ChatApiFactory.rewardPe(param)
+                .subscribe(new Consumer<SimpleResponse>() {
+                    @Override
+                    public void accept(@NonNull SimpleResponse dateTheme) throws Exception {
+                        ToastUtils.showShort(dateTheme.msg);
+                        if (dateTheme.code == 200) {
+                            urlList.get(checkPos).setGift(1);
+                            urlList.get(checkPos).setGift_sum(urlList.get(checkPos).getGift_sum() + 1);
+                            if (checkPos == 0) {
+                                urlList.get(checkPos).setPlay(false);
+                            }
+                            videoAdapter.notifyItemChanged(checkPos);
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        //mView.showViewError(throwable);
+                    }
+                });
     }
 }

@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.mine.adapter;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,9 +9,13 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.module.mine.OtherHomeActivity;
 import com.kuwai.ysy.module.mine.bean.LikeBean;
 import com.kuwai.ysy.module.mine.bean.LikeParent;
+import com.kuwai.ysy.utils.Utils;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.List;
 
@@ -58,7 +63,7 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
                 });
                 break;
             case TYPE_LEVEL_1:
-                LikeBean likeBean = (LikeBean) item;
+                final LikeBean likeBean = (LikeBean) item;
                 if (item != null) {
                     GlideUtil.load(mContext, likeBean.getAvatar(), (ImageView) holder.getView(R.id.img_head));
                     holder.setText(R.id.tv_nick, likeBean.getNickname());
@@ -81,6 +86,21 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
                     }
 
                     holder.setText(R.id.tv_sign, "ID:" + likeBean.getUid());
+
+                    holder.getView(R.id.img_head).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                                if (!SPManager.get().getStringValue("uid").equals(String.valueOf(likeBean.getUid()))) {
+                                    Intent intent1 = new Intent(mContext, OtherHomeActivity.class);
+                                    intent1.putExtra("uid", String.valueOf(likeBean.getUid()));
+                                    mContext.startActivity(intent1);
+                                }
+                            } else {
+                                ToastUtils.showShort(R.string.login_error);
+                            }
+                        }
+                    });
                 }
                 break;
         }

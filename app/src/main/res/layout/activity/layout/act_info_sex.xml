@@ -88,7 +88,7 @@
         android:layout_below="@id/tv_warn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:text="1990年6月1日"
+        android:text="1990-01-01"
         android:textColor="#ff282838"
         android:textSize="27sp" />
 

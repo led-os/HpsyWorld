@@ -30,9 +30,10 @@ public class C {
     public static final String CONTACTUS = "contact-us.html?uid=";
     //level:会员等级
     //			part:会员特权（内容特权，身份特权等依次为1,2,3,4）
-    public static final String VIPDETAIL = "vip-detail.html?level=1&part=1";
+    public static final String VIPDETAIL = "vip-detail.html?";
     public static final String XIEYI = "user-agreement.html";
     public static final String HONGBAOXUZHI = "redbag-tips-list.html";
+    public static final String INVITE = "invitation-share.html?uid=";
     public static final String HUIYUANTIOAKUAN = "vip-service.html";
     public static final String BAOHUZHENGCE = "secret-protect.html";
     public static final String MEILILEVEL = "charm-level.html";
@@ -148,7 +149,7 @@ public class C {
     //通知
     public static final int MSG_LOGIN = 0x0000010;
 
-    public static final int MSG_LOG_OUT= 0x00000100;
+    public static final int MSG_LOG_OUT = 0x00000100;
     public static final int MSG_ZAN_DY = 0x00000101;
     public static final int MSG_COMMENT = 0x00000102;
     public static final int MSG_REWARD_DY = 0x00000103;
@@ -157,12 +158,14 @@ public class C {
     public static final int MSG_FIND_TEXT_RUN = 0x00000106;
     public static final int MSG_GIFT_WITHDRAW_SUCC = 0x00000107;
     public static final int MSG_FILTER_DATE = 0x00000108;
-    public static final int MSG_ZAN_REFRESH= 0x00000109;
+    public static final int MSG_DY_REFRESH = 0x00000109;
+    public static final int MSG_HOLE_REFRESH = 0x00000110;
 
     public static final int MSG_CHANGE_INFO = 0x000001001;
     public static final int MSG_RECHARGE_SUCC = 0x000001002;
     public static final int MSG_UPDATE_VIDEO = 0x000001003;
     public static final int MSG_UPDATE_NOTICE = 0x000001004;
+    public static final int MSG_UNREAD_UPDATE = 0x000001005;
 
     //注册参数
     public static final String REGIST_NAME = "RE_NAME";//昵称

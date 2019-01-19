@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.chat.api.ChatApiFactory;
 import com.kuwai.ysy.module.chat.bean.MyFriends;
@@ -15,6 +17,7 @@ import com.kuwai.ysy.module.circle.adapter.message.LikeMsgAdapter;
 import com.kuwai.ysy.module.circle.api.CircleApiFactory;
 import com.kuwai.ysy.module.circle.bean.AllLikeBean;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
@@ -65,7 +68,6 @@ public class DyLikeMesFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void initView(Bundle savedInstanceState) {
-
         mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -109,8 +111,9 @@ public class DyLikeMesFragment extends BaseFragment implements View.OnClickListe
         addSubscription(CircleApiFactory.getAllLikeListData(uid, mPage).subscribe(new Consumer<AllLikeBean>() {
             @Override
             public void accept(AllLikeBean myBlindBean) throws Exception {
+                EventBusUtil.sendEvent(new MessageEvent(C.MSG_UNREAD_UPDATE));
+                mRefreshLayout.finishRefresh();
                 if (myBlindBean.getCode() == 200) {
-                    mRefreshLayout.finishRefresh();
                     mAllLikeBean = myBlindBean;
                     mDateAdapter.replaceData(myBlindBean.getData());
                 } else {

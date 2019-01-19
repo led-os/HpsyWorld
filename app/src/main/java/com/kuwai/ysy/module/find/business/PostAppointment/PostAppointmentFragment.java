@@ -243,6 +243,7 @@ public class PostAppointmentFragment extends BaseFragment<PostAppointmentPresent
     public void getInfo(BlindBean blindBean) {
         DialogUtil.dismissDialog(true);
         if (blindBean.getCode() == 200) {
+            ToastUtils.showShort("发布成功");
             getActivity().finish();
         } else {
             ToastUtils.showShort(blindBean.getMsg());
@@ -285,7 +286,7 @@ public class PostAppointmentFragment extends BaseFragment<PostAppointmentPresent
                 }
             });
 
-            DateTimePicker picker = new DateTimePicker(getActivity(), DateTimePicker.HOUR_24);
+            final DateTimePicker picker = new DateTimePicker(getActivity(), DateTimePicker.HOUR_24);
             picker.setDateRangeStart(2018, 1, 1);
             picker.setDateRangeEnd(2022, 12, 31);
             picker.setTimeRangeStart(0, 0);
@@ -296,14 +297,14 @@ public class PostAppointmentFragment extends BaseFragment<PostAppointmentPresent
             picker.setTextSize(16);
             picker.setSelectedItem(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH), 8, 0);
             picker.setTextColor(getResources().getColor(R.color.balck_28));
-            picker.setOnDateTimePickListener(new DateTimePicker.OnYearMonthDayTimePickListener() {
+           /* picker.setOnDateTimePickListener(new DateTimePicker.OnYearMonthDayTimePickListener() {
                 @Override
                 public void onDateTimePicked(String year, String month, String day, String hour, String minute) {
                     //showToast(year + "-" + month + "-" + day + " " + hour + ":" + minute);
                 }
-            });
+            });*/
 
-            picker.setOnWheelListener(new DateTimePicker.OnWheelListener() {
+          /*  picker.setOnWheelListener(new DateTimePicker.OnWheelListener() {
                 @Override
                 public void onYearWheeled(int index, String year) {
                     mYear = year;
@@ -328,7 +329,7 @@ public class PostAppointmentFragment extends BaseFragment<PostAppointmentPresent
                 public void onMinuteWheeled(int index, String minute) {
                     mMinute = minute;
                 }
-            });
+            });*/
             //得到选择器视图，可内嵌到其他视图容器，不需要调用show方法
             layout.addView(picker.getContentView());
 
@@ -338,7 +339,7 @@ public class PostAppointmentFragment extends BaseFragment<PostAppointmentPresent
                     if (themeDialog != null) {
                         themeDialog.dismiss();
                     }
-                    mTvTime.setRightString(mYear + "-" + mMonth + "-" + mDay + "  " + mHour + ":" + mMinute);
+                    mTvTime.setRightString(picker.getSelectedYear() + "-" + picker.getSelectedMonth() + "-" + picker.getSelectedDay() + "  " + picker.getSelectedHour() + ":" + picker.getSelectedMinute());
                 }
             });
             themeDialog = new CustomDialog.Builder(getActivity())

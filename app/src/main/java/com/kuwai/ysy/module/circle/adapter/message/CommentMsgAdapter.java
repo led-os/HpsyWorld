@@ -10,6 +10,7 @@ import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.module.circle.bean.AllCommentBean;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
+import com.kuwai.ysy.utils.Utils;
 import com.rayhahah.rbase.utils.base.DateTimeUitl;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
 
@@ -28,7 +29,9 @@ public class CommentMsgAdapter extends BaseQuickAdapter<AllCommentBean.DataBean,
 
         CircleImageView head = helper.getView(R.id.img_head);
         GlideUtil.load(mContext, item.getAvatar(), head);
-        GlideUtil.load(mContext, item.getAttach(), (ImageView) helper.getView(R.id.img_gift));
+        if(!Utils.isNullString(item.getAttach())){
+            GlideUtil.load(mContext, item.getAttach(), (ImageView) helper.getView(R.id.img_gift));
+        }
         helper.setText(R.id.tv_msg, DateTimeUitl.getStandardDate(String.valueOf(item.getCreate_time())));
         helper.setText(R.id.tv_nick, item.getNickname());
         helper.setText(R.id.content, item.getC_text());

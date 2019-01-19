@@ -66,8 +66,8 @@ public class FindFriendNearFragment extends BaseFragment implements View.OnClick
     public void initView(Bundle savedInstanceState) {
         mFriendRl = mRootView.findViewById(R.id.recyclerView);
         uid = SPManager.get().getStringValue("uid");
-        latitude = SPManager.get().getStringValue("latitude");
-        longitude = SPManager.get().getStringValue("longitude");
+        latitude = SPManager.get().getStringValue("latitude","31.27831");
+        longitude = SPManager.get().getStringValue("longitude","120.525565");
         mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {

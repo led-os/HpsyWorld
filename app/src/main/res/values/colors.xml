@@ -4,7 +4,8 @@
     <color name="colorPrimaryDark">@color/theme</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="theme">#6732f8</color>
+    <color name="theme">#5417f5</color>
+    <color name="bg_theme">#B35417f5</color>
     <color name="bg_gray_06">#6732f8</color>
     <!-- title 半透明背景颜色 -->
     <color name="color_title_bg">#CCFFFFFF</color>
@@ -67,9 +68,9 @@
     <color name="aliyun_record_fill_progress">#fff600</color>
     <color name="aliyun_white_alpha_50">#7FFFFFFF</color>
 
-    <color name="alivc_chooser_indicator_bg">#B3000000 </color>
+    <color name="alivc_chooser_indicator_bg">#B3000000</color>
     <color name="alivc_line_gray">#979797</color>
-    <color name="alivc_line_gray_light">#C3C5C6 </color>
+    <color name="alivc_line_gray_light">#C3C5C6</color>
     <color name="alivc_chooser_pager_bg">#B3000000</color>
     <color name="alivc_white">#FFFFFF</color>
     <color name="alivc_beauty_level_height">#FFFFFF</color>

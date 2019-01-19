@@ -54,9 +54,7 @@ public abstract class BaseRecAdapter<T, K extends BaseRecViewHolder> extends Rec
 
     @Override
     public void onBindViewHolder(K holder, int position) {
-
         onHolder(holder, list.get(position), position);
-
     }
 
 

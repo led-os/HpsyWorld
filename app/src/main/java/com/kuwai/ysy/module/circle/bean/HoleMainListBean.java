@@ -121,6 +121,15 @@ public class HoleMainListBean {
             private String create_time;
             private int views;
             private int hot;
+            private String uid;
+
+            public String getUid() {
+                return uid == null ? "" : uid;
+            }
+
+            public void setUid(String uid) {
+                this.uid = uid == null ? "" : uid;
+            }
 
             public int getT_id() {
                 return t_id;

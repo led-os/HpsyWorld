@@ -1,11 +1,13 @@
 package com.kuwai.ysy.module.mine.business.homepage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +15,7 @@ import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
+import com.kuwai.ysy.module.mine.VipCenterActivity;
 import com.kuwai.ysy.module.mine.adapter.PicAdapter;
 import com.kuwai.ysy.module.mine.adapter.homepage.PageGiftReceiveAdapter;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
@@ -41,6 +44,14 @@ public class PageDetailFragment extends BaseFragment<PageDetailPresenter> implem
     private TextView mIsName, mIsHouse, mIsEdu, mIsCar, mID, mAge, mTall, mSign;
     private LayoutInflater mInflater;
     private TextView mGift;
+    private TextView mTvHouse;
+    private TextView mTvCar;
+    private TextView mTvMarry;
+    private TextView mTvZong;
+    private TextView mTvChild;
+    private TextView mTvJob;
+    private TextView isVipTv;
+    private LinearLayout mVipLay;
 
     public static PageDetailFragment newInstance(Bundle bundle) {
         PageDetailFragment fragment = new PageDetailFragment();
@@ -66,6 +77,9 @@ public class PageDetailFragment extends BaseFragment<PageDetailPresenter> implem
                 bundle.putString("uid", otherid);
                 ((BaseFragment) getParentFragment()).start(TaAcceptGiftFragment.newInstance(bundle));
                 break;
+            case R.id.is_vip:
+                startActivity(new Intent(getActivity(), VipCenterActivity.class));
+                break;
         }
     }
 
@@ -76,12 +90,21 @@ public class PageDetailFragment extends BaseFragment<PageDetailPresenter> implem
         mIsEdu = mRootView.findViewById(R.id.tv_isedu);
         mIsCar = mRootView.findViewById(R.id.tv_iscar);
         mID = mRootView.findViewById(R.id.tv_id);
+        isVipTv = mRootView.findViewById(R.id.is_vip);
+        mVipLay = mRootView.findViewById(R.id.vip_lay);
         mAge = mRootView.findViewById(R.id.tv_age);
         mTall = mRootView.findViewById(R.id.tv_tall);
         mSign = mRootView.findViewById(R.id.tv_sign);
         mGift = mRootView.findViewById(R.id.ta_gift);
+        mTvHouse = mRootView.findViewById(R.id.tv_house);
+        mTvCar = mRootView.findViewById(R.id.tv_car);
+        mTvMarry = mRootView.findViewById(R.id.tv_marry);
+        mTvZong = mRootView.findViewById(R.id.tv_zong);
+        mTvChild = mRootView.findViewById(R.id.tv_child);
+        mTvJob = mRootView.findViewById(R.id.tv_job);
 
         mGift.setOnClickListener(this);
+        isVipTv.setOnClickListener(this);
 
         mInflater = LayoutInflater.from(getActivity());
         tagFlowLayout = mRootView.findViewById(R.id.tv_tag);
@@ -108,18 +131,30 @@ public class PageDetailFragment extends BaseFragment<PageDetailPresenter> implem
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         otherid = getArguments().getString("id");
-        mPresenter.requestHomeData(otherid,SPManager.get().getStringValue("uid") );
+        mPresenter.requestHomeData(otherid, SPManager.get().getStringValue("uid"));
     }
 
     @Override
     public void setHomeData(PersolHomePageBean persolHomePageBean) {
+
+        if (SPManager.get().getIntValue("isvip_") == 1) {
+            isVipTv.setVisibility(View.GONE);
+            mVipLay.setVisibility(View.VISIBLE);
+            mTvHouse.setText(persolHomePageBean.getData().getInfo().getBuy_house());
+            mTvCar.setText(persolHomePageBean.getData().getInfo().getCar_buying());
+            mTvMarry.setText(persolHomePageBean.getData().getInfo().getMarriage());
+            mTvZong.setText(persolHomePageBean.getData().getInfo().getReligion());
+            mTvChild.setText(persolHomePageBean.getData().getInfo().getChildren());
+            mTvJob.setText(persolHomePageBean.getData().getInfo().getOccupation());
+        }
+
         if (persolHomePageBean.getData().getInfo().getIs_real() == 0) {
             mIsName.setVisibility(View.GONE);
         } else {
             mIsName.setVisibility(View.VISIBLE);
         }
 
-        if ("0".equals(persolHomePageBean.getData().getInfo().getBuy_house())) {
+        if (persolHomePageBean.getData().getInfo().getIs_house() == 0) {
             mIsHouse.setVisibility(View.GONE);
         } else {
             mIsHouse.setVisibility(View.VISIBLE);
@@ -137,7 +172,8 @@ public class PageDetailFragment extends BaseFragment<PageDetailPresenter> implem
             mIsCar.setVisibility(View.VISIBLE);
         }
 
-        mSign.setText(persolHomePageBean.getData().getInfo().getSig());
+        String sign = persolHomePageBean.getData().getInfo().getSig();
+        mSign.setText(Utils.isNullString(sign) ? "无" : sign);
         mID.setText(String.valueOf(persolHomePageBean.getData().getInfo().getUid()));
         mAge.setText(String.valueOf(persolHomePageBean.getData().getInfo().getAge()));
         mTall.setText(String.valueOf(persolHomePageBean.getData().getInfo().getHeight() + "cm"));

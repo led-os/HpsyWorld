@@ -10,36 +10,57 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <ImageView
-        android:id="@+id/img_gift"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="180dp"
-        android:layout_marginRight="18dp"
-        android:layout_marginTop="28dp"
-        android:src="@drawable/home_home_ic_gift_nor" />
+        android:layout_marginBottom="160dp"
+        android:layout_marginRight="28dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/img_heart"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_above="@id/img_gift"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="18dp"
-        android:layout_marginTop="28dp"
-        android:src="@drawable/home_home_ic_heart_nor" />
+        <com.allen.library.CircleImageView
+            android:id="@+id/img_head"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/center_img_user_default"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp" />
 
-    <com.allen.library.CircleImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_above="@+id/img_heart"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="18dp"
-        android:src="@drawable/center_img_user_default"
-        app:civ_border_color="@color/white"
-        app:civ_border_width="2dp" />
+        <ImageView
+            android:id="@+id/img_heart"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="28dp"
+            android:src="@drawable/home_home_ic_heart_nor" />
+
+        <TextView
+            android:id="@+id/tv_love_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="0"
+            android:textColor="#ffffffff"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:id="@+id/img_gift"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/home_home_ic_gift_nor" />
+
+        <TextView
+            android:id="@+id/tv_gift_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="0"
+            android:textColor="#ffffffff"
+            android:textSize="13sp" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_title"

@@ -128,121 +128,118 @@ public class GiftMyAcceptFragment extends BaseFragment<GiftMyAcceptPresenter> im
 
     public void showSelectdialog(final int position) {
 
-        if (customDialog == null) {
+        View parent = View.inflate(getActivity(), R.layout.my_gift_details_fragment, null);
+        CircleImageView mIvHeadicon;
+        TextView mTvNickname;
+        ImageView mIvSex;
+        ImageView mIvVip;
+        TextView mTvMsg;
+        SuperButton mSbToBack;
+        SuperButton mSbSendMsg;
+        LinearLayout mLlGift;
+        TextView mTvGiftName;
+        LinearLayout mLlCoin;
+        TextView mTvValue;
+        TextView mTvIntegral;
+        ImageView mIvGift;
+        TextView mTvGiftNum;
+        SuperButton mSbRecharge;
+        Button mBtnCash;
 
-            View parent = View.inflate(getActivity(), R.layout.my_gift_details_fragment, null);
-            CircleImageView mIvHeadicon;
-            TextView mTvNickname;
-            ImageView mIvSex;
-            ImageView mIvVip;
-            TextView mTvMsg;
-            SuperButton mSbToBack;
-            SuperButton mSbSendMsg;
-            LinearLayout mLlGift;
-            TextView mTvGiftName;
-            LinearLayout mLlCoin;
-            TextView mTvValue;
-            TextView mTvIntegral;
-            ImageView mIvGift;
-            TextView mTvGiftNum;
-            SuperButton mSbRecharge;
-            Button mBtnCash;
+        mIvHeadicon = parent.findViewById(R.id.iv_headicon);
+        mTvNickname = parent.findViewById(R.id.tv_nickname);
+        mIvSex = parent.findViewById(R.id.iv_sex);
+        mIvVip = parent.findViewById(R.id.iv_vip);
+        mTvMsg = parent.findViewById(R.id.tv_msg);
+        mSbToBack = parent.findViewById(R.id.sb_to_back);
+        mSbSendMsg = parent.findViewById(R.id.sb_send_msg);
+        mLlGift = parent.findViewById(R.id.ll_gift);
+        mTvGiftName = parent.findViewById(R.id.tv_gift_name);
+        mLlCoin = parent.findViewById(R.id.ll_coin);
+        mTvValue = parent.findViewById(R.id.tv_value);
+        mTvIntegral = parent.findViewById(R.id.tv_integral);
+        mIvGift = parent.findViewById(R.id.iv_gift);
+        mTvGiftNum = parent.findViewById(R.id.tv_gift_num);
+        mSbRecharge = parent.findViewById(R.id.sb_recharge);
+        mBtnCash = parent.findViewById(R.id.btn_cash);
+        GlideUtil.load(mContext, giftBean.getGift().get(position).getAvatar(), mIvHeadicon);
+        GlideUtil.load(mContext, giftBean.getGift().get(position).getGirft_img_url(), mIvGift);
+        mTvGiftName.setText(giftBean.getGift().get(position).getGirft_name() + " x" + giftBean.getGift().get(position).getG_nums());
+        mTvNickname.setText(giftBean.getGift().get(position).getNickname());
+        mTvGiftNum.setText("x" + giftBean.getGift().get(position).getG_nums());
+        mTvMsg.setText(DateTimeUitl.timedate(String.valueOf(giftBean.getGift().get(position).getCreate_time())));
+        mTvValue.setText(giftBean.getGift().get(position).getPrice() + " 鱼币");
 
-            mIvHeadicon = parent.findViewById(R.id.iv_headicon);
-            mTvNickname = parent.findViewById(R.id.tv_nickname);
-            mIvSex = parent.findViewById(R.id.iv_sex);
-            mIvVip = parent.findViewById(R.id.iv_vip);
-            mTvMsg = parent.findViewById(R.id.tv_msg);
-            mSbToBack = parent.findViewById(R.id.sb_to_back);
-            mSbSendMsg = parent.findViewById(R.id.sb_send_msg);
-            mLlGift = parent.findViewById(R.id.ll_gift);
-            mTvGiftName = parent.findViewById(R.id.tv_gift_name);
-            mLlCoin = parent.findViewById(R.id.ll_coin);
-            mTvValue = parent.findViewById(R.id.tv_value);
-            mTvIntegral = parent.findViewById(R.id.tv_integral);
-            mIvGift = parent.findViewById(R.id.iv_gift);
-            mTvGiftNum = parent.findViewById(R.id.tv_gift_num);
-            mSbRecharge = parent.findViewById(R.id.sb_recharge);
-            mBtnCash = parent.findViewById(R.id.btn_cash);
-            GlideUtil.load(mContext, giftBean.getGift().get(position).getAvatar(), mIvHeadicon);
-            GlideUtil.load(mContext, giftBean.getGift().get(position).getGirft_img_url(), mIvGift);
-            mTvGiftName.setText(giftBean.getGift().get(position).getGirft_name() + " x" + giftBean.getGift().get(position).getG_nums());
-            mTvNickname.setText(giftBean.getGift().get(position).getNickname());
-            mTvGiftNum.setText("x" + giftBean.getGift().get(position).getG_nums());
-            mTvMsg.setText(DateTimeUitl.timedate(String.valueOf(giftBean.getGift().get(position).getCreate_time())));
-            mTvValue.setText(giftBean.getGift().get(position).getPrice() + " 鱼币");
-
-            switch (giftBean.getGift().get(position).getIs_vip()) {
-                case 0:
-                    mIvVip.setVisibility(View.GONE);
-                    break;
-                case 1:
-                    mIvVip.setVisibility(View.VISIBLE);
-                    break;
-            }
-
-            switch (giftBean.getGift().get(position).getGender()) {
-                case C.Man:
-                    GlideUtil.load(mContext, R.drawable.ic_user_man, mIvSex);
-                    break;
-                case C.Woman:
-                    GlideUtil.load(mContext, R.drawable.ic_user_woman, mIvSex);
-                    break;
-            }
-
-            final View.OnClickListener clickListener = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    switch (v.getId()) {
-                        case R.id.sb_to_back:
-                            if (giftPopBean != null) {
-                                otherId = String.valueOf(giftBean.getGift().get(position).getUid());
-                                GiftPannelView pannelView = new GiftPannelView(getActivity());
-                                pannelView.setData(giftPopBean.getData(), getActivity());
-                                pannelView.setGiftClickCallBack(GiftMyAcceptFragment.this);
-                                if (giftDialog == null) {
-                                    giftDialog = new CustomDialog.Builder(getActivity())
-                                            .setView(pannelView)
-                                            .setTouchOutside(true)
-                                            .setItemHeight(0.4f)
-                                            .setDialogGravity(Gravity.BOTTOM)
-                                            .build();
-                                }
-                                giftDialog.show();
-                            }
-                            break;
-                        case R.id.sb_send_msg:
-                            RongIM.getInstance().startPrivateChat(getActivity(), String.valueOf(giftBean.getGift().get(position).getUid()), giftBean.getGift().get(position).getNickname());
-                            break;
-                        case R.id.sb_recharge:
-                            Intent intent = new Intent(getActivity(), WebviewH5Activity.class);
-                            intent.putExtra(C.H5_FLAG, C.H5_URL + C.GIFT_CHANGE + SPManager.get().getStringValue("uid") + "&gid=" + giftBean.getGift().get(position).getG_id()
-                                    + "&num=" + giftBean.getGift().get(position).getG_nums() + "&type=" + giftBean.getGift().get(position).getType());
-                            startActivity(intent);
-                            break;
-                        case R.id.btn_cash:
-                            Intent intent1 = new Intent(getActivity(), WebviewH5Activity.class);
-                            intent1.putExtra(C.H5_FLAG, C.H5_URL + C.GIFT_RECHARGE + SPManager.get().getStringValue("uid") + "&gid=" + giftBean.getGift().get(position).getG_id()
-                                    + "&num=" + giftBean.getGift().get(position).getG_nums() + "&type=" + giftBean.getGift().get(position).getType() + "&price=" + giftBean.getGift().get(position).getPrice()
-                                    + "&integral=" + giftBean.getGift().get(position).getPrice());
-                            startActivity(intent1);
-                            break;
-                    }
-                    customDialog.dismiss();
-                }
-            };
-
-            mSbSendMsg.setOnClickListener(clickListener);
-            mBtnCash.setOnClickListener(clickListener);
-            mSbToBack.setOnClickListener(clickListener);
-            mSbRecharge.setOnClickListener(clickListener);
-
-            customDialog = new CustomDialog.Builder(getActivity())
-                    .setView(parent)
-                    .setTouchOutside(true)
-                    .setDialogGravity(Gravity.BOTTOM)
-                    .build();
+        switch (giftBean.getGift().get(position).getIs_vip()) {
+            case 0:
+                mIvVip.setVisibility(View.GONE);
+                break;
+            case 1:
+                mIvVip.setVisibility(View.VISIBLE);
+                break;
         }
+
+        switch (giftBean.getGift().get(position).getGender()) {
+            case C.Man:
+                GlideUtil.load(mContext, R.drawable.ic_user_man, mIvSex);
+                break;
+            case C.Woman:
+                GlideUtil.load(mContext, R.drawable.ic_user_woman, mIvSex);
+                break;
+        }
+
+        final View.OnClickListener clickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.sb_to_back:
+                        if (giftPopBean != null) {
+                            otherId = String.valueOf(giftBean.getGift().get(position).getUid());
+                            GiftPannelView pannelView = new GiftPannelView(getActivity());
+                            pannelView.setData(giftPopBean.getData(), getActivity());
+                            pannelView.setGiftClickCallBack(GiftMyAcceptFragment.this);
+                            if (giftDialog == null) {
+                                giftDialog = new CustomDialog.Builder(getActivity())
+                                        .setView(pannelView)
+                                        .setTouchOutside(true)
+                                        .setItemHeight(0.4f)
+                                        .setDialogGravity(Gravity.BOTTOM)
+                                        .build();
+                            }
+                            giftDialog.show();
+                        }
+                        break;
+                    case R.id.sb_send_msg:
+                        RongIM.getInstance().startPrivateChat(getActivity(), String.valueOf(giftBean.getGift().get(position).getUid()), giftBean.getGift().get(position).getNickname());
+                        break;
+                    case R.id.sb_recharge:
+                        Intent intent = new Intent(getActivity(), WebviewH5Activity.class);
+                        intent.putExtra(C.H5_FLAG, C.H5_URL + C.GIFT_CHANGE + SPManager.get().getStringValue("uid") + "&gid=" + giftBean.getGift().get(position).getG_id()
+                                + "&num=" + giftBean.getGift().get(position).getG_nums() + "&type=" + giftBean.getGift().get(position).getType());
+                        startActivity(intent);
+                        break;
+                    case R.id.btn_cash:
+                        Intent intent1 = new Intent(getActivity(), WebviewH5Activity.class);
+                        intent1.putExtra(C.H5_FLAG, C.H5_URL + C.GIFT_RECHARGE + SPManager.get().getStringValue("uid") + "&gid=" + giftBean.getGift().get(position).getG_id()
+                                + "&num=" + giftBean.getGift().get(position).getG_nums() + "&type=" + giftBean.getGift().get(position).getType() + "&price=" + giftBean.getGift().get(position).getPrice()
+                                + "&integral=" + giftBean.getGift().get(position).getPrice());
+                        startActivity(intent1);
+                        break;
+                }
+                customDialog.dismiss();
+            }
+        };
+
+        mSbSendMsg.setOnClickListener(clickListener);
+        mBtnCash.setOnClickListener(clickListener);
+        mSbToBack.setOnClickListener(clickListener);
+        mSbRecharge.setOnClickListener(clickListener);
+
+        customDialog = new CustomDialog.Builder(getActivity())
+                .setView(parent)
+                .setTouchOutside(true)
+                .setDialogGravity(Gravity.BOTTOM)
+                .build();
         customDialog.show();
     }
 
@@ -274,11 +271,13 @@ public class GiftMyAcceptFragment extends BaseFragment<GiftMyAcceptPresenter> im
     }
 
     public void setMoreData(GiftAcceptBean dyMainListBean) {
-        mDateAdapter.loadMoreEnd();
         if (dyMainListBean.getData().getGift().size() > 0) {
             page++;
             giftBean.getGift().addAll(dyMainListBean.getData().getGift());
             mDateAdapter.addData(dyMainListBean.getData().getGift());
+            mDateAdapter.loadMoreComplete();
+        } else {
+            mDateAdapter.loadMoreEnd();
         }
     }
 

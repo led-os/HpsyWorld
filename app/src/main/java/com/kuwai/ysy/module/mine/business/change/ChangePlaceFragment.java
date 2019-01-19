@@ -16,6 +16,7 @@ import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
+import com.kuwai.ysy.module.mine.bean.FootCity;
 import com.kuwai.ysy.module.mine.bean.PersonalTreeHole;
 import com.kuwai.ysy.module.mine.bean.place.LatestPlace;
 import com.kuwai.ysy.utils.EventBusUtil;
@@ -38,9 +39,12 @@ public class ChangePlaceFragment extends BaseFragment implements View.OnClickLis
     private TagFlowLayout mTvLatest;
     private TagFlowLayout mTvCountry;
     private TagAdapter tagAdapter;
+    private TagAdapter cityAdapter;
     private List<LatestPlace.DataBean> mVals = new ArrayList<>();
+    private List<FootCity.DataBean> cityVals = new ArrayList<>();
     private LayoutInflater mInflater;
-    private int mPage = 1;
+    private int mNearPage = 1;
+    private int cityPage = 1;
 
     public static ChangePlaceFragment newInstance() {
         Bundle args = new Bundle();
@@ -80,13 +84,21 @@ public class ChangePlaceFragment extends BaseFragment implements View.OnClickLis
                     for (LatestPlace.DataBean bean : mVals) {
                         bean.canEdit = true;
                     }
+                    for (FootCity.DataBean bean : cityVals) {
+                        bean.canEdit = true;
+                    }
                     tagAdapter.notifyDataChanged();
+                    cityAdapter.notifyDataChanged();
                 } else {
                     ((TextView) v).setText("编辑");
                     for (LatestPlace.DataBean bean : mVals) {
                         bean.canEdit = false;
                     }
+                    for (FootCity.DataBean bean : cityVals) {
+                        bean.canEdit = false;
+                    }
                     tagAdapter.notifyDataChanged();
+                    cityAdapter.notifyDataChanged();
                 }
 
             }
@@ -98,13 +110,18 @@ public class ChangePlaceFragment extends BaseFragment implements View.OnClickLis
             }
         });
 
+        //最近足迹
         tagAdapter = new TagAdapter<LatestPlace.DataBean>(mVals) {
             @Override
             public View getView(FlowLayout parent, final int position, LatestPlace.DataBean s) {
                 RelativeLayout tv = (RelativeLayout) mInflater.inflate(R.layout.item_place_edit, mTvLatest, false);
                 TextView place = tv.findViewById(R.id.place);
                 ImageView delete = tv.findViewById(R.id.delete);
-                place.setText(s.getPlace());
+                if (!"...".equals(s.getPlace())) {
+                    place.setText(s.getPlace() + "|" + s.getDistance() + "km");
+                } else {
+                    place.setText(s.getPlace());
+                }
                 if ("...".equals(s.getPlace())) {
                     delete.setVisibility(View.GONE);
                 } else if (s.canEdit) {
@@ -116,7 +133,7 @@ public class ChangePlaceFragment extends BaseFragment implements View.OnClickLis
                     tv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            getMore(mPage + 1);
+                            getMore(mNearPage + 1);
                         }
                     });
                 }
@@ -124,20 +141,64 @@ public class ChangePlaceFragment extends BaseFragment implements View.OnClickLis
                 delete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        deleteFoot(mVals.get(position).getF_id(), position);
+                        deleteFoot(mVals.get(position).getF_id(), position, 2);
                     }
                 });
                 return tv;
             }
         };
-
         mTvLatest.setAdapter(tagAdapter);
+
+        //城市足迹
+        cityAdapter = new TagAdapter<FootCity.DataBean>(cityVals) {
+            @Override
+            public View getView(FlowLayout parent, final int position, FootCity.DataBean s) {
+                RelativeLayout tv = (RelativeLayout) mInflater.inflate(R.layout.item_place_edit, mTvCountry, false);
+                TextView place = tv.findViewById(R.id.place);
+                ImageView delete = tv.findViewById(R.id.delete);
+                place.setText(s.getRegion_name());
+                if ("...".equals(s.getRegion_name())) {
+                    delete.setVisibility(View.GONE);
+                } else if (s.canEdit) {
+                    delete.setVisibility(View.VISIBLE);
+                } else {
+                    delete.setVisibility(View.GONE);
+                }
+                if ("...".equals(s.getRegion_name())) {
+                    tv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            getMore(cityPage + 1);
+                        }
+                    });
+                }
+
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteFoot(cityVals.get(position).getF_id(), position, 1);
+                    }
+                });
+                return tv;
+            }
+        };
+        mTvCountry.setAdapter(cityAdapter);
 
         mTvLatest.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
             @Override
             public boolean onTagClick(View view, int position, FlowLayout parent) {
                 if (mVals.get(position).getPlace().equals("...")) {
-                    getMore(mPage + 1);
+                    getMore(mNearPage + 1);
+                }
+                return true;
+            }
+        });
+
+        mTvCountry.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+                if (cityVals.get(position).getRegion_name().equals("...")) {
+                    getMoreCity(cityPage + 1);
                 }
                 return true;
             }
@@ -147,7 +208,8 @@ public class ChangePlaceFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        getLatest(mPage);
+        getLatest(mNearPage);
+        getCity(cityPage);
     }
 
     private void getLatest(int page) {
@@ -168,13 +230,50 @@ public class ChangePlaceFragment extends BaseFragment implements View.OnClickLis
         }));
     }
 
+    private void getCity(int page) {
+        addSubscription(MineApiFactory.getFootCity(SPManager.get().getStringValue("uid"), page).subscribe(new Consumer<FootCity>() {
+            @Override
+            public void accept(FootCity response) throws Exception {
+                cityVals.addAll(response.getData());
+                FootCity.DataBean dataBean = new FootCity.DataBean();
+                dataBean.setRegion_name("...");
+                cityVals.add(dataBean);
+                cityAdapter.notifyDataChanged();
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: "+throwable);
+            }
+        }));
+    }
+
+    private void getMoreCity(int page) {
+
+        addSubscription(MineApiFactory.getFootCity(SPManager.get().getStringValue("uid"), page).subscribe(new Consumer<FootCity>() {
+            @Override
+            public void accept(FootCity response) throws Exception {
+                if (response.getData() != null) {
+                    cityPage++;
+                }
+                cityVals.addAll(cityVals.size() - 2, response.getData());
+                cityAdapter.notifyDataChanged();
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: "+throwable);
+            }
+        }));
+    }
+
     private void getMore(int page) {
 
         addSubscription(MineApiFactory.getLatestPlace(SPManager.get().getStringValue("uid"), page).subscribe(new Consumer<LatestPlace>() {
             @Override
             public void accept(LatestPlace response) throws Exception {
                 if (response.getData() != null) {
-                    mPage++;
+                    mNearPage++;
                 }
                 mVals.addAll(mVals.size() - 2, response.getData());
                 tagAdapter.notifyDataChanged();
@@ -187,13 +286,18 @@ public class ChangePlaceFragment extends BaseFragment implements View.OnClickLis
         }));
     }
 
-    private void deleteFoot(int fid, final int pos) {
-        addSubscription(MineApiFactory.deleteFoot(SPManager.get().getStringValue("uid"), String.valueOf(fid)).subscribe(new Consumer<SimpleResponse>() {
+    private void deleteFoot(int fid, final int pos, final int type) {
+        addSubscription(MineApiFactory.deleteFoot(SPManager.get().getStringValue("uid"), String.valueOf(fid), type).subscribe(new Consumer<SimpleResponse>() {
             @Override
             public void accept(SimpleResponse response) throws Exception {
                 if (response.code == 200) {
-                    mVals.remove(pos);
-                    tagAdapter.notifyDataChanged();
+                    if (type == 1) {
+                        cityVals.remove(pos);
+                        cityAdapter.notifyDataChanged();
+                    } else if (type == 2) {
+                        mVals.remove(pos);
+                        tagAdapter.notifyDataChanged();
+                    }
                 }
                 ToastUtils.showShort(response.msg);
             }

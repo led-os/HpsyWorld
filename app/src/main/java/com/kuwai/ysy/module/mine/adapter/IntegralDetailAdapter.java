@@ -20,7 +20,7 @@ public class IntegralDetailAdapter extends BaseQuickAdapter<IntegralDetailBean.D
     protected void convert(BaseViewHolder helper, IntegralDetailBean.DataBean item) {
 
         helper.setText(R.id.tv_title, item.getName());
-        //helper.setText(R.id.tv_time, DateTimeUitl.getIntegralTime(String.valueOf(item.getCreate_time())));
+        helper.setText(R.id.tv_time, DateTimeUitl.getIntegralTime(String.valueOf(item.getCreate_time())));
 
         if ("+".equals(item.getType())) {
             helper.setTextColor(R.id.tv_num, mContext.getResources().getColor(R.color.theme));

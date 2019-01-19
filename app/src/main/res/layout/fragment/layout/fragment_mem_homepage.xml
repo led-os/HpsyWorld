@@ -253,11 +253,42 @@
 
     <View style="@style/horizontal_line" />
 
+    <LinearLayout
+        android:id="@+id/lay_has_pic"
+        android:layout_width="match_parent"
+        android:layout_height="134dp"
+        android:background="@color/line_color"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ta还没有个性展示呢，赶快提醒Ta上传吧！"
+            android:textColor="#ff7645fa"
+            android:textSize="15sp" />
+
+        <com.allen.library.SuperButton
+            android:id="@+id/btn_update"
+            android:layout_width="140dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:text="立即提醒"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:sCornersRadius="2dp"
+            app:sGradientEndColor="#ff9c7cff"
+            app:sGradientOrientation="LEFT_RIGHT"
+            app:sGradientStartColor="#ff7644fa" />
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rl_pic"
         android:layout_width="match_parent"
         android:layout_height="134dp"
-        android:background="@color/line_color"></android.support.v7.widget.RecyclerView>
+        android:background="@color/line_color"
+        android:visibility="gone"></android.support.v7.widget.RecyclerView>
 
     <com.flyco.tablayout.CommonTabLayout
         android:id="@+id/tl_9"

@@ -12,33 +12,75 @@
         app:leftImg="@drawable/dyn_message_ic_back"
         app:title1="消息中心"></com.kuwai.ysy.widget.NavigationLayout>
 
-    <com.allen.library.SuperTextView
-        android:id="@+id/tv_comment"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:sLeftIconRes="@drawable/dyn_message_ic_com"
-        app:sLeftTextColor="@color/balck_28"
-        app:sLeftTextSize="16sp"
-        app:sLeftTextString="评论"
-        app:sRightIconRes="@drawable/dyn_message_ic_adv"></com.allen.library.SuperTextView>
+        android:layout_height="wrap_content">
 
-    <com.allen.library.SuperTextView
-        android:id="@+id/tv_like"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:sLeftIconRes="@drawable/dyn_message_ic_like"
-        app:sLeftTextColor="@color/balck_28"
-        app:sLeftTextSize="16sp"
-        app:sLeftTextString="点赞"
-        app:sRightIconRes="@drawable/dyn_message_ic_adv"></com.allen.library.SuperTextView>
+        <com.allen.library.SuperTextView
+            android:id="@+id/tv_comment"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            app:sLeftIconRes="@drawable/dyn_message_ic_com"
+            app:sLeftTextColor="@color/balck_28"
+            app:sLeftTextSize="16sp"
+            app:sLeftTextString="评论"
+            app:sRightIconRes="@drawable/dyn_message_ic_adv"></com.allen.library.SuperTextView>
 
-    <com.allen.library.SuperTextView
-        android:id="@+id/tv_reward"
+        <com.kuwai.ysy.widget.pageitem.RoundMessageView
+            android:id="@+id/red_ping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="40dp"
+            android:layout_marginRight="14dp"></com.kuwai.ysy.widget.pageitem.RoundMessageView>
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:sLeftIconRes="@drawable/dyn_message_ic_reward"
-        app:sLeftTextColor="@color/balck_28"
-        app:sLeftTextSize="16sp"
-        app:sLeftTextString="打赏"
-        app:sRightIconRes="@drawable/dyn_message_ic_adv"></com.allen.library.SuperTextView>
+        android:layout_height="wrap_content">
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/tv_like"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            app:sLeftIconRes="@drawable/dyn_message_ic_like"
+            app:sLeftTextColor="@color/balck_28"
+            app:sLeftTextSize="16sp"
+            app:sLeftTextString="点赞"
+            app:sRightIconRes="@drawable/dyn_message_ic_adv"></com.allen.library.SuperTextView>
+
+        <com.kuwai.ysy.widget.pageitem.RoundMessageView
+            android:id="@+id/red_zan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="40dp"
+            android:layout_marginRight="14dp"></com.kuwai.ysy.widget.pageitem.RoundMessageView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/tv_reward"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            app:sLeftIconRes="@drawable/dyn_message_ic_reward"
+            app:sLeftTextColor="@color/balck_28"
+            app:sLeftTextSize="16sp"
+            app:sLeftTextString="打赏"
+            app:sRightIconRes="@drawable/dyn_message_ic_adv"></com.allen.library.SuperTextView>
+
+        <com.kuwai.ysy.widget.pageitem.RoundMessageView
+            android:id="@+id/red_reward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="40dp"
+            android:layout_marginRight="14dp"></com.kuwai.ysy.widget.pageitem.RoundMessageView>
+    </RelativeLayout>
 </LinearLayout>

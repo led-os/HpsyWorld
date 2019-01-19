@@ -23,6 +23,8 @@ import com.kuwai.ysy.module.chat.bean.MyFriends;
 import com.kuwai.ysy.module.chat.bean.NoticeBean;
 import com.kuwai.ysy.module.chat.bean.NoticeDateBean;
 import com.kuwai.ysy.module.chat.business.redpack.SendRedActivity;
+import com.kuwai.ysy.module.find.CommisDetailOtherActivity;
+import com.kuwai.ysy.module.find.business.CommisDetailMyActivity;
 import com.kuwai.ysy.module.home.WebviewH5Activity;
 import com.kuwai.ysy.module.home.bean.HomeVideoBean;
 import com.kuwai.ysy.utils.EventBusUtil;
@@ -61,7 +63,6 @@ public class NoticeFragment extends BaseFragment implements View.OnClickListener
 
     private SmartRefreshLayout mRefreshLayout;
     private int mPage = 1;
-    private String uid;
 
     public static NoticeFragment newInstance() {
         Bundle args = new Bundle();
@@ -106,7 +107,25 @@ public class NoticeFragment extends BaseFragment implements View.OnClickListener
         dateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                RongIM.getInstance().startPrivateChat(getActivity(), String.valueOf(dateAdapter.getData().get(position).getUid()), dateAdapter.getData().get(position).getNickname());
+                //跳转约会详情
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("rid", dateAdapter.getData().get(position).getR_id());
+                    bundle.putString("uid", String.valueOf(dateAdapter.getData().get(position).getUid()));
+
+                    if (Integer.valueOf(SPManager.get().getStringValue("uid")) == (dateAdapter.getData().get(position).getUid())) {
+                        Intent intent = new Intent(getActivity(), CommisDetailMyActivity.class);
+                        intent.putExtra("data", bundle);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(getActivity(), CommisDetailOtherActivity.class);
+                        intent.putExtra("data", bundle);
+                        startActivity(intent);
+                    }
+                } else {
+                    ToastUtils.showShort(R.string.login_error);
+                }
+                //RongIM.getInstance().startPrivateChat(getActivity(), String.valueOf(dateAdapter.getData().get(position).getUid()), dateAdapter.getData().get(position).getNickname());
             }
         });
 
@@ -151,8 +170,7 @@ public class NoticeFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        uid = SPManager.get().getStringValue("uid");
-        if (!Utils.isNullString(uid)) {
+        if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
             getFriends();
             getNotice();
         } else {
@@ -160,7 +178,7 @@ public class NoticeFragment extends BaseFragment implements View.OnClickListener
     }
 
     void getFriends() {
-        addSubscription(ChatApiFactory.getSystemNotice(uid, mPage).subscribe(new Consumer<NoticeBean>() {
+        addSubscription(ChatApiFactory.getSystemNotice(SPManager.get().getStringValue("uid"), mPage).subscribe(new Consumer<NoticeBean>() {
             @Override
             public void accept(NoticeBean noticeBean) throws Exception {
                 mRefreshLayout.finishRefresh();
@@ -180,7 +198,7 @@ public class NoticeFragment extends BaseFragment implements View.OnClickListener
     }
 
     void getNotice() {
-        addSubscription(ChatApiFactory.getDateNotice(uid).subscribe(new Consumer<NoticeDateBean>() {
+        addSubscription(ChatApiFactory.getDateNotice(SPManager.get().getStringValue("uid")).subscribe(new Consumer<NoticeDateBean>() {
             @Override
             public void accept(NoticeDateBean noticeBean) throws Exception {
                 if (noticeBean.getCode() == 200) {
@@ -197,7 +215,7 @@ public class NoticeFragment extends BaseFragment implements View.OnClickListener
     }
 
     private void getMore() {
-        addSubscription(ChatApiFactory.getSystemNotice(uid, mPage + 1).subscribe(new Consumer<NoticeBean>() {
+        addSubscription(ChatApiFactory.getSystemNotice(SPManager.get().getStringValue("uid"), mPage + 1).subscribe(new Consumer<NoticeBean>() {
             @Override
             public void accept(NoticeBean myFriends) throws Exception {
                 if (myFriends.getData() != null) {

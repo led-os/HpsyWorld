@@ -1,17 +1,32 @@
 package com.kuwai.ysy.app;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Application;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ComponentCallbacks;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Process;
 import android.support.multidex.MultiDex;
+import android.support.v4.app.NotificationCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.kuwai.ysy.R;
 import com.kuwai.ysy.bean.MessageEvent;
+import com.kuwai.ysy.module.chat.MyFriendActivity;
+import com.kuwai.ysy.module.home.WebviewH5Activity;
+import com.kuwai.ysy.module.home.business.HomeActivity;
+import com.kuwai.ysy.module.mine.business.like.StLikeActivity;
+import com.kuwai.ysy.module.mine.business.visitor.VisitorActivity;
 import com.kuwai.ysy.net.ApiClient;
 import com.kuwai.ysy.rong.ExtensionModule;
 import com.kuwai.ysy.rong.GiftSendMessage;
@@ -24,7 +39,9 @@ import com.kuwai.ysy.rong.RedReceiveMessage;
 import com.kuwai.ysy.rong.RedReceiveMessageItemProvider;
 import com.kuwai.ysy.rong.RedSendMessage;
 import com.kuwai.ysy.rong.RedSendMessageItemProvider;
+import com.kuwai.ysy.rong.TxtMsg;
 import com.kuwai.ysy.utils.EventBusUtil;
+import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.utils.language.LocalManageUtil;
 import com.rayhahah.rbase.BaseApplication;
 import com.rayhahah.rbase.net.OkHttpManager;
@@ -77,6 +94,7 @@ public class MyApp extends BaseApplication {
     private void initRong() {
         RongIM.init(this);
         RongIM.getInstance().registerConversationTemplate(new MyGroupConversationProvider());
+        RongIM.registerMessageType(TxtMsg.class);
         RongIM.getInstance().registerMessageTemplate(new MyTextMessageItemProvider());
         RongIM.registerMessageType(QuestionMessage.class);
         RongIM.getInstance().registerMessageTemplate(new QuestionMessageItemProvider());
@@ -93,7 +111,58 @@ public class MyApp extends BaseApplication {
             public boolean onReceived(Message message, int i) {
                 Log.e("", "");
                 if ("TxtMsg".equals(message.getObjectName())) {
-                    EventBusUtil.sendEvent(new MessageEvent(C.MSG_UPDATE_NOTICE));
+                    if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                        EventBusUtil.sendEvent(new MessageEvent(C.MSG_UPDATE_NOTICE));
+                        EventBusUtil.sendEvent(new MessageEvent(C.MSG_UNREAD_UPDATE));
+                    }
+                    TxtMsg msg = (TxtMsg) message.getContent();
+                    Intent intent = null;
+                    String content = "";
+                    if ("1".equals(msg.getExtra())) {
+                        //物流相亲
+                        if (!Utils.isNullString(msg.getContent())) {
+                            content = "你有新的通知!";
+                            intent = new Intent(mAppContext, WebviewH5Activity.class);
+                            intent.putExtra(C.H5_FLAG, msg.getContent());
+                        }
+                    } else if ("4".equals(msg.getExtra())) {
+                        //访问提醒
+                        content = "你有新的访问提醒";
+                        intent = new Intent(mAppContext, VisitorActivity.class);
+                    } else if ("5".equals(msg.getExtra())) {
+                        //喜欢提醒
+                        content = "有人喜欢了你";
+                        intent = new Intent(mAppContext, StLikeActivity.class);
+                    } else if ("6".equals(msg.getExtra())) {
+                        //上线提醒
+                        content = "好友上线了";
+                    } else if ("7".equals(msg.getExtra())) {
+                        //约会跳系统通知
+                        content = "你有新的通知!";
+                        intent = new Intent(mAppContext, HomeActivity.class);
+                    } else if ("8".equals(msg.getExtra())) {
+                        //新的朋友
+                        content = "你有新的好友请求";
+                        intent = new Intent(mAppContext, MyFriendActivity.class);
+                    }
+                    //String content = msg.getContent();
+                    //String extra = msg.getExtra();
+                    PendingIntent pendingIntent = PendingIntent.getActivity(mAppContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    //mAppContext.startActivity(intent);
+
+                    NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                    Notification notification = new NotificationCompat.Builder(mAppContext, "chat")
+                            .setContentTitle(content)
+                            .setContentText("")
+                            .setWhen(System.currentTimeMillis())
+                            .setSmallIcon(R.mipmap.ic_sading)
+                            .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_sading))
+                            .setAutoCancel(true)
+                            .setSound(null)
+                            .setVibrate(new long[]{0})
+                            .setContentIntent(pendingIntent)
+                            .build();
+                    manager.notify(1, notification);
                 }
                 return false;
             }
@@ -129,7 +198,26 @@ public class MyApp extends BaseApplication {
         QbSdk.initX5Environment(getApplicationContext(), cb);
         loadLibs();
         com.aliyun.vod.common.httpfinal.QupaiHttpFinal.getInstance().initOkHttpFinal();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String channelId = "chat";
+            String channelName = "消息通知";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            createNotificationChannel(channelId, channelName, importance);
+        }
+
     }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    private void createNotificationChannel(String channelId, String channelName, int importance) {
+        NotificationChannel channel = new NotificationChannel(channelId, channelName, importance);
+        channel.enableVibration(false);
+        channel.setVibrationPattern(new long[]{0});
+        channel.setSound(null, null);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(
+                NOTIFICATION_SERVICE);
+        notificationManager.createNotificationChannel(channel);
+    }
+
 
     private void loadLibs() {
         System.loadLibrary("fdk-aac");

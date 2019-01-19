@@ -10,13 +10,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
-import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.DyMainListBean;
 import com.kuwai.ysy.others.NineImageAdapter;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NineGridView;
 import com.kuwai.ysy.widget.PileLayout;
-import com.kuwai.ysy.widget.TextImageView;
 import com.rayhahah.rbase.utils.base.DateTimeUitl;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
 import com.rayhahah.rbase.utils.useful.SPManager;
@@ -24,7 +22,6 @@ import com.rayhahah.rbase.utils.useful.SPManager;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import cc.shinichi.library.ImagePreview;
@@ -42,9 +39,16 @@ public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, Ba
 
     @Override
     protected void convert(BaseViewHolder helper, final DyMainListBean.DataBean item) {
-        helper.setText(R.id.tv_content, item.getText());
+        if (!Utils.isNullString(item.getText())) {
+            helper.getView(R.id.tv_content).setVisibility(View.VISIBLE);
+            helper.setText(R.id.tv_content, item.getText());
+        } else {
+            helper.getView(R.id.tv_content).setVisibility(View.GONE);
+        }
         switch (item.getType()) {
             case C.DY_TXT:
+                helper.getView(R.id.nine_grid_view).setVisibility(View.GONE);
+                helper.getView(R.id.rl_play).setVisibility(View.GONE);
                 break;
             case C.DY_PIC:
                 helper.getView(R.id.rl_play).setVisibility(View.GONE);
@@ -55,31 +59,34 @@ public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, Ba
                     @Override
                     public void onImageClick(int position, View view) {
                         if (mImageWatcher != null) {
-                            ImagePreview
-                                    .getInstance()
-                                    // 上下文，必须是activity，不需要担心内存泄漏，本框架已经处理好
-                                    .setContext(mContext)
-                                    // 从第几张图片开始，索引从0开始哦~
-                                    .setIndex(position)
-                                    // 只有一张图片的情况，可以直接传入这张图片的url
-                                    .setImageList(item.getAttach())
-                                    // 加载策略，详细说明见下面“加载策略介绍”。默认为手动模式
-                                    .setLoadStrategy(ImagePreview.LoadStrategy.AlwaysThumb)
-                                    // 保存的文件夹名称，会在SD卡根目录进行文件夹的新建。
-                                    // (你也可设置嵌套模式，比如："BigImageView/Download"，会在SD卡根目录新建BigImageView文件夹，并在BigImageView文件夹中新建Download文件夹)
-                                    .setFolderName("YsyDownload")
-                                    // 缩放动画时长，单位ms
-                                    .setZoomTransitionDuration(300)
-                                    // 是否启用上拉/下拉关闭。默认不启用
-                                    .setEnableDragClose(true)
-                                    // 是否显示下载按钮，在页面右下角。默认显示
-                                    .setShowDownButton(false)
-                                    // 设置是否显示顶部的指示器（1/9）默认显示
-                                    .setShowIndicator(false)
-                                    // 设置失败时的占位图，默认为R.drawable.load_failed，设置为 0 时不显示
-                                    .setErrorPlaceHolder(R.drawable.load_failed)
-                                    // 开启预览
-                                    .start();
+                            if (item.getAttach() != null && item.getAttach().size() > 0) {
+                                ImagePreview
+                                        .getInstance()
+                                        // 上下文，必须是activity，不需要担心内存泄漏，本框架已经处理好
+                                        .setContext(mContext)
+                                        // 从第几张图片开始，索引从0开始哦~
+                                        .setIndex(position)
+                                        // 只有一张图片的情况，可以直接传入这张图片的url
+                                        .setImageList(item.getAttach())
+                                        // 加载策略，详细说明见下面“加载策略介绍”。默认为手动模式
+                                        .setLoadStrategy(ImagePreview.LoadStrategy.AlwaysThumb)
+                                        // 保存的文件夹名称，会在SD卡根目录进行文件夹的新建。
+                                        // (你也可设置嵌套模式，比如："BigImageView/Download"，会在SD卡根目录新建BigImageView文件夹，并在BigImageView文件夹中新建Download文件夹)
+                                        .setFolderName("YsyDownload")
+                                        // 缩放动画时长，单位ms
+                                        .setZoomTransitionDuration(300)
+                                        // 是否启用上拉/下拉关闭。默认不启用
+                                        .setEnableDragClose(true)
+                                        // 是否显示下载按钮，在页面右下角。默认显示
+                                        .setShowDownButton(false)
+                                        // 设置是否显示顶部的指示器（1/9）默认显示
+                                        .setShowIndicator(false)
+                                        // 设置失败时的占位图，默认为R.drawable.load_failed，设置为 0 时不显示
+                                        .setErrorPlaceHolder(R.drawable.load_failed)
+                                        // 开启预览
+                                        .start();
+                            }
+
                             //mImageWatcher.show((ImageView) view, nineGridView.getImageViews(), item.getAttach());
                         }
                     }
@@ -99,6 +106,13 @@ public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, Ba
                 break;
         }
 
+        ImageView sexImg = helper.getView(R.id.img_sex);
+
+        if (item.getGender() == 1) {
+            sexImg.setImageResource(R.drawable.ic_user_man);
+        } else if (item.getGender() == 2) {
+            sexImg.setImageResource(R.drawable.ic_user_woman);
+        }
         PileLayout pileLayout = helper.getView(R.id.round_head);
         if (item.getReward_sum() > 0) {
             helper.getView(R.id.tv_reward).setVisibility(View.GONE);
@@ -141,7 +155,7 @@ public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, Ba
         helper.setText(R.id.tv_location, Utils.isNullString(item.getAddress()) ? "" : item.getAddress() + "    ");
         helper.setText(R.id.tv_time, DateTimeUitl.getStandardDate(String.valueOf(item.getUpdate_time())));
 
-        if(!Utils.isNullString(SPManager.get().getStringValue("uid"))){
+        if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
             if (item.getUid() == (Integer.valueOf(SPManager.get().getStringValue("uid")))) {
                 helper.getView(R.id.tv_delete).setVisibility(View.VISIBLE);
             } else {

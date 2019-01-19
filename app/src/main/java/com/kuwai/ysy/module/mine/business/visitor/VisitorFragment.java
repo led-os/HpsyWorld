@@ -104,7 +104,7 @@ public class VisitorFragment extends BaseFragment<VisitorPresenter> implements V
 
     @Override
     public void setHomeData(VisitorBean visitorBean) {
-
+        mRefreshLayout.finishRefresh();
         int earlyDataSize = visitorBean.getData().getEarlier().size();
         int todayDataSize = visitorBean.getData().getToday().size();
 

@@ -3,11 +3,14 @@ package com.kuwai.ysy.module.find.business.FoundLocation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
@@ -15,7 +18,9 @@ import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.AddressChooseActivity;
 import com.kuwai.ysy.module.circle.business.publishdy.PublishDyActivity;
+import com.kuwai.ysy.module.find.adapter.HotcityAdapter;
 import com.kuwai.ysy.module.find.adapter.LocalCityAdapter;
+import com.kuwai.ysy.module.find.adapter.MoneyAdapter;
 import com.kuwai.ysy.module.find.adapter.ProvinceAdapter;
 import com.kuwai.ysy.module.find.api.FoundApiFactory;
 import com.kuwai.ysy.module.find.bean.FoundHome.LocalNextBean;
@@ -27,6 +32,7 @@ import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import cn.qqtheme.framework.entity.City;
 import cn.qqtheme.framework.entity.Province;
@@ -40,7 +46,7 @@ public class FoundLocationFragment extends BaseActivity<FoundLocationPresenter> 
 
     private ImageView mImg;
     private MyEditText mEtSearch;
-    private RecyclerView mRvProvince;
+    private RecyclerView mRvProvince, rl_hot;
     private RecyclerView mRvCity;
     private RecyclerView mRvArea;
     private FrameLayout mFrameCity;
@@ -48,11 +54,16 @@ public class FoundLocationFragment extends BaseActivity<FoundLocationPresenter> 
     private LocalCityAdapter cityAdapter;
     private LocalCityAdapter areaAdapter;
     private NavigationLayout navigationLayout;
+    private HotcityAdapter chengyiAdapter;
 
     private ProvincesAndCityBean mProvincesAndCityBean;
     private LocalNextBean mLocalNextBean, mAeraBean;
+    private TextView tv_current;
     final ArrayList<ProvincesAndCityBean> data = new ArrayList<>();
     private String cityId, cityName;
+    private LinearLayout lay_hot, lay_city;
+    private String[] hotArray = new String[]{"北京", "上海", "南京", "深圳", "武汉", "广州", "杭州", "苏州", "成都", "长沙",
+            "天津", "重庆", "厦门", "三亚", "昆明", "大理", "大连", "丽江"};
 
     @Override
     protected FoundLocationPresenter getPresenter() {
@@ -84,8 +95,12 @@ public class FoundLocationFragment extends BaseActivity<FoundLocationPresenter> 
         data.clear();
         data.add(provincesAndCityBean);
         dataSave.setDataList("cityList", data);
+        ProvincesAndCityBean.DataBean bean = new ProvincesAndCityBean.DataBean();
+        bean.setRegion_name("推荐");
+        bean.isChecked = true;
         mProvincesAndCityBean = provincesAndCityBean;
-        provinceAdapter.replaceData(provincesAndCityBean.getData());
+        mProvincesAndCityBean.getData().add(0, bean);
+        provinceAdapter.replaceData(mProvincesAndCityBean.getData());
     }
 
     @Override
@@ -115,6 +130,11 @@ public class FoundLocationFragment extends BaseActivity<FoundLocationPresenter> 
         mImg = findViewById(R.id.img);
         mEtSearch = findViewById(R.id.et_search);
         //Utils.showOrHide(this,mEtSearch);
+        rl_hot = findViewById(R.id.rl_hot);
+        tv_current = findViewById(R.id.tv_current);
+        lay_hot = findViewById(R.id.lay_hot);
+        lay_city = findViewById(R.id.lay_city);
+        tv_current.setText(SPManager.get().getStringValue("cityName", "苏州"));
         mRvProvince = findViewById(R.id.rv_province);
         navigationLayout = findViewById(R.id.navigation);
         navigationLayout.setLeftClick(new View.OnClickListener() {
@@ -126,6 +146,28 @@ public class FoundLocationFragment extends BaseActivity<FoundLocationPresenter> 
         mRvCity = findViewById(R.id.rv_city);
         mRvArea = findViewById(R.id.rv_area);
         mFrameCity = findViewById(R.id.frame_city);
+
+        chengyiAdapter = new HotcityAdapter(Arrays.asList(hotArray));
+        rl_hot.setLayoutManager(new GridLayoutManager(this, 3));
+        rl_hot.setAdapter(chengyiAdapter);
+
+        chengyiAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                SPManager.get().putString("cityName", chengyiAdapter.getData().get(position));
+                Intent aintent = new Intent(FoundLocationFragment.this, PublishDyActivity.class);
+                aintent.putExtra("city", chengyiAdapter.getData().get(position));
+                setResult(RESULT_OK, aintent);
+                finish();
+            }
+        });
+
+        mEtSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(FoundLocationFragment.this, SearchCityFragment.class), 0);
+            }
+        });
 
         mRvProvince.setLayoutManager(new LinearLayoutManager(this));
         mRvCity.setLayoutManager(new LinearLayoutManager(this));
@@ -154,19 +196,31 @@ public class FoundLocationFragment extends BaseActivity<FoundLocationPresenter> 
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-                for (ProvincesAndCityBean.DataBean dataBean : mProvincesAndCityBean.getData()) {
-                    dataBean.isChecked = false;
+                if ("推荐".equals(mProvincesAndCityBean.getData().get(position).getRegion_name())) {
+                    lay_hot.setVisibility(View.VISIBLE);
+                    lay_city.setVisibility(View.GONE);
+                    for (ProvincesAndCityBean.DataBean dataBean : mProvincesAndCityBean.getData()) {
+                        dataBean.isChecked = false;
+                    }
+                    mProvincesAndCityBean.getData().get(position).isChecked = true;
+                    provinceAdapter.notifyDataSetChanged();
+                } else {
+                    lay_hot.setVisibility(View.GONE);
+                    lay_city.setVisibility(View.VISIBLE);
+                    for (ProvincesAndCityBean.DataBean dataBean : mProvincesAndCityBean.getData()) {
+                        dataBean.isChecked = false;
+                    }
+                    mProvincesAndCityBean.getData().get(position).isChecked = true;
+
+                    mPresenter.requestNextData(mProvincesAndCityBean.getData().get(position).getRegion_name());
+
+                    if (mAeraBean != null) {
+                        areaAdapter.getData().clear();
+                        areaAdapter.notifyDataSetChanged();
+                    }
+
+                    provinceAdapter.notifyDataSetChanged();
                 }
-                mProvincesAndCityBean.getData().get(position).isChecked = true;
-
-                mPresenter.requestNextData(mProvincesAndCityBean.getData().get(position).getRegion_id());
-
-                if (mAeraBean != null) {
-                    areaAdapter.getData().clear();
-                    areaAdapter.notifyDataSetChanged();
-                }
-
-                provinceAdapter.notifyDataSetChanged();
             }
         });
 
@@ -180,7 +234,7 @@ public class FoundLocationFragment extends BaseActivity<FoundLocationPresenter> 
                 mLocalNextBean.getData().get(position).ischecked = true;
                 cityId = String.valueOf(mLocalNextBean.getData().get(position).getRegion_id());
                 cityName = mLocalNextBean.getData().get(position).getRegion_name();
-                mPresenter.requestAreaData(mLocalNextBean.getData().get(position).getRegion_id());
+                mPresenter.requestAreaData(mLocalNextBean.getData().get(position).getRegion_name());
                 cityAdapter.notifyDataSetChanged();
             }
         });
@@ -193,9 +247,28 @@ public class FoundLocationFragment extends BaseActivity<FoundLocationPresenter> 
         dataSave = new ListDataSave(this, "cityList");
         if (dataSave.getDataList("cityList", ProvincesAndCityBean.class).size() > 0) {
             mProvincesAndCityBean = dataSave.getDataList("cityList", ProvincesAndCityBean.class).get(0);
+            ProvincesAndCityBean.DataBean bean = new ProvincesAndCityBean.DataBean();
+            bean.setRegion_name("推荐");
+            bean.isChecked = true;
+            mProvincesAndCityBean.getData().add(0, bean);
             provinceAdapter.replaceData(mProvincesAndCityBean.getData());
         } else {
             mPresenter.requestHomeData();
+        }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (data != null) {
+                cityName = data.getStringExtra("city");
+                Intent aintent = new Intent(FoundLocationFragment.this, PublishDyActivity.class);
+                aintent.putExtra("city", cityName);
+                setResult(RESULT_OK, aintent);
+                finish();
+            }
         }
     }
 }

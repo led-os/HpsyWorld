@@ -34,6 +34,7 @@ import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.callback.GiftClickCallback;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.api.CircleApiFactory;
+import com.kuwai.ysy.module.circle.bean.DyMainListBean;
 import com.kuwai.ysy.module.circle.bean.HoleDetailBean;
 import com.kuwai.ysy.module.circle.business.DyDashang.DyDashangListFragment;
 import com.kuwai.ysy.module.circle.business.dycomment.DySecFragment;
@@ -53,6 +54,8 @@ import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
 import org.apache.commons.lang3.StringUtils;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;

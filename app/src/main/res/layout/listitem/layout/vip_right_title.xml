@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/lay_content"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/sec_title"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/sub_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="内容特权"
+            android:textColor="#ff7b7b7b"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="1px"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:layout_toLeftOf="@id/sub_title"
+            android:background="@color/line_color" />
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="1px"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_toRightOf="@id/sub_title"
+            android:background="@color/line_color" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

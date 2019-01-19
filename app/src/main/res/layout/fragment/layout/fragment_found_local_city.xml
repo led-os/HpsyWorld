@@ -41,21 +41,15 @@
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@id/img"
                 android:background="@null"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:hint="搜索位置"
                 android:paddingRight="10dp"
+                android:singleLine="true"
                 android:textColor="@color/balck_28"
-                android:textSize="14sp"
-                app:delete_height="48"
-                app:delete_width="48" />
+                android:textSize="14sp" />
 
         </RelativeLayout>
-
-        <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center_vertical"-->
-        <!--android:padding="10dp"-->
-        <!--android:text="搜索" />-->
 
     </LinearLayout>
 
@@ -64,9 +58,11 @@
         android:layout_height="0.5dp"
         android:background="#33bdbdbd" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_province"
@@ -76,37 +72,78 @@
 
         </android.support.v7.widget.RecyclerView>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_city"
-            android:layout_width="108dp"
-            android:layout_height="match_parent">
-
-        </android.support.v7.widget.RecyclerView>
-
-        <View
-            android:layout_width="0.5dp"
-            android:layout_height="match_parent"
-            android:background="#33bdbdbd" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_area"
-            android:layout_width="108dp"
-            android:layout_height="match_parent">
-
-        </android.support.v7.widget.RecyclerView>
-
-        <View
-            android:layout_width="0.5dp"
-            android:layout_height="match_parent"
-            android:background="#33bdbdbd" />
-
-        <FrameLayout
-            android:id="@+id/frame_city"
+        <LinearLayout
+            android:id="@+id/lay_hot"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        </FrameLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="当前定位" />
 
+            <TextView
+                android:id="@+id/tv_current"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_tips_city"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical"
+                android:text="苏州" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                android:text="热门城市" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rl_hot"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lay_city"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_city"
+                android:layout_width="108dp"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="#33bdbdbd" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_area"
+                android:layout_width="108dp"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="#33bdbdbd" />
+
+            <FrameLayout
+                android:id="@+id/frame_city"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </FrameLayout>
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

@@ -13,6 +13,7 @@ import com.kuwai.ysy.module.mine.bean.CheckInBean;
 import com.kuwai.ysy.module.mine.bean.CreditBean;
 import com.kuwai.ysy.module.mine.bean.ESUser;
 import com.kuwai.ysy.module.mine.bean.EarlierBean;
+import com.kuwai.ysy.module.mine.bean.FootCity;
 import com.kuwai.ysy.module.mine.bean.GiftAcceptBean;
 import com.kuwai.ysy.module.mine.bean.GiftBoxBean;
 import com.kuwai.ysy.module.mine.bean.GiftWithdrawalsBean;
@@ -22,6 +23,7 @@ import com.kuwai.ysy.module.mine.bean.LikeParent;
 import com.kuwai.ysy.module.mine.bean.LikeParentBean;
 import com.kuwai.ysy.module.mine.bean.MyAskBean;
 import com.kuwai.ysy.module.mine.bean.MyWalletBean;
+import com.kuwai.ysy.module.mine.bean.NoticeSetBean;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.kuwai.ysy.module.mine.bean.PersonalTreeHole;
 import com.kuwai.ysy.module.mine.bean.TaGiftBean;
@@ -56,17 +58,17 @@ public class MineApiFactory {
                 .compose(RxSchedulers.<UserInfo>ioMain());
     }
 
-    public static Observable<SimpleResponse> setReminder(String uid,String otherId) {
+    public static Observable<SimpleResponse> setReminder(String uid, String otherId) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)
-                .getReminder(uid,otherId)
+                .getReminder(uid, otherId)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
-    public static Observable<SimpleResponse> setCancelReminder(String uid,String otherId) {
+    public static Observable<SimpleResponse> setCancelReminder(String uid, String otherId) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)
-                .getCancelReminder(uid,otherId)
+                .getCancelReminder(uid, otherId)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
@@ -224,10 +226,10 @@ public class MineApiFactory {
                 .compose(RxSchedulers.<LikeParentBean>ioMain());
     }
 
-    public static Observable<EarlierBean> getIloveEarlier(String uid,int page) {
+    public static Observable<EarlierBean> getIloveEarlier(String uid, int page) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)
-                .getIloveEarlier(uid,page)
+                .getIloveEarlier(uid, page)
                 .compose(RxSchedulers.<EarlierBean>ioMain());
     }
 
@@ -364,10 +366,24 @@ public class MineApiFactory {
                 .compose(RxSchedulers.<LatestPlace>ioMain());
     }
 
-    public static Observable<SimpleResponse> deleteFoot(String uid, String fid) {
+    public static Observable<SimpleResponse> deleteFoot(String uid, String fid,int type) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)
-                .deleteFoot(uid, fid)
+                .deleteFoot(uid, fid,type)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<NoticeSetBean> noticiSet(String uid) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .noticeSet(uid)
+                .compose(RxSchedulers.<NoticeSetBean>ioMain());
+    }
+
+    public static Observable<SimpleResponse> noticeChange(String uid, int type, String set) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .noticeChange(uid, type, set)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
@@ -385,11 +401,25 @@ public class MineApiFactory {
                 .compose(RxSchedulers.<BlackListBean>ioMain());
     }
 
+    public static Observable<FootCity> getFootCity(String uid, int page) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getFootCity(uid, page)
+                .compose(RxSchedulers.<FootCity>ioMain());
+    }
+
     public static Observable<BlackListBean> getPingList(String uid, int page) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)
                 .getPingList(uid, page)
                 .compose(RxSchedulers.<BlackListBean>ioMain());
+    }
+
+    public static Observable<SimpleResponse> ping(String uid, int t_id, int type) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .ping(uid, t_id, type)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
     public static Observable<EarlierBean> getUserLikemeItEarlier(String uid, int page) {

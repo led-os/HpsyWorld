@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="被喜欢提醒"
+            android:text="被访问提醒"
             android:textColor="#ff282828"
             android:textSize="16sp" />
 

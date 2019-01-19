@@ -1,6 +1,8 @@
 package com.kuwai.ysy.module.mine.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,12 +12,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.module.circle.VideoPlayActivity;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.kuwai.ysy.module.mine.bean.WallBean;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cc.shinichi.library.ImagePreview;
 
 public class MyVideoAdapter extends RecyclerView.Adapter<MyVideoAdapter.ViewHolder> {
 
@@ -69,6 +74,7 @@ public class MyVideoAdapter extends RecyclerView.Adapter<MyVideoAdapter.ViewHold
             GlideUtil.load(context, mList.get(position - 1).getAttach(), holder.ivPhoto);
             //holder.ivPhoto.setImageBitmap(BitmapFactory.decodeFile(mList.get(position)));
         }
+        holder.ivPhoto.setTag(R.id.image_key, position);
         /*if (mList.size() >= MAX_SIZE) {
             //最多8张
             holder.ivAdd.setVisibility(View.GONE);
@@ -113,6 +119,19 @@ public class MyVideoAdapter extends RecyclerView.Adapter<MyVideoAdapter.ViewHold
             super(itemView);
             ivPhoto = itemView.findViewById(R.id.iv_photo);
             ivAdd = itemView.findViewById(R.id.iv_add);
+
+            ivPhoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = (int) v.getTag(R.id.image_key);
+                    Intent intent = new Intent(context, VideoPlayActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("vid", mList.get(pos - 1).getVideo_id());
+                    bundle.putString("imgurl", mList.get(pos - 1).getAttach());
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 

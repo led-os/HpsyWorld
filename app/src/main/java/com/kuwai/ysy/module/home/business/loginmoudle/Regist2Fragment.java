@@ -124,6 +124,9 @@ public class Regist2Fragment extends BaseFragment implements View.OnClickListene
         mTitle = mRootView.findViewById(R.id.title);
         mCodeInfo = mRootView.findViewById(R.id.code_info);
         mEtCode = mRootView.findViewById(R.id.et_code);
+        mEtCode.setFocusable(true);
+        mEtCode.setFocusableInTouchMode(true);
+        mEtCode.requestFocus();
         mTvCountDown = mRootView.findViewById(R.id.tv_count_down);
         mLine1 = mRootView.findViewById(R.id.line1);
         mBtnNext = mRootView.findViewById(R.id.btn_next);

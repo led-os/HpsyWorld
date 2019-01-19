@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.utils.ZoomOutPageTransformer;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -356,7 +357,7 @@ public class BannerRound extends FrameLayout implements OnPageChangeListener {
             if (imageView == null) {
                 imageView = new ImageView(context);
             }
-            setScaleType(imageView);
+            //setScaleType(imageView);
             Object url = null;
             if (i == 0) {
                 url = imagesUrl.get(count - 1);
@@ -365,6 +366,10 @@ public class BannerRound extends FrameLayout implements OnPageChangeListener {
             } else {
                 url = imagesUrl.get(i - 1);
             }
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(66, 27);
+            params.width = Utils.getScreenWidth() - Utils.dp2px(100);
+            params.height = params.width * 27 / 66;
+            imageView.setLayoutParams(params);
             imageViews.add(imageView);
             if (imageLoader != null)
                 imageLoader.displayImage(context, url, imageView);

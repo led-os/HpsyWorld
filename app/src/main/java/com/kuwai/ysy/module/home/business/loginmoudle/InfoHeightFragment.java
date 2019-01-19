@@ -36,7 +36,7 @@ public class InfoHeightFragment extends BaseFragment implements View.OnClickList
     private SuperButton mBtnNext;
 
     private CustomDialog themeDialog, heightDialog;
-    private String height = "165cm";
+    private String height = "165";
     private int incomeId = 4;
     private String income = "";
 

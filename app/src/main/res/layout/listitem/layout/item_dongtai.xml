@@ -33,6 +33,13 @@
             android:layout_toRightOf="@id/img_head"
             android:textColor="@color/balck_28" />
 
+        <include
+            layout="@layout/layout_sex_vip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_nick"
+            android:layout_toRightOf="@id/tv_nick" />
+
         <ImageView
             android:id="@+id/iv_sex"
             android:layout_width="wrap_content"
@@ -70,8 +77,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_info"
-            android:layout_marginTop="18dp"
+            android:layout_marginBottom="6dp"
             android:layout_marginRight="16dp"
+            android:layout_marginTop="10dp"
             android:textColor="@color/balck_28"
             android:textSize="14sp" />
 
@@ -119,7 +127,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/top_lay"
             android:ellipsize="end"
-            android:maxLength="18"
+            android:maxEms="12"
+            android:singleLine="true"
             android:paddingTop="10dp"
             android:textColor="@color/gray_7b"
             android:textSize="12sp" />
@@ -175,8 +184,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/line1"
             android:layout_marginTop="8dp"
-            android:visibility="gone"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/pre_reward"

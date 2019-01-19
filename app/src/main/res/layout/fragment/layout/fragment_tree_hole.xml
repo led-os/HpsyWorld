@@ -1,32 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mRefreshLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:srlEnableHeaderTranslationContent="false">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
-        android:orientation="vertical">
+        android:background="@color/black">
 
-        <com.youth.banner.Banner
-            android:id="@+id/banner"
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="164dp"
-            app:image_scale_type="center_crop"
-            app:indicator_height="3dp"
-            app:indicator_margin="3dp"
-            app:indicator_width="10dp" />
+            android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rl_tree_hole"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/banner"
-            android:layout_margin="12dp"></android.support.v7.widget.RecyclerView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.youth.banner.Banner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="164dp"
+                    app:image_scale_type="center_crop"
+                    app:indicator_height="3dp"
+                    app:indicator_margin="3dp"
+                    app:indicator_width="10dp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rl_tree_hole"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="12dp"></android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
 
         <com.kuwai.ysy.widget.DragFloatActionButton
             android:id="@+id/tv_edit"
@@ -38,4 +47,4 @@
             android:layout_marginRight="30dp"
             android:drawableLeft="@drawable/dyn_dyn_btn_edit" />
     </RelativeLayout>
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

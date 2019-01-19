@@ -45,8 +45,8 @@ public class PlayerManager {
         vodPlayer.setOnErrorListener(new IAliyunVodPlayer.OnErrorListener() {
             @Override
             public void onError(int arg0, int arg1, String msg) {
-                Toast.makeText(context.getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
                 stop();
+                getSts();
             }
         });
 
@@ -60,7 +60,7 @@ public class PlayerManager {
         vodPlayer.setOnPreparedListener(new IAliyunVodPlayer.OnPreparedListener() {
             @Override
             public void onPrepared() {
-                if(holder.getTips()!=null){
+                if (holder.getTips() != null) {
                     holder.tipsView.hideNetLoadingTipView();
                 }
                 vodPlayer.start();
@@ -86,7 +86,9 @@ public class PlayerManager {
         mVidSts.setSecurityToken(SPManager.get().getStringValue(C.ALI_TOKEN));
 
         vodPlayer.reset();
-        holder.tipsView.showNetLoadingTipView();
+        if (holder.tipsView != null) {
+            holder.tipsView.showNetLoadingTipView();
+        }
         vodPlayer.prepareAsync(mVidSts);
     }
 

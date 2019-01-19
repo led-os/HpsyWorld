@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
@@ -86,6 +87,7 @@ public class AddressChooseActivity extends AppCompatActivity implements Location
     private PoiItem firstItem;
 
     private AMapLocation mAmapLocation;
+    private TextView left;
 
     private static final int PERMISSON_REQUESTCODE = 0;
 
@@ -94,7 +96,13 @@ public class AddressChooseActivity extends AppCompatActivity implements Location
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_address);
-
+        left = findViewById(R.id.img_left);
+        left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         StatusBarUtil.setColor(this, getResources().getColor(R.color.transparent), 0);
         StatusBarUtil.setLightMode(this);
 

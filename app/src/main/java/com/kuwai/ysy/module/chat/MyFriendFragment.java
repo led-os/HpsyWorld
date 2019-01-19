@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.chat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import com.kuwai.ysy.module.chat.api.ChatApiFactory;
 import com.kuwai.ysy.module.chat.bean.MyFriends;
 import com.kuwai.ysy.module.chat.business.FindFriendFragment;
 import com.kuwai.ysy.module.chat.business.SearchMyFriendFragment;
+import com.kuwai.ysy.module.mine.OtherHomeActivity;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.MyRecycleViewDivider;
 import com.rayhahah.dialoglib.CustomDialog;
@@ -104,6 +106,17 @@ public class MyFriendFragment extends BaseFragment implements View.OnClickListen
                     case R.id.btn_agree:
                         agreeNewFriends(String.valueOf(mNewDatalist.get(position).getUid()), 1);
                         break;
+                    case R.id.img_head:
+                        if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                            if (!SPManager.get().getStringValue("uid").equals(String.valueOf(newFriendsAdapter.getData().get(position).getUid()))) {
+                                Intent intent1 = new Intent(getActivity(), OtherHomeActivity.class);
+                                intent1.putExtra("uid", String.valueOf(newFriendsAdapter.getData().get(position).getUid()));
+                                startActivity(intent1);
+                            }
+                        } else {
+                            ToastUtils.showShort(R.string.login_error);
+                        }
+                        break;
                 }
             }
         });
@@ -130,6 +143,25 @@ public class MyFriendFragment extends BaseFragment implements View.OnClickListen
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (type == 1) {
                     showPop(position);
+                }
+            }
+        });
+
+        myFriendsAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.img_head:
+                        if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                            if (!SPManager.get().getStringValue("uid").equals(String.valueOf(myFriendsAdapter.getData().get(position).getUid()))) {
+                                Intent intent1 = new Intent(getActivity(), OtherHomeActivity.class);
+                                intent1.putExtra("uid", String.valueOf(myFriendsAdapter.getData().get(position).getUid()));
+                                startActivity(intent1);
+                            }
+                        } else {
+                            ToastUtils.showShort(R.string.login_error);
+                        }
+                        break;
                 }
             }
         });
@@ -176,7 +208,7 @@ public class MyFriendFragment extends BaseFragment implements View.OnClickListen
                 if (myBlindBean.getCode() == 200) {
                     newFriendsAdapter.replaceData(myBlindBean.getData());
                 } else {
-                    ToastUtils.showShort(myBlindBean.getMsg());
+                    //ToastUtils.showShort(myBlindBean.getMsg());
                 }
 
             }

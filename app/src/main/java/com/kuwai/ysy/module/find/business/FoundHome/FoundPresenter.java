@@ -25,7 +25,6 @@ public class FoundPresenter extends RBasePresenter<FoundContract.IHomeView> impl
 
     @Override
     public void requestHomeData(Map<String, Object> map) {
-        mView.showViewLoading();
         addSubscription(FoundApiFactory.getTeamList(map).subscribe(new Consumer<FoundBean>() {
             @Override
             public void accept(FoundBean foundBean) throws Exception {

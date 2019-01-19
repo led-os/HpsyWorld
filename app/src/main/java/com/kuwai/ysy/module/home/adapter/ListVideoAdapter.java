@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.home.adapter;
 
+import android.content.Intent;
 import android.graphics.SurfaceTexture;
 import android.support.v7.widget.RecyclerView;
 import android.view.TextureView;
@@ -17,13 +18,17 @@ import com.amap.api.services.help.Tip;
 import com.bumptech.glide.Glide;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.callback.HomeCallBack;
 import com.kuwai.ysy.common.BaseRecAdapter;
 import com.kuwai.ysy.common.BaseRecViewHolder;
 import com.kuwai.ysy.listener.PlayerManager;
 import com.kuwai.ysy.module.home.bean.HomeVideoBean;
 import com.kuwai.ysy.module.home.bean.VideoBean;
+import com.kuwai.ysy.module.mine.OtherHomeActivity;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.utils.glide.GlideImageLoader;
+import com.rayhahah.rbase.utils.base.ToastUtils;
+import com.rayhahah.rbase.utils.useful.GlideUtil;
 import com.rayhahah.rbase.utils.useful.SPManager;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -33,24 +38,42 @@ import java.util.List;
 public class ListVideoAdapter extends BaseRecAdapter<HomeVideoBean.DataBean, BaseRecViewHolder> {
 
     private PlayerManager playerManager;
+    private HomeCallBack homeCallBack;
 
     public ListVideoAdapter(List<HomeVideoBean.DataBean> list, PlayerManager playerManager) {
         super(list);
         this.playerManager = playerManager;
     }
 
+    public void setCallBack(HomeCallBack callBack) {
+        this.homeCallBack = callBack;
+    }
+
     @Override
-    public void onHolder(final BaseRecViewHolder holder, HomeVideoBean.DataBean bean, int position) {
+    public void onHolder(final BaseRecViewHolder holder, final HomeVideoBean.DataBean bean, final int position) {
         ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
         layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
 
         int viewType = holder.getItemViewType();
         if (viewType == C.DY_FILM) {
             final VideoViewHolder videoholder = (VideoViewHolder) holder;
+            GlideUtil.load(context, bean.getAvatar(), videoholder.headImg);
+            videoholder.giftTv.setText(bean.getGift_sum() + "");
+            videoholder.loveTv.setText(bean.getLove_sum() + "");
+            if (bean.getLove() == 1) {
+                GlideUtil.load(context, R.drawable.home_home_ic_redherat, videoholder.heartImg);
+            } else {
+                GlideUtil.load(context, R.drawable.home_home_ic_heart_nor, videoholder.heartImg);
+            }
+            if (bean.getGift() == 1) {
+                GlideUtil.load(context, R.drawable.home_home_ic_redgift, videoholder.giftImg);
+            } else {
+                GlideUtil.load(context, R.drawable.home_home_ic_gift_nor, videoholder.giftImg);
+            }
             videoholder.mBtnDetail.setText(bean.getAge() + "岁|" + bean.getHeight() + "cm|" + bean.getEducation() + "|" + bean.getAnnual_income());
             videoholder.tv_title.setText(bean.getNickname());
             videoholder.setTag(position);
-            if (position == 0) {
+            if (position == 0  && bean.isPlay()) {
                 TextureView textureView = new TextureView(context);
                 textureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
                     @Override
@@ -90,8 +113,86 @@ public class ListVideoAdapter extends BaseRecAdapter<HomeVideoBean.DataBean, Bas
                 holder1.mp_video.PlayStop();
                 //holder1.mp_video.destroy();
             }*/
+
+            videoholder.giftImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (homeCallBack != null) {
+                        homeCallBack.giftClick(position);
+                    }
+                }
+            });
+            videoholder.heartImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (homeCallBack != null) {
+                        homeCallBack.heartClick(position);
+                    }
+                }
+            });
+
+            videoholder.headImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                        if (!SPManager.get().getStringValue("uid").equals(String.valueOf(bean.getUid()))) {
+                            Intent intent1 = new Intent(context, OtherHomeActivity.class);
+                            intent1.putExtra("uid", String.valueOf(bean.getUid()));
+                            context.startActivity(intent1);
+                        }
+                    } else {
+                        ToastUtils.showShort(R.string.login_error);
+                    }
+                }
+            });
         } else {
             PicViewHolder holder2 = (PicViewHolder) holder;
+            GlideUtil.load(context, bean.getAvatar(), holder2.headImg);
+            holder2.giftTv.setText(bean.getGift_sum() + "");
+            holder2.loveTv.setText(bean.getLove_sum() + "");
+
+            holder2.giftImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (homeCallBack != null) {
+                        homeCallBack.giftClick(position);
+                    }
+                }
+            });
+            holder2.heartImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (homeCallBack != null) {
+                        homeCallBack.heartClick(position);
+                    }
+                }
+            });
+
+            holder2.headImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                        if (!SPManager.get().getStringValue("uid").equals(String.valueOf(bean.getUid()))) {
+                            Intent intent1 = new Intent(context, OtherHomeActivity.class);
+                            intent1.putExtra("uid", String.valueOf(bean.getUid()));
+                            context.startActivity(intent1);
+                        }
+                    } else {
+                        ToastUtils.showShort(R.string.login_error);
+                    }
+                }
+            });
+
+            if (bean.getLove() == 1) {
+                GlideUtil.load(context, R.drawable.home_home_ic_redherat, holder2.heartImg);
+            } else {
+                GlideUtil.load(context, R.drawable.home_home_ic_heart_nor, holder2.heartImg);
+            }
+            if (bean.getGift() == 1) {
+                GlideUtil.load(context, R.drawable.home_home_ic_redgift, holder2.giftImg);
+            } else {
+                GlideUtil.load(context, R.drawable.home_home_ic_gift_nor, holder2.giftImg);
+            }
             holder2.tvDetail.setText(bean.getAge() + "岁|" + bean.getHeight() + "cm|" + bean.getEducation() + "|" + bean.getAnnual_income());
             holder2.tv_title.setText(bean.getNickname());
             holder2.mp_video.setImages(bean.getAttach());
@@ -119,6 +220,8 @@ public class ListVideoAdapter extends BaseRecAdapter<HomeVideoBean.DataBean, Bas
         private int position;
         private SuperButton mBtnDetail;
         public TipsView tipsView;
+        private ImageView giftImg, heartImg, headImg;
+        private TextView loveTv, giftTv;
 
         public VideoViewHolder(View rootView) {
             super(rootView);
@@ -126,6 +229,11 @@ public class ListVideoAdapter extends BaseRecAdapter<HomeVideoBean.DataBean, Bas
             //this.mp_video = rootView.findViewById(R.id.video);
             this.mBtnDetail = rootView.findViewById(R.id.tv_detail);
             this.tv_title = rootView.findViewById(R.id.tv_title);
+            giftImg = rootView.findViewById(R.id.img_gift);
+            heartImg = rootView.findViewById(R.id.img_heart);
+            headImg = rootView.findViewById(R.id.img_head);
+            loveTv = rootView.findViewById(R.id.tv_love_num);
+            giftTv = rootView.findViewById(R.id.tv_gift_num);
         }
 
         public void addTextureView(TextureView textureView) {
@@ -153,7 +261,7 @@ public class ListVideoAdapter extends BaseRecAdapter<HomeVideoBean.DataBean, Bas
             }
         }
 
-        public TipsView getTips(){
+        public TipsView getTips() {
             return tipsView;
         }
 
@@ -183,6 +291,8 @@ public class ListVideoAdapter extends BaseRecAdapter<HomeVideoBean.DataBean, Bas
         public Banner mp_video;
         public TextView tv_title;
         private SuperButton tvDetail;
+        private ImageView giftImg, heartImg, headImg;
+        private TextView loveTv, giftTv;
 
         public PicViewHolder(View rootView) {
             super(rootView);
@@ -190,6 +300,11 @@ public class ListVideoAdapter extends BaseRecAdapter<HomeVideoBean.DataBean, Bas
             this.tvDetail = rootView.findViewById(R.id.tv_detail);
             this.mp_video = rootView.findViewById(R.id.banner);
             this.tv_title = rootView.findViewById(R.id.tv_title);
+            loveTv = rootView.findViewById(R.id.tv_love_num);
+            giftTv = rootView.findViewById(R.id.tv_gift_num);
+            giftImg = rootView.findViewById(R.id.img_gift);
+            heartImg = rootView.findViewById(R.id.img_heart);
+            headImg = rootView.findViewById(R.id.img_head);
             mp_video.setBannerStyle(BannerConfig.NUM_INDICATOR);
             mp_video.setImageLoader(new GlideImageLoader());
             mp_video.isAutoPlay(false);

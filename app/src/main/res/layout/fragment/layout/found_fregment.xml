@@ -1,240 +1,249 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/scrool"
+    android:id="@+id/mRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    app:srlEnableHeaderTranslationContent="false">
 
-    <com.kuwai.ysy.widget.MultipleStatusView
-        android:id="@+id/multipleStatusView"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrool"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:errorView="@layout/layout_error_view"
-        app:loadingView="@layout/loading_view">
+        android:paddingBottom="24dp">
 
-        <ImageView
+        <com.kuwai.ysy.widget.MultipleStatusView
+            android:id="@+id/multipleStatusView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:src="@drawable/bg_hearder_zise" />
+            android:layout_height="match_parent"
+            app:errorView="@layout/layout_error_view"
+            app:loadingView="@layout/loading_view">
 
-        <LinearLayout
-            android:id="@+id/rl_search"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_hearder_zise" />
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:background="@drawable/shape_found_edit">
+            <LinearLayout
+                android:id="@+id/rl_search"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp">
 
-                <ImageView
-                    android:id="@+id/img"
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_found_edit">
+
+                    <ImageView
+                        android:id="@+id/img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/ic_text_search" />
+
+                    <com.kuwai.ysy.widget.MyEditText
+                        android:id="@+id/et_search"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@id/img"
+                        android:background="@null"
+                        android:hint="搜索活动名称、约会主题"
+                        android:paddingRight="10dp"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:textColor="#66ffffff"
+                        android:textColorHint="#66ffffff"
+                        android:textSize="14sp"
+                        app:delete_height="48"
+                        app:delete_width="48" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/ic_text_search" />
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="14dp"
+                    android:drawableStart="@drawable/ic_nav_dingwei"
+                    android:gravity="center_vertical"
+                    android:text="苏州"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16" />
+            </LinearLayout>
 
-                <com.kuwai.ysy.widget.MyEditText
-                    android:id="@+id/et_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/img"
-                    android:background="@null"
-                    android:hint="搜索活动名称、约会主题"
-                    android:paddingRight="10dp"
-                    android:textColor="#66ffffff"
-                    android:textColorHint="#66ffffff"
-                    android:textSize="14sp"
-                    app:delete_height="48"
-                    app:delete_width="48" />
+            <com.kuwai.ysy.widget.BannerRound
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_below="@+id/rl_search"
+                android:layout_gravity="center"></com.kuwai.ysy.widget.BannerRound>
+
+            <com.kuwai.ysy.widget.ViewPagerIndicator
+                android:id="@+id/indicator_line"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_below="@+id/banner"
+                app:vpi_default_color="#cacaca"
+                app:vpi_distance="14dp"
+                app:vpi_distanceType="BY_DISTANCE"
+                app:vpi_indicatorType="CIRCLE_LINE"
+                app:vpi_length="14dp"
+                app:vpi_radius="3dp"
+                app:vpi_selected_color="#ff6161" />
+
+
+            <RelativeLayout
+                android:id="@+id/iv_huaban"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/indicator_line"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/bg_img_huaban">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_img_zouma"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="215dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/shape_found_text"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp">
+
+                        <com.kuwai.ysy.widget.TextBannerView
+                            android:id="@+id/tv_banner"
+                            android:layout_width="match_parent"
+                            android:layout_height="24dp"
+                            android:background="@color/transparent"
+                            app:setGravity="center"
+                            app:setSingleLine="true"
+                            app:setTextColor="#ccffffff"
+                            app:setTextSize="13sp" />
+                    </LinearLayout>
+                    <!--<com.allen.library.SuperButton-->
+                    <!--android:layout_width="215dp"-->
+                    <!--android:layout_height="24dp"-->
+                    <!--android:background="#66804379"-->
+                    <!--android:text="走马灯"-->
+                    <!--android:textColor="#ccffffff"-->
+                    <!--app:sCornersRadius="12dp" />-->
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/bg_user_head"
+                    android:gravity="center">
+
+                    <com.allen.library.CircleImageView
+                        android:id="@+id/iv_headicon"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginTop="4.5dp"
+                        android:src="@drawable/icon" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="15dp"
+                    android:src="@drawable/find_bg_img_right" />
+
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/tv_location"
+                android:id="@+id/tv_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="14dp"
-                android:drawableStart="@drawable/ic_nav_dingwei"
-                android:gravity="center_vertical"
-                android:text="苏州"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_16" />
-        </LinearLayout>
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/iv_huaban"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="16dp"
+                android:drawableStart="@drawable/ic_list_tab"
+                android:text="同城相约"
+                android:textColor="@color/balck_28"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold" />
 
-        <com.kuwai.ysy.widget.BannerRound
-            android:id="@+id/banner"
-            android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:layout_below="@+id/rl_search"
-            android:layout_gravity="center"></com.kuwai.ysy.widget.BannerRound>
-
-        <com.kuwai.ysy.widget.ViewPagerIndicator
-            android:id="@+id/indicator_line"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_below="@+id/banner"
-            app:vpi_default_color="#cacaca"
-            app:vpi_distance="14dp"
-            app:vpi_distanceType="BY_DISTANCE"
-            app:vpi_indicatorType="CIRCLE_LINE"
-            app:vpi_length="14dp"
-            app:vpi_radius="3dp"
-            app:vpi_selected_color="#ff6161" />
-
-
-        <RelativeLayout
-            android:id="@+id/iv_huaban"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/indicator_line"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/bg_img_huaban">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/bg_img_zouma"
-                android:gravity="center">
-
-                <LinearLayout
-                    android:layout_width="215dp"
-                    android:layout_height="24dp"
-                    android:background="@drawable/shape_found_text"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp">
-
-                    <com.kuwai.ysy.widget.TextBannerView
-                        android:id="@+id/tv_banner"
-                        android:layout_width="match_parent"
-                        android:layout_height="24dp"
-                        android:background="@color/transparent"
-                        app:setGravity="center"
-                        app:setSingleLine="true"
-                        app:setTextColor="#ccffffff"
-                        app:setTextSize="13sp" />
-                </LinearLayout>
-                <!--<com.allen.library.SuperButton-->
-                <!--android:layout_width="215dp"-->
-                <!--android:layout_height="24dp"-->
-                <!--android:background="#66804379"-->
-                <!--android:text="走马灯"-->
-                <!--android:textColor="#ccffffff"-->
-                <!--app:sCornersRadius="12dp" />-->
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="9dp"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/bg_user_head"
-                android:gravity="center">
-
-                <com.allen.library.CircleImageView
-                    android:id="@+id/iv_headicon"
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginTop="4.5dp"
-                    android:src="@drawable/icon" />
-            </LinearLayout>
-
-            <ImageView
+            <TextView
+                android:id="@+id/tv_city_meet_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
+                android:layout_below="@+id/iv_huaban"
                 android:layout_marginEnd="15dp"
-                android:src="@drawable/find_bg_img_right" />
+                android:layout_marginTop="16dp"
+                android:drawableEnd="@drawable/ic_list_jinru_pressed"
+                android:gravity="center_vertical"
+                android:text="更多"
+                android:textColor="#bdbdbd"
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold" />
 
-        </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_city"
+                android:layout_width="match_parent"
+                android:layout_height="203dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tv_city"
+                android:layout_marginTop="19dp">
 
-        <TextView
-            android:id="@+id/tv_city"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/iv_huaban"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="16dp"
-            android:drawableStart="@drawable/ic_list_tab"
-            android:text="同城相约"
-            android:textColor="@color/balck_28"
-            android:textSize="@dimen/sp_18"
-            android:textStyle="bold" />
+            </android.support.v7.widget.RecyclerView>
 
-        <TextView
-            android:id="@+id/tv_city_meet_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/iv_huaban"
-            android:layout_marginEnd="15dp"
-            android:layout_marginTop="16dp"
-            android:drawableEnd="@drawable/ic_list_jinru_pressed"
-            android:gravity="center_vertical"
-            android:text="更多"
-            android:textColor="#bdbdbd"
-            android:textSize="@dimen/sp_14"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/rv_city"
+                android:layout_marginStart="15dp"
+                android:drawableStart="@drawable/ic_list_tab"
+                android:text="脱单活动"
+                android:textColor="@color/balck_28"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_city"
-            android:layout_width="match_parent"
-            android:layout_height="203dp"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/tv_city"
-            android:layout_marginTop="19dp">
+            <TextView
+                android:id="@+id/tv_tuodan_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/rv_city"
+                android:layout_marginEnd="15dp"
+                android:drawableEnd="@drawable/ic_list_jinru_pressed"
+                android:gravity="center_vertical"
+                android:text="更多"
+                android:textColor="#bdbdbd"
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold" />
 
-        </android.support.v7.widget.RecyclerView>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_activity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_activity">
 
-        <TextView
-            android:id="@+id/tv_activity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/rv_city"
-            android:layout_marginStart="15dp"
-            android:drawableStart="@drawable/ic_list_tab"
-            android:text="脱单活动"
-            android:textColor="@color/balck_28"
-            android:textSize="@dimen/sp_18"
-            android:textStyle="bold" />
+            </android.support.v7.widget.RecyclerView>
 
-        <TextView
-            android:id="@+id/tv_tuodan_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/rv_city"
-            android:layout_marginEnd="15dp"
-            android:drawableEnd="@drawable/ic_list_jinru_pressed"
-            android:gravity="center_vertical"
-            android:text="更多"
-            android:textColor="#bdbdbd"
-            android:textSize="@dimen/sp_14"
-            android:textStyle="bold" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_activity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_activity">
-
-        </android.support.v7.widget.RecyclerView>
-
-    </com.kuwai.ysy.widget.MultipleStatusView>
-</android.support.v4.widget.NestedScrollView>
+        </com.kuwai.ysy.widget.MultipleStatusView>
+    </android.support.v4.widget.NestedScrollView>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>

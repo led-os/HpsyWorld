@@ -11,6 +11,7 @@ import com.kuwai.ysy.module.mine.bean.ChangeHeadBean;
 import com.kuwai.ysy.module.mine.bean.CheckInBean;
 import com.kuwai.ysy.module.mine.bean.CreditBean;
 import com.kuwai.ysy.module.mine.bean.EarlierBean;
+import com.kuwai.ysy.module.mine.bean.FootCity;
 import com.kuwai.ysy.module.mine.bean.GiftAcceptBean;
 import com.kuwai.ysy.module.mine.bean.GiftBoxBean;
 import com.kuwai.ysy.module.mine.bean.GiftExchangeBean;
@@ -21,6 +22,7 @@ import com.kuwai.ysy.module.mine.bean.LikeParent;
 import com.kuwai.ysy.module.mine.bean.LikeParentBean;
 import com.kuwai.ysy.module.mine.bean.MyAskBean;
 import com.kuwai.ysy.module.mine.bean.MyWalletBean;
+import com.kuwai.ysy.module.mine.bean.NoticeSetBean;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.kuwai.ysy.module.mine.bean.PersonalTreeHole;
 import com.kuwai.ysy.module.mine.bean.RechargeRecordBean;
@@ -178,8 +180,8 @@ public interface MineService {
     @FormUrlEncoded
     @POST("My/DelVisitorsRecord")
     Observable<SimpleResponse> getDelVisitorsRecord(@Field("uid") String uid,
-                                                 @Field("v_id") int vid,
-                                                 @Field("type") String type);
+                                                    @Field("v_id") int vid,
+                                                    @Field("type") String type);
 
     /**
      * 我喜欢的
@@ -194,7 +196,7 @@ public interface MineService {
     @FormUrlEncoded
     @POST("My/UserLoveMeEarlier")
     Observable<EarlierBean> getIloveEarlier(@Field("uid") String uid,
-                                                 @Field("page") int page);
+                                            @Field("page") int page);
 
     /**
      * 喜欢我的
@@ -387,11 +389,25 @@ public interface MineService {
     Observable<ShieldAndBlackListBean> getShieldAndBlackList(@Field("uid") String uid);
 
     /**
+     * 消息设置-列表
+     */
+    @FormUrlEncoded
+    @POST("My/MessageNotificationList")
+    Observable<NoticeSetBean> noticeSet(@Field("uid") String uid);
+
+    /**
+     * 消息设置
+     */
+    @FormUrlEncoded
+    @POST("My/MessageSettings")
+    Observable<SimpleResponse> noticeChange(@Field("uid") String uid,@Field("type") int type,@Field("set") String set);
+
+    /**
      * 删除足迹
      */
     @FormUrlEncoded
     @POST("My/DelFootprints")
-    Observable<SimpleResponse> deleteFoot(@Field("uid") String uid, @Field("f_id") String fid);
+    Observable<SimpleResponse> deleteFoot(@Field("uid") String uid, @Field("f_id") String fid, @Field("type") int type);
 
     /**
      * 黑名单-列表
@@ -402,12 +418,27 @@ public interface MineService {
                                            @Field("page") int page);
 
     /**
-     * 黑名单-列表
+     * 足迹地点-城市
+     */
+    @FormUrlEncoded
+    @POST("My/UserFootprints")
+    Observable<FootCity> getFootCity(@Field("uid") String uid, @Field("page") int page);
+
+    /**
+     * 屏蔽名单-列表
      */
     @FormUrlEncoded
     @POST("My/ShieldList")
     Observable<BlackListBean> getPingList(@Field("uid") String uid,
                                           @Field("page") int page);
+
+    /**
+     * 帖子屏蔽
+     */
+    @FormUrlEncoded
+    @POST("Currency/ScreenPosts")
+    Observable<SimpleResponse> ping(@Field("uid") String uid,
+                                          @Field("t_id") int t_id, @Field("type") int type);
 
     /**
      * 积分兑换桃花币

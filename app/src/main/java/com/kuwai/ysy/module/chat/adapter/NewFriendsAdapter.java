@@ -25,6 +25,7 @@ public class NewFriendsAdapter extends BaseQuickAdapter<MyFriends.DataBean, Base
         //0在线   1离线
         ((TextImageView) helper.getView(R.id.img_head)).setOnlineState(0);
         helper.addOnClickListener(R.id.btn_agree);
+        helper.addOnClickListener(R.id.img_head);
         SuperButton agree = helper.getView(R.id.btn_agree);
         ImageView vipImg = helper.getView(R.id.img_vip);
         ImageView sexImg = helper.getView(R.id.img_sex);

@@ -2,6 +2,7 @@ package com.kuwai.ysy.module.find.api;
 
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.find.bean.GiftPopBean;
+import com.kuwai.ysy.module.find.bean.SearchCityBean;
 import com.kuwai.ysy.module.find.bean.appointment.MyAppointMent;
 import com.kuwai.ysy.module.find.bean.appointment.MyCommis;
 import com.kuwai.ysy.module.find.bean.theme.DateTheme;
@@ -38,6 +39,9 @@ public interface AppointService {
     @POST("Appointment/DelAppointmentSincerityCustom")
     Observable<SimpleResponse> delCustomTheme(@Field("uid") String uid,@Field("s_id") int sid);
 
-
+    //搜索市/区的名称
+    @FormUrlEncoded
+    @POST("Currency/searchProvincesOrCitiesInfoList")
+    Observable<SearchCityBean> searchCity(@Field("region_name") String region_name);
 
 }

@@ -23,7 +23,7 @@
         android:id="@+id/tv_delete_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/line2"
+        android:layout_below="@+id/line2"
         android:layout_marginTop="14dp"
         android:text="删除约会"
         android:textColor="@color/balck_28"

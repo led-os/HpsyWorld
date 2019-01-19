@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.mine.business.vip;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,11 +12,14 @@ import android.widget.TextView;
 import com.allen.library.SuperButton;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
+import com.kuwai.ysy.module.home.WebviewH5Activity;
 import com.kuwai.ysy.module.mine.adapter.vip.HuangjinVipFeeAdapter;
 import com.kuwai.ysy.module.mine.adapter.vip.TequanAdapter;
+import com.kuwai.ysy.module.mine.adapter.vip.VipRightAdapter;
 import com.kuwai.ysy.module.mine.bean.vip.VipBean;
 import com.kuwai.ysy.module.mine.bean.vip.VipPayBean;
 import com.kuwai.ysy.widget.CustomFontTextview;
@@ -33,14 +37,7 @@ import java.util.Map;
 
 public class VipSuperFragment extends BaseFragment<VipHuangjinPresenter> implements VipHuangjinContract.IMineView, View.OnClickListener {
 
-    private HuangjinVipFeeAdapter mDateAdapter;
-    private TequanAdapter mContentAdapter;
-    private TequanAdapter mAuthAdapter;
-    private TequanAdapter mActAdapter;
-    private RecyclerView rl_fee, rlContent, rlAuth, rlAct;
-    private List<VipBean.DataBean.PrivilegeBean.ArrBean> mContentDataList = new ArrayList<>();
-    private List<VipBean.DataBean.PrivilegeBean.ArrBean> mAuthDataList = new ArrayList<>();
-    private List<VipBean.DataBean.PrivilegeBean.ArrBean> mActDataList = new ArrayList<>();
+    private RecyclerView rlRight;
 
     private VipBean.DataBean mVipdata = null;
     private CustomFontTextview sec_price, tv_money;
@@ -76,10 +73,14 @@ public class VipSuperFragment extends BaseFragment<VipHuangjinPresenter> impleme
                 mPresenter.getAliOrderInfo(param);
                 break;
             case R.id.tv_xieyi:
-                ToastUtils.showShort("协议");
+                Intent intent = new Intent(getActivity(), WebviewH5Activity.class);
+                intent.putExtra(C.H5_FLAG, C.H5_URL + C.HUIYUANTIOAKUAN);
+                startActivity(intent);
                 break;
             case R.id.tv_zhengce:
-                ToastUtils.showShort("政策");
+                Intent intent1 = new Intent(getActivity(), WebviewH5Activity.class);
+                intent1.putExtra(C.H5_FLAG, C.H5_URL + C.BAOHUZHENGCE);
+                startActivity(intent1);
                 break;
         }
     }
@@ -87,8 +88,8 @@ public class VipSuperFragment extends BaseFragment<VipHuangjinPresenter> impleme
     @Override
     public void initView(Bundle savedInstanceState) {
         mVipdata = (VipBean.DataBean) getArguments().getSerializable("data");
-        rl_fee = mRootView.findViewById(R.id.rl_fee);
         mXieyiTv = mRootView.findViewById(R.id.tv_xieyi);
+        rlRight = mRootView.findViewById(R.id.rl_right);
         mZhengceTv = mRootView.findViewById(R.id.tv_zhengce);
         mXieyiTv.setOnClickListener(this);
         mZhengceTv.setOnClickListener(this);
@@ -96,37 +97,18 @@ public class VipSuperFragment extends BaseFragment<VipHuangjinPresenter> impleme
         sec_price = mRootView.findViewById(R.id.sec_price);
         sec_price.setText(mVipdata.getMonthly_card() + "");
         tv_money.setText(mVipdata.getMonthly_card() + "");
-        rlContent = mRootView.findViewById(R.id.rl_content);
-        rlAuth = mRootView.findViewById(R.id.rl_auth);
-        rlAct = mRootView.findViewById(R.id.rl_activity);
         source_price = mRootView.findViewById(R.id.source_price);
         source_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         mSubmitBtn = mRootView.findViewById(R.id.btn_submit);
         mSubmitBtn.setOnClickListener(this);
 
-        mContentDataList.clear();
-        mAuthDataList.clear();
-        mActDataList.clear();
-        for (int i = 0; i < mVipdata.getPrivilege().get(0).getArr().size(); i++) {
-            mContentDataList.add(mVipdata.getPrivilege().get(0).getArr().get(i));
-        }
-        for (int i = 0; i < mVipdata.getPrivilege().get(1).getArr().size(); i++) {
-            mActDataList.add(mVipdata.getPrivilege().get(1).getArr().get(i));
-        }
-        for (int i = 0; i < mVipdata.getPrivilege().get(2).getArr().size(); i++) {
-            mAuthDataList.add(mVipdata.getPrivilege().get(2).getArr().get(i));
-        }
-        rl_fee.setAdapter(mDateAdapter);
-        rlContent.setLayoutManager(new MyGridLayoutManager(getActivity(), 4));
-        rlAuth.setLayoutManager(new MyGridLayoutManager(getActivity(), 4));
-        rlAct.setLayoutManager(new MyGridLayoutManager(getActivity(), 4));
-        mContentAdapter = new TequanAdapter(mContentDataList);
-        mAuthAdapter = new TequanAdapter(mAuthDataList);
-        mActAdapter = new TequanAdapter(mActDataList);
-        rlContent.setAdapter(mContentAdapter);
-        rlAuth.setAdapter(mAuthAdapter);
-        rlAct.setAdapter(mActAdapter);
-
+        rlRight.setLayoutManager(new LinearLayoutManager(getActivity()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        rlRight.setAdapter(new VipRightAdapter(mVipdata.getPrivilege(),mVipdata.getV_id()));
     }
 
     @Override

@@ -23,6 +23,7 @@ import com.rayhahah.rbase.utils.useful.SPManager;
 import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imkit.model.GroupUserInfo;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
@@ -63,6 +64,14 @@ public class ChatFragment extends BaseFragment implements View.OnClickListener{
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.conversationlist, conversationListFragment);
         transaction.commit();*/
+
+        /*RongIM.setGroupUserInfoProvider(new RongIM.GroupUserInfoProvider() {
+            @Override
+            public GroupUserInfo getGroupUserInfo(String s, String s1) {
+                //GroupUserInfo userId = new GroupUserInfo();
+                return userId;
+            }
+        });*/
 
         RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
 

@@ -18,23 +18,24 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
         android:layout_toRightOf="@id/img_head"
+        android:layout_toLeftOf="@id/id_hot"
         android:ellipsize="end"
-        android:maxEms="15"
+        android:maxLines="2"
         android:text="这件事我想很久了"
         android:textColor="@color/balck_28"
         android:textSize="16sp" />
 
     <com.allen.library.SuperButton
-        android:visibility="gone"
         android:id="@+id/id_hot"
         android:layout_width="20dp"
+        android:visibility="gone"
         android:layout_height="20dp"
-        android:layout_marginStart="5dp"
-        android:layout_toEndOf="@+id/tv_title"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/img_more"
         android:text="热"
+        android:textColor="@color/white"
         android:textSize="10sp"
         app:sCornersRadius="5dp"
-        android:textColor="@color/white"
         app:sSolidColor="@android:color/holo_red_light" />
 
     <ImageView
@@ -68,8 +69,8 @@
         android:id="@+id/tv_views"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_content"
         android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_content"
         android:layout_marginTop="14dp"
         android:text="44500人看过"
         android:textColor="#ffbdbdbd"

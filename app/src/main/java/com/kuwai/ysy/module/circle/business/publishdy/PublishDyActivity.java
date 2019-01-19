@@ -24,6 +24,7 @@ import com.amap.api.services.core.PoiItem;
 import com.hjq.bar.TitleBar;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.module.chat.bean.StsBean;
@@ -32,6 +33,7 @@ import com.kuwai.ysy.module.circle.aliyun.AlivcSvideoRecordActivity;
 import com.kuwai.ysy.module.circle.business.RightChooseActivity;
 import com.kuwai.ysy.module.mine.business.homepage.MineHomepageFragment;
 import com.kuwai.ysy.utils.DialogUtil;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.UploadHelper;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NavigationLayout;
@@ -451,6 +453,7 @@ public class PublishDyActivity extends BaseActivity<PublishPresenter> implements
     public void setPublishCallBack(SimpleResponse dyDetailBean) {
         DialogUtil.dismissDialog(true);
         if (dyDetailBean.code == 200) {
+            EventBusUtil.sendEvent(new MessageEvent(C.MSG_DY_REFRESH));
             ToastUtils.showShort("发布成功");
             finish();
         } else {

@@ -7,21 +7,26 @@
     <TextView
         android:id="@+id/place"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/voucher_money_shape"
+        android:ellipsize="end"
         android:gravity="center"
-        android:paddingLeft="10dp"
+        android:maxEms="18"
+        android:padding="6dp"
         android:paddingRight="10dp"
+        android:singleLine="true"
         android:text="苏州大学附属医院"
-        android:textColor="@color/theme" />
+        android:textColor="@color/theme"
+        android:textSize="12sp" />
 
     <ImageView
         android:id="@+id/delete"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
         android:layout_marginLeft="-10dp"
+        android:layout_marginTop="4dp"
         android:layout_toRightOf="@id/place"
         android:visibility="gone"
         android:src="@drawable/center_foot_del" />

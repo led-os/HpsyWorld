@@ -31,6 +31,7 @@ import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.callback.GiftClickCallback;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.circle.ReportActivity;
 import com.kuwai.ysy.module.circle.VideoPlayActivity;
 import com.kuwai.ysy.module.circle.bean.DyCommentListBean;
 import com.kuwai.ysy.module.circle.bean.DyDetailBean;
@@ -39,6 +40,7 @@ import com.kuwai.ysy.module.circle.business.DyDashang.DyDashangListFragment;
 import com.kuwai.ysy.module.circle.business.dycomment.DySecFragment;
 import com.kuwai.ysy.module.circle.business.DyZan.DyZanListFragment;
 import com.kuwai.ysy.module.find.bean.GiftPopBean;
+import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.others.NineImageAdapter;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
@@ -49,6 +51,7 @@ import com.kuwai.ysy.widget.NiceImageView;
 import com.kuwai.ysy.widget.NineGridView;
 import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.utils.base.DateTimeUitl;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
 import com.rayhahah.rbase.utils.useful.SPManager;
 import com.umeng.socialize.ShareAction;
@@ -64,6 +67,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cc.shinichi.library.ImagePreview;
+import io.reactivex.functions.Consumer;
 import io.rong.imkit.MainActivity;
 
 public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implements DyDetailContract.IHomeView, View.OnClickListener, GiftClickCallback {
@@ -216,7 +220,7 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
         navigationLayout.setRightClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                share();
+                showMore();
             }
         });
 
@@ -337,6 +341,89 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
         });
     }
 
+    private void showMore() {
+        View pannel = View.inflate(getActivity(), R.layout.dialog_dongtai_item_more, null);
+        pannel.findViewById(R.id.tv_like).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                like(SPManager.get().getStringValue("uid"), String.valueOf(mDyDetailBean.getData().getUid()), 1);
+            }
+        });
+        pannel.findViewById(R.id.tv_share).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                share();
+                //like(SPManager.get().getStringValue("uid"), String.valueOf(mDongtaiAdapter.getData().get(pos).getUid()), 1);
+            }
+        });
+        pannel.findViewById(R.id.tv_report).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                Bundle bundle = new Bundle();
+                bundle.putString("module", "0");
+                bundle.putString("p_id", String.valueOf(mDyDetailBean.getData().getD_id()));
+                Intent intent = new Intent(getActivity(), ReportActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        pannel.findViewById(R.id.tv_ping).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                ping(SPManager.get().getStringValue("uid"), mDyDetailBean.getData().getD_id(), 1);//1：动态，2：树洞，3：首页。。。
+                //like(SPManager.get().getStringValue("uid"), String.valueOf(mDongtaiAdapter.getData().get(pos).getUid()), 1);
+            }
+        });
+        if (customDialog == null) {
+            customDialog = new CustomDialog.Builder(getActivity())
+                    .setView(pannel)
+                    .setTouchOutside(true)
+                    .setDialogGravity(Gravity.CENTER)
+                    .build();
+        }
+        customDialog.show();
+    }
+
+    public void like(String uid, String otherId, int type) {
+        addSubscription(MineApiFactory.getUserLike(uid, otherId, type).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse response) throws Exception {
+                if (response.code == 200) {
+                    ToastUtils.showShort("喜欢成功");
+                } else {
+                    ToastUtils.showShort(response.msg);
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: "+throwable);
+            }
+        }));
+    }
+
+    public void ping(String uid, int tid, int type) {
+        addSubscription(MineApiFactory.ping(uid, tid, type).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse response) throws Exception {
+                if (response.code == 200) {
+                    ToastUtils.showShort("屏蔽成功");
+                } else {
+                    ToastUtils.showShort(response.msg);
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: "+throwable);
+            }
+        }));
+    }
+
     private void share() {
         /*UMImage image = new UMImage(getActivity(), R.drawable.center_mark_ic_more);//网络图片
         //image.setThumb(image);
@@ -355,7 +442,7 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
             web.setDescription(mDyDetailBean.getData().getText());//描述
             new ShareAction(getActivity())
                     .withMedia(web)
-                    .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
+                    .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
                     .setCallback(shareListener).open();
         }
 
@@ -376,7 +463,7 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
          */
         @Override
         public void onResult(SHARE_MEDIA platform) {
-            Toast.makeText(getActivity(), "成功了", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(), "成功了", Toast.LENGTH_LONG).show();
         }
 
         /**
@@ -386,7 +473,7 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
          */
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
-            Toast.makeText(getActivity(), "失败" + t.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "分享失败", Toast.LENGTH_LONG).show();
         }
 
         /**
@@ -395,7 +482,7 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
          */
         @Override
         public void onCancel(SHARE_MEDIA platform) {
-            Toast.makeText(getActivity(), "取消了", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "分享取消", Toast.LENGTH_LONG).show();
         }
     };
 

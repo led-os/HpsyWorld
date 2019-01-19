@@ -83,8 +83,17 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
                 if (reportId < 0) {
                     ToastUtils.showShort("请选择举报理由");
                     return;
+                } else if ("-1".equals(module)) {
+                    if (Utils.isNullString(et_question_answer.getText().toString())) {
+                        ToastUtils.showShort("请输入举报理由");
+                        return;
+                    }
                 }
-                report();
+                if ("-1".equals(module)) {
+                    userReport();
+                } else {
+                    report();
+                }
                 break;
         }
     }
@@ -207,6 +216,41 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
             helper.addParameter("file" + i + "\";filename=\"" + selectList.get(i).getCompressPath(), file);
         }
         addSubscription(CircleApiFactory.report(helper.builder()).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse dyDetailBean) throws Exception {
+                //UploadHelper.getInstance().clear();
+                //mView.setPublishCallBack(dyDetailBean);
+                if (dyDetailBean.code == 200) {
+                    //ToastUtils.showShort("举报成功");
+                    getActivity().finish();
+                }
+                DialogUtil.dismissDialog(true);
+                ToastUtils.showShort(dyDetailBean.msg);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: " + throwable);
+                ToastUtils.showShort(R.string.server_error);
+            }
+        }));
+
+    }
+
+    private void userReport() {
+        UploadHelper helper = UploadHelper.getInstance();
+        helper.clear();
+        helper.addParameter("uid", SPManager.get().getStringValue("uid"));
+        helper.addParameter("other_id", d_id);//帖子ID
+        helper.addParameter("type", String.valueOf(reportId));//举报原因（0：发布色情、违法行为，1：存在欺骗诈骗行为，2：对我进行骚扰，3：其他理由）
+        if (!Utils.isNullString(et_question_answer.getText().toString())) {
+            helper.addParameter("remarks", et_question_answer.getText().toString());
+        }
+        for (int i = 0; i < selectList.size(); i++) {
+            File file = new File(selectList.get(i).getCompressPath());
+            helper.addParameter("file" + i + "\";filename=\"" + selectList.get(i).getCompressPath(), file);
+        }
+        addSubscription(CircleApiFactory.userReport(helper.builder()).subscribe(new Consumer<SimpleResponse>() {
             @Override
             public void accept(SimpleResponse dyDetailBean) throws Exception {
                 //UploadHelper.getInstance().clear();

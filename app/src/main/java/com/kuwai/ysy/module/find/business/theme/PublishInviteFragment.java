@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.allen.library.SuperButton;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -59,6 +60,7 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
     private int mDeletePos = 0;
 
     private GiftPopBean giftPopBean;
+    private TextView tv_sincerity_tips, tv_gift_tips;
 
     public static PublishInviteFragment newInstance() {
         Bundle args = new Bundle();
@@ -95,6 +97,12 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
                 bundle.putSerializable("gift", (Serializable) mGiftData);
                 start(PostAppointmentFragment.newInstance(bundle));
                 break;
+            case R.id.tv_gift_tips:
+                initGiftDialog();
+                break;
+            case R.id.tv_sincerity_tips:
+                initChengyiDialog();
+                break;
         }
     }
 
@@ -103,6 +111,10 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
         mThemeRl = mRootView.findViewById(R.id.rl_theme);
         navigationLayout = mRootView.findViewById(R.id.navigation);
         mGiftRl = mRootView.findViewById(R.id.rl_gift);
+        tv_sincerity_tips = mRootView.findViewById(R.id.tv_sincerity_tips);
+        tv_gift_tips = mRootView.findViewById(R.id.tv_gift_tips);
+        tv_sincerity_tips.setOnClickListener(this);
+        tv_gift_tips.setOnClickListener(this);
         mMoneyRl = mRootView.findViewById(R.id.rl_sincerity);
         btnNext = mRootView.findViewById(R.id.btn_commit);
 
@@ -245,8 +257,10 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
                         DateTheme.DataBean.SincerityBean bean = new DateTheme.DataBean.SincerityBean();
                         bean.setName(et_search.getText().toString());
                         bean.setS_id(-1);
+                        bean.isCheck = true;
                         bean.drawable = getResources().getDrawable(R.drawable.ic_sel_other);
                         mDataList.add(bean);
+                        mPos = mDataList.size() - 1;
                         themeAdapter.notifyDataSetChanged();
                         themeDialog.dismiss();
                     }
@@ -345,5 +359,37 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
     @Override
     public void showViewError(Throwable t) {
 
+    }
+
+    private void initChengyiDialog() {
+        new NormalAlertDialog.Builder(getActivity())
+                .setTitleText("诚意金作用")
+                .setContentText(getResources().getString(R.string.chengyi_tips))
+                .setSingleButtonText("好的，知道了")
+                .setSingleMode(true)
+                .setSingleListener(new DialogInterface.OnSingleClickListener<NormalAlertDialog>() {
+                    @Override
+                    public void clickSingleButton(NormalAlertDialog dialog, View view) {
+                        dialog.dismiss();
+                    }
+                })
+                .setCanceledOnTouchOutside(true)
+                .build().show();
+    }
+
+    private void initGiftDialog() {
+        new NormalAlertDialog.Builder(getActivity())
+                .setTitleText("礼物作用")
+                .setContentText(getResources().getString(R.string.gift_tips))
+                .setSingleButtonText("好的，知道了")
+                .setSingleMode(true)
+                .setSingleListener(new DialogInterface.OnSingleClickListener<NormalAlertDialog>() {
+                    @Override
+                    public void clickSingleButton(NormalAlertDialog dialog, View view) {
+                        dialog.dismiss();
+                    }
+                })
+                .setCanceledOnTouchOutside(true)
+                .build().show();
     }
 }

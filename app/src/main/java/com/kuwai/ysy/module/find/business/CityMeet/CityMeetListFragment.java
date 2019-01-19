@@ -175,7 +175,7 @@ public class CityMeetListFragment extends BaseFragment<CityMeetPresenter> implem
         param.put("city", SPManager.get().getStringValue("cityName"));
         mPresenter.requestHomeData(param);
         mPresenter.getMeetfilter();
-        getAreaData(Integer.parseInt(SPManager.get().getStringValue("cityId")));
+        getAreaData(SPManager.get().getStringValue("cityName"));
     }
 
     private void showPopListView() {
@@ -425,7 +425,7 @@ public class CityMeetListFragment extends BaseFragment<CityMeetPresenter> implem
         }));
     }
 
-    public void getAreaData(int id) {
+    public void getAreaData(String id) {
         addSubscription(FoundApiFactory.getLocalNextList(id).subscribe(new Consumer<LocalNextBean>() {
             @Override
             public void accept(LocalNextBean localNextBean) throws Exception {

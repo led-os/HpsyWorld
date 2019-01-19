@@ -43,9 +43,7 @@ public class TreeHoleMineFragment extends BaseFragment implements View.OnClickLi
 
     private TreeHoleMineAdapter mDongtaiAdapter;
     private RecyclerView mDongtaiList;
-    private List<CategoryBean> mDataList = new ArrayList<>();
 
-    private YsyPopWindow mListPopWindow;
     private CustomDialog customDialog;
 
     private SmartRefreshLayout mRefreshLayout;
@@ -103,6 +101,7 @@ public class TreeHoleMineFragment extends BaseFragment implements View.OnClickLi
 
         mDongtaiList.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 0.5f), R.color.line_color));
         mDongtaiAdapter = new TreeHoleMineAdapter();
+        mDongtaiAdapter.setNoMore();
         mDongtaiList.setAdapter(mDongtaiAdapter);
 
         mDongtaiAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -111,17 +110,6 @@ public class TreeHoleMineFragment extends BaseFragment implements View.OnClickLi
                 Intent intent = new Intent(getActivity(), HoleDetailActivity.class);
                 intent.putExtra("tid", String.valueOf(mDyMainListBean.getData().get(position).getT_id()));
                 startActivity(intent);
-            }
-        });
-
-        mDongtaiAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (view.getId()) {
-                    case R.id.img_more:
-                        showPopListView();
-                        break;
-                }
             }
         });
     }

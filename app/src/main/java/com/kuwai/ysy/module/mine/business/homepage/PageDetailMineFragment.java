@@ -51,6 +51,12 @@ public class PageDetailMineFragment extends BaseFragment implements View.OnClick
     private List<String> mVals = new ArrayList<>();
     private List<String> mValsZeou = new ArrayList<>();
     private TextView changeXuan, renzheng, superInfo, chooseZeou, managePlace;
+    private TextView mTvHouse;
+    private TextView mTvCar;
+    private TextView mTvMarry;
+    private TextView mTvZong;
+    private TextView mTvChild;
+    private TextView mTvJob;
 
     private PersolHomePageBean mPersolHomePageBean;
 
@@ -117,6 +123,13 @@ public class PageDetailMineFragment extends BaseFragment implements View.OnClick
         chooseZeou = mRootView.findViewById(R.id.chooseZeou);
         managePlace = mRootView.findViewById(R.id.managePlace);
 
+        mTvHouse = mRootView.findViewById(R.id.tv_house);
+        mTvCar = mRootView.findViewById(R.id.tv_car);
+        mTvMarry = mRootView.findViewById(R.id.tv_marry);
+        mTvZong = mRootView.findViewById(R.id.tv_zong);
+        mTvChild = mRootView.findViewById(R.id.tv_child);
+        mTvJob = mRootView.findViewById(R.id.tv_job);
+
         changeXuan.setOnClickListener(this);
         renzheng.setOnClickListener(this);
         superInfo.setOnClickListener(this);
@@ -142,13 +155,20 @@ public class PageDetailMineFragment extends BaseFragment implements View.OnClick
             public void accept(PersolHomePageBean persolHomePageBean) throws Exception {
 
                 mPersolHomePageBean = persolHomePageBean;
+                mTvHouse.setText(persolHomePageBean.getData().getInfo().getBuy_house());
+                mTvCar.setText(persolHomePageBean.getData().getInfo().getCar_buying());
+                mTvMarry.setText(persolHomePageBean.getData().getInfo().getMarriage());
+                mTvZong.setText(persolHomePageBean.getData().getInfo().getReligion());
+                mTvChild.setText(persolHomePageBean.getData().getInfo().getChildren());
+                mTvJob.setText(persolHomePageBean.getData().getInfo().getOccupation());
+
                 if (persolHomePageBean.getData().getInfo().getIs_real() == 0) {
                     mIsName.setVisibility(View.GONE);
                 } else {
                     mIsName.setVisibility(View.VISIBLE);
                 }
 
-                if ("0".equals(persolHomePageBean.getData().getInfo().getBuy_house())) {
+                if (persolHomePageBean.getData().getInfo().getIs_house() == 0) {
                     mIsHouse.setVisibility(View.GONE);
                 } else {
                     mIsHouse.setVisibility(View.VISIBLE);
@@ -165,8 +185,8 @@ public class PageDetailMineFragment extends BaseFragment implements View.OnClick
                 } else {
                     mIsCar.setVisibility(View.VISIBLE);
                 }
-
-                mSign.setText(persolHomePageBean.getData().getInfo().getSig());
+                String sign = persolHomePageBean.getData().getInfo().getSig();
+                mSign.setText(Utils.isNullString(sign) ? "无" : sign);
                 mID.setText(String.valueOf(persolHomePageBean.getData().getInfo().getUid()));
                 mAge.setText(String.valueOf(persolHomePageBean.getData().getInfo().getAge()));
                 mTall.setText(String.valueOf(persolHomePageBean.getData().getInfo().getHeight() + "cm"));

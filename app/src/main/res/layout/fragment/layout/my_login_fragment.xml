@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:paddingBottom="56dp"
     android:fillViewport="true">
 
     <com.kuwai.ysy.widget.MultipleStatusView
@@ -99,8 +100,8 @@
 
                 <ImageView
                     android:id="@+id/img_vip"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
                     android:layout_above="@+id/tv_id"
                     android:layout_marginStart="9dp"
                     android:layout_marginTop="28dp"
