@@ -47,6 +47,7 @@ import com.kuwai.ysy.utils.language.LocalManageUtil;
 import com.rayhahah.rbase.BaseApplication;
 import com.rayhahah.rbase.net.OkHttpManager;
 import com.rayhahah.rbase.utils.RCrashHandler;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
 import com.taobao.sophix.PatchStatus;
 import com.taobao.sophix.SophixManager;

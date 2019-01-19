@@ -186,5 +186,10 @@ public class C {
 
     public static final String UpDate = "http://192.168.1.88/api/User/appVersion?app_type=android";//更新app
 
+    public static final String SP_NAME = "startpage";
+
+    public static final String QiDong = "http://192.168.1.88/api/User/appStartupPage";//更新app
+
+
 
 }
