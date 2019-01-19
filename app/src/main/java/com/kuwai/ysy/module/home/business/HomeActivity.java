@@ -1,16 +1,20 @@
 package com.kuwai.ysy.module.home.business;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -23,9 +27,11 @@ import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.LocationSource;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.services.core.LatLonPoint;
+import com.google.gson.Gson;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.MessageEvent;
+import com.kuwai.ysy.bean.StartPageBean;
 import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.controller.NavigationController;
 import com.kuwai.ysy.module.chat.ChatFragment;
@@ -38,6 +44,7 @@ import com.kuwai.ysy.module.find.business.FoundHome.FoundFragment;
 import com.kuwai.ysy.module.home.VideohomeActivity;
 import com.kuwai.ysy.module.home.api.HomeApiFactory;
 import com.kuwai.ysy.module.home.bean.login.LoginBean;
+import com.kuwai.ysy.module.home.business.loginmoudle.StartupPageActivity;
 import com.kuwai.ysy.module.home.business.loginmoudle.login.LoginActivity;
 import com.kuwai.ysy.module.mine.business.mine.MineLoginFragment;
 import com.kuwai.ysy.utils.EventBusUtil;
@@ -47,9 +54,14 @@ import com.rayhahah.rbase.base.RBaseFragment;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.FileCallBack;
+import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,6 +69,8 @@ import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
+import okhttp3.Call;
+import okhttp3.Response;
 
 import static com.kuwai.ysy.app.C.MSG_LOGIN;
 
@@ -76,6 +90,9 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
     private String user2 = "r15Y4G6BcSpmSgXbJrf/ClUbwhMPS+kf5yBTiVt919N9HJEQV3wopiEsnyZK5KbUzIcg7rRdn8ZWr7Sv9AIj0A==";
     private UserInfo userInfo;
     private AMapLocationClient mlocationClient;
+    private StartPageBean startPageBean;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     private boolean needImmersive() {
         return false;
@@ -113,6 +130,7 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
         mNavigationController.setupWithViewPager(viewPager);
         getLocation();
         autoLogin();
+        requestReadPermission();
         // connectRongYun(user1);
     }
 
@@ -350,5 +368,75 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void getStartPage() {
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        int screenWidth = dm.widthPixels;
+        int screenHeight = dm.heightPixels;
+        OkHttpUtils
+                .post()
+                .url(C.QiDong)
+                .addParam("img_width", String.valueOf(screenWidth))
+                .addParam("img_height", String.valueOf(screenHeight))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Response response, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        try {
+                            startPageBean = new Gson().fromJson(response, StartPageBean.class);
+                            startPageBean.getData().getImg_url();
+                            startPageBean.getData().getStart_time();
+                            startPageBean.getData().getEnd_time();
+
+                            getPageIMG();
+                        } catch (Exception e) {
+
+                        }
+                    }
+                });
+    }
+
+    private void getPageIMG() {
+
+        OkHttpUtils
+                .get()
+                .url(startPageBean.getData().getImg_url())
+                .build()
+                .execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath() + "/dskgxt/pic/", "start_page.jpg") {
+                    @Override
+                    public void onError(Call call, Response response, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(File response, int id) {
+                        sharedPreferences = getSharedPreferences(C.SP_NAME, Context.MODE_PRIVATE); //私有数据
+                        editor = sharedPreferences.edit();
+                        editor.putLong("start_time", startPageBean.getData().getStart_time());
+                        editor.putLong("end_time", startPageBean.getData().getEnd_time());
+                        editor.putLong("show_time", startPageBean.getData().getShow_time());
+
+                        editor.apply();//提交修改
+                    }
+                });
+
+    }
+
+
+    private void requestReadPermission() {
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        getStartPage();
+                    }
+                });
     }
 }
