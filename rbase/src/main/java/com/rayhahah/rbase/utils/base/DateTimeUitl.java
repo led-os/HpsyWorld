@@ -236,6 +236,7 @@ public class DateTimeUitl {
 
     /**
      * 将字符串转为时间戳
+     *
      * @param dateString
      * @param pattern
      * @return
@@ -243,9 +244,9 @@ public class DateTimeUitl {
     public static long getStringToDate(String dateString, String pattern) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
         Date date = new Date();
-        try{
+        try {
             date = dateFormat.parse(dateString);
-        } catch(ParseException e) {
+        } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -697,6 +698,23 @@ public class DateTimeUitl {
      * @param time 时间字符串
      * @return　　　失败返回　０
      */
+    public static long toSystemTime(String time) {
+        long nRet = 0;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat(SYS_DATE_FORMATE_YMD);
+            Date de = dateFormat.parse(time);
+            nRet = de.getTime() / 1000;
+        } catch (Exception e) {/*DISCARD EXCEPTION*/
+        }
+        return nRet;
+    }
+
+    /**
+     * 将时间字符串转化为秒值（相对 1970年１月１日）
+     *
+     * @param time 时间字符串
+     * @return　　　失败返回　０
+     */
     public static long toSystemTimeLong(String time) {
         long nRet = 0;
         try {
@@ -757,7 +775,7 @@ public class DateTimeUitl {
      *
      * @param input_num     输入的整数
      * @param output_length 输出字符串的长度
-     * @return 参数(32, 4），输出：“0032”，参数(3390, 3)，输出：“3390”
+     * @return 参数(32, 4 ） ， 输出 ： “ 0032 ” ， 参数 ( 3390, 3)，输出：“3390”
      */
     public static String integerToString(int input_num, int output_length) {
         StringBuffer sbPrefix = new StringBuffer();
@@ -1005,6 +1023,24 @@ public class DateTimeUitl {
     }
 
     /**
+     * 比较时间先后
+     *
+     * @param ltime -
+     * @param str1  时间参数 1 格式：2011-11-11
+     * @param str2  时间参数 2 格式：2011-01-01
+     * @return boolean
+     */
+    public static boolean getDistanceDay(String str1, String str2) {
+        boolean result = false;
+        long time1 = toSystemTime(str1);
+        long time2 = toSystemTime(str2);
+        if (((time1 - time2) / 60 / 60 / 24) > 365 * 18) {
+            result = true;
+        }
+        return result;
+    }
+
+    /**
      * 获取某个时间后的n小时
      *
      * @return
@@ -1130,8 +1166,8 @@ public class DateTimeUitl {
         return strs[0] + "-" + strs[1] + "-01";
     }
 
-    public static Long currentTimeMillis(){
-        return System.currentTimeMillis()/1000;
+    public static Long currentTimeMillis() {
+        return System.currentTimeMillis() / 1000;
     }
 
 //	/**
@@ -1347,7 +1383,7 @@ public class DateTimeUitl {
             long now = System.currentTimeMillis() / 1000;
             long publish = Long.parseLong(timeStr);
             long diff = now - publish;
-            long months = diff / (60 * 60 * 24*30);
+            long months = diff / (60 * 60 * 24 * 30);
             long days = diff / (60 * 60 * 24);
             long hours = (diff - days * (60 * 60 * 24)) / (60 * 60);
             long minutes = (diff - days * (60 * 60 * 24) - hours * (60 * 60)) / 60;

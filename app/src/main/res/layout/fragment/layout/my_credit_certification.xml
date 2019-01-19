@@ -29,6 +29,8 @@
 
     </TextView>
 
+    <View style="@style/horizontal_line"/>
+
     <com.allen.library.SuperTextView
         android:id="@+id/st_headicon"
         android:layout_marginTop="1dp"
@@ -37,6 +39,7 @@
         android:paddingStart="6dp"
         app:sLeftTextColor="#282828"
         app:sLeftTextSize="16sp"
+        android:visibility="gone"
         app:sLeftTextString="真实照片认证"
         app:sRightTextColor="#ffbdbdbd"
         app:sRightTextSize="14sp"

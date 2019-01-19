@@ -198,6 +198,13 @@ public class MineApiFactory {
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
+    public static Observable<SimpleResponse> inviteToUpdate(String uid, String pid) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .inviteToUpdate(uid, pid)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
     public static Observable<SimpleResponse> getUpdateProblem(String uid, int pid, String pro, String answer) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)

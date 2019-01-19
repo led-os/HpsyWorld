@@ -164,7 +164,7 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
                 //弹出打赏
                 break;
             case R.id.btn_update:
-                ToastUtils.showShort("提醒成功");
+                mPresenter.invite(SPManager.get().getStringValue("uid"), otherid);
                 break;
             case R.id.right:
                 showPopListView();
@@ -461,7 +461,7 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
                 mBtnLike.setText("取消喜欢");
                 ToastUtils.showShort("喜欢成功");
             } else {
-                mBtnLike.setText("取消成功");
+                mBtnLike.setText("喜欢");
             }
         }
     }
@@ -478,6 +478,14 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
     public void cancelResult(SimpleResponse response) {
         if (response.code == 200) {
             mTvShangxian.setText("上线提醒");
+        }
+        ToastUtils.showShort(response.msg);
+    }
+
+    @Override
+    public void inviteResult(SimpleResponse response) {
+        if (response.code == 200) {
+
         }
         ToastUtils.showShort(response.msg);
     }

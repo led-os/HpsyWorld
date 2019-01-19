@@ -19,14 +19,15 @@ import io.reactivex.functions.Consumer;
  * @fuction
  */
 public class OtherHomepagePresenter extends RBasePresenter<OtherHomepageContract.IHomeView> implements OtherHomepageContract.IHomePresenter {
-    private static final String TAG ="FoundPresenter";
+    private static final String TAG = "FoundPresenter";
+
     public OtherHomepagePresenter(OtherHomepageContract.IHomeView view) {
         super(view);
     }
 
     @Override
-    public void requestHomeData(String uid ,String otherid) {
-        addSubscription(MineApiFactory.getOtherHomepageInfo(uid,otherid).subscribe(new Consumer<PersolHomePageBean>() {
+    public void requestHomeData(String uid, String otherid) {
+        addSubscription(MineApiFactory.getOtherHomepageInfo(uid, otherid).subscribe(new Consumer<PersolHomePageBean>() {
             @Override
             public void accept(PersolHomePageBean persolHomePageBean) throws Exception {
                 mView.setHomeData(persolHomePageBean);
@@ -34,14 +35,14 @@ public class OtherHomepagePresenter extends RBasePresenter<OtherHomepageContract
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                Log.i(TAG, "accept: "+throwable);
+                Log.i(TAG, "accept: " + throwable);
             }
         }));
     }
 
     @Override
     public void like(String uid, String otherId, int type) {
-        addSubscription(MineApiFactory.getUserLike(uid,otherId,type).subscribe(new Consumer<SimpleResponse>() {
+        addSubscription(MineApiFactory.getUserLike(uid, otherId, type).subscribe(new Consumer<SimpleResponse>() {
             @Override
             public void accept(SimpleResponse response) throws Exception {
                 mView.likeResult(response);
@@ -49,14 +50,14 @@ public class OtherHomepagePresenter extends RBasePresenter<OtherHomepageContract
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                Log.i(TAG, "accept: "+throwable);
+                Log.i(TAG, "accept: " + throwable);
             }
         }));
     }
 
     @Override
     public void online(String uid, String otherId) {
-        addSubscription(MineApiFactory.setReminder(uid,otherId).subscribe(new Consumer<SimpleResponse>() {
+        addSubscription(MineApiFactory.setReminder(uid, otherId).subscribe(new Consumer<SimpleResponse>() {
             @Override
             public void accept(SimpleResponse response) throws Exception {
                 mView.onlineResult(response);
@@ -64,14 +65,14 @@ public class OtherHomepagePresenter extends RBasePresenter<OtherHomepageContract
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                Log.i(TAG, "accept: "+throwable);
+                Log.i(TAG, "accept: " + throwable);
             }
         }));
     }
 
     @Override
     public void cancelRemind(String uid, String otherId) {
-        addSubscription(MineApiFactory.setCancelReminder(uid,otherId).subscribe(new Consumer<SimpleResponse>() {
+        addSubscription(MineApiFactory.setCancelReminder(uid, otherId).subscribe(new Consumer<SimpleResponse>() {
             @Override
             public void accept(SimpleResponse response) throws Exception {
                 mView.cancelResult(response);
@@ -79,7 +80,22 @@ public class OtherHomepagePresenter extends RBasePresenter<OtherHomepageContract
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                Log.i(TAG, "accept: "+throwable);
+                Log.i(TAG, "accept: " + throwable);
+            }
+        }));
+    }
+
+    @Override
+    public void invite(String uid, String otherId) {
+        addSubscription(MineApiFactory.inviteToUpdate(uid, otherId).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse response) throws Exception {
+                mView.inviteResult(response);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.i(TAG, "accept: " + throwable);
             }
         }));
     }

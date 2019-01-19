@@ -5,6 +5,8 @@ import com.rayhahah.rbase.utils.base.FileUtils;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import static com.kuwai.ysy.app.C.BaseURL.BASE_URL;
+
 /**
  * 常量配置类
  */
@@ -184,7 +186,7 @@ public class C {
     public static final String REGIST_EDUCATION = "RE_EDUCATION";//学历
 
 
-    public static final String UpDate = "http://192.168.1.88/api/User/appVersion?app_type=android";//更新app
+    public static final String UpDate = BASE_URL + "User/appVersion?app_type=android";//更新app
 
 
 }

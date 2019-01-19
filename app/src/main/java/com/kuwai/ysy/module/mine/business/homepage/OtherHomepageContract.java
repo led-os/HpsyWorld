@@ -26,6 +26,8 @@ public class OtherHomepageContract {
         void likeResult(SimpleResponse response);
         void onlineResult(SimpleResponse response);
         void cancelResult(SimpleResponse response);
+
+        void inviteResult(SimpleResponse response);
     }
 
     public interface IHomePresenter {
@@ -40,5 +42,7 @@ public class OtherHomepageContract {
         void online(String uid,String otherId);
 
         void cancelRemind(String uid,String otherId);
+
+        void invite(String uid,String otherId);
     }
 }

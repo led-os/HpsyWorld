@@ -60,7 +60,7 @@ public class MyFriends {
         private int gender;
         private int height;
         private String education;
-        private int annual_income;
+        private String annual_income;
         private String sig;
         private int is_vip;
         private int friends;
@@ -129,11 +129,11 @@ public class MyFriends {
             this.education = education;
         }
 
-        public int getAnnual_income() {
+        public String getAnnual_income() {
             return annual_income;
         }
 
-        public void setAnnual_income(int annual_income) {
+        public void setAnnual_income(String annual_income) {
             this.annual_income = annual_income;
         }
 

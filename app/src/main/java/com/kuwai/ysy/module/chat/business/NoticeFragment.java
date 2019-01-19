@@ -185,7 +185,7 @@ public class NoticeFragment extends BaseFragment implements View.OnClickListener
                 if (noticeBean.getCode() == 200) {
                     myFriendsAdapter.replaceData(noticeBean.getData());
                 } else {
-                    ToastUtils.showShort(noticeBean.getMsg());
+                    //ToastUtils.showShort(noticeBean.getMsg());
                 }
 
             }

@@ -16,8 +16,11 @@ import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.net.glide.ProgressInterceptor;
 import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.DateTimeUitl;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
+
+import java.util.Calendar;
 
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.picker.DateTimePicker;
@@ -35,11 +38,13 @@ public class InfoSexFragment extends BaseFragment implements View.OnClickListene
     private SuperButton mBtnNext;
 
     private CustomDialog themeDialog;
-    private String mYear = "2018";
+    private String mYear = "1990";
     private String mMonth = "01";
     private String mDay = "01";
 
     private int sex = 0;
+    private Calendar calendar;
+    private boolean isOld = true;
 
     public static InfoSexFragment newInstance() {
         Bundle args = new Bundle();
@@ -64,6 +69,8 @@ public class InfoSexFragment extends BaseFragment implements View.OnClickListene
             case R.id.btn_next:
                 if (sex == 0) {
                     ToastUtils.showShort("请选择性别");
+                } else if (!isOld) {
+                    ToastUtils.showShort("注册年龄需满18周岁");
                 } else {
                     SPManager.get().putString(C.REGIST_GENDER, String.valueOf(sex));
                     SPManager.get().putString(C.REGIST_BIRTHDAY, mTvDate.getText().toString());
@@ -78,6 +85,7 @@ public class InfoSexFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        calendar = Calendar.getInstance();
         mTitle = mRootView.findViewById(R.id.title);
         mSexWarn = mRootView.findViewById(R.id.sex_warn);
         mLaySex = mRootView.findViewById(R.id.lay_sex);
@@ -130,7 +138,7 @@ public class InfoSexFragment extends BaseFragment implements View.OnClickListene
             datePicker.setOffset(2);
             datePicker.setRangeEnd(2020, 12, 31);
             datePicker.setRangeStart(1970, 01, 01);
-            datePicker.setSelectedItem(2018, 01, 01);
+            datePicker.setSelectedItem(1990, 01, 01);
             datePicker.setTopLineColor(0xFF5415f9);
             datePicker.setLabelTextColor(0xFF5415f9);
             datePicker.setDividerColor(0xFF5415f9);
@@ -160,7 +168,17 @@ public class InfoSexFragment extends BaseFragment implements View.OnClickListene
                 @Override
                 public void onClick(View v) {
                     if (themeDialog != null) {
+                        //DateTimeUitl
                         themeDialog.dismiss();
+                    }
+                    String now = calendar.get(Calendar.YEAR) + "-" + String.valueOf(calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DAY_OF_MONTH);
+                    String choose = datePicker.getSelectedYear() + "-" + datePicker.getSelectedMonth() + "-" + datePicker.getSelectedDay();
+                    if (!DateTimeUitl.getDistanceDay(now, choose)) {
+                        isOld = false;
+                        ToastUtils.showShort("注册年龄需满18周岁");
+                        return;
+                    } else {
+                        isOld = true;
                     }
                     mTvDate.setText(datePicker.getSelectedYear() + "-" + datePicker.getSelectedMonth() + "-" + datePicker.getSelectedDay());
                 }

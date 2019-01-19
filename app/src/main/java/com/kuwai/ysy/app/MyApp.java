@@ -25,6 +25,7 @@ import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.module.chat.MyFriendActivity;
 import com.kuwai.ysy.module.home.WebviewH5Activity;
 import com.kuwai.ysy.module.home.business.HomeActivity;
+import com.kuwai.ysy.module.mine.business.homepage.HomePageActivity;
 import com.kuwai.ysy.module.mine.business.like.StLikeActivity;
 import com.kuwai.ysy.module.mine.business.visitor.VisitorActivity;
 import com.kuwai.ysy.net.ApiClient;
@@ -47,6 +48,7 @@ import com.kuwai.ysy.utils.language.LocalManageUtil;
 import com.rayhahah.rbase.BaseApplication;
 import com.rayhahah.rbase.net.OkHttpManager;
 import com.rayhahah.rbase.utils.RCrashHandler;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
 import com.taobao.sophix.PatchStatus;
 import com.taobao.sophix.SophixManager;
@@ -119,55 +121,62 @@ public class MyApp extends BaseApplication {
                     if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
                         EventBusUtil.sendEvent(new MessageEvent(C.MSG_UPDATE_NOTICE));
                         EventBusUtil.sendEvent(new MessageEvent(C.MSG_UNREAD_UPDATE));
-                    }
-                    TxtMsg msg = (TxtMsg) message.getContent();
-                    Intent intent = null;
-                    String content = "";
-                    if ("1".equals(msg.getExtra())) {
-                        //物流相亲
-                        if (!Utils.isNullString(msg.getContent())) {
-                            content = "你有新的通知!";
-                            intent = new Intent(mAppContext, WebviewH5Activity.class);
-                            intent.putExtra(C.H5_FLAG, msg.getContent());
-                        }
-                    } else if ("4".equals(msg.getExtra())) {
-                        //访问提醒
-                        content = "你有新的访问提醒";
-                        intent = new Intent(mAppContext, VisitorActivity.class);
-                    } else if ("5".equals(msg.getExtra())) {
-                        //喜欢提醒
-                        content = "有人喜欢了你";
-                        intent = new Intent(mAppContext, StLikeActivity.class);
-                    } else if ("6".equals(msg.getExtra())) {
-                        //上线提醒
-                        content = "好友上线了";
-                    } else if ("7".equals(msg.getExtra())) {
-                        //约会跳系统通知
-                        content = "你有新的通知!";
-                        intent = new Intent(mAppContext, HomeActivity.class);
-                    } else if ("8".equals(msg.getExtra())) {
-                        //新的朋友
-                        content = "你有新的好友请求";
-                        intent = new Intent(mAppContext, MyFriendActivity.class);
-                    }
-                    //String content = msg.getContent();
-                    //String extra = msg.getExtra();
-                    PendingIntent pendingIntent = PendingIntent.getActivity(mAppContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                    //mAppContext.startActivity(intent);
 
-                    NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                    Notification notification = new NotificationCompat.Builder(mAppContext, "chat")
-                            .setContentTitle(content)
-                            .setContentText("")
-                            .setWhen(System.currentTimeMillis())
-                            .setSmallIcon(R.mipmap.ic_sading)
-                            .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_sading))
-                            .setAutoCancel(true)
-                            .setSound(null)
-                            .setVibrate(new long[]{0})
-                            .setContentIntent(pendingIntent)
-                            .build();
-                    manager.notify(1, notification);
+                        TxtMsg msg = (TxtMsg) message.getContent();
+                        Intent intent = null;
+                        String content = "";
+                        if ("1".equals(msg.getExtra())) {
+                            //物流相亲
+                            if (!Utils.isNullString(msg.getContent())) {
+                                content = "你有新的通知!";
+                                intent = new Intent(mAppContext, WebviewH5Activity.class);
+                                intent.putExtra(C.H5_FLAG, msg.getContent());
+                            }
+                        } else if ("4".equals(msg.getExtra())) {
+                            //访问提醒
+                            content = "你有新的访问提醒";
+                            intent = new Intent(mAppContext, VisitorActivity.class);
+                        } else if ("5".equals(msg.getExtra())) {
+                            //喜欢提醒
+                            content = "有人喜欢了你";
+                            intent = new Intent(mAppContext, StLikeActivity.class);
+                        } else if ("6".equals(msg.getExtra())) {
+                            //上线提醒
+                            content = "您关注的好友" + msg.getContent() + "上线了";
+                        } else if ("7".equals(msg.getExtra())) {
+                            //约会跳系统通知
+                            content = "你有新的通知!";
+                            intent = new Intent(mAppContext, HomeActivity.class);
+                        } else if ("8".equals(msg.getExtra())) {
+                            //新的朋友
+                            content = "你有新的好友请求";
+                            intent = new Intent(mAppContext, MyFriendActivity.class);
+                        } else if ("9".equals(msg.getExtra())) {
+                            //新的朋友
+                            content = "有好友邀请您上传个人图片";
+                            intent = new Intent(mAppContext, HomePageActivity.class);
+                        }
+                        //String content = msg.getContent();
+                        //String extra = msg.getExtra();
+                        PendingIntent pendingIntent = null;
+                        if (intent != null) {
+                            pendingIntent = PendingIntent.getActivity(mAppContext, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                        }
+
+                        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                        Notification notification = new NotificationCompat.Builder(mAppContext, "chat")
+                                .setContentTitle(content)
+                                .setContentText("")
+                                .setWhen(System.currentTimeMillis())
+                                .setSmallIcon(R.mipmap.ic_sading)
+                                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_sading))
+                                .setAutoCancel(true)
+                                .setSound(null)
+                                .setVibrate(new long[]{0})
+                                .setContentIntent(pendingIntent == null ? null : pendingIntent)
+                                .build();
+                        manager.notify(1, notification);
+                    }
                 }
                 return false;
             }
@@ -216,7 +225,7 @@ public class MyApp extends BaseApplication {
     private void initUpdate() {
         XUpdate.get()
                 .debug(true) //开启debug模式，可用于问题的排查
-                .isWifiOnly(true)     //默认设置只在wifi下检查版本更新
+                .isWifiOnly(false)     //默认设置只在wifi下检查版本更新
                 .isGet(true)          //默认设置使用get请求检查版本
                 .isAutoMode(false)    //默认设置非自动模式，可根据具体使用配置
                 .param("VersionCode", UpdateUtils.getVersionCode(this)) //设置默认公共请求参数

@@ -206,7 +206,7 @@ public class DongtaiFragment extends BaseFragment implements View.OnClickListene
                         red_tv.setHasMessage(false);
                     }
                 } else {
-                    ToastUtils.showShort(myBlindBean.getMsg());
+                    //ToastUtils.showShort(myBlindBean.getMsg());
                 }
 
             }

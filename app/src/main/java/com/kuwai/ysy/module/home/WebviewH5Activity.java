@@ -191,15 +191,16 @@ public class WebviewH5Activity extends BaseActivity {
                 }
             });
             h5Webview.addJavascriptInterface(closeCall, "Android");
-        }else if("about".equals(type)){
+        } else if ("about".equals(type)) {
             UpdateCall closeCall = new UpdateCall();
             closeCall.setCallback(new UpdateCall.H5CallBack() {
                 @Override
                 public void update() {
                     XUpdate.newBuild(WebviewH5Activity.this)
                             .updateUrl(C.UpDate)
-                            .themeColor(R.color.colorPrimary)
+                            .themeColor(getResources().getColor(R.color.colorPrimary))
                             .updateParser(new CustomUpdateParser()) //设置自定义的版本更新解析器
+                            .supportBackgroundUpdate(true)
                             .update();
                 }
             });

@@ -100,7 +100,7 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
                     mRewardNum.setMessageNumber(myBlindBean.getData().getGift());
                     mZanNum.setMessageNumber(myBlindBean.getData().getLikes());
                 } else {
-                    ToastUtils.showShort(myBlindBean.getMsg());
+                    //ToastUtils.showShort(myBlindBean.getMsg());
                 }
 
             }

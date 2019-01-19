@@ -299,6 +299,13 @@ public interface MineService {
     Observable<SimpleResponse> getDelAsk(@Field("uid") String uid, @Field("p_id") int pid);
 
     /**
+     * 邀请上传个人图片、视频
+     */
+    @FormUrlEncoded
+    @POST("My/InvitationToUpload")
+    Observable<SimpleResponse> inviteToUpdate(@Field("uid") String uid, @Field("other_uid") String other_uid);
+
+    /**
      * 添加问题
      */
     @FormUrlEncoded
@@ -400,7 +407,7 @@ public interface MineService {
      */
     @FormUrlEncoded
     @POST("My/MessageSettings")
-    Observable<SimpleResponse> noticeChange(@Field("uid") String uid,@Field("type") int type,@Field("set") String set);
+    Observable<SimpleResponse> noticeChange(@Field("uid") String uid, @Field("type") int type, @Field("set") String set);
 
     /**
      * 删除足迹
@@ -438,7 +445,7 @@ public interface MineService {
     @FormUrlEncoded
     @POST("Currency/ScreenPosts")
     Observable<SimpleResponse> ping(@Field("uid") String uid,
-                                          @Field("t_id") int t_id, @Field("type") int type);
+                                    @Field("t_id") int t_id, @Field("type") int type);
 
     /**
      * 积分兑换桃花币

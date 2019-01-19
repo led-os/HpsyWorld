@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -248,6 +249,7 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
         View pannel = View.inflate(getActivity(), R.layout.dialog_yingyue_content, null);
         ImageView head = pannel.findViewById(R.id.img_head);
         TextView title = pannel.findViewById(R.id.tv_name);
+        final EditText content = pannel.findViewById(R.id.dialog_comment_et);
         GlideUtil.load(getActivity(), mcCommisDetailBean.getData().getAvatar(), head);
         title.setText(mcCommisDetailBean.getData().getNickname());
         pannel.findViewById(R.id.tv_send).setOnClickListener(new View.OnClickListener() {
@@ -255,7 +257,7 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
             public void onClick(View v) {
                 customDialog.dismiss();
                 //RongIM.getInstance().setMessageAttachedUserInfo(true);
-                mPresenter.getApply(rid, Integer.valueOf(SPManager.get().getStringValue("uid")), getResources().getString(R.string.meetagree_text));
+                mPresenter.getApply(rid, Integer.valueOf(SPManager.get().getStringValue("uid")), Utils.isNullString(content.getText().toString()) ? getResources().getString(R.string.meetagree_text) : content.getText().toString());
             }
         });
 
@@ -519,7 +521,7 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
             web.setDescription(mcCommisDetailBean.getData().getMessage());//描述
             new ShareAction(getActivity())
                     .withMedia(web)
-                    .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
+                    .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
                     .setCallback(shareListener).open();
         }
 
