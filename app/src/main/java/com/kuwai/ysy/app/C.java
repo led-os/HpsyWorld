@@ -181,7 +181,7 @@ public class C {
     public static final String REGIST_EDUCATION = "RE_EDUCATION";//学历
 
 
-    public static final String UpDate = "https://raw.githubusercontent.com/xuexiangjys/XUpdate/master/jsonapi/update_custom.json";//更新app
+    public static final String UpDate = "http://192.168.1.88/api/User/appVersion?app_type=android";//更新app
 
 
 }

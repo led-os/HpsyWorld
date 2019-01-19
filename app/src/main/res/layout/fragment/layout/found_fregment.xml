@@ -76,7 +76,9 @@
             android:layout_width="match_parent"
             android:layout_height="140dp"
             android:layout_below="@+id/rl_search"
-            android:layout_gravity="center"></com.kuwai.ysy.widget.BannerRound>
+            android:layout_gravity="center">
+
+        </com.kuwai.ysy.widget.BannerRound>
 
         <com.kuwai.ysy.widget.ViewPagerIndicator
             android:id="@+id/indicator_line"

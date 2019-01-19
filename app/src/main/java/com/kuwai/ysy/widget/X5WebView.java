@@ -57,7 +57,12 @@ public class X5WebView extends WebView {
         // webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSetting.setCacheMode(WebSettings.LOAD_NO_CACHE);
 
-
+        webSetting.setAllowContentAccess(true); // 是否可访问Content Provider的资源，默认值 true
+        webSetting.setAllowFileAccess(true);    // 是否可访问本地文件，默认值 true
+        // 是否允许通过file url加载的Javascript读取本地文件，默认值 false
+        webSetting.setAllowFileAccessFromFileURLs(false);
+        // 是否允许通过file url加载的Javascript读取全部资源(包括文件,http,https)，默认值 false
+        webSetting.setAllowUniversalAccessFromFileURLs(false);
         // this.getSettingsExtension().setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);//extension
         // settings 的设计
 

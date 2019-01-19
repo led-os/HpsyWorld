@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.kuwai.ysy.bean.CustomResult;
 import com.xuexiang.xupdate.entity.UpdateEntity;
 import com.xuexiang.xupdate.proxy.IUpdateParser;
+
 /**
  * 自定义更新解析器
  *
@@ -32,13 +33,19 @@ public class CustomUpdateParser implements IUpdateParser {
         CustomResult result = new Gson().fromJson(json, CustomResult.class);
         if (result != null) {
             return new UpdateEntity()
-                    .setHasUpdate(result.hasUpdate)
-                    .setIsIgnorable(result.isIgnorable)
-                    .setVersionCode(result.versionCode)
-                    .setVersionName(result.versionName)
-                    .setUpdateContent(result.updateLog)
-                    .setDownloadUrl(result.apkUrl)
-                    .setSize(result.apkSize);
+//                    .setHasUpdate(result.hasUpdate)
+//                    .setIsIgnorable(result.isIgnorable)
+//                    .setVersionCode(result.versionCode)
+//                    .setVersionName(result.versionName)
+//                    .setUpdateContent(result.updateLog)
+//                    .setDownloadUrl(result.apkUrl)
+//                    .setSize(result.apkSize);
+
+                    .setHasUpdate(result.getData().isIs_force())
+                    .setVersionName(result.getData().getApp_version())
+                    .setUpdateContent(result.getData().getApp_content())
+                    .setDownloadUrl(result.getData().getApp_url())
+                    .setSize(result.getData().getApp_size());
         }
         return null;
     }
