@@ -8,13 +8,17 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.JavascriptInterface;
 
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.listener.ActivityDetailCall;
 import com.kuwai.ysy.listener.AndroidtoJs;
+import com.kuwai.ysy.listener.CloseCall;
 import com.kuwai.ysy.listener.JoinActivityCall;
+import com.kuwai.ysy.listener.UpdateCall;
+import com.kuwai.ysy.utils.CustomUpdateParser;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.kuwai.ysy.widget.X5WebView;
 import com.rayhahah.rbase.base.RBasePresenter;
@@ -23,6 +27,7 @@ import com.rayhahah.rbase.utils.useful.SPManager;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
+import com.xuexiang.xupdate.XUpdate;
 
 import static com.kuwai.ysy.app.C.H5_FLAG;
 
@@ -77,11 +82,13 @@ public class WebviewH5Activity extends BaseActivity {
                 if (title != null) {
                     navigationLayout.setTitle(title);
                 }
+
             }
         });
 
         initHardwareAccelerate();
         initCallBACK();
+
         h5Webview.loadUrl(mHomeUrl);
 
         h5Webview.setWebViewClient(new WebViewClient() {
@@ -176,7 +183,27 @@ public class WebviewH5Activity extends BaseActivity {
             });
             h5Webview.addJavascriptInterface(joinActivityCall, "Android");
         } else if ("yunshi".equals(type)) {
-
+            CloseCall closeCall = new CloseCall();
+            closeCall.setCallback(new CloseCall.H5CallBack() {
+                @Override
+                public void closewebview() {
+                    ToastUtils.showShort("关闭");
+                }
+            });
+            h5Webview.addJavascriptInterface(closeCall, "Android");
+        }else if("about".equals(type)){
+            UpdateCall closeCall = new UpdateCall();
+            closeCall.setCallback(new UpdateCall.H5CallBack() {
+                @Override
+                public void update() {
+                    XUpdate.newBuild(WebviewH5Activity.this)
+                            .updateUrl(C.UpDate)
+                            .themeColor(R.color.colorPrimary)
+                            .updateParser(new CustomUpdateParser()) //设置自定义的版本更新解析器
+                            .update();
+                }
+            });
+            h5Webview.addJavascriptInterface(closeCall, "Android");
         }
     }
 }

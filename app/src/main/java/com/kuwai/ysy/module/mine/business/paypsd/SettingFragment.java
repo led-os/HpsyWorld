@@ -83,6 +83,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
                 break;
             case R.id.st_about:
                 Intent intent1 = new Intent(getActivity(), WebviewH5Activity.class);
+                intent1.putExtra("type", "about");
                 intent1.putExtra(C.H5_FLAG, C.H5_URL + C.ABOUTUS);
                 startActivity(intent1);
                 break;

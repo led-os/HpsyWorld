@@ -42,6 +42,7 @@ import com.kuwai.ysy.rong.RedSendMessageItemProvider;
 import com.kuwai.ysy.rong.TxtMsg;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
+import com.kuwai.ysy.utils.http.OKHttpUpdateHttpService;
 import com.kuwai.ysy.utils.language.LocalManageUtil;
 import com.rayhahah.rbase.BaseApplication;
 import com.rayhahah.rbase.net.OkHttpManager;
@@ -54,6 +55,10 @@ import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
+import com.xuexiang.xupdate.XUpdate;
+import com.xuexiang.xupdate.entity.UpdateError;
+import com.xuexiang.xupdate.listener.OnUpdateFailureListener;
+import com.xuexiang.xupdate.utils.UpdateUtils;
 
 import java.util.List;
 
@@ -205,6 +210,25 @@ public class MyApp extends BaseApplication {
             createNotificationChannel(channelId, channelName, importance);
         }
 
+        initUpdate();
+    }
+
+    private void initUpdate() {
+        XUpdate.get()
+                .debug(true) //开启debug模式，可用于问题的排查
+                .isWifiOnly(true)     //默认设置只在wifi下检查版本更新
+                .isGet(true)          //默认设置使用get请求检查版本
+                .isAutoMode(false)    //默认设置非自动模式，可根据具体使用配置
+                .param("VersionCode", UpdateUtils.getVersionCode(this)) //设置默认公共请求参数
+                .param("AppKey", getPackageName())
+                .setOnUpdateFailureListener(new OnUpdateFailureListener() { //设置版本更新出错的监听
+                    @Override
+                    public void onFailure(UpdateError error) {
+                        ToastUtils.showShort(error.toString());
+                    }
+                })
+                .setIUpdateHttpService(new OKHttpUpdateHttpService()) //这个必须设置！实现网络请求功能。
+                .init(this);   //这个必须初始化
     }
 
     @TargetApi(Build.VERSION_CODES.O)
