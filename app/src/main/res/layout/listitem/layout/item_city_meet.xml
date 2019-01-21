@@ -60,6 +60,8 @@
             android:layout_below="@id/tv_nick"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="8dp"
+            android:lines="3"
+            android:ellipsize="end"
             android:layout_toRightOf="@id/img_head"
             android:text="真诚的想结交朋友,邀约寄语"
             android:textColor="@color/gray_7b" />
