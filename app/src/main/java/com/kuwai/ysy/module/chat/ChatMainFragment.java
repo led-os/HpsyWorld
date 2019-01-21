@@ -115,7 +115,7 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
         fragments.add(conversationListFragment);
         fragments.add(NoticeFragment.newInstance());*/
 
-        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+       /* RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
 
             @Override
             public UserInfo getUserInfo(String userId) {
@@ -123,7 +123,7 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
                 return findUserById(userId);//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。SDK
             }
 
-        }, true);
+        }, true);*/
 
         // 添加页面切换事件的监听器
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -214,8 +214,8 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
     }
 
     //该方法不建议放在有生命周期的地方
-    private UserInfo findUserById(String userId) {
-        addSubscription(ChatApiFactory.getUserInfo(userId).subscribe(new Consumer<UserInfoBean>() {
+   /* private UserInfo findUserById(String userId) {
+        addSubscription(ChatApiFactory.getUserInfo(userId,SPManager.get().getStringValue("uid")).subscribe(new Consumer<UserInfoBean>() {
             @Override
             public void accept(UserInfoBean userInfoBean) throws Exception {
                 if (userInfoBean.getCode() == 200) {
@@ -233,7 +233,7 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
             }
         }));
         return userInfo;
-    }
+    }*/
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void isLogin(MessageEvent event) {

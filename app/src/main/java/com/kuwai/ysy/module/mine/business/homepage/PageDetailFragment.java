@@ -13,18 +13,24 @@ import android.widget.Toast;
 
 import com.allen.library.SuperButton;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.mine.VipCenterActivity;
 import com.kuwai.ysy.module.mine.adapter.PicAdapter;
 import com.kuwai.ysy.module.mine.adapter.homepage.PageGiftReceiveAdapter;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.shadow.FlowLayout;
 import com.kuwai.ysy.widget.shadow.TagAdapter;
 import com.kuwai.ysy.widget.shadow.TagFlowLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.useful.SPManager;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -85,6 +91,7 @@ public class PageDetailFragment extends BaseFragment<PageDetailPresenter> implem
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        EventBusUtil.register(this);
         mIsName = mRootView.findViewById(R.id.tv_isname);
         mIsHouse = mRootView.findViewById(R.id.tv_ishouse);
         mIsEdu = mRootView.findViewById(R.id.tv_isedu);
@@ -131,12 +138,16 @@ public class PageDetailFragment extends BaseFragment<PageDetailPresenter> implem
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         otherid = getArguments().getString("id");
-        mPresenter.requestHomeData(otherid, SPManager.get().getStringValue("uid"));
+        //mPresenter.requestHomeData(otherid, SPManager.get().getStringValue("uid"));
     }
 
     @Override
     public void setHomeData(PersolHomePageBean persolHomePageBean) {
 
+        setPersonData(persolHomePageBean);
+    }
+
+    private void setPersonData(PersolHomePageBean persolHomePageBean) {
         if (SPManager.get().getIntValue("isvip_") == 1) {
             isVipTv.setVisibility(View.GONE);
             mVipLay.setVisibility(View.VISIBLE);
@@ -245,5 +256,19 @@ public class PageDetailFragment extends BaseFragment<PageDetailPresenter> implem
     @Override
     public void showViewError(Throwable t) {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBusUtil.unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void isLogin(MessageEvent event) {
+        if (event.getCode() == C.MSG_UPDATE_OTHER) {
+            PersolHomePageBean persolHomePageBean = (PersolHomePageBean) event.getData();
+            setPersonData(persolHomePageBean);
+        }
     }
 }

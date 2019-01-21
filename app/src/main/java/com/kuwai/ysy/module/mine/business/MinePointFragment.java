@@ -59,6 +59,7 @@ public class MinePointFragment extends BaseFragment implements View.OnClickListe
     private boolean isShowMore = false;
 
     private TextView tv_integral;
+    private boolean isCheck = false;
 
     int daySize = 0;
 
@@ -213,7 +214,9 @@ public class MinePointFragment extends BaseFragment implements View.OnClickListe
                         mSignTv.setText("已签到");
                     }
                 }
-                mStepView.setStepNum(mStepBeans, positon);
+                if (!isCheck) {
+                    mStepView.setStepNum(mStepBeans, positon);
+                }
                 daySize = checkInBean.getData().getDaily_tasks().size();
                 if (daySize > 0) {
                     checkAdapter.replaceData(checkInBean.getData().getDaily_tasks().subList(0, daySize > 3 ? 3 : daySize));
@@ -235,6 +238,7 @@ public class MinePointFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void accept(SimpleResponse simpleResponse) throws Exception {
                 if (simpleResponse.code == 200) {
+                    isCheck = true;
                     mStepView.startSignAnimation(positon - 1);
                     mSignTv.setText("已签到");
                     EventBusUtil.sendEvent(new MessageEvent(C.MSG_CHANGE_INFO));

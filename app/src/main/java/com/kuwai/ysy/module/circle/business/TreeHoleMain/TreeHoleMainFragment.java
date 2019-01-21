@@ -24,6 +24,7 @@ import com.kuwai.ysy.module.circle.api.CircleApiFactory;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.HoleMainListBean;
 import com.kuwai.ysy.module.circle.business.PublishHoleActivity;
+import com.kuwai.ysy.module.home.WebviewH5Activity;
 import com.kuwai.ysy.module.home.business.HomeActivity;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.utils.EventBusUtil;
@@ -41,6 +42,7 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -101,7 +103,7 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
         mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
 
         mPublishTv = mRootView.findViewById(R.id.tv_edit);
-        mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity()){
+        mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity()) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -109,7 +111,7 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
         });
         mDongtaiList.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 4), R.color.black));
         mDongtaiAdapter = new TreeHoleAdapter();
-        mDongtaiList.addOnScrollListener(new HomeActivity.ListScrollListener());
+        //mDongtaiList.addOnScrollListener(new HomeActivity.ListScrollListener());
         mDongtaiList.setAdapter(mDongtaiAdapter);
         mPublishTv.setOnClickListener(this);
 
@@ -150,7 +152,16 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
 
         mBanner = mRootView.findViewById(R.id.banner);
         mBanner.setImageLoader(new GlideImageLoader());
-
+        mBanner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    Intent intent = new Intent(getActivity(), WebviewH5Activity.class);
+                    intent.putExtra(C.H5_FLAG, mHoleMainListBean.getData().getBanner().get(position).getLink() + "?uid=" + SPManager.get().getStringValue("uid"));
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override

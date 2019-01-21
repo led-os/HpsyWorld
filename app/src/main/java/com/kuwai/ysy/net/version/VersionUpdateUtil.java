@@ -123,7 +123,7 @@ public class VersionUpdateUtil {
             Activity context, String title, String version, String versionCode,
             String content, String time, View.OnClickListener confirmListner,
             View.OnClickListener cancelListner) {
-        View view = View.inflate(context, R.layout.dialog_update_version, null);
+        View view = View.inflate(context, R.layout.xupdate_dialog_app, null);
         /*versionBinding.tvItemTitle.setText(title);
         versionBinding.tvVersionName.setText(version);
         versionBinding.tvVersionCode.setText(versionCode);

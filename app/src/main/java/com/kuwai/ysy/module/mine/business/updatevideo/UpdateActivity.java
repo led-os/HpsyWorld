@@ -51,6 +51,9 @@ import com.rayhahah.rbase.utils.useful.SPManager;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,6 +94,7 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void initView() {
+        EventBusUtil.register(this);
         mNavigation = findViewById(R.id.navigation);
         mImgVideoMore = findViewById(R.id.img_normal_more);
         mRlVideo = findViewById(R.id.rl_normal);
@@ -461,6 +465,12 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBusUtil.unregister(this);
+    }
+
     public void publishVideo() {
         UploadHelper helper = UploadHelper.getInstance();
         helper.clear();
@@ -486,5 +496,12 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
                 Log.i(TAG, "accept: " + throwable);
             }
         }));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void isLogin(MessageEvent event) {
+        if (event.getCode() == C.MSG_DELETE_VIDEO) {
+            getWall();
+        }
     }
 }

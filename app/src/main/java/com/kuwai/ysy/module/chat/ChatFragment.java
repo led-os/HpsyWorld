@@ -72,19 +72,9 @@ public class ChatFragment extends BaseFragment implements View.OnClickListener{
                 return userId;
             }
         });*/
-
-        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-
-            @Override
-            public UserInfo getUserInfo(String userId) {
-
-                return findUserById(userId);//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。SDK
-            }
-
-        }, true);
     }
 
-    private UserInfo findUserById(String userId) {
+/*    private UserInfo findUserById(String userId) {
         addSubscription(ChatApiFactory.getUserInfo(userId).subscribe(new Consumer<UserInfoBean>() {
             @Override
             public void accept(UserInfoBean userInfoBean) throws Exception {
@@ -103,7 +93,7 @@ public class ChatFragment extends BaseFragment implements View.OnClickListener{
             }
         }));
         return userInfo;
-    }
+    }*/
 
     @Override
     public void initView(Bundle savedInstanceState) {

@@ -100,9 +100,9 @@ public class NoticeFragment extends BaseFragment implements View.OnClickListener
         mRlDate.setAdapter(dateAdapter);
         mRlSystem.setAdapter(myFriendsAdapter);
         mRlSystem.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        mRlSystem.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 1), R.color.line_color));
+        //mRlSystem.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 1), R.color.line_color));
         mRlDate.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        mRlDate.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 1), R.color.line_color));
+        //mRlDate.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 1), R.color.line_color));
 
         dateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override

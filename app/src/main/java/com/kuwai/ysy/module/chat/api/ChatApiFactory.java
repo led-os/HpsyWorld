@@ -36,10 +36,10 @@ public class ChatApiFactory {
                 .compose(RxSchedulers.<MyFriends>ioMain());
     }
 
-    public static Observable<UserInfoBean> getUserInfo(String uid) {
+    public static Observable<UserInfoBean> getUserInfo(String uid,String myid) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
-                .getUserInfo(uid)
+                .getUserInfo(uid,myid)
                 .compose(RxSchedulers.<UserInfoBean>ioMain());
     }
 

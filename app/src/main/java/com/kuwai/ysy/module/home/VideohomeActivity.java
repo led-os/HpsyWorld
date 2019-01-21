@@ -121,7 +121,7 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
     public void initView(Bundle savedInstanceState) {
         mTvFilter = mRootView.findViewById(R.id.tv_filter);
         rvPic = mRootView.findViewById(R.id.rv_pic);
-        rvPic.addOnScrollListener(new HomeActivity.ListScrollListener());
+        //rvPic.addOnScrollListener(new HomeActivity.ListScrollListener());
         mTvDate = mRootView.findViewById(R.id.tv_date);
 
         mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
@@ -149,7 +149,7 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
         mTvTui.setTextSize(20);
         mTvNear = mRootView.findViewById(R.id.tv_near);
         rvPage2 = mRootView.findViewById(R.id.rv_page2);
-        rvPage2.addOnScrollListener(new HomeActivity.ListScrollListener());
+        //rvPage2.addOnScrollListener(new HomeActivity.ListScrollListener());
         ((SimpleItemAnimator) rvPage2.getItemAnimator()).setSupportsChangeAnimations(false);
         urlList = new ArrayList<>();
         //rvPage2.addOnScrollListener(new HomeActivity.ListScrollListener());

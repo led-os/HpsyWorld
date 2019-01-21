@@ -77,10 +77,10 @@
                 android:background="@drawable/bg_color_radiobutton_selector"
                 android:button="@color/transparent"
                 android:checked="true"
+                android:paddingBottom="4dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
                 android:paddingTop="4dp"
-                android:paddingBottom="4dp"
                 android:text="不限"
                 android:textColor="@color/colorPrimary" />
 
@@ -91,10 +91,10 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/bg_color_radiobutton_selector"
                 android:button="@color/transparent"
+                android:paddingBottom="4dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
                 android:paddingTop="4dp"
-                android:paddingBottom="4dp"
                 android:text="男"
                 android:textColor="@color/colorPrimary" />
 
@@ -104,10 +104,10 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_color_radiobutton_selector"
                 android:button="@color/transparent"
+                android:paddingBottom="4dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
                 android:paddingTop="4dp"
-                android:paddingBottom="4dp"
                 android:text="女"
                 android:textColor="@color/colorPrimary" />
         </RadioGroup>
@@ -119,8 +119,8 @@
     <RelativeLayout
         android:id="@+id/rl_paypal"
         android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_height="53dp">
+        android:layout_height="53dp"
+        android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
@@ -149,10 +149,10 @@
                 android:background="@drawable/bg_color_radiobutton_selector"
                 android:button="@color/transparent"
                 android:checked="true"
+                android:paddingBottom="4dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
                 android:paddingTop="4dp"
-                android:paddingBottom="4dp"
                 android:text="AA"
                 android:textColor="@color/colorPrimary" />
 
@@ -163,10 +163,10 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/bg_color_radiobutton_selector"
                 android:button="@color/transparent"
+                android:paddingBottom="4dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
                 android:paddingTop="4dp"
-                android:paddingBottom="4dp"
                 android:text="我买单"
                 android:textColor="@color/colorPrimary" />
 
@@ -176,10 +176,10 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_color_radiobutton_selector"
                 android:button="@color/transparent"
+                android:paddingBottom="4dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
                 android:paddingTop="4dp"
-                android:paddingBottom="4dp"
                 android:text="你买单"
                 android:textColor="@color/colorPrimary" />
         </RadioGroup>
@@ -192,9 +192,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:background="@color/white"
         android:paddingTop="18dp"
         android:text="邀约寄语"
-        android:background="@color/white"
         android:textColor="@color/balck_28"
         android:textSize="@dimen/sp_16" />
 
@@ -211,9 +211,9 @@
 
     <ImageView
         android:id="@+id/img_up"
-        android:layout_width="60dp"
+        android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_marginTop="14dp"
         android:layout_marginLeft="14dp"
-        android:src="@drawable/ic_btn_gift_add"/>
+        android:layout_marginTop="14dp"
+        android:src="@drawable/center_center_add" />
 </LinearLayout>

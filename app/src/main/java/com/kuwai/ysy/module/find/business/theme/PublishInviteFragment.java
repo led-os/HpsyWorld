@@ -128,7 +128,12 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
         });
 
         themeAdapter = new ThemeAdapter(mDataList);
-        mThemeRl.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+        mThemeRl.setLayoutManager(new GridLayoutManager(getActivity(), 4){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
         mThemeRl.setAdapter(themeAdapter);
 
         mChengyiList.add(new ThemeBean(false, "10桃花币", R.drawable.ic_sel_other, false));
@@ -138,10 +143,20 @@ public class PublishInviteFragment extends BaseFragment<ThemeListPresenter> impl
         mChengyiList.add(new ThemeBean(false, "100桃花币", R.drawable.ic_sel_other, false));
         mChengyiList.add(new ThemeBean(false, "200桃花币", R.drawable.ic_sel_other, false));
         chengyiAdapter = new MoneyAdapter(mChengyiList);
-        mMoneyRl.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        mMoneyRl.setLayoutManager(new GridLayoutManager(getActivity(), 3){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
         mMoneyRl.setAdapter(chengyiAdapter);
 
-        mGiftRl.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+        mGiftRl.setLayoutManager(new GridLayoutManager(getActivity(), 4){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
         publishGiftAdapter = new PublishGiftAdapter(mGiftData, this);
         mGiftRl.setAdapter(publishGiftAdapter);
 

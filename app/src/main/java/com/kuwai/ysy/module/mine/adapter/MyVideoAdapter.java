@@ -12,15 +12,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.circle.VideoPlayActivity;
+import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.kuwai.ysy.module.mine.bean.WallBean;
+import com.kuwai.ysy.utils.EventBusUtil;
+import com.rayhahah.dialoglib.DialogInterface;
+import com.rayhahah.dialoglib.MDAlertDialog;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cc.shinichi.library.ImagePreview;
+import io.reactivex.functions.Consumer;
 
 public class MyVideoAdapter extends RecyclerView.Adapter<MyVideoAdapter.ViewHolder> {
 
@@ -132,6 +142,33 @@ public class MyVideoAdapter extends RecyclerView.Adapter<MyVideoAdapter.ViewHold
                     context.startActivity(intent);
                 }
             });
+
+            ivPhoto.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    final int pos = (int) v.getTag(R.id.image_key);
+
+                    new MDAlertDialog.Builder(context)
+                            .setTitleVisible(false)
+                            .setContentText("删除该视频？")
+                            .setHeight(0.16f)
+                            .setOnclickListener(new DialogInterface.OnLeftAndRightClickListener<MDAlertDialog>() {
+                                @Override
+                                public void clickLeftButton(MDAlertDialog dialog, View view) {
+                                    dialog.dismiss();
+                                }
+
+                                @Override
+                                public void clickRightButton(MDAlertDialog dialog, View view) {
+                                    dialog.dismiss();
+                                    delete(mList.get(pos - 1).getV_id());
+                                }
+                            })
+                            .setCanceledOnTouchOutside(true)
+                            .build().show();
+                    return false;
+                }
+            });
         }
     }
 
@@ -143,5 +180,22 @@ public class MyVideoAdapter extends RecyclerView.Adapter<MyVideoAdapter.ViewHold
          */
         void onItemVideoAddClick();
 
+    }
+
+    public void delete(int picid) {
+        MineApiFactory.deleteVideo(SPManager.get().getStringValue("uid"), picid, 2).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse giftBean) throws Exception {
+                if (giftBean.code == 200) {
+                    EventBusUtil.sendEvent(new MessageEvent(C.MSG_DELETE_VIDEO));
+                }
+                ToastUtils.showShort(giftBean.msg);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                // Log.i(TAG, "accept: " + throwable);
+            }
+        });
     }
 }

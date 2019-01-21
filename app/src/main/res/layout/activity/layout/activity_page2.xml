@@ -59,6 +59,10 @@
             android:layout_marginRight="8dp"
             android:button="@null"
             android:text="推荐"
+            android:shadowColor="#40000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="1"
             android:textColor="#fffffeff"
             android:textSize="18sp" />
 
@@ -68,6 +72,10 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
+            android:shadowColor="#40000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="1"
             android:background="@color/white" />
 
         <RadioButton
@@ -77,6 +85,10 @@
             android:layout_marginLeft="8dp"
             android:button="@null"
             android:text="附近"
+            android:shadowColor="#40000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="1"
             android:textColor="#fffffeff"
             android:textSize="16sp" />
 

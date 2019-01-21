@@ -88,7 +88,7 @@ public class MyFragment extends BaseFragment<CirclePresent> implements View.OnCl
                         (position % 2 == 0) ? offset : 0, offset);
             }
         });
-        mRecycleView.addOnScrollListener(new HomeActivity.ListScrollListener());
+        //mRecycleView.addOnScrollListener(new HomeActivity.ListScrollListener());
 
         mHomeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override

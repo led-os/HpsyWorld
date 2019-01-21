@@ -89,7 +89,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         mHomeAdapter = new HomeAdapter(list);
         mRecycleView.setAdapter(mHomeAdapter);
         mRecycleView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        mRecycleView.addOnScrollListener(new HomeActivity.ListScrollListener());
+        //mRecycleView.addOnScrollListener(new HomeActivity.ListScrollListener());
 
         mHomeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override

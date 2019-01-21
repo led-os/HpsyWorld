@@ -13,7 +13,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Process;
 import android.support.multidex.MultiDex;
 import android.support.v4.app.NotificationCompat;
@@ -22,7 +25,10 @@ import android.util.Log;
 
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.bean.MessageEvent;
+import com.kuwai.ysy.module.chat.DialogAcitvity;
 import com.kuwai.ysy.module.chat.MyFriendActivity;
+import com.kuwai.ysy.module.chat.api.ChatApiFactory;
+import com.kuwai.ysy.module.chat.bean.UserInfoBean;
 import com.kuwai.ysy.module.home.WebviewH5Activity;
 import com.kuwai.ysy.module.home.business.HomeActivity;
 import com.kuwai.ysy.module.mine.business.homepage.HomePageActivity;
@@ -65,12 +71,14 @@ import com.xuexiang.xupdate.utils.UpdateUtils;
 import java.util.List;
 
 import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Message;
+import io.rong.imlib.model.UserInfo;
 import okhttp3.OkHttpClient;
 
 public class MyApp extends BaseApplication {
@@ -78,6 +86,7 @@ public class MyApp extends BaseApplication {
     private RCrashHandler.CrashUploader mCrashUploader;
     private static float sNoncompatDensity;
     private static float sNoncompatScaledDensity;
+    private UserInfo userInfo;
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -181,6 +190,47 @@ public class MyApp extends BaseApplication {
                 return false;
             }
         });
+
+        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+
+            @Override
+            public UserInfo getUserInfo(String userId) {
+
+                return findUserById(userId);//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。SDK
+            }
+
+        }, false);
+
+        RongIM.setConnectionStatusListener(new RongIMClient.ConnectionStatusListener() {
+            @Override
+            public void onChanged(ConnectionStatus connectionStatus) {
+                switch (connectionStatus) {
+
+                    case CONNECTED://连接成功。
+
+                        break;
+                    case DISCONNECTED://断开连接。
+
+                        break;
+                    case CONNECTING://连接中。
+
+                        break;
+                    case NETWORK_UNAVAILABLE://网络不可用。
+
+                        break;
+                    case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(getApplicationContext(), DialogAcitvity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                                getApplicationContext().startActivity(intent);
+                            }
+                        });
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -262,6 +312,27 @@ public class MyApp extends BaseApplication {
 
     private void initBugly() {
         CrashReport.initCrashReport(getApplicationContext(), C.BUGLY.APP_ID, true);
+    }
+
+    private UserInfo findUserById(String userId) {
+        ChatApiFactory.getUserInfo(userId, SPManager.get().getStringValue("uid")).subscribe(new Consumer<UserInfoBean>() {
+            @Override
+            public void accept(UserInfoBean userInfoBean) throws Exception {
+                if (userInfoBean.getCode() == 200) {
+                    userInfo = new UserInfo(String.valueOf(userInfoBean.getData().getUid()), userInfoBean.getData().getNickname(), Uri.parse(userInfoBean.getData().getAvatar()));
+                    RongIM.getInstance().refreshUserInfoCache(userInfo);
+                } else {
+                    //ToastUtils.showShort(myBlindBean.getMsg());
+                }
+
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //ToastUtils.showShort("网络错误");
+            }
+        });
+        return userInfo;
     }
 
     /**

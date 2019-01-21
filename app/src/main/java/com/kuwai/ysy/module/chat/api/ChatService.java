@@ -65,7 +65,7 @@ public interface ChatService {
     //好友申请列表
     @FormUrlEncoded
     @POST("Currency/UserInformation")
-    Observable<UserInfoBean> getUserInfo(@Field("uid") String uid);
+    Observable<UserInfoBean> getUserInfo(@Field("uid") String uid,@Field("loginguserid") String loginguserid);
 
     //同意拒绝申请
     @FormUrlEncoded
@@ -90,7 +90,7 @@ public interface ChatService {
     //设置备注
     @FormUrlEncoded
     @POST("Chat/Remarks")
-    Observable<SimpleResponse> setRemark(@Field("uid") String uid,@Field("other_uid") String other_id,@Field("other_nickname") String other_nickname);
+    Observable<SimpleResponse> setRemark(@Field("uid") String uid,@Field("other_id") String other_id,@Field("other_nickname") String other_nickname);
 
     //加入黑名单
     @FormUrlEncoded

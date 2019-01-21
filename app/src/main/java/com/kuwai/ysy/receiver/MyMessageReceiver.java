@@ -30,27 +30,28 @@ public class MyMessageReceiver extends PushMessageReceiver {
         String jsonStr = pushNotificationMessage.getExtra();
         Gson gson = new Gson();
         PushContent p = gson.fromJson(jsonStr, PushContent.class);
+        if (p != null) {
+            if (p.getType() == 1) {
+                if (!Utils.isNullString(p.getUrl())) {
+                    Intent intent = new Intent(context, WebviewH5Activity.class);
+                    intent.putExtra(C.H5_FLAG, p.getUrl());
+                    context.startActivity(intent);
+                }
+            } else if (p.getType() == 4) {
+                Intent intent = new Intent(context, VisitorActivity.class);
+                context.startActivity(intent);
+            } else if (p.getType() == 5) {
+                Intent intent = new Intent(context, StLikeActivity.class);
+                context.startActivity(intent);
+            } else if (p.getType() == 6) {
 
-        if (p.getType() == 1) {
-            if (!Utils.isNullString(p.getUrl())) {
-                Intent intent = new Intent(context, WebviewH5Activity.class);
-                intent.putExtra(C.H5_FLAG, p.getUrl());
+            } else if (p.getType() == 7) {
+                Intent intent = new Intent(context, HomeActivity.class);
+                context.startActivity(intent);
+            } else if (p.getType() == 8) {
+                Intent intent = new Intent(context, MyFriendActivity.class);
                 context.startActivity(intent);
             }
-        } else if (p.getType() == 4) {
-            Intent intent = new Intent(context, VisitorActivity.class);
-            context.startActivity(intent);
-        } else if (p.getType() == 5) {
-            Intent intent = new Intent(context, StLikeActivity.class);
-            context.startActivity(intent);
-        } else if (p.getType() == 6) {
-
-        } else if (p.getType() == 7) {
-            Intent intent = new Intent(context, HomeActivity.class);
-            context.startActivity(intent);
-        }else if(p.getType() == 8){
-            Intent intent = new Intent(context, MyFriendActivity.class);
-            context.startActivity(intent);
         }
         return true;
     }

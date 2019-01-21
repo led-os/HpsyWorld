@@ -1,5 +1,6 @@
 package com.kuwai.ysy.common;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.AppManager;
 import com.kuwai.ysy.utils.language.LocalManageUtil;
 import com.kuwai.ysy.widget.MultipleStatusView;
 import com.rayhahah.rbase.base.RBaseActivity;
@@ -16,14 +18,19 @@ import com.rayhahah.rbase.fragmentmanage.anim.FragmentAnimator;
 import com.rayhahah.rbase.utils.base.StatusBarUtil;
 import com.rayhahah.rbase.utils.base.StatusBartext;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public abstract class BaseActivity<T extends RBasePresenter> extends RBaseActivity<T> {
 
     protected MultipleStatusView mLayoutStatusView = null;
+    public static List<Activity> activities = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppManager.getAppManager().addActivity(this);
         if (needImmersive()) {
             StatusBarUtil.setColor(this, getResources().getColor(R.color.transparent), 0);
             StatusBarUtil.setLightMode(this);
@@ -61,7 +68,11 @@ public abstract class BaseActivity<T extends RBasePresenter> extends RBaseActivi
 
     }
 
-    ;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppManager.getAppManager().finishActivity(this);
+    }
 
     private boolean needImmersive() {
         return true;

@@ -74,7 +74,7 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
     private String income = "";
     private int zeincomeId = 4;
     private String zeincome = "";
-    private String mYear = "2018";
+    private String mYear = "1990";
     private String mMonth = "01";
     private String mDay = "01";
     private String eduTv = "大专";
@@ -179,10 +179,10 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
     }
 
     private void setData() {
-        if(mPersolHomePageBean!=null){
-            PersolHomePageBean.DataBean.InfoBean bean =  mPersolHomePageBean.getData().getInfo();
-            mTvId.setCenterString(bean.getUid()+"");
-            mTvHeight.setCenterString(bean.getHeight()+"");
+        if (mPersolHomePageBean != null) {
+            PersolHomePageBean.DataBean.InfoBean bean = mPersolHomePageBean.getData().getInfo();
+            mTvId.setCenterString(bean.getUid() + "");
+            mTvHeight.setCenterString(bean.getHeight() + "");
             mTvNick.setCenterString(bean.getNickname());
             mTvBirth.setCenterString(bean.getBirthday());
             mTvEdu.setCenterString(bean.getEducation());
@@ -343,7 +343,7 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
             datePicker.setOffset(2);
             datePicker.setRangeEnd(2020, 12, 31);
             datePicker.setRangeStart(1970, 01, 01);
-            datePicker.setSelectedItem(2018, 01, 01);
+            datePicker.setSelectedItem(1990, 01, 01);
             datePicker.setTopLineColor(0xFF5415f9);
             datePicker.setLabelTextColor(0xFF5415f9);
             datePicker.setDividerColor(0xFF5415f9);
@@ -865,6 +865,9 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
         }
         if (!Utils.isNullString(mTvIncome.getCenterString())) {
             params.put("annual_income", incomeId);
+        }
+        if (!Utils.isNullString(mTvBirth.getCenterString())) {
+            params.put("age", mTvBirth.getCenterString());
         }
         if (!Utils.isNullString(mTvPlace.getCenterString())) {
             params.put("city", cityId);

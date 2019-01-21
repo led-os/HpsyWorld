@@ -168,6 +168,10 @@ public class C {
     public static final int MSG_UPDATE_VIDEO = 0x000001003;
     public static final int MSG_UPDATE_NOTICE = 0x000001004;
     public static final int MSG_UNREAD_UPDATE = 0x000001005;
+    public static final int MSG_DELETE_VIDEO = 0x000001006;
+    public static final int MSG_UPDATE_OTHER = 0x000001007;
+    public static final int EVENT_FORCE_OUT = 0x000001008;
+
 
     //注册参数
     public static final String REGIST_NAME = "RE_NAME";//昵称

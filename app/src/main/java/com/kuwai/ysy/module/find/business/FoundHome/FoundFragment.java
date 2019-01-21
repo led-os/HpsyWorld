@@ -28,6 +28,7 @@ import com.kuwai.ysy.module.chat.business.redpack.SendRedActivity;
 import com.kuwai.ysy.module.find.CityMeetActivity;
 import com.kuwai.ysy.module.find.CommisDetailOtherActivity;
 import com.kuwai.ysy.module.find.FoundLocationActivity;
+import com.kuwai.ysy.module.find.SearchMeetActivity;
 import com.kuwai.ysy.module.find.business.CityMeet.SearchMeetFragment;
 import com.kuwai.ysy.module.find.business.CommisDetail.CommisDetailFragment;
 import com.kuwai.ysy.module.find.business.CommisDetailMyActivity;
@@ -134,7 +135,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
                 startActivityForResult(new Intent(getActivity(), FoundLocationFragment.class), 0);
                 break;
             case R.id.et_search:
-                startActivity(new Intent(getActivity(), SearchMeetFragment.class));
+                startActivity(new Intent(getActivity(), SearchMeetActivity.class));
                 break;
         }
     }
@@ -168,7 +169,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
             public void OnBannerClick(int position) {
                 if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
                     Intent intent = new Intent(getActivity(), WebviewH5Activity.class);
-                    intent.putExtra(C.H5_FLAG, C.H5_URL + C.INVITE + SPManager.get().getStringValue("uid"));
+                    intent.putExtra(C.H5_FLAG, mFoundBean.getData().getBanner().get(position).getLink() + "?uid=" + SPManager.get().getStringValue("uid"));
                     startActivity(intent);
                 }
             }
@@ -186,7 +187,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
         mTvActivity = mRootView.findViewById(R.id.tv_activity);
         mRvActivity = mRootView.findViewById(R.id.rv_activity);
 
-        scrollView.setOnScrollChangeListener(new HomeActivity.ScroolListener());
+        //scrollView.setOnScrollChangeListener(new HomeActivity.ScroolListener());
 
         mCitymeetMore.setOnClickListener(this);
         mTuodanMore.setOnClickListener(this);

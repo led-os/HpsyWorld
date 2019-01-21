@@ -347,6 +347,8 @@ public class AddressChooseActivity extends AppCompatActivity implements Location
                     && result.getRegeocodeAddress().getFormatAddress() != null) {
                 String address = result.getRegeocodeAddress().getProvince() + result.getRegeocodeAddress().getCity() + result.getRegeocodeAddress().getDistrict() + result.getRegeocodeAddress().getTownship();
                 firstItem = new PoiItem("regeo", searchLatlonPoint, address, address);
+                firstItem.setCityName(result.getRegeocodeAddress().getCity());
+                firstItem.setAdName(result.getRegeocodeAddress().getDistrict());
                 doSearchQuery();
             }
         } else {

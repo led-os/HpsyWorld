@@ -2,10 +2,8 @@ package com.rayhahah.rbase;
 
 import android.app.Application;
 
-import com.facebook.stetho.Stetho;
 import com.rayhahah.rbase.utils.useful.RLog;
 import com.rayhahah.rbase.utils.useful.SPManager;
-import com.squareup.leakcanary.LeakCanary;
 
 /**
  * Created by a on 2017/5/27.

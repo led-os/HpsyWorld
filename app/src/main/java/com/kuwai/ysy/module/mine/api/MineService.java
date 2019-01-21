@@ -596,4 +596,11 @@ public interface MineService {
     @POST("UserVip/OpenMembership")
     Observable<SimpleResponse> openVip(@FieldMap Map<String, Object> infos);
 
+    /**
+     * 照片墙删除图片/视频
+     */
+    @FormUrlEncoded
+    @POST("My/DelUserPhotoWall")
+    Observable<SimpleResponse> deleteVideo(@Field("uid") String uid, @Field("v_id") int v_id, @Field("type") int type);
+
 }

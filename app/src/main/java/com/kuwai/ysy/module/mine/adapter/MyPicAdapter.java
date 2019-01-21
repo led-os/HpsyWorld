@@ -8,16 +8,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
+import com.kuwai.ysy.bean.SimpleResponse;
+import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.module.mine.bean.WallBean;
+import com.kuwai.ysy.utils.EventBusUtil;
+import com.rayhahah.dialoglib.DialogInterface;
+import com.rayhahah.dialoglib.MDAlertDialog;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cc.shinichi.library.ImagePreview;
-import cc.shinichi.library.view.listener.OnBigImageClickListener;
-import cc.shinichi.library.view.listener.OnBigImageLongClickListener;
-import io.rong.imkit.MainActivity;
+import io.reactivex.functions.Consumer;
 
 public class MyPicAdapter extends RecyclerView.Adapter<MyPicAdapter.ViewHolder> {
 
@@ -173,6 +180,32 @@ public class MyPicAdapter extends RecyclerView.Adapter<MyPicAdapter.ViewHolder> 
                             .start();
                 }
             });
+
+            ivPhoto.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    final int pos = (int) v.getTag(R.id.image_key);
+                    new MDAlertDialog.Builder(context)
+                            .setTitleVisible(false)
+                            .setContentText("删除该图片？")
+                            .setHeight(0.16f)
+                            .setOnclickListener(new DialogInterface.OnLeftAndRightClickListener<MDAlertDialog>() {
+                                @Override
+                                public void clickLeftButton(MDAlertDialog dialog, View view) {
+                                    dialog.dismiss();
+                                }
+
+                                @Override
+                                public void clickRightButton(MDAlertDialog dialog, View view) {
+                                    dialog.dismiss();
+                                    delete(mList.get(pos - 1).getI_id());
+                                }
+                            })
+                            .setCanceledOnTouchOutside(true)
+                            .build().show();
+                    return false;
+                }
+            });
         }
     }
 
@@ -183,6 +216,22 @@ public class MyPicAdapter extends RecyclerView.Adapter<MyPicAdapter.ViewHolder> 
          * 继续添加图片接口
          */
         void onItemPicAddClick();
+    }
 
+    public void delete(int picid) {
+        MineApiFactory.deleteVideo(SPManager.get().getStringValue("uid"), picid, 1).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse giftBean) throws Exception {
+                if (giftBean.code == 200) {
+                    EventBusUtil.sendEvent(new MessageEvent(C.MSG_DELETE_VIDEO));
+                }
+                ToastUtils.showShort(giftBean.msg);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                // Log.i(TAG, "accept: " + throwable);
+            }
+        });
     }
 }

@@ -339,7 +339,7 @@ public class PostAppointmentFragment extends BaseFragment<PostAppointmentPresent
                     if (themeDialog != null) {
                         themeDialog.dismiss();
                     }
-                    mTvTime.setRightString(picker.getSelectedYear() + "-" + picker.getSelectedMonth() + "-" + picker.getSelectedDay() + "  " + picker.getSelectedHour() + ":" + picker.getSelectedMinute());
+                    mTvTime.setRightString(picker.getSelectedYear() + "-" + picker.getSelectedMonth() + "-" + picker.getSelectedDay() + " " + picker.getSelectedHour() + ":" + picker.getSelectedMinute());
                 }
             });
             themeDialog = new CustomDialog.Builder(getActivity())

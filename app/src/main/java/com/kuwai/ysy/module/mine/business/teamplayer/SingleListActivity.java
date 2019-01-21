@@ -12,7 +12,6 @@ import com.kuwai.ysy.R;
 import com.kuwai.ysy.bean.PlayerListBean;
 import com.kuwai.ysy.bean.TeamListBean;
 import com.kuwai.ysy.common.BaseActivity;
-import com.kuwai.ysy.module.mine.adapter.TeamListAdapter;
 
 import java.util.List;
 
@@ -71,11 +70,11 @@ public class SingleListActivity extends BaseActivity<SingleListPresenter>
         currentTeamData = teamList;
         rvSingleList.setLayoutManager(
                 new GridLayoutManager(this, 3, LinearLayoutManager.VERTICAL, false));
-        TeamListAdapter teamListAdapter = new TeamListAdapter();
+        /*TeamListAdapter teamListAdapter = new TeamListAdapter();
         teamListAdapter.setNewData(teamList);
         teamListAdapter.openLoadAnimation();
         teamListAdapter.setOnItemChildClickListener(this);
-        rvSingleList.setAdapter(teamListAdapter);
+        rvSingleList.setAdapter(teamListAdapter);*/
     }
 
     @Override

@@ -1,22 +1,13 @@
 package com.kuwai.ysy.utils;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
-import android.provider.MediaStore;
-
-import com.facebook.stetho.common.LogUtil;
-import com.luck.picture.lib.tools.Constant;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -26,7 +17,8 @@ public class UploadHelper {
     public static HashMap<String, RequestBody> params;
     private Uri photoUri;
 
-    private UploadHelper() {}
+    private UploadHelper() {
+    }
 
     //单例模式
     public static UploadHelper getInstance() {
@@ -61,7 +53,7 @@ public class UploadHelper {
     }
 
     //清除参数
-    public void clear(){
+    public void clear() {
         params.clear();
     }
 
@@ -84,7 +76,6 @@ public class UploadHelper {
                 mList.get(i).compress(Bitmap.CompressFormat.JPEG, 100, out);
                 out.flush();
                 out.close();
-                LogUtil.e("最终上传图片的路径------>" + files[i].getAbsolutePath());
             } catch (Exception e) {
                 e.printStackTrace();
             }

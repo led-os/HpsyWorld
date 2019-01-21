@@ -463,4 +463,11 @@ public class MineApiFactory {
                 .openVip(param)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
+
+    public static Observable<SimpleResponse> deleteVideo(String uid, int t_id, int type) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .deleteVideo(uid, t_id, type)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
 }

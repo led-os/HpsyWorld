@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="bottom"
+            android:textCursorDrawable="@drawable/textcusor"
             android:background="@drawable/rc_edit_text_background_selector"
             android:paddingTop="3dp"
             android:maxLines="4"

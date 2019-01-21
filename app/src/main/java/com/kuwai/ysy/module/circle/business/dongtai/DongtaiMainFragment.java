@@ -153,7 +153,7 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
 
         mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mDongtaiAdapter = new DongtaiAdapter(mImageWatcher);
-        mDongtaiList.addOnScrollListener(new HomeActivity.ListScrollListener());
+        //mDongtaiList.addOnScrollListener(new HomeActivity.ListScrollListener());
         mDongtaiList.setAdapter(mDongtaiAdapter);
         ((SimpleItemAnimator) mDongtaiList.getItemAnimator()).setSupportsChangeAnimations(false);
         mPublishTv.setOnClickListener(this);

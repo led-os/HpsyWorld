@@ -40,6 +40,7 @@ import com.kuwai.ysy.module.circle.business.DyDashang.DyDashangListFragment;
 import com.kuwai.ysy.module.circle.business.dycomment.DySecFragment;
 import com.kuwai.ysy.module.circle.business.DyZan.DyZanListFragment;
 import com.kuwai.ysy.module.find.bean.GiftPopBean;
+import com.kuwai.ysy.module.mine.OtherHomeActivity;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.others.NineImageAdapter;
 import com.kuwai.ysy.utils.EventBusUtil;
@@ -144,6 +145,17 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.img_head:
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    if (!SPManager.get().getStringValue("uid").equals(String.valueOf(mDyDetailBean.getData().getUid()))) {
+                        Intent intent1 = new Intent(getActivity(), OtherHomeActivity.class);
+                        intent1.putExtra("uid", String.valueOf(mDyDetailBean.getData().getUid()));
+                        startActivity(intent1);
+                    }
+                } else {
+                    ToastUtils.showShort(R.string.login_error);
+                }
+                break;
             case R.id.iv_playimg:
                 Intent intent = new Intent(getActivity(), VideoPlayActivity.class);
                 Bundle bundle = new Bundle();
@@ -190,6 +202,7 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
         index = getArguments().getInt("index");
         mImgHead = (NiceImageView) mRootView.findViewById(R.id.img_head);
         mTvNick = (TextView) mRootView.findViewById(R.id.tv_nick);
+        mImgHead.setOnClickListener(this);
         mIvSex = mRootView.findViewById(R.id.iv_sex);
         rl_play = mRootView.findViewById(R.id.rl_play);
         iv_playimg = mRootView.findViewById(R.id.iv_playimg);
@@ -442,7 +455,7 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
             web.setDescription(mDyDetailBean.getData().getText());//描述
             new ShareAction(getActivity())
                     .withMedia(web)
-                    .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
+                    .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
                     .setCallback(shareListener).open();
         }
 

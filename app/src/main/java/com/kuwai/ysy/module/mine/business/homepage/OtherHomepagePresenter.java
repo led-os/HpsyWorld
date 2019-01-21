@@ -2,12 +2,15 @@ package com.kuwai.ysy.module.mine.business.homepage;
 
 import android.util.Log;
 
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.find.api.FoundApiFactory;
 import com.kuwai.ysy.module.find.bean.FoundHome.FoundBean;
 import com.kuwai.ysy.module.find.business.FoundHome.FoundContract;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.rayhahah.rbase.base.RBasePresenter;
 
 import io.reactivex.functions.Consumer;
@@ -31,6 +34,9 @@ public class OtherHomepagePresenter extends RBasePresenter<OtherHomepageContract
             @Override
             public void accept(PersolHomePageBean persolHomePageBean) throws Exception {
                 mView.setHomeData(persolHomePageBean);
+                if(persolHomePageBean.getData()!=null){
+                    EventBusUtil.sendEvent(new MessageEvent(C.MSG_UPDATE_OTHER,persolHomePageBean));
+                }
             }
         }, new Consumer<Throwable>() {
             @Override

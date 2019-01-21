@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
-import com.kuwai.ysy.module.circle.adapter.CircleAdapter;
 import com.kuwai.ysy.module.home.bean.HomeBean;
 import com.rayhahah.rbase.base.RBasePresenter;
 
@@ -20,7 +19,7 @@ public class CircleFragment extends BaseFragment{
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     //private FriendCircleAdapter mFriendCircleAdapter;
-    private CircleAdapter circleAdapter;
+    //private CircleAdapter circleAdapter;
     private List<HomeBean.IssueListBean.ItemListBean> dataList= new ArrayList<>();
 
     public static CircleFragment newInstance() {
@@ -61,8 +60,8 @@ public class CircleFragment extends BaseFragment{
         bean.setData(new HomeBean.IssueListBean.ItemListBean.DataBean());
         bean.getData().setImage("http://pic.chinahpsy.com/home/750/cq.jpg");
         dataList.add(bean);
-        circleAdapter = new CircleAdapter(dataList);
-        recyclerView.setAdapter(circleAdapter);
+        //circleAdapter = new CircleAdapter(dataList);
+        //recyclerView.setAdapter(circleAdapter);
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
