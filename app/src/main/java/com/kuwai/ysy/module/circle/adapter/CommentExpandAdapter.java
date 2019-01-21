@@ -98,6 +98,13 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
             groupHolder = (GroupHolder) convertView.getTag();
         }
         GlideUtil.load(context, commentBeanList.get(groupPosition).getAvatar(), groupHolder.logo);
+        groupHolder.logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addSecComment.toHomePage(commentBeanList.get(groupPosition).getUid());
+            }
+        });
+
         groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getNickname());
         groupHolder.tv_time.setText(DateTimeUitl.getStandardDate(String.valueOf(commentBeanList.get(groupPosition).getUpdate_time())));
         groupHolder.tv_content.setText(commentBeanList.get(groupPosition).getText());
@@ -243,6 +250,8 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         void addSec(String comId, int comUid, int pos);
 
         void commantZan(int comId, int comUid, int pos, int state);
+
+        void toHomePage(int uid);
     }
 
 }

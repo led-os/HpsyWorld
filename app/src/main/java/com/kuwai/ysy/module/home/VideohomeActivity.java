@@ -525,7 +525,7 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
             param.put("uid", SPManager.get().getStringValue("uid"));
         }
         param.put("longitude", SPManager.get().getStringValue("longitude"));
-        param.put("latitude", SPManager.get().getStringValue("longitude"));
+        param.put("latitude", SPManager.get().getStringValue("latitude"));
         param.put("page", nearPage);
         addSubscription(HomeApiFactory.getHomeData(param).subscribe(new Consumer<HomeVideoBean>() {
             @Override
@@ -551,7 +551,7 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
             param.put("uid", SPManager.get().getStringValue("uid"));
         }
         param.put("longitude", SPManager.get().getStringValue("longitude"));
-        param.put("latitude", SPManager.get().getStringValue("longitude"));
+        param.put("latitude", SPManager.get().getStringValue("latitude"));
         param.put("page", nearPage + 1);
         addSubscription(HomeApiFactory.getHomeData(param).subscribe(new Consumer<HomeVideoBean>() {
             @Override
