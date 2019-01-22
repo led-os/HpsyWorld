@@ -5,7 +5,7 @@
     <color name="colorAccent">#ad99fc</color>
 
     <color name="theme">#5417f5</color>
-    <color name="bg_theme">#B35417f5</color>
+    <color name="bg_theme">#5417f5</color>
     <color name="bg_gray_06">#6732f8</color>
     <!-- title 半透明背景颜色 -->
     <color name="color_title_bg">#CCFFFFFF</color>
@@ -46,6 +46,7 @@
     <color name="gray_e6">#e6e6e6</color>
     <color name="balck_28">#282828</color>
     <color name="grey_bd">#bdbdbd</color>
+    <color name="bg_tequan">#33eabc8f</color>
     <color name="line_color">#eeeeee</color>
     <color name="divider">#ffd2d2d2</color>
     <color name="bg_color_f4">#f4f4f4</color>

@@ -20,8 +20,10 @@ import com.kuwai.ysy.module.home.business.loginmoudle.login.LoginActivity;
 import com.kuwai.ysy.module.mine.SettingActivity;
 import com.kuwai.ysy.module.mine.business.SecurityFragment;
 import com.kuwai.ysy.module.mine.business.black.BlackFragment;
+import com.kuwai.ysy.utils.DataCleanManager;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.widget.NavigationLayout;
+import com.rayhahah.dialoglib.MDAlertDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
@@ -94,8 +96,27 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
                 //start(MsgNoticeFragment.newInstance());
                 break;
             case R.id.st_clear:
-                ToastUtils.showShort("缓存清除成功");
-                //start(MsgNoticeFragment.newInstance());
+                //ToastUtils.showShort("缓存清除成功");
+                new MDAlertDialog.Builder(getActivity())
+                        .setTitleVisible(false)
+                        .setContentText("确认清除缓存？")
+                        .setHeight(0.16f)
+                        .setOnclickListener(new com.rayhahah.dialoglib.DialogInterface.OnLeftAndRightClickListener<MDAlertDialog>() {
+                            @Override
+                            public void clickLeftButton(MDAlertDialog dialog, View view) {
+                                dialog.dismiss();
+                            }
+
+                            @Override
+                            public void clickRightButton(MDAlertDialog dialog, View view) {
+                                dialog.dismiss();
+                                mStClear.setRightString("0.0M");
+                                ToastUtils.showShort("缓存清除成功");
+                                DataCleanManager.clearAllCache(getActivity());
+                            }
+                        })
+                        .setCanceledOnTouchOutside(true)
+                        .build().show();
                 break;
             case R.id.st_exit:
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -153,6 +174,12 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
         mStAgree.setOnClickListener(this);
         mStHelp.setOnClickListener(this);
         mStBlack.setOnClickListener(this);
+        mStClear.setOnClickListener(this);
+        try {
+            mStClear.setRightString(DataCleanManager.getTotalCacheSize(getActivity()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -151,7 +151,7 @@ public class DongtaiFragment extends BaseFragment implements View.OnClickListene
                 if (null != view && view instanceof TextView) {
                     ((TextView) view).setTextSize(16);
                     ((TextView) view).setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
-                    ((TextView) view).setTextColor(ContextCompat.getColor(mContext, R.color.balck_28));
+                    ((TextView) view).setTextColor(ContextCompat.getColor(mContext, R.color.gray_7b));
                 }
             }
 
@@ -186,6 +186,8 @@ public class DongtaiFragment extends BaseFragment implements View.OnClickListene
         if (getActivity() != null) {
             if (!isVisibleToUser) {
                 StatusBarUtil.setLightMode(getActivity());
+            } else if (mTabLayout.getSelectedTabPosition() == 2) {
+                StatusBarUtil.setDarkMode(getActivity());
             }
             if (isVisibleToUser) {
                 if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {

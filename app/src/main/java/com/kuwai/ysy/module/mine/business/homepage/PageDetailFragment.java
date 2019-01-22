@@ -148,7 +148,7 @@ public class PageDetailFragment extends BaseFragment<PageDetailPresenter> implem
     }
 
     private void setPersonData(PersolHomePageBean persolHomePageBean) {
-        if (SPManager.get().getIntValue("isvip_") == 1) {
+        if ("1".equals(SPManager.get().getStringValue("isvip_"))) {
             isVipTv.setVisibility(View.GONE);
             mVipLay.setVisibility(View.VISIBLE);
             mTvHouse.setText(persolHomePageBean.getData().getInfo().getBuy_house());

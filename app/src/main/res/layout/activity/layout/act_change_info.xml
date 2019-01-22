@@ -152,7 +152,7 @@
                 app:sCenterViewMarginLeft="20dp"
                 app:sLeftTextColor="@color/gray_68"
                 app:sLeftTextSize="14sp"
-                app:sLeftTextString="月收入"
+                app:sLeftTextString="年收入"
                 app:sLeftViewGravity="left_center"
                 app:sLeftViewWidth="60dp"
                 app:sRightIconRes="@drawable/ic_arrow_right"></com.allen.library.SuperTextView>
@@ -324,7 +324,7 @@
                 app:sCenterViewMarginLeft="20dp"
                 app:sLeftTextColor="@color/gray_68"
                 app:sLeftTextSize="14sp"
-                app:sLeftTextString="月收入"
+                app:sLeftTextString="年收入"
                 app:sLeftViewGravity="left_center"
                 app:sLeftViewWidth="60dp"
                 app:sRightIconRes="@drawable/ic_arrow_right"></com.allen.library.SuperTextView>

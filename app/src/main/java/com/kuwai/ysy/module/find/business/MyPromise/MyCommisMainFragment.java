@@ -73,6 +73,7 @@ public class MyCommisMainFragment extends BaseFragment<MyPromisePresenter> imple
     public void initView(Bundle savedInstanceState) {
         EventBusUtil.register(this);
         mDongtaiList = mRootView.findViewById(R.id.recyclerView);
+        mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
 
         mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
@@ -135,11 +136,13 @@ public class MyCommisMainFragment extends BaseFragment<MyPromisePresenter> imple
 
     @Override
     public void getMyCommis(MyCommis myCommis) {
-        if (myCommis.getCode() == 200) {
+        if (myCommis.getCode() == 200 && myCommis.getData().size() > 0) {
             mDateAdapter.replaceData(myCommis.getData());
+            mLayoutStatusView.showContent();
         } else {
             mDateAdapter.getData().clear();
             mDateAdapter.notifyDataSetChanged();
+            mLayoutStatusView.showError();
         }
     }
 

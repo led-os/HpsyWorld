@@ -18,6 +18,7 @@ package com.kuwai.ysy.utils;
 
 import com.google.gson.Gson;
 import com.kuwai.ysy.bean.CustomResult;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.xuexiang.xupdate.entity.UpdateEntity;
 import com.xuexiang.xupdate.proxy.IUpdateParser;
 
@@ -28,20 +29,24 @@ import com.xuexiang.xupdate.proxy.IUpdateParser;
  * @since 2018/7/12 下午3:46
  */
 public class CustomUpdateParser implements IUpdateParser {
+
+    private boolean update = true;
+
     @Override
     public UpdateEntity parseJson(String json) throws Exception {
         CustomResult result = new Gson().fromJson(json, CustomResult.class);
+        if (Utils.getVerName().equals(result.getData().getApp_version())) {
+            update = false;
+        }
         if (result != null) {
             return new UpdateEntity()
 //                    .setHasUpdate(result.hasUpdate)
 //                    .setIsIgnorable(result.isIgnorable)
-//                    .setVersionCode(result.versionCode)
 //                    .setVersionName(result.versionName)
 //                    .setUpdateContent(result.updateLog)
 //                    .setDownloadUrl(result.apkUrl)
 //                    .setSize(result.apkSize);
-
-                    .setHasUpdate(result.getData().isIs_force())
+                    .setHasUpdate(update)
                     .setVersionName(result.getData().getApp_version())
                     .setUpdateContent(result.getData().getApp_content())
                     .setDownloadUrl(result.getData().getApp_url())

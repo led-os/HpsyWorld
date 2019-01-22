@@ -64,6 +64,15 @@ public class MyFriends {
         private String sig;
         private int is_vip;
         private int friends;
+        private int online;
+
+        public int getOnline() {
+            return online;
+        }
+
+        public void setOnline(int online) {
+            this.online = online;
+        }
 
         public int getFriends() {
             return friends;

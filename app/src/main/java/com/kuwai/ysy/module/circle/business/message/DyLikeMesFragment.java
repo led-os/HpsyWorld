@@ -1,17 +1,21 @@
 package com.kuwai.ysy.module.circle.business.message;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.chat.api.ChatApiFactory;
 import com.kuwai.ysy.module.chat.bean.MyFriends;
+import com.kuwai.ysy.module.circle.DyDetailActivity;
+import com.kuwai.ysy.module.circle.HoleDetailActivity;
 import com.kuwai.ysy.module.circle.adapter.message.DashangAdapter;
 import com.kuwai.ysy.module.circle.adapter.message.LikeMsgAdapter;
 import com.kuwai.ysy.module.circle.api.CircleApiFactory;
@@ -69,6 +73,7 @@ public class DyLikeMesFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void initView(Bundle savedInstanceState) {
         mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
+        mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -98,6 +103,25 @@ public class DyLikeMesFragment extends BaseFragment implements View.OnClickListe
         //mDongtaiList.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 1), R.color.line_color));
         mDateAdapter = new LikeMsgAdapter();
         mDongtaiList.setAdapter(mDateAdapter);
+
+        mDateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (mDateAdapter.getData().get(position).getType() == -1) {
+                    //树洞
+                    Intent intent = new Intent(getActivity(), HoleDetailActivity.class);
+                    intent.putExtra("tid", String.valueOf(mDateAdapter.getData().get(position).getD_id()));
+                    startActivity(intent);
+                } else {
+                    //动态
+                    Intent intent = new Intent(getActivity(), DyDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("did", String.valueOf(mDateAdapter.getData().get(position).getD_id()));
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
@@ -113,11 +137,12 @@ public class DyLikeMesFragment extends BaseFragment implements View.OnClickListe
             public void accept(AllLikeBean myBlindBean) throws Exception {
                 EventBusUtil.sendEvent(new MessageEvent(C.MSG_UNREAD_UPDATE));
                 mRefreshLayout.finishRefresh();
-                if (myBlindBean.getCode() == 200) {
+                if (myBlindBean.getCode() == 200 && myBlindBean.getData().size() > 0) {
                     mAllLikeBean = myBlindBean;
                     mDateAdapter.replaceData(myBlindBean.getData());
+                    mLayoutStatusView.showContent();
                 } else {
-                    ToastUtils.showShort(myBlindBean.getMsg());
+                    mLayoutStatusView.showError();
                 }
 
             }

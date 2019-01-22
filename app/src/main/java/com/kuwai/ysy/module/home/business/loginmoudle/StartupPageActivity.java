@@ -12,6 +12,8 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.common.BaseActivity;
@@ -23,6 +25,7 @@ import com.kuwai.ysy.module.home.business.HomeActivity;
 import com.kuwai.ysy.module.home.business.loginmoudle.login.LoginActivity;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
+import com.rayhahah.rbase.utils.useful.GlideUtil;
 import com.rayhahah.rbase.utils.useful.SPManager;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -70,10 +73,14 @@ public class StartupPageActivity extends BaseActivity implements Animation.Anima
         showtime = sharedPreferences.getLong("show_time", 0);
 
         if (currenttime > starttime && currenttime < endtime) {
+            //活动启动页
             File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/dskgxt/pic/start_page.jpg");
             if (f.exists()) {
+                RequestOptions options = new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE);
                 Glide.with(StartupPageActivity.this)
                         .load(Environment.getExternalStorageDirectory().getAbsolutePath() + "/dskgxt/pic/start_page.jpg")
+                        .apply(options)
                         .into(splashImage);
             }
 
@@ -84,7 +91,7 @@ public class StartupPageActivity extends BaseActivity implements Animation.Anima
             splashImage.startAnimation(animation);
 
         } else {
-
+            //默认启动页
             Glide.with(StartupPageActivity.this)
                     .load(R.drawable.bg_start)
                     .into(splashImage);

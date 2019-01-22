@@ -16,7 +16,7 @@
         app:tabIndicatorHeight="0dp"
         app:tabMode="scrollable"
         app:tabSelectedTextColor="@color/theme"
-        app:tabTextColor="@color/balck_28" />
+        app:tabTextColor="@color/gray_7b" />
 
     <ImageView
         android:id="@+id/img_message"

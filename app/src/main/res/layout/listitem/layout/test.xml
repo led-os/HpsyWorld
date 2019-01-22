@@ -89,7 +89,7 @@
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/beau_girl" />
+                            android:src="@drawable/center_img_user_default" />
 
                         <TextView
                             android:id="@+id/tv_name"

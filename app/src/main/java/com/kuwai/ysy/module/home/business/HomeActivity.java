@@ -171,6 +171,7 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
                     SPManager.get().putString("password_", SPManager.get().getStringValue("password_"));
                     SPManager.get().putString("icon", loginBean.getData().getAvatar());
                     SPManager.get().putString("sex_", String.valueOf(loginBean.getData().getGender()));
+                    SPManager.get().putString("isvip_", String.valueOf(loginBean.getData().getIs_vip()));
                     SPManager.get().putString(C.HAS_THIRD_PASS, String.valueOf(loginBean.getData().getPayment()));
                     SPManager.get().putString("rongyun_token", loginBean.getData().getRongyun_token());
                     SPManager.get().putString("token", loginBean.getData().getToken());
@@ -383,7 +384,7 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Response response, Exception e, int id) {
-
+                        Log.e("","");
                     }
 
                     @Override
@@ -396,7 +397,7 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
 
                             getPageIMG();
                         } catch (Exception e) {
-
+                            Log.e("","");
                         }
                     }
                 });

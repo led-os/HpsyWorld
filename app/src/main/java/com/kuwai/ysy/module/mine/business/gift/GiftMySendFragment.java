@@ -66,6 +66,7 @@ public class GiftMySendFragment extends BaseFragment<GiftMySendPresenter> implem
     public void initView(Bundle savedInstanceState) {
         mDongtaiList = mRootView.findViewById(R.id.recyclerView);
 
+        mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
         mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -96,7 +97,14 @@ public class GiftMySendFragment extends BaseFragment<GiftMySendPresenter> implem
     @Override
     public void setHomeData(GiftAcceptBean giftAcceptBean) {
         mRefreshLayout.finishRefresh();
-        mDateAdapter.replaceData(giftAcceptBean.getData().getGift());
+        if (giftAcceptBean.getCode() == 200 && giftAcceptBean.getData().getGift().size() > 0) {
+            mDateAdapter.replaceData(giftAcceptBean.getData().getGift());
+            mLayoutStatusView.showContent();
+        } else {
+            mDateAdapter.getData().clear();
+            mDateAdapter.notifyDataSetChanged();
+            mLayoutStatusView.showError();
+        }
     }
 
     @Override

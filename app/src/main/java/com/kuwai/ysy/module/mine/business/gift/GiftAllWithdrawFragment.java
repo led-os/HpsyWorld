@@ -65,33 +65,35 @@ public class GiftAllWithdrawFragment extends BaseFragment implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_duihuan:
-                StringBuffer type1 = new StringBuffer();
-                StringBuffer type2 = new StringBuffer();
-                for (int i = 0; i < mGiftBean.getData().size(); i++) {
-                    for (int j = 0; j < mGiftBean.getData().get(i).getArr().size(); j++) {
-                        if (mGiftBean.getData().get(i).getArr().get(j).isCheck) {
-                            if ("1".equals(mGiftBean.getData().get(i).getArr().get(j).getType())) {
-                                type1.append(mGiftBean.getData().get(i).getArr().get(j).getG_id());
-                                type1.append(",");
-                            } else {
-                                type2.append(mGiftBean.getData().get(i).getArr().get(j).getG_id());
-                                type2.append(",");
+                if (mGiftBean.getData() != null) {
+                    StringBuffer type1 = new StringBuffer();
+                    StringBuffer type2 = new StringBuffer();
+                    for (int i = 0; i < mGiftBean.getData().size(); i++) {
+                        for (int j = 0; j < mGiftBean.getData().get(i).getArr().size(); j++) {
+                            if (mGiftBean.getData().get(i).getArr().get(j).isCheck) {
+                                if ("1".equals(mGiftBean.getData().get(i).getArr().get(j).getType())) {
+                                    type1.append(mGiftBean.getData().get(i).getArr().get(j).getG_id());
+                                    type1.append(",");
+                                } else {
+                                    type2.append(mGiftBean.getData().get(i).getArr().get(j).getG_id());
+                                    type2.append(",");
+                                }
                             }
                         }
                     }
-                }
-                if (type1.length() == 0 && type2.length() == 0) {
-                    ToastUtils.showShort("请选择提现礼物");
-                    return;
-                }
+                    if (type1.length() == 0 && type2.length() == 0) {
+                        ToastUtils.showShort("请选择提现礼物");
+                        return;
+                    }
 
-                if (type1.length() > 0) {
-                    typeS1 = type1.toString().substring(0, type1.length() - 1);
+                    if (type1.length() > 0) {
+                        typeS1 = type1.toString().substring(0, type1.length() - 1);
+                    }
+                    if (type2.length() > 0) {
+                        typeS2 = type2.toString().substring(0, type2.length() - 1);
+                    }
+                    allGiftsWithdraw(typeS1, typeS2);
                 }
-                if (type2.length() > 0) {
-                    typeS2 = type2.toString().substring(0, type2.length() - 1);
-                }
-                allGiftsWithdraw(typeS1, typeS2);
                 break;
         }
     }
@@ -133,26 +135,28 @@ public class GiftAllWithdrawFragment extends BaseFragment implements View.OnClic
         radio_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isAllCheck) {
-                    isAllCheck = false;
-                    radio_all.setChecked(false);
-                    for (int i = 0; i < mGiftBean.getData().size(); i++) {
-                        mGiftBean.getData().get(i).isAllCheck = false;
-                        for (int j = 0; j < mGiftBean.getData().get(i).getArr().size(); j++) {
-                            mGiftBean.getData().get(i).getArr().get(j).isCheck = false;
+                if (mGiftBean.getData() != null) {
+                    if (isAllCheck) {
+                        isAllCheck = false;
+                        radio_all.setChecked(false);
+                        for (int i = 0; i < mGiftBean.getData().size(); i++) {
+                            mGiftBean.getData().get(i).isAllCheck = false;
+                            for (int j = 0; j < mGiftBean.getData().get(i).getArr().size(); j++) {
+                                mGiftBean.getData().get(i).getArr().get(j).isCheck = false;
+                            }
+                        }
+                    } else {
+                        isAllCheck = true;
+                        radio_all.setChecked(true);
+                        for (int i = 0; i < mGiftBean.getData().size(); i++) {
+                            for (int j = 0; j < mGiftBean.getData().get(i).getArr().size(); j++) {
+                                mGiftBean.getData().get(i).getArr().get(j).isCheck = true;
+                            }
                         }
                     }
-                } else {
-                    isAllCheck = true;
-                    radio_all.setChecked(true);
-                    for (int i = 0; i < mGiftBean.getData().size(); i++) {
-                        for (int j = 0; j < mGiftBean.getData().get(i).getArr().size(); j++) {
-                            mGiftBean.getData().get(i).getArr().get(j).isCheck = true;
-                        }
-                    }
+                    updateUi();
+                    adapter.notifyDataSetChanged();
                 }
-                updateUi();
-                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -205,7 +209,7 @@ public class GiftAllWithdrawFragment extends BaseFragment implements View.OnClic
             @Override
             public void accept(Throwable throwable) throws Exception {
                 //Log.i(TAG, "accept: "+throwable);
-                ToastUtils.showShort(R.string.server_error);
+                //ToastUtils.showShort(R.string.server_error);
             }
         }));
     }
@@ -216,7 +220,7 @@ public class GiftAllWithdrawFragment extends BaseFragment implements View.OnClic
             public void accept(SimpleResponse response) throws Exception {
                 if (response.code == 200) {
                     ToastUtils.showShort("提现成功");
-                }else{
+                } else {
                     ToastUtils.showShort(response.msg);
                 }
                 EventBusUtil.sendEvent(new MessageEvent(C.MSG_GIFT_WITHDRAW_SUCC));

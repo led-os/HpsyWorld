@@ -78,7 +78,7 @@ public class HomeVideoBean {
         private int img_height;
         private List<AttachBean> attach;
         private boolean isPlay = false;
-        private List<String> mPiclist = new ArrayList<>();
+        private ArrayList<String> mPiclist = new ArrayList<>();
 
         public String getDistance() {
             return distance == null ? "" : distance;
@@ -224,7 +224,7 @@ public class HomeVideoBean {
             this.gift_sum = gift_sum;
         }
 
-        public List<String> getAttach() {
+        public ArrayList<String> getAttach() {
             mPiclist.clear();
             for (AttachBean bean : attach) {
                 mPiclist.add(bean.getImg());

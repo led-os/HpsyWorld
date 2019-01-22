@@ -514,7 +514,7 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
             } else {
                 image = new UMImage(getActivity(), R.mipmap.ic_sading);//网络图片
             }
-            String url = "http://api.yushuiyuan.cn/h5/appointment-detail.html?aid=" + mcCommisDetailBean.getData().getR_id();
+            String url = C.H5_URL + "appointment-detail.html?aid=" + mcCommisDetailBean.getData().getR_id();
             UMWeb web = new UMWeb(url);
             web.setTitle("鱼水缘约会");//标题
             web.setThumb(image);  //缩略图

@@ -68,6 +68,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cc.shinichi.library.ImagePreview;
 import io.reactivex.functions.Consumer;
 
 
@@ -186,12 +187,42 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
         mPicAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(getActivity(), VideoPlayActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("vid", mPicAdapter.getData().get(position).getVideo_id());
-                bundle.putString("imgurl", mPicAdapter.getData().get(position).getVideo_attach());
-                intent.putExtras(bundle);
-                startActivity(intent);
+                if (Utils.isNullString(mPicAdapter.getData().get(position).getVideo_id())) {
+                    if (mPicAdapter.getData().get(position).getAttach() != null && mPicAdapter.getData().get(position).getAttach().size() > 0) {
+                        ImagePreview
+                                .getInstance()
+                                // 上下文，必须是activity，不需要担心内存泄漏，本框架已经处理好
+                                .setContext(mContext)
+                                // 从第几张图片开始，索引从0开始哦~
+                                .setIndex(0)
+                                // 只有一张图片的情况，可以直接传入这张图片的url
+                                .setImageList(mPicAdapter.getData().get(position).getAttach())
+                                // 加载策略，详细说明见下面“加载策略介绍”。默认为手动模式
+                                .setLoadStrategy(ImagePreview.LoadStrategy.AlwaysThumb)
+                                // 保存的文件夹名称，会在SD卡根目录进行文件夹的新建。
+                                // (你也可设置嵌套模式，比如："BigImageView/Download"，会在SD卡根目录新建BigImageView文件夹，并在BigImageView文件夹中新建Download文件夹)
+                                .setFolderName("YsyDownload")
+                                // 缩放动画时长，单位ms
+                                .setZoomTransitionDuration(300)
+                                // 是否启用上拉/下拉关闭。默认不启用
+                                .setEnableDragClose(true)
+                                // 是否显示下载按钮，在页面右下角。默认显示
+                                .setShowDownButton(false)
+                                // 设置是否显示顶部的指示器（1/9）默认显示
+                                .setShowIndicator(true)
+                                // 设置失败时的占位图，默认为R.drawable.load_failed，设置为 0 时不显示
+                                .setErrorPlaceHolder(R.drawable.load_failed)
+                                // 开启预览
+                                .start();
+                    }
+                } else {
+                    Intent intent = new Intent(getActivity(), VideoPlayActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("vid", mPicAdapter.getData().get(position).getVideo_id());
+                    bundle.putString("imgurl", mPicAdapter.getData().get(position).getVideo_attach());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -524,8 +555,8 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
         if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
             param.put("uid", SPManager.get().getStringValue("uid"));
         }
-        param.put("longitude", SPManager.get().getStringValue("longitude"));
-        param.put("latitude", SPManager.get().getStringValue("longitude"));
+        param.put("longitude", SPManager.get().getStringValue("longitude", "120.525565"));
+        param.put("latitude", SPManager.get().getStringValue("latitude", "31.27831"));
         param.put("page", nearPage);
         addSubscription(HomeApiFactory.getHomeData(param).subscribe(new Consumer<HomeVideoBean>() {
             @Override

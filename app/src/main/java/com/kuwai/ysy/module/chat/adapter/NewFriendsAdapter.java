@@ -23,7 +23,12 @@ public class NewFriendsAdapter extends BaseQuickAdapter<MyFriends.DataBean, Base
     @Override
     protected void convert(BaseViewHolder helper, MyFriends.DataBean item) {
         //0在线   1离线
-        ((TextImageView) helper.getView(R.id.img_head)).setOnlineState(0);
+        if(item.getOnline() == 1){
+            ((TextImageView) helper.getView(R.id.img_head)).setOnlineState(0);
+        }else{
+            //离线
+            ((TextImageView) helper.getView(R.id.img_head)).setOnlineState(1);
+        }
         helper.addOnClickListener(R.id.btn_agree);
         helper.addOnClickListener(R.id.img_head);
         SuperButton agree = helper.getView(R.id.btn_agree);

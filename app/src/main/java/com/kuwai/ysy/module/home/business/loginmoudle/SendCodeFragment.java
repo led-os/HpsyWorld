@@ -89,7 +89,7 @@ public class SendCodeFragment extends BaseFragment implements View.OnClickListen
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (!StringUtils.isLegalPhone(s.toString())) {
+                if (StringUtils.isLegalPhone(s.toString())) {
                     mBtnGetcode.setEnabled(true);
                     mBtnGetcode.setTextColor(getResources().getColor(R.color.white));
                 } else {

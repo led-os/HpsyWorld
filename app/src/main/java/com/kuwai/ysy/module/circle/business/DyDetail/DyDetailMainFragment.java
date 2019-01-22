@@ -87,7 +87,6 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
     private NineImageAdapter nineImageAdapter;
 
     private NiceImageView mImgHead;
-    private int index;
     /**
      * 杨和苏Ysny
      */
@@ -199,7 +198,6 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
     @Override
     public void initView(Bundle savedInstanceState) {
         did = getArguments().getString("did");
-        index = getArguments().getInt("index");
         mImgHead = (NiceImageView) mRootView.findViewById(R.id.img_head);
         mTvNick = (TextView) mRootView.findViewById(R.id.tv_nick);
         mImgHead.setOnClickListener(this);
@@ -448,7 +446,7 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
             } else {
                 image = new UMImage(getActivity(), R.mipmap.ic_sading);//网络图片
             }
-            String url = "http://api.yushuiyuan.cn/h5/trend-detail.html?did=" + did;
+            String url = C.H5_URL + "trend-detail.html?did=" + did;
             UMWeb web = new UMWeb(url);
             web.setTitle("鱼水缘动态");//标题
             web.setThumb(image);  //缩略图

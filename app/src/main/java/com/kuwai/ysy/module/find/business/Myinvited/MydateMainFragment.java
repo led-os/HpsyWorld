@@ -72,6 +72,7 @@ public class MydateMainFragment extends BaseFragment<MyInvitedPresenter> impleme
     public void initView(Bundle savedInstanceState) {
         EventBusUtil.register(this);
         mDongtaiList = mRootView.findViewById(R.id.recyclerView);
+        mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
 
         mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
@@ -113,21 +114,22 @@ public class MydateMainFragment extends BaseFragment<MyInvitedPresenter> impleme
 
     @Override
     public void getMyAppintMent(MyAppointMent myAppointMent) {
-        if (myAppointMent.getCode() == 200) {
+        if (myAppointMent.getCode() == 200 && myAppointMent.getData().size() > 0) {
             mDateAdapter.replaceData(myAppointMent.getData());
+            mLayoutStatusView.showContent();
         } else {
             mDateAdapter.getData().clear();
             mDateAdapter.notifyDataSetChanged();
+            mLayoutStatusView.showError();
         }
-
     }
 
     private void getMore() {
-        addSubscription(AppointApiFactory.getMyAppoint(SPManager.get().getStringValue("uid"), mPage + 1,state).subscribe(new Consumer<MyAppointMent>() {
+        addSubscription(AppointApiFactory.getMyAppoint(SPManager.get().getStringValue("uid"), mPage + 1, state).subscribe(new Consumer<MyAppointMent>() {
             @Override
             public void accept(MyAppointMent myFriends) throws Exception {
                 mRefreshLayout.finishLoadmore();
-                if(myFriends.getCode() == 200){
+                if (myFriends.getCode() == 200) {
                     if (myFriends.getData() != null) {
                         mPage++;
                     }

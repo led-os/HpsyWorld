@@ -68,7 +68,7 @@
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
-        android:src="@drawable/beau_girl"
+        android:src="@drawable/center_img_user_default"
         app:civ_border_color="#E9C295"
         app:civ_border_width="2dp" />
 

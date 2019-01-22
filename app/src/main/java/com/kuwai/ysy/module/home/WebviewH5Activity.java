@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
+import android.widget.Toast;
 
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
@@ -17,10 +18,13 @@ import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.listener.ActivityDetailCall;
 import com.kuwai.ysy.listener.AndroidtoJs;
 import com.kuwai.ysy.listener.CloseCall;
+import com.kuwai.ysy.listener.InviteCall;
 import com.kuwai.ysy.listener.JoinActivityCall;
 import com.kuwai.ysy.listener.UpdateCall;
 import com.kuwai.ysy.module.chat.business.ReportFragment;
+import com.kuwai.ysy.module.circle.bean.DyMainListBean;
 import com.kuwai.ysy.utils.CustomUpdateParser;
+import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.kuwai.ysy.widget.X5WebView;
 import com.luck.picture.lib.PictureSelector;
@@ -34,6 +38,11 @@ import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 import com.xuexiang.xupdate.XUpdate;
 
 import java.util.ArrayList;
@@ -102,6 +111,8 @@ public class WebviewH5Activity extends BaseActivity {
         initHardwareAccelerate();
         initCallBACK();
 
+        h5Webview.addJavascriptInterface(this, "Android");
+
         h5Webview.loadUrl(mHomeUrl);
 
         h5Webview.setWebViewClient(new WebViewClient() {
@@ -123,7 +134,6 @@ public class WebviewH5Activity extends BaseActivity {
                 }
             }
         });
-
 
         /*h5Webview.setWebChromeClient(new WebChromeClient() {
 
@@ -157,6 +167,19 @@ public class WebviewH5Activity extends BaseActivity {
                 choosePicture();
             }
         });*/
+    }
+
+    @JavascriptInterface
+    public void viewmap(String url, String title, String message) {
+        //callBack.sharetoother(url, title, message);
+        Intent intent = new Intent(WebviewH5Activity.this, WebviewH5Activity.class);
+        intent.putExtra(C.H5_FLAG, C.H5_URL + C.INVITE_SHARE + SPManager.get().getStringValue("uid"));
+        startActivity(intent);
+    }
+
+    @JavascriptInterface
+    public void sharetoother(String url, String title, String message) {
+        share(url, title, message);
     }
 
     /**
@@ -204,22 +227,14 @@ public class WebviewH5Activity extends BaseActivity {
 
     void initCallBACK() {
         if ("huodong".equals(type)) {
-            ActivityDetailCall activityDetailCall = new ActivityDetailCall();
+            /*ActivityDetailCall activityDetailCall = new ActivityDetailCall();
             activityDetailCall.setCallback(new ActivityDetailCall.H5CallBack() {
                 @Override
-                public void viewmap() {
-
-                }
-
-                @Override
-                public void toJoin() {
-                    Intent intent = new Intent(WebviewH5Activity.this, WebviewH5Activity.class);
-                    intent.putExtra("type", "baoming");
-                    intent.putExtra(C.H5_FLAG, C.H5_URL + C.BAOMING + SPManager.get().getStringValue("uid") + "&aid=" + id);
-                    startActivity(intent);
+                public void viewmap(String lat, String lng, String place) {
+                    Log.e("", "");
                 }
             });
-            h5Webview.addJavascriptInterface(activityDetailCall, "Android");
+            h5Webview.addJavascriptInterface(activityDetailCall, "Android");*/
         } else if ("baoming".equals(type)) {
             JoinActivityCall joinActivityCall = new JoinActivityCall();
             joinActivityCall.setCallback(new JoinActivityCall.H5CallBack() {
@@ -252,6 +267,82 @@ public class WebviewH5Activity extends BaseActivity {
                 }
             });
             h5Webview.addJavascriptInterface(closeCall, "Android");
+        } else if ("invite".equals(type)) {
+            /*InviteCall closeCall = new InviteCall();
+            closeCall.setCallback(new InviteCall.H5CallBack() {
+                @Override
+                public void sharetoother(String url, String title, String message) {
+                    share(url, title, message);
+                }
+            });
+            h5Webview.addJavascriptInterface(closeCall, "Android");*/
         }
     }
+
+    @JavascriptInterface
+    public void update() {
+        XUpdate.newBuild(WebviewH5Activity.this)
+                .updateUrl(C.UpDate)
+                .themeColor(getResources().getColor(R.color.colorPrimary))
+                .updateParser(new CustomUpdateParser()) //设置自定义的版本更新解析器
+                .supportBackgroundUpdate(true)
+                .update();
+    }
+
+    private void share(String url, String title, String content) {
+        /*UMImage image = new UMImage(getActivity(), R.drawable.center_mark_ic_more);//网络图片
+        //image.setThumb(image);
+        image.compressStyle = UMImage.CompressStyle.QUALITY;*/
+        UMImage image = null;
+        if (!Utils.isNullString(url)) {
+            image = new UMImage(WebviewH5Activity.this, R.mipmap.ic_sading);//网络图片
+            UMWeb web = new UMWeb(url);
+            web.setTitle(title);//标题
+            web.setThumb(image);  //缩略图
+            web.setDescription(content);//描述
+            new ShareAction(WebviewH5Activity.this)
+                    .withMedia(web)
+                    .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+                    .setCallback(shareListener).open();
+
+        }
+    }
+
+    private UMShareListener shareListener = new UMShareListener() {
+        /**
+         * @descrption 分享开始的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+        }
+
+        /**
+         * @descrption 分享成功的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Toast.makeText(WebviewH5Activity.this, "分享成功", Toast.LENGTH_LONG).show();
+        }
+
+        /**
+         * @descrption 分享失败的回调
+         * @param platform 平台类型
+         * @param t 错误原因
+         */
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(WebviewH5Activity.this, "分享失败", Toast.LENGTH_LONG).show();
+        }
+
+        /**
+         * @descrption 分享取消的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(WebviewH5Activity.this, "分享取消", Toast.LENGTH_LONG).show();
+        }
+    };
 }

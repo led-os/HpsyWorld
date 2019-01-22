@@ -103,6 +103,7 @@ public class CityMeetListFragment extends BaseFragment<CityMeetPresenter> implem
     @Override
     public void initView(Bundle savedInstanceState) {
         mDongtaiList = mRootView.findViewById(R.id.rl_city_meet);
+        mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
         mCityTv = mRootView.findViewById(R.id.tv_city);
         mFilterTv = mRootView.findViewById(R.id.tv_filter);
         floatButton = mRootView.findViewById(R.id.publish);
@@ -311,13 +312,15 @@ public class CityMeetListFragment extends BaseFragment<CityMeetPresenter> implem
     public void setHomeData(CityMeetBean cityMeetBean) {
         mcityMeetBean = cityMeetBean;
         mRefreshLayout.finishRefresh();
-        if (cityMeetBean.getCode() == 200) {
+
+        if (cityMeetBean.getCode() == 200 && cityMeetBean.getData().size() > 0) {
             mDongtaiAdapter.replaceData(cityMeetBean.getData());
+            mLayoutStatusView.showContent();
         } else {
             mDongtaiAdapter.getData().clear();
             mDongtaiAdapter.notifyDataSetChanged();
+            mLayoutStatusView.showError();
         }
-
     }
 
     @Override

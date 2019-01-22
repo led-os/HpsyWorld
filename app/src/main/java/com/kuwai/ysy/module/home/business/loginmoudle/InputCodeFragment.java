@@ -170,6 +170,7 @@ public class InputCodeFragment extends BaseFragment implements View.OnClickListe
                     SPManager.get().putString("uid", String.valueOf(loginBean.getData().getUid()));
                     SPManager.get().putString("rongyun_token", loginBean.getData().getRongyun_token());
                     SPManager.get().putString("token", loginBean.getData().getToken());
+                    SPManager.get().putString("isvip_", String.valueOf(loginBean.getData().getIs_vip()));
                     SPManager.get().putString("sex_", String.valueOf(loginBean.getData().getGender()));
                     SPManager.get().putString("phone_", loginBean.getData().getPhone());
                     SPManager.get().putString("nickname", loginBean.getData().getNickname());

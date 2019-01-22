@@ -42,6 +42,10 @@ import com.rayhahah.rbase.utils.base.DateTimeUitl;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
 import com.rayhahah.rbase.utils.useful.SPManager;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -64,6 +68,7 @@ public class GiftMyAcceptFragment extends BaseFragment<GiftMyAcceptPresenter> im
 
     private GiftPopBean giftPopBean;
     private String otherId = "";
+    private SmartRefreshLayout mRefreshLayout;
 
     public static GiftMyAcceptFragment newInstance() {
         Bundle args = new Bundle();
@@ -74,7 +79,7 @@ public class GiftMyAcceptFragment extends BaseFragment<GiftMyAcceptPresenter> im
 
     @Override
     protected int setFragmentLayoutRes() {
-        return R.layout.recyclerview;
+        return R.layout.smart_refresh;
     }
 
     @Override
@@ -107,6 +112,9 @@ public class GiftMyAcceptFragment extends BaseFragment<GiftMyAcceptPresenter> im
     public void initView(Bundle savedInstanceState) {
         EventBusUtil.register(this);
         mDongtaiList = mRootView.findViewById(R.id.recyclerView);
+        mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
+        mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
+        mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
         mDongtaiList.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         mDateAdapter = new GiftAdapter();
         mDongtaiList.setAdapter(mDateAdapter);
@@ -115,6 +123,14 @@ public class GiftMyAcceptFragment extends BaseFragment<GiftMyAcceptPresenter> im
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 showSelectdialog(position);
+            }
+        });
+
+        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                page = 1;
+                mPresenter.requestHomeData(SPManager.get().getStringValue("uid"), page);
             }
         });
 
@@ -253,7 +269,15 @@ public class GiftMyAcceptFragment extends BaseFragment<GiftMyAcceptPresenter> im
     @Override
     public void setHomeData(GiftAcceptBean giftAcceptBean) {
         giftBean = giftAcceptBean.getData();
-        mDateAdapter.replaceData(giftAcceptBean.getData().getGift());
+        mRefreshLayout.finishRefresh();
+        if (giftAcceptBean.getCode() == 200 && giftAcceptBean.getData().getGift().size() > 0) {
+            mDateAdapter.replaceData(giftAcceptBean.getData().getGift());
+            mLayoutStatusView.showContent();
+        } else {
+            mDateAdapter.getData().clear();
+            mDateAdapter.notifyDataSetChanged();
+            mLayoutStatusView.showError();
+        }
     }
 
     public void requestMore(String uid, int page) {

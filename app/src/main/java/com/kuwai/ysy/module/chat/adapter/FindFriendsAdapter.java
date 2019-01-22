@@ -27,7 +27,12 @@ public class FindFriendsAdapter extends BaseQuickAdapter<MyFriends.DataBean, Bas
     protected void convert(BaseViewHolder helper, MyFriends.DataBean item) {
         //0在线   1离线
         helper.addOnClickListener(R.id.btn_add_friend);
-        ((TextImageView) helper.getView(R.id.img_head)).setOnlineState(0);
+        if(item.getOnline() == 1){
+            ((TextImageView) helper.getView(R.id.img_head)).setOnlineState(0);
+        }else{
+            //离线
+            ((TextImageView) helper.getView(R.id.img_head)).setOnlineState(1);
+        }
 
         ImageView vipImg = helper.getView(R.id.is_vip);
         ImageView sexImg = helper.getView(R.id.img_sex);

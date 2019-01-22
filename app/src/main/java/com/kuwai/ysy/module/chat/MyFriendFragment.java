@@ -143,6 +143,8 @@ public class MyFriendFragment extends BaseFragment implements View.OnClickListen
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (type == 1) {
                     showPop(position);
+                }else{
+                    RongIM.getInstance().startPrivateChat(getActivity(), String.valueOf(myFriendsAdapter.getData().get(position).getUid()), myFriendsAdapter.getData().get(position).getNickname());
                 }
             }
         });

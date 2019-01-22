@@ -305,6 +305,7 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
             SPManager.get().putString("uid", String.valueOf(loginBean.getData().getUid()));
             SPManager.get().putString("nickname", loginBean.getData().getNickname());
             SPManager.get().putString("phone_", loginBean.getData().getPhone());
+            SPManager.get().putString("isvip_", String.valueOf(loginBean.getData().getIs_vip()));
             SPManager.get().putString("password_", Utils.encrypt32(mEtCode.getText().toString()));
             SPManager.get().putString("icon", loginBean.getData().getAvatar());
             SPManager.get().putString("sex_", String.valueOf(loginBean.getData().getGender()));

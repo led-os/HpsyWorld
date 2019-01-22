@@ -169,7 +169,8 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
             public void OnBannerClick(int position) {
                 if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
                     Intent intent = new Intent(getActivity(), WebviewH5Activity.class);
-                    intent.putExtra(C.H5_FLAG, mFoundBean.getData().getBanner().get(position).getLink() + "?uid=" + SPManager.get().getStringValue("uid"));
+                    intent.putExtra("type", "invite");
+                    intent.putExtra(C.H5_FLAG, mFoundBean.getData().getBanner().get(position).getLink() + "?uid=" + SPManager.get().getStringValue("uid") + "&is_vip=" + SPManager.get().getStringValue("isvip_"));
                     startActivity(intent);
                 }
             }
@@ -193,7 +194,6 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
         mTuodanMore.setOnClickListener(this);
         mLocationTv.setOnClickListener(this);
 
-        Drawable drawable = getResources().getDrawable(R.mipmap.ic_launcher);
         /**这里可以设置带图标的数据（1.0.2新方法），比setDatas方法多了带图标参数；
          第一个参数：数据 。
          第二参数：drawable.

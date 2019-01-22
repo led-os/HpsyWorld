@@ -19,10 +19,12 @@
             android:scaleType="centerCrop"/>
 
         <ImageView
+            android:id="@+id/img_video"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_alignParentRight="true"
             android:layout_margin="14dp"
+            android:visibility="gone"
             android:src="@mipmap/home_nearby_ic_video"/>
 
         <com.allen.library.CircleImageView

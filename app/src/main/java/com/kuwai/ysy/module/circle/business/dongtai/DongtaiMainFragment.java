@@ -225,7 +225,6 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
                     index = position;
                     Intent intent = new Intent(getActivity(), DyDetailActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putInt("index", position);
                     bundle.putString("did", String.valueOf(mDyMainListBean.getData().get(position).getD_id()));
                     intent.putExtras(bundle);
                     startActivity(intent);
@@ -358,7 +357,12 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
     public void setHomeData(DyMainListBean dyMainListBean) {
         mRefreshLayout.finishRefresh();
         mDyMainListBean = dyMainListBean;
-        mDongtaiAdapter.replaceData(dyMainListBean.getData());
+        if (dyMainListBean.getData() != null && dyMainListBean.getData().size() > 0) {
+            mDongtaiAdapter.replaceData(dyMainListBean.getData());
+            mLayoutStatusView.showContent();
+        } else {
+            mLayoutStatusView.showError();
+        }
     }
 
     @Override
@@ -512,14 +516,14 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
             } else {
                 image = new UMImage(getActivity(), R.mipmap.ic_sading);//网络图片
             }
-            String url = "http://api.yushuiyuan.cn/h5/trend-detail.html?did=" + mDyDetailBean.getD_id();
+            String url = C.H5_URL + "trend-detail.html?did=" + mDyDetailBean.getD_id();
             UMWeb web = new UMWeb(url);
             web.setTitle("鱼水缘动态");//标题
             web.setThumb(image);  //缩略图
             web.setDescription(mDyDetailBean.getText());//描述
             new ShareAction(getActivity())
                     .withMedia(web)
-                    .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
+                    .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
                     .setCallback(shareListener).open();
         }
 

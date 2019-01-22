@@ -7,8 +7,7 @@ public class ActivityDetailCall extends Object{
 
     private H5CallBack callBack = null;
     public interface H5CallBack{
-        void viewmap();
-        void toJoin();
+        void viewmap(String lat,String lng,String place);
     }
 
     public void setCallback(H5CallBack h5CallBack){
@@ -16,12 +15,7 @@ public class ActivityDetailCall extends Object{
     }
 
     @JavascriptInterface
-    public void viewmap() {
-        callBack.viewmap();
-    }
-
-    @JavascriptInterface
-    public void toJoin() {
-       callBack.viewmap();
+    public void viewmap(String lat,String lon,String add) {
+        callBack.viewmap(lat,lon,add);
     }
 }

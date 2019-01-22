@@ -12,7 +12,7 @@
         android:layout_height="38dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/beau_girl" />
+        android:src="@drawable/center_img_user_default" />
 
     <TextView
         android:id="@+id/comment_item_userName"

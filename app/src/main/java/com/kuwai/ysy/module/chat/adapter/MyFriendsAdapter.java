@@ -24,7 +24,7 @@ public class MyFriendsAdapter extends BaseQuickAdapter<MyFriends.DataBean, BaseV
     protected void convert(BaseViewHolder helper, MyFriends.DataBean item) {
         //0在线   1离线
         helper.addOnClickListener(R.id.img_head);
-        ((TextImageView) helper.getView(R.id.img_head)).setOnlineState(0);
+        //((TextImageView) helper.getView(R.id.img_head)).setOnlineState(0);
         GlideUtil.loadRound(mContext, item.getAvatar(), (TextImageView) helper.getView(R.id.img_head));
         helper.setText(R.id.tv_info, item.getAge() + "岁|" + item.getHeight() + "cm|" + item.getEducation() + "|" + item.getAnnual_income() + "万元");
         helper.setText(R.id.tv_sign, item.getSig());
@@ -37,6 +37,13 @@ public class MyFriendsAdapter extends BaseQuickAdapter<MyFriends.DataBean, BaseV
             sexImg.setImageResource(R.drawable.ic_user_man);
         } else if (item.getGender() == 2) {
             sexImg.setImageResource(R.drawable.ic_user_woman);
+        }
+
+        if(item.getOnline() == 1){
+            ((TextImageView) helper.getView(R.id.img_head)).setOnlineState(0);
+        }else{
+            //离线
+            ((TextImageView) helper.getView(R.id.img_head)).setOnlineState(1);
         }
         //GlideUtil.load(mContext, item.getBgPicture(), ((ImageView) helper.getView(R.id.iv_category)));
         //helper.addOnClickListener(R.id.fbl_item_team);

@@ -28,7 +28,15 @@ public class HomePicAdapter extends BaseQuickAdapter<HomeVideoBean.DataBean, Bas
 
     @Override
     protected void convert(BaseViewHolder helper, final HomeVideoBean.DataBean item) {
-        GlideUtil.load(mContext, item.getVideo_attach(), (ImageView) helper.getView(R.id.top_img));
+        if (Utils.isNullString(item.getVideo_id())) {
+            if (item.getAttach() != null && item.getAttach().size() > 0) {
+                GlideUtil.load(mContext, item.getAttach().get(0), (ImageView) helper.getView(R.id.top_img));
+            }
+            helper.getView(R.id.img_video).setVisibility(View.GONE);
+        } else {
+            GlideUtil.load(mContext, item.getVideo_attach(), (ImageView) helper.getView(R.id.top_img));
+            helper.getView(R.id.img_video).setVisibility(View.VISIBLE);
+        }
         GlideUtil.load(mContext, item.getAvatar(), (ImageView) helper.getView(R.id.img_head));
         helper.setText(R.id.tv_name, item.getNickname());
         helper.setText(R.id.tv_location, item.getDistance() + "km");

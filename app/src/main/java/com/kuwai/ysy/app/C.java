@@ -16,7 +16,7 @@ public class C {
     public static final int RESPONSE_SUCCESS = 0;
     public static final int RESPONSE_FAILED = 1;
     public static final String APP_NAME = "鱼水缘";
-    public static final String H5_URL = "http://api.yushuiyuan.cn/h5/";
+    public static final String H5_URL = "http://m.yushuiyuan.cn/h5/";
 
 
     // 简体中文
@@ -43,6 +43,7 @@ public class C {
     public static final String YUYUE = "order-fortune-tell.html?uid=";
     public static final String GIFT_CHANGE = "exchange-gift.html?uid=";
     public static final String GIFT_RECHARGE = "gift-cash.html?uid=";
+    public static final String INVITE_SHARE = "invitation-share.html?uid=";
 
     public interface DIR {
         String PIC_DIR = FileUtils.getRootFilePath() + "Ysy/images";
@@ -75,8 +76,8 @@ public class C {
     @Retention(RetentionPolicy.SOURCE)
     public @interface BaseURL {
         String TEST_URL = "http://baobab.kaiyanapp.com/api/";
-        //String BASE_URL = "http://192.168.1.88/api/";
-        String BASE_URL = "http://api.yushuiyuan.cn/api/";
+        String BASE_URL = "http://192.168.1.88/api/";
+        //String BASE_URL = "http://api.yushuiyuan.cn/api/";
     }
 
     /**
@@ -194,7 +195,7 @@ public class C {
 
     public static final String SP_NAME = "startpage";
 
-    public static final String QiDong = "http://192.168.1.88/api/User/appStartupPage";//更新app
+    public static final String QiDong = BASE_URL + "User/appStartupPage";//更新app
 
 
 

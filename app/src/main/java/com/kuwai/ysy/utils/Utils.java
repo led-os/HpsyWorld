@@ -1,6 +1,7 @@
 package com.kuwai.ysy.utils;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -204,6 +205,42 @@ public class Utils {
     public static int getWindowWidth() {
         WindowManager wm = (WindowManager) BaseApplication.getAppContext().getSystemService(Context.WINDOW_SERVICE);
         return wm.getDefaultDisplay().getWidth();
+    }
+
+
+    /**
+     * 获取当前本地apk的版本
+     *
+     * @param
+     * @return
+     */
+    public static int getVersionCode() {
+        int versionCode = 0;
+        try {
+            //获取软件版本号，对应AndroidManifest.xml下android:versionCode
+            versionCode = BaseApplication.getAppContext().getPackageManager().
+                    getPackageInfo(BaseApplication.getAppContext().getPackageName(), 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionCode;
+    }
+
+    /**
+     * 获取版本号名称
+     *
+     * @para
+     * @return
+     */
+    public static String getVerName() {
+        String verName = "";
+        try {
+            verName = BaseApplication.getAppContext().getPackageManager().
+                    getPackageInfo(BaseApplication.getAppContext().getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return verName;
     }
 
     public static int getWindowHeight() {

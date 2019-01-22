@@ -178,7 +178,7 @@ public class MineLoginFragment extends BaseFragment<MinePresenter> implements Vi
         GlideUtil.load(getActivity(), cityMeetBean.getData().getAvatar(), mHeadImg);
         tv_id.setText("ID:" + cityMeetBean.getData().getUid());
         tv_level.setText(cityMeetBean.getData().getGrade() + "");
-        SPManager.get().putInt("isvip_", cityMeetBean.getData().getIs_vip());
+        //SPManager.get().putInt("isvip_", cityMeetBean.getData().getIs_vip());
         img_vip.setVisibility(cityMeetBean.getData().getIs_vip() == 1 ? View.VISIBLE : View.GONE);
         tv_money.setText(cityMeetBean.getData().getAmount());
         tv_integral.setText(cityMeetBean.getData().getIntegral_sum() + "");

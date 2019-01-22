@@ -12,7 +12,7 @@
         android:layout_height="60dp"
         android:layout_centerVertical="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/beau_girl"
+        android:src="@drawable/center_img_user_default"
         app:corner_radius="4dp" />
 
     <TextView
