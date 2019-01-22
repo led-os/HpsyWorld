@@ -314,7 +314,7 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
         ((ImageView) mRootView.findViewById(R.id.navigation)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().finish();
+                pop();
             }
         });
 

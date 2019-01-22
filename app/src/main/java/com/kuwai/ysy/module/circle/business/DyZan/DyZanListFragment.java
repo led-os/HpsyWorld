@@ -1,11 +1,13 @@
 package com.kuwai.ysy.module.circle.business.DyZan;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.MessageEvent;
@@ -13,8 +15,11 @@ import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.adapter.DyZanAdapter;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.DyLikeListBean;
+import com.kuwai.ysy.module.mine.OtherHomeActivity;
 import com.kuwai.ysy.utils.EventBusUtil;
+import com.kuwai.ysy.utils.Utils;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -28,6 +33,7 @@ public class DyZanListFragment extends BaseFragment<DyZanPresenter> implements D
     private DyZanAdapter mDateAdapter;
     private RecyclerView mDongtaiList;
     private List<CategoryBean> mDataList = new ArrayList<>();
+    private DyLikeListBean mDyLikeListBean;
     private int page = 1;
     private String did;
 
@@ -67,6 +73,21 @@ public class DyZanListFragment extends BaseFragment<DyZanPresenter> implements D
         mDongtaiList.setLayoutManager(linearLayoutManager);
         mDateAdapter = new DyZanAdapter();
         mDongtaiList.setAdapter(mDateAdapter);
+
+        mDateAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    if (!SPManager.get().getStringValue("uid").equals(String.valueOf(mDyLikeListBean.getData().getGood().get(position).getUid()))) {
+                        Intent intent1 = new Intent(getActivity(), OtherHomeActivity.class);
+                        intent1.putExtra("uid", String.valueOf(mDyLikeListBean.getData().getGood().get(position).getUid()));
+                        startActivity(intent1);
+                    }
+                } else {
+                    ToastUtils.showShort(R.string.login_error);
+                }
+            }
+        });
     }
 
     @Override
@@ -78,6 +99,7 @@ public class DyZanListFragment extends BaseFragment<DyZanPresenter> implements D
 
     @Override
     public void setHomeData(DyLikeListBean dyLikeListBean) {
+        mDyLikeListBean = dyLikeListBean;
         if (dyLikeListBean.getData().getGood().size() > 0) {
             mLayoutStatusView.showContent();
             mDateAdapter.replaceData(dyLikeListBean.getData().getGood());

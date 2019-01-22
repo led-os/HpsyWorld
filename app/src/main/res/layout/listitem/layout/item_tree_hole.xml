@@ -13,6 +13,7 @@
         android:src="@drawable/dyn_tree_ic_anony" />
 
     <TextView
+        android:textStyle="bold"
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,7 +21,7 @@
         android:layout_toRightOf="@id/img_head"
         android:layout_toLeftOf="@id/id_hot"
         android:ellipsize="end"
-        android:maxLines="2"
+        android:maxLines="1"
         android:text="这件事我想很久了"
         android:textColor="@color/balck_28"
         android:textSize="16sp" />
@@ -51,6 +52,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/img_head"
         android:layout_marginTop="16dp"
+        android:lines="3"
+        android:ellipsize="end"
         android:text="我们欠了很多钱，房子车子甚至家里的金器全卖光了，现在还欠外面600多万。老公已经是黑户，我自己信用卡逾期20多万，三个月没还了。但是这已经是..."
         android:textColor="#cc282828"
         android:textSize="14sp" />

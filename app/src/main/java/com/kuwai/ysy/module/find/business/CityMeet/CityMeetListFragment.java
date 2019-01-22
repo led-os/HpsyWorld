@@ -166,6 +166,21 @@ public class CityMeetListFragment extends BaseFragment<CityMeetPresenter> implem
                 }
             }
         });
+
+        mDongtaiAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("rid", mDongtaiAdapter.getData().get(position).getR_id());
+                bundle.putString("uid", String.valueOf(mDongtaiAdapter.getData().get(position).getUid()));
+
+                if (Integer.valueOf(SPManager.get().getStringValue("uid")) == (mDongtaiAdapter.getData().get(position).getUid())) {
+                    start(CommicDetailMyFragment.newInstance(bundle));
+                } else {
+                    start(CommisDetailFragment.newInstance(bundle));
+                }
+            }
+        });
     }
 
     @Override

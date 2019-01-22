@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.circle.business.dycomment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
@@ -18,8 +19,11 @@ import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.adapter.CommentExpandAdapter;
 import com.kuwai.ysy.module.circle.bean.DyCommentListBean;
+import com.kuwai.ysy.module.mine.OtherHomeActivity;
 import com.kuwai.ysy.utils.EventBusUtil;
+import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.CommentExpandableListView;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -102,7 +106,7 @@ public class DySecFragment extends BaseFragment<CommentPresenter> implements Vie
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int groupPosition) {
-                // Toast.makeText(getActivity(), "展开第" + groupPosition + "个分组", Toast.LENGTH_SHORT).show();
+                 Toast.makeText(getActivity(), "展开第" + groupPosition + "个分组", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -164,6 +168,19 @@ public class DySecFragment extends BaseFragment<CommentPresenter> implements Vie
                 @Override
                 public void commantZan(int comId, int comUid, int pos, int state) {
                     mPresenter.commenZan(did, SPManager.get().getStringValue("uid"), state, comId, comUid);
+                }
+
+                @Override
+                public void toHomePage(int uid) {
+                    if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                        if (!SPManager.get().getStringValue("uid").equals(String.valueOf(uid))) {
+                            Intent intent1 = new Intent(getActivity(), OtherHomeActivity.class);
+                            intent1.putExtra("uid", String.valueOf(uid));
+                            startActivity(intent1);
+                        }
+                    } else {
+                        ToastUtils.showShort(R.string.login_error);
+                    }
                 }
             });
         } else {
