@@ -385,8 +385,8 @@ public class AliyunSVideoRecordView extends RelativeLayout
 
     private void initRecordTimeView() {
         mRecordTimeView = new RecordTimelineView(getContext());
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, Utils.dip2px(getContext(), 10));
-        mRecordTimeView.setColor(R.color.aliyun_color_record_duraton, R.color.aliyun_colorPrimary, R.color.aliyun_white,
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, Utils.dip2px(getContext(), 5));
+        mRecordTimeView.setColor(R.color.alivc_green, R.color.aliyun_colorPrimary, R.color.aliyun_white,
                 R.color.alivc_bg_record_time);
         mRecordTimeView.setMaxDuration(clipManager.getMaxDuration());
         mRecordTimeView.setMinDuration(clipManager.getMinDuration());
