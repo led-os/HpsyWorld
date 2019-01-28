@@ -98,11 +98,7 @@ public class DyDetailPresenter extends RBasePresenter<DyDetailContract.IHomeView
         addSubscription(CircleApiFactory.dynamicReward(uid, type, tid, gid,nums).subscribe(new Consumer<SimpleResponse>() {
             @Override
             public void accept(SimpleResponse simpleResponse) throws Exception {
-                if (simpleResponse.code == 200) {
-                    mView.rewardSuc();
-                } else {
-                    ToastUtils.showShort(simpleResponse.msg);
-                }
+                    mView.rewardSuc(simpleResponse);
             }
         }, new Consumer<Throwable>() {
             @Override

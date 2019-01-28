@@ -52,7 +52,8 @@ public class NineImageAdapter implements NineGridView.NineGridAdapter<String> {
             imageView = (ImageView) itemView;
         }
         String url = mImageBeans.get(position);
-        GlideUtil.load(mContext, url, imageView);
+       // GlideUtil.load(mContext, url, imageView);
+        GlideUtil.loadRetangle(mContext,url,imageView);
         return imageView;
     }
 }

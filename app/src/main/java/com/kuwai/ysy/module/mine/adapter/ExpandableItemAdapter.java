@@ -9,6 +9,8 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.bean.SimpleResponse;
+import com.kuwai.ysy.module.chat.api.ChatApiFactory;
 import com.kuwai.ysy.module.mine.OtherHomeActivity;
 import com.kuwai.ysy.module.mine.bean.LikeBean;
 import com.kuwai.ysy.module.mine.bean.LikeParent;
@@ -18,6 +20,8 @@ import com.rayhahah.rbase.utils.useful.GlideUtil;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.List;
+
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by luoxw on 2016/8/9.
@@ -101,8 +105,41 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
                             }
                         }
                     });
+
+                    holder.getView(R.id.btn_add_friend).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                                if (!SPManager.get().getStringValue("uid").equals(String.valueOf(likeBean.getUid()))) {
+                                    addFriends(String.valueOf(likeBean.getUid()));
+                                }
+                            } else {
+                                ToastUtils.showShort(R.string.login_error);
+                            }
+                        }
+                    });
                 }
                 break;
         }
+    }
+
+    void addFriends(String otherId) {
+        ChatApiFactory.addFriends(SPManager.get().getStringValue("uid"), otherId).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse response) throws Exception {
+                if (response.code == 200) {
+                    //newFriendsAdapter.replaceData(myBlindBean.getData());
+                    //mDatalist.get(pos).setFriends(-1);
+                    //myFriendsAdapter.notifyItemChanged(pos);
+                }
+                ToastUtils.showShort(response.msg);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: "+throwable);
+                //ToastUtils.showShort("网络错误");
+            }
+        });
     }
 }

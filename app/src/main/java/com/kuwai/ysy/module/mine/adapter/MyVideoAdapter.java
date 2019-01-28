@@ -81,7 +81,7 @@ public class MyVideoAdapter extends RecyclerView.Adapter<MyVideoAdapter.ViewHold
         } else {
             holder.ivAdd.setVisibility(View.GONE);
             holder.ivPhoto.setVisibility(View.VISIBLE);
-            GlideUtil.load(context, mList.get(position - 1).getAttach(), holder.ivPhoto);
+            GlideUtil.loadRetangle(context, mList.get(position - 1).getAttach(), holder.ivPhoto);
             //holder.ivPhoto.setImageBitmap(BitmapFactory.decodeFile(mList.get(position)));
         }
         holder.ivPhoto.setTag(R.id.image_key, position);

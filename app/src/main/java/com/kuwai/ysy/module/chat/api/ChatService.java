@@ -3,6 +3,7 @@ package com.kuwai.ysy.module.chat.api;
 
 import com.kuwai.ysy.bean.AliOrderInfoBean;
 import com.kuwai.ysy.bean.SimpleResponse;
+import com.kuwai.ysy.module.chat.bean.ChatQuestion;
 import com.kuwai.ysy.module.chat.bean.MyFriends;
 import com.kuwai.ysy.module.chat.bean.NoticeBean;
 import com.kuwai.ysy.module.chat.bean.NoticeDateBean;
@@ -50,12 +51,12 @@ public interface ChatService {
     //好友列表
     @FormUrlEncoded
     @POST("Chat/MyFriendList")
-    Observable<MyFriends> getFriends(@FieldMap  Map<String,String> map);
+    Observable<MyFriends> getFriends(@FieldMap Map<String, String> map);
 
     //搜索用户添加好友
     @FormUrlEncoded
     @POST("Chat/SearchFriendList")
-    Observable<MyFriends> searchFriends(@Field("search_criteria") String search_criteria,@Field("page") int page);
+    Observable<MyFriends> searchFriends(@Field("search_criteria") String search_criteria, @Field("page") int page);
 
     //好友申请列表
     @FormUrlEncoded
@@ -65,57 +66,57 @@ public interface ChatService {
     //好友申请列表
     @FormUrlEncoded
     @POST("Currency/UserInformation")
-    Observable<UserInfoBean> getUserInfo(@Field("uid") String uid,@Field("loginguserid") String loginguserid);
+    Observable<UserInfoBean> getUserInfo(@Field("uid") String uid, @Field("loginguserid") String loginguserid);
 
     //同意拒绝申请
     @FormUrlEncoded
     @POST("Chat/HandleFiend")
-    Observable<SimpleResponse> agreeNewFriends(@Field("uid") String uid,@Field("other_uid") String other_id,@Field("status") int status);
+    Observable<SimpleResponse> agreeNewFriends(@Field("uid") String uid, @Field("other_uid") String other_id, @Field("status") int status);
 
     //申请加好友
     @FormUrlEncoded
     @POST("Chat/addfriend")
-    Observable<SimpleResponse> addFriends(@Field("uid") String uid,@Field("other_uid") String other_id);
+    Observable<SimpleResponse> addFriends(@Field("uid") String uid, @Field("other_uid") String other_id);
 
     //寻找好友列表-推荐
     @FormUrlEncoded
     @POST("Chat/RecommendFriendList")
-    Observable<MyFriends> getTuiFriends(@Field("uid") String uid,@Field("gender") String gender,@Field("page") int page);
+    Observable<MyFriends> getTuiFriends(@Field("uid") String uid, @Field("gender") String gender, @Field("page") int page);
 
     //寻找好友列表-附近
     @FormUrlEncoded
     @POST("Chat/NearbydFriendList")
-    Observable<MyFriends> getNearFriends(@Field("uid") String uid,@Field("page") int page,@Field("longitude") String longitude,@Field("latitude") String latitude);
+    Observable<MyFriends> getNearFriends(@Field("uid") String uid, @Field("page") int page, @Field("longitude") String longitude, @Field("latitude") String latitude);
 
     //设置备注
     @FormUrlEncoded
     @POST("Chat/Remarks")
-    Observable<SimpleResponse> setRemark(@Field("uid") String uid,@Field("other_id") String other_id,@Field("other_nickname") String other_nickname);
+    Observable<SimpleResponse> setRemark(@Field("uid") String uid, @Field("other_id") String other_id, @Field("other_nickname") String other_nickname);
 
     //加入黑名单
     @FormUrlEncoded
     @POST("Chat/Blacklist")
-    Observable<SimpleResponse> setBlack(@Field("uid") String uid,@Field("other_id") String other_id);
+    Observable<SimpleResponse> setBlack(@Field("uid") String uid, @Field("other_id") String other_id);
 
     //取消黑名单
     @FormUrlEncoded
     @POST("Chat/CancelBlacklist")
-    Observable<SimpleResponse> cancelBlack(@Field("uid") String uid,@Field("other_uid") String other_id);
+    Observable<SimpleResponse> cancelBlack(@Field("uid") String uid, @Field("other_uid") String other_id);
 
     //取消屏蔽
     @FormUrlEncoded
     @POST("Currency/UpdateShield")
-    Observable<SimpleResponse> cancelPing(@Field("uid") String uid,@Field("s_id") String other_id);
+    Observable<SimpleResponse> cancelPing(@Field("uid") String uid, @Field("s_id") String other_id);
 
     //发红包
     @FormUrlEncoded
     @POST("Chat/HandOutRedEnvelopes")
-    Observable<RedBean> sendRed(@FieldMap  Map<String,Object> map);
+    Observable<RedBean> sendRed(@FieldMap Map<String, Object> map);
 
     //收红包
     @FormUrlEncoded
     @POST("Chat/CollectRedPackets")
-    Observable<SimpleResponse> receiveRed(@Field("uid") String uid,@Field("r_id") String r_id);
+    Observable<SimpleResponse> receiveRed(@Field("uid") String uid, @Field("r_id") String r_id);
 
     //红包详情-接收方看到
     @FormUrlEncoded
@@ -149,6 +150,16 @@ public interface ChatService {
     //打赏人
     @FormUrlEncoded
     @POST("Chat/Giving")
-    Observable<SimpleResponse> rewardPe(@FieldMap Map<String,Object> map);
+    Observable<SimpleResponse> rewardPe(@FieldMap Map<String, Object> map);
+
+    //聊天问题列表
+    @FormUrlEncoded
+    @POST("Chat/ProblemList")
+    Observable<ChatQuestion> getChatQuestion(@Field("uid") String uid, @Field("other_uid") String other_uid);
+
+    //聊天问题列表
+    @FormUrlEncoded
+    @POST("Chat/SendProblem")
+    Observable<SimpleResponse> sendChatAnswer(@Field("uid") String uid, @Field("other_uid") String other_uid, @Field("p_id") int p_id, @Field("answer") String answer);
 
 }

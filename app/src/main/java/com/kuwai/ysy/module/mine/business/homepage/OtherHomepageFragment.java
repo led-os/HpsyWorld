@@ -43,6 +43,7 @@ import com.kuwai.ysy.module.circle.business.dongtai.DongtaiMainFragment;
 import com.kuwai.ysy.module.find.api.AppointApiFactory;
 import com.kuwai.ysy.module.find.api.FoundApiFactory;
 import com.kuwai.ysy.module.find.bean.GiftPopBean;
+import com.kuwai.ysy.module.mine.MyWalletActivity;
 import com.kuwai.ysy.module.mine.adapter.PicAdapter;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.kuwai.ysy.module.mine.bean.TabEntity;
@@ -524,6 +525,9 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
                     public void accept(@NonNull SimpleResponse dateTheme) throws Exception {
                         if (dateTheme.code == 200) {
                             //ToastUtils.showShort("赠送成功");
+                        } else if (dateTheme.code == 202) {
+                            //余额不足跳转充值
+                            startActivity(new Intent(getActivity(), MyWalletActivity.class));
                         }
                         ToastUtils.showShort(dateTheme.msg);
                     }

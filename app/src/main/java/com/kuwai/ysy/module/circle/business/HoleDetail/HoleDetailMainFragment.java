@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.circle.business.HoleDetail;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -40,6 +41,7 @@ import com.kuwai.ysy.module.circle.business.DyDashang.DyDashangListFragment;
 import com.kuwai.ysy.module.circle.business.dycomment.DySecFragment;
 import com.kuwai.ysy.module.circle.business.holecomment.HoleComFragment;
 import com.kuwai.ysy.module.find.bean.GiftPopBean;
+import com.kuwai.ysy.module.mine.MyWalletActivity;
 import com.kuwai.ysy.module.mine.bean.ChangeHeadBean;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
@@ -294,7 +296,7 @@ public class HoleDetailMainFragment extends BaseFragment<HoleDetailPresenter> im
     }
 
     public void setGroup() {
-        addSubscription(CircleApiFactory.getGroup( mHoleDetailBean.getData().getT_uid(),SPManager.get().getStringValue("uid"), mHoleDetailBean.getData().getT_id()).subscribe(new Consumer<ChangeHeadBean>() {
+        addSubscription(CircleApiFactory.getGroup(mHoleDetailBean.getData().getT_uid(), SPManager.get().getStringValue("uid"), mHoleDetailBean.getData().getT_id()).subscribe(new Consumer<ChangeHeadBean>() {
             @Override
             public void accept(ChangeHeadBean holeDetailBean) throws Exception {
                 RongIM.getInstance().startGroupChat(getActivity(), holeDetailBean.getData(), "树洞");
@@ -363,10 +365,17 @@ public class HoleDetailMainFragment extends BaseFragment<HoleDetailPresenter> im
     }
 
     @Override
-    public void rewardSuc() {
-        EventBusUtil.sendEvent(new MessageEvent(C.MSG_REWARD_HOLE));
+    public void rewardSuc(SimpleResponse response) {
+
         if (customDialog != null) {
             customDialog.dismiss();
+        }
+
+        if (response.code == 200) {
+            EventBusUtil.sendEvent(new MessageEvent(C.MSG_REWARD_HOLE));
+        } else if (response.code == 202) {
+            //余额不足跳转充值
+            startActivity(new Intent(getActivity(), MyWalletActivity.class));
         }
     }
 

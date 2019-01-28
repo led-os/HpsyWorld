@@ -81,6 +81,15 @@ public class DyDetailBean {
         private int update_time;
         private int reward;
         private int whatgood;
+        private int is_vip;
+
+        public int getIs_vip() {
+            return is_vip;
+        }
+
+        public void setIs_vip(int is_vip) {
+            this.is_vip = is_vip;
+        }
 
         public String getAvatar() {
             return avatar;

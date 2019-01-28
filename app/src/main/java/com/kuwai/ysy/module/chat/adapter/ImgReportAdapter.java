@@ -83,7 +83,7 @@ public class ImgReportAdapter extends RecyclerView.Adapter<ImgReportAdapter.View
             holder.ivRemove.setVisibility(View.VISIBLE);
             holder.ivAdd.setVisibility(View.GONE);
             holder.ivPhoto.setVisibility(View.VISIBLE);
-            GlideUtil.load(context, mList.get(position).getCompressPath(), holder.ivPhoto);
+            GlideUtil.loadRetangle(context, mList.get(position).getCompressPath(), holder.ivPhoto);
             //holder.ivPhoto.setImageBitmap(BitmapFactory.decodeFile(mList.get(position)));
         }
     }

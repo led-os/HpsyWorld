@@ -74,7 +74,11 @@ public class DongtaiFragment extends BaseFragment implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_message:
-                startActivity(new Intent(getActivity(), MessageActivity.class));
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    startActivity(new Intent(getActivity(), MessageActivity.class));
+                } else {
+                    ToastUtils.showShort(R.string.login_error);
+                }
                 break;
         }
     }

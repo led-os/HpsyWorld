@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.chat.adapter.FindFriendsAdapter;
@@ -21,6 +22,7 @@ import com.kuwai.ysy.utils.security.PhoneUtil;
 import com.kuwai.ysy.widget.MyRecycleViewDivider;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -75,6 +77,17 @@ public class InvitePhoneBookFragment extends BaseFragment implements View.OnClic
         mDatalist = phoneUtil.getPhone();
         myFriendsAdapter = new PhoneBookAdapter(mDatalist);
         mFriendRl.setAdapter(myFriendsAdapter);
+
+        myFriendsAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()){
+                    case R.id.invite:
+                        ToastUtils.showShort(R.string.ing_error);
+                        break;
+                }
+            }
+        });
     }
 
     @Override

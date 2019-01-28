@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.chat.business;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.chat.adapter.PhoneBookAdapter;
 import com.kuwai.ysy.module.chat.api.ChatApiFactory;
 import com.kuwai.ysy.module.chat.bean.PhotoBook;
+import com.kuwai.ysy.module.circle.ReportActivity;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.utils.security.PhoneUtil;
 import com.kuwai.ysy.widget.MyRecycleViewDivider;
@@ -62,7 +64,12 @@ public class ChatSettingFragment extends BaseFragment implements View.OnClickLis
                 start(ChangeRemarkFragment.newInstance(targetId));
                 break;
             case R.id.tv_report:
-                //start(ReportFragment.newInstance());
+                Bundle bundle = new Bundle();
+                bundle.putString("module", "-1");
+                bundle.putString("p_id", targetId);
+                Intent intent = new Intent(getActivity(), ReportActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
                 break;
         }
     }

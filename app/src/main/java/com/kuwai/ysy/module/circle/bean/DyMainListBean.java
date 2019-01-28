@@ -83,6 +83,8 @@ public class DyMainListBean {
         private int update_time;
         private int reward_sum;
         private int whatgood;
+        private int is_vip;
+
         private List<RewardBean> reward;
 
         public String getAvatar() {
@@ -167,6 +169,14 @@ public class DyMainListBean {
 
         public List<String> getAttach() {
             return attach;
+        }
+
+        public int getIs_vip() {
+            return is_vip;
+        }
+
+        public void setIs_vip(int is_vip) {
+            this.is_vip = is_vip;
         }
 
         public void setAttach(List<String> attach) {

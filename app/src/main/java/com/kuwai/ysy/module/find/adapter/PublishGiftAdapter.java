@@ -67,7 +67,7 @@ public class PublishGiftAdapter extends RecyclerView.Adapter<PublishGiftAdapter.
             holder.ivPhoto.setVisibility(View.VISIBLE);
             holder.nameTv.setVisibility(View.VISIBLE);
             holder.nameTv.setText(mList.get(position).getGirft_name() + " x" + mList.get(position).num);
-            GlideUtil.load(context, mList.get(position).getGirft_img_url(), holder.ivPhoto);
+            GlideUtil.loadRetangle(context, mList.get(position).getGirft_img_url(), holder.ivPhoto);
             //holder.ivPhoto.setImageBitmap(BitmapFactory.decodeFile(mList.get(position)));
         }
         if (mList.size() >= MAX_SIZE) {

@@ -28,7 +28,7 @@ public class CityMeetAdapter extends BaseQuickAdapter<CityMeetBean.DataBean, Bas
     @Override
     protected void convert(BaseViewHolder helper, CityMeetBean.DataBean item) {
         NiceImageView headImg = helper.getView(R.id.img_head);
-        GlideUtil.load(mContext, item.getAvatar(), headImg);
+        GlideUtil.loadRetangle(mContext, item.getAvatar(), headImg);
 
         helper.setText(R.id.tv_nick, item.getNickname());
 

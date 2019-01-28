@@ -17,6 +17,7 @@ import com.rayhahah.rbase.fragmentmanage.anim.DefaultHorizontalAnimator;
 import com.rayhahah.rbase.fragmentmanage.anim.FragmentAnimator;
 import com.rayhahah.rbase.utils.base.StatusBarUtil;
 import com.rayhahah.rbase.utils.base.StatusBartext;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +67,18 @@ public abstract class BaseActivity<T extends RBasePresenter> extends RBaseActivi
      */
     public void start() {
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+       // MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+      //  MobclickAgent.onPause(this);
     }
 
     @Override

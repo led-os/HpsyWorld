@@ -74,12 +74,12 @@ public class StartupPageActivity extends BaseActivity implements Animation.Anima
 
         if (currenttime > starttime && currenttime < endtime) {
             //活动启动页
-            File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/dskgxt/pic/start_page.jpg");
+            File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/dskgxt/pic/ysy_start_page.jpg");
             if (f.exists()) {
                 RequestOptions options = new RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.NONE);
                 Glide.with(StartupPageActivity.this)
-                        .load(Environment.getExternalStorageDirectory().getAbsolutePath() + "/dskgxt/pic/start_page.jpg")
+                        .load(Environment.getExternalStorageDirectory().getAbsolutePath() + "/dskgxt/pic/ysy_start_page.jpg")
                         .apply(options)
                         .into(splashImage);
             }

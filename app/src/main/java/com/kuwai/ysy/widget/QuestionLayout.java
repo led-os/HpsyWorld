@@ -91,6 +91,16 @@ public class QuestionLayout extends RelativeLayout implements
         }
     }
 
+    public void setContent(String content) {
+        if (et_question_answer != null) {
+            et_question_answer.setText(content);
+        }
+    }
+
+    public String getContent() {
+            return et_question_answer.getText().toString();
+    }
+
     private OnClickListener mSendClick;
     private OnClickListener mArrowClick;
 

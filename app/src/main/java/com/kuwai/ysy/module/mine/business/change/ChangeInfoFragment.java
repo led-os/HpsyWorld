@@ -44,6 +44,7 @@ import cn.qqtheme.framework.picker.DateTimePicker;
 import cn.qqtheme.framework.picker.NumberPicker;
 import cn.qqtheme.framework.picker.SinglePicker;
 import io.reactivex.functions.Consumer;
+import okio.Okio;
 
 public class ChangeInfoFragment extends BaseFragment implements View.OnClickListener {
 
@@ -208,6 +209,10 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
                             @Override
                             public void clickRightButton(MDEditDialog dialog, View view) {
                                 dialog.dismiss();
+                                if (dialog.getEditTextContent().length() > 10) {
+                                    ToastUtils.showShort("昵称最长10个字符");
+                                    return;
+                                }
                                 mTvNick.setCenterString(dialog.getEditTextContent());
                             }
                         })

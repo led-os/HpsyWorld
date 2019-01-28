@@ -17,6 +17,7 @@ import com.kuwai.ysy.module.chat.FindFriendChildFragment;
 import com.kuwai.ysy.module.chat.FindFriendNearFragment;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -31,7 +32,7 @@ public class FindFriendFragment extends BaseFragment implements View.OnClickList
     private SlidingTabLayout slidingTabLayout;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private MyPagerAdapter mAdapter;
-    private TextView mPhoneBookTv;
+    private TextView mPhoneBookTv,mWechatLay,mQqlay;
     private NavigationLayout navigationLayout;
 
     @Override
@@ -51,6 +52,8 @@ public class FindFriendFragment extends BaseFragment implements View.OnClickList
             }
         });
         slidingTabLayout = mRootView.findViewById(R.id.tl_9);
+        mWechatLay = mRootView.findViewById(R.id.layout_wechat);
+        mQqlay = mRootView.findViewById(R.id.layout_qq);
         mPhoneBookTv = mRootView.findViewById(R.id.lay_phone_book);
         mFragments.add(FindFriendChildFragment.newInstance());
         mFragments.add(FindFriendNearFragment.newInstance());
@@ -59,6 +62,8 @@ public class FindFriendFragment extends BaseFragment implements View.OnClickList
         slidingTabLayout.setViewPager(viewPager);
 
         mPhoneBookTv.setOnClickListener(this);
+        mQqlay.setOnClickListener(this);
+        mWechatLay.setOnClickListener(this);
     }
 
     @Override
@@ -76,6 +81,12 @@ public class FindFriendFragment extends BaseFragment implements View.OnClickList
         switch (v.getId()) {
             case R.id.lay_phone_book:
                 requestContactPermission();
+                break;
+            case R.id.layout_wechat:
+                ToastUtils.showShort(R.string.ing_error);
+                break;
+            case R.id.layout_qq:
+                ToastUtils.showShort(R.string.ing_error);
                 break;
         }
     }

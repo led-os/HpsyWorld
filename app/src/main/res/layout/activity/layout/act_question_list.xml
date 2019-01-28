@@ -18,6 +18,12 @@
         android:layout_height="12dp"
         android:background="@color/line_color" />
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rl_question"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"></android.support.v7.widget.RecyclerView>
+
     <com.kuwai.ysy.widget.QuestionLayout
         android:id="@+id/question1"
         android:layout_width="match_parent"

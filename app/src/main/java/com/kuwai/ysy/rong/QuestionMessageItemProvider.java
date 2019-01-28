@@ -2,6 +2,7 @@ package com.kuwai.ysy.rong;
 
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.text.Selection;
 import android.text.Spannable;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.listener.OnRedPacketDialogClickListener;
+import com.kuwai.ysy.module.chat.business.QuestionActivity;
 import com.kuwai.ysy.rong.bean.RedPacketEntity;
 import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.utils.base.ToastUtils;
@@ -85,6 +87,9 @@ public class QuestionMessageItemProvider extends IContainerItemProvider.MessageP
         //showRedPacketDialog(entity, view.getContext());
         //view.getContext().startActivity(new Intent(view.getContext(), SendRedActivity.class));
         //view.getContext().startActivity(new Intent(view.getContext(), QuestionActivity.class));
+        Intent intent = new Intent(view.getContext(),QuestionActivity.class);
+        intent.putExtra("id",message.getTargetId());
+        view.getContext().startActivity(intent);
     }
 
     public void showRedPacketDialog(RedPacketEntity entity, Context mContext) {

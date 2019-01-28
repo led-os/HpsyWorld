@@ -46,6 +46,8 @@
         android:hint="请输入手机号码"
         android:inputType="phone"
         android:textColor="#ff282838"
+        android:singleLine="true"
+        android:maxLength="14"
         android:textColorHint="@color/gray_7b"
         android:textSize="16sp"
         app:ic_delete="@drawable/sl_repa_ic_delete" />

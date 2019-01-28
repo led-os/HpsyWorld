@@ -26,6 +26,7 @@ import com.kuwai.ysy.module.home.bean.HomeVideoBean;
 import com.kuwai.ysy.module.home.bean.VideoBean;
 import com.kuwai.ysy.module.mine.OtherHomeActivity;
 import com.kuwai.ysy.utils.Utils;
+import com.kuwai.ysy.utils.glide.GlideHomeLoader;
 import com.kuwai.ysy.utils.glide.GlideImageLoader;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
@@ -306,7 +307,7 @@ public class ListVideoAdapter extends BaseRecAdapter<HomeVideoBean.DataBean, Bas
             heartImg = rootView.findViewById(R.id.img_heart);
             headImg = rootView.findViewById(R.id.img_head);
             mp_video.setBannerStyle(BannerConfig.NUM_INDICATOR);
-            mp_video.setImageLoader(new GlideImageLoader());
+            mp_video.setImageLoader(new GlideHomeLoader());
             mp_video.isAutoPlay(false);
         }
     }

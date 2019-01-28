@@ -35,6 +35,8 @@
         android:layout_marginTop="60dp"
         android:background="@null"
         android:gravity="bottom"
+        android:singleLine="true"
+        android:maxLength="16"
         android:hint="请输入手机号码"
         android:inputType="phone"
         android:textColor="#ff282838"

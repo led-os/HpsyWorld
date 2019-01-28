@@ -42,7 +42,7 @@ public class TaGiftAdapter extends BaseQuickAdapter<TaGiftBean.DataBean, BaseVie
 
         helper.setText(R.id.tv_info, String.valueOf(item.getPrice()));
 
-        GlideUtil.load(mContext, item.getGirft_img_url(), (ImageView) helper.getView(R.id.img_gift));
+        GlideUtil.loadRetangle(mContext, item.getGirft_img_url(), (ImageView) helper.getView(R.id.img_gift));
 
 
     }

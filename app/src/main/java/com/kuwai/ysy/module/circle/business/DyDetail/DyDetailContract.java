@@ -19,7 +19,7 @@ public class DyDetailContract {
 
         void setGifts(GiftPopBean popBean);
 
-        void rewardSuc();
+        void rewardSuc(SimpleResponse response);
 
         /**
          * 显示错误信息

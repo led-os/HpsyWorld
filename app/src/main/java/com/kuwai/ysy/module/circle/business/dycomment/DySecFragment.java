@@ -98,7 +98,7 @@ public class DySecFragment extends BaseFragment<CommentPresenter> implements Vie
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
-                Toast.makeText(getActivity(), "点击了回复", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "点击了回复", Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
@@ -106,7 +106,7 @@ public class DySecFragment extends BaseFragment<CommentPresenter> implements Vie
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int groupPosition) {
-                 Toast.makeText(getActivity(), "展开第" + groupPosition + "个分组", Toast.LENGTH_SHORT).show();
+                 //Toast.makeText(getActivity(), "展开第" + groupPosition + "个分组", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -126,6 +126,7 @@ public class DySecFragment extends BaseFragment<CommentPresenter> implements Vie
                 String replyContent = commentText.getText().toString().trim();
                 if (!TextUtils.isEmpty(replyContent)) {
                     dialog.dismiss();
+                    Utils.showOrHide(getActivity(), commentText);
                     mPresenter.addSecComment(comId, SPManager.get().getStringValue("uid"), replyContent, comUid);
                     expandableListView.expandGroup(position);
                 } else {

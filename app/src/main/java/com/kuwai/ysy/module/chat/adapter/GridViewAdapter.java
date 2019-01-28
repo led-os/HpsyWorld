@@ -79,7 +79,7 @@ public class GridViewAdapter extends BaseAdapter {
         GiftPopBean.DataBean model = getItem(position);
         viewHolder.tv.setText(model.getGirft_name());
         viewHolder.price.setText(model.getPrice()+"桃花币");
-        GlideUtil.load(mContext, model.getGirft_img_url(), viewHolder.iv);
+        GlideUtil.loadRetangle(mContext, model.getGirft_img_url(), viewHolder.iv);
         //viewHolder.iv.setImageDrawable(model.getGirft_img_url());
         if (model.isSelected()) {//被选中
             viewHolder.item_layout.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.item_selector));

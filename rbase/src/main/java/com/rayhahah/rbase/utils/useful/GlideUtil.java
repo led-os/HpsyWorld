@@ -12,8 +12,10 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.Transformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.Resource;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.rayhahah.rbase.BaseApplication;
 import com.rayhahah.rbase.R;
 import com.rayhahah.rbase.utils.base.ThreadUtil;
@@ -192,6 +194,32 @@ public class GlideUtil {
                 .centerCrop()
                 .placeholder(placeholderSoWhite) //占位图
                 .error(context.getResources().getDrawable(R.drawable.center_img_user_default))       //错误图
+                // .priority(Priority.HIGH)
+                .diskCacheStrategy(DiskCacheStrategy.ALL);
+        Glide.with(context).load(url).apply(options).into(imageView);
+
+    }
+
+    public static void loadRetangle(Context context, String url, ImageView imageView) {
+        //DrawableCrossFadeFactory drawableCrossFadeFactory = new DrawableCrossFadeFactory.Builder(400).setCrossFadeEnabled(true).build();
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(context.getResources().getDrawable(R.drawable.default_img)) //占位图
+                .error(context.getResources().getDrawable(R.drawable.default_img))       //错误图
+                // .priority(Priority.HIGH)
+                .diskCacheStrategy(DiskCacheStrategy.ALL);
+        Glide.with(context).load(url)
+                .apply(options)
+                //.transition(DrawableTransitionOptions.with(drawableCrossFadeFactory))
+                .into(imageView);
+
+    }
+
+    public static void loadBanner(Context context, Object url, ImageView imageView) {
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(context.getResources().getDrawable(R.drawable.default_retangle)) //占位图
+                .error(context.getResources().getDrawable(R.drawable.default_retangle))       //错误图
                 // .priority(Priority.HIGH)
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
         Glide.with(context).load(url).apply(options).into(imageView);

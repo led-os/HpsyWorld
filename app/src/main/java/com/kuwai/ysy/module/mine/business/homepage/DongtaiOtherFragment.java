@@ -47,7 +47,6 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.ielse.view.imagewatcher.ImageWatcher;
 import io.reactivex.functions.Consumer;
 
 import static com.kuwai.ysy.app.C.TYPE_DY_ALL;
@@ -59,7 +58,6 @@ public class DongtaiOtherFragment extends BaseFragment<com.kuwai.ysy.module.mine
     private DragFloatActionButton mPublishTv;
 
     private CustomDialog customDialog;
-    private ImageWatcher mImageWatcher;
     private DyMainListBean mDyMainListBean;
     private int page = 1;
     private SmartRefreshLayout mRefreshLayout;
@@ -102,7 +100,6 @@ public class DongtaiOtherFragment extends BaseFragment<com.kuwai.ysy.module.mine
         mDongtaiList = mRootView.findViewById(R.id.recyclerView);
         mPublishTv = mRootView.findViewById(R.id.tv_edit);
         mPublishTv.setVisibility(View.GONE);
-        mImageWatcher = mRootView.findViewById(R.id.image_watcher);
 
         mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
@@ -122,7 +119,7 @@ public class DongtaiOtherFragment extends BaseFragment<com.kuwai.ysy.module.mine
         });
 
         mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        mDongtaiAdapter = new DongtaiAdapter( mImageWatcher);
+        mDongtaiAdapter = new DongtaiAdapter();
         ((SimpleItemAnimator)mDongtaiList.getItemAnimator()).setSupportsChangeAnimations(false);
         mDongtaiList.setAdapter(mDongtaiAdapter);
         mPublishTv.setOnClickListener(this);

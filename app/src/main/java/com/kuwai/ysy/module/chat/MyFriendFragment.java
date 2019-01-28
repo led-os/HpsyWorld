@@ -13,6 +13,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.chat.adapter.MyFriendsAdapter;
@@ -22,6 +24,7 @@ import com.kuwai.ysy.module.chat.bean.MyFriends;
 import com.kuwai.ysy.module.chat.business.FindFriendFragment;
 import com.kuwai.ysy.module.chat.business.SearchMyFriendFragment;
 import com.kuwai.ysy.module.mine.OtherHomeActivity;
+import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.MyRecycleViewDivider;
 import com.rayhahah.dialoglib.CustomDialog;
@@ -229,6 +232,7 @@ public class MyFriendFragment extends BaseFragment implements View.OnClickListen
             public void accept(SimpleResponse response) throws Exception {
                 if (response.code == 200) {
                     //newFriendsAdapter.replaceData(myBlindBean.getData());
+                    EventBusUtil.sendEvent(new MessageEvent(C.MSG_FRIEND_REFRESH));
                     getFriends();
                     getNewFriends();
                 }

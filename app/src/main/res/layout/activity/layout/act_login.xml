@@ -54,6 +54,8 @@
         android:background="@null"
         android:gravity="bottom"
         android:inputType="number"
+        android:singleLine="true"
+        android:maxLength="14"
         android:textColor="#ff282838"
         android:textSize="20sp"
         app:ic_delete="@drawable/sl_repa_ic_delete" />
@@ -96,6 +98,8 @@
         android:layout_toLeftOf="@id/img_eye"
         android:layout_toRightOf="@id/tv_code"
         android:background="@null"
+        android:singleLine="true"
+        android:maxLength="14"
         android:inputType="textPassword"
         android:textColor="#ff282838"
         android:textSize="20sp"

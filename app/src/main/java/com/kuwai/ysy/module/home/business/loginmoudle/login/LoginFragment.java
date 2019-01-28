@@ -134,6 +134,9 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
             case R.id.img_wechat:
                 UMShareAPI.get(getActivity()).getPlatformInfo(getActivity(), SHARE_MEDIA.WEIXIN, authListener);
                 break;
+            case R.id.img_close:
+                getActivity().finish();
+                break;
         }
     }
 
@@ -242,6 +245,7 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
         mImgEye.setOnClickListener(this);
         mTvForget.setOnClickListener(this);
         mTvRegist.setOnClickListener(this);
+        mImgClose.setOnClickListener(this);
         mBtnLogin.setOnClickListener(this);
         mImgQq.setOnClickListener(this);
         mImgWechat.setOnClickListener(this);

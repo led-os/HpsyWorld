@@ -31,6 +31,7 @@ import com.kuwai.ysy.module.circle.bean.HoleMainListBean;
 import com.kuwai.ysy.module.find.api.AppointApiFactory;
 import com.kuwai.ysy.module.find.bean.GiftPopBean;
 import com.kuwai.ysy.module.home.WebviewH5Activity;
+import com.kuwai.ysy.module.mine.MyWalletActivity;
 import com.kuwai.ysy.module.mine.adapter.GiftAdapter;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.module.mine.bean.GiftAcceptBean;
@@ -179,7 +180,7 @@ public class GiftMyAcceptFragment extends BaseFragment<GiftMyAcceptPresenter> im
         mSbRecharge = parent.findViewById(R.id.sb_recharge);
         mBtnCash = parent.findViewById(R.id.btn_cash);
         GlideUtil.load(mContext, giftBean.getGift().get(position).getAvatar(), mIvHeadicon);
-        GlideUtil.load(mContext, giftBean.getGift().get(position).getGirft_img_url(), mIvGift);
+        GlideUtil.loadRetangle(mContext, giftBean.getGift().get(position).getGirft_img_url(), mIvGift);
         mTvGiftName.setText(giftBean.getGift().get(position).getGirft_name() + " x" + giftBean.getGift().get(position).getG_nums());
         mTvNickname.setText(giftBean.getGift().get(position).getNickname());
         mTvGiftNum.setText("x" + giftBean.getGift().get(position).getG_nums());
@@ -351,6 +352,9 @@ public class GiftMyAcceptFragment extends BaseFragment<GiftMyAcceptPresenter> im
                     public void accept(@NonNull SimpleResponse dateTheme) throws Exception {
                         if (dateTheme.code == 200) {
 
+                        } else if (dateTheme.code == 202) {
+                            //余额不足跳转充值
+                            startActivity(new Intent(getActivity(), MyWalletActivity.class));
                         }
                         ToastUtils.showShort(dateTheme.msg);
                     }

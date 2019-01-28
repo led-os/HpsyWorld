@@ -314,7 +314,7 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
         ((ImageView) mRootView.findViewById(R.id.navigation)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pop();
+                getActivity().finish();
             }
         });
 
@@ -351,7 +351,7 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
     public void setHomeData(CommisDetailBean commisDetailBean) {
         mLayoutStatusView.showContent();
         mcCommisDetailBean = commisDetailBean;
-        GlideUtil.load(mContext, commisDetailBean.getData().getR_img(), mCover);
+        GlideUtil.loadRetangle(mContext, commisDetailBean.getData().getR_img(), mCover);
         mTvName.setText(commisDetailBean.getData().getNickname());
         mTvAge.setText(commisDetailBean.getData().getAge() + "岁");
 

@@ -30,6 +30,7 @@
             android:text="通讯录好友" />
 
         <TextView
+            android:id="@+id/layout_wechat"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
@@ -38,6 +39,7 @@
             android:text="微信好友" />
 
         <TextView
+            android:id="@+id/layout_qq"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"

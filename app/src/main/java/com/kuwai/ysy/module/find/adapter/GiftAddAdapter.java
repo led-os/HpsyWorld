@@ -26,7 +26,7 @@ public class GiftAddAdapter extends BaseQuickAdapter<GiftPopBean.DataBean, BaseV
     @Override
     protected void convert(BaseViewHolder helper, final GiftPopBean.DataBean item) {
         AmountRoundView roundView = helper.getView(R.id.amount);
-        GlideUtil.load(mContext, item.getGirft_img_url(), (ImageView) helper.getView(R.id.img_gift));
+        GlideUtil.loadRetangle(mContext, item.getGirft_img_url(), (ImageView) helper.getView(R.id.img_gift));
         helper.setText(R.id.tv_name, item.getGirft_name());
         helper.setText(R.id.tv_money, item.getPrice() + "桃花币");
         roundView.setOnAmountChangeListener(new AmountRoundView.OnAmountChangeListener() {

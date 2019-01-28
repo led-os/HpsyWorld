@@ -46,7 +46,7 @@ public class GiftSendAdapter extends BaseQuickAdapter<GiftAcceptBean.DataBean.Gi
 
         helper.setText(R.id.tv_info, DateTimeUitl.timedate(String.valueOf(item.getCreate_time())));
 
-        GlideUtil.load(mContext, item.getGirft_img_url(), (ImageView) helper.getView(R.id.img_gift));
+        GlideUtil.loadRetangle(mContext, item.getGirft_img_url(), (ImageView) helper.getView(R.id.img_gift));
 
         helper.setText(R.id.gift_name, item.getGirft_name());
 

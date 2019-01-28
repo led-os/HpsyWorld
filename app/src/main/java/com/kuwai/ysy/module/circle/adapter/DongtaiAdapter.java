@@ -25,16 +25,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cc.shinichi.library.ImagePreview;
-import ch.ielse.view.imagewatcher.ImageWatcher;
 
 
 public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, BaseViewHolder> {
 
-    private ImageWatcher mImageWatcher;
-
-    public DongtaiAdapter(ImageWatcher imageWatcher) {
+    public DongtaiAdapter() {
         super(R.layout.item_dongtai);
-        this.mImageWatcher = imageWatcher;
     }
 
     @Override
@@ -58,36 +54,32 @@ public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, Ba
                 nineGridView.setOnImageClickListener(new NineGridView.OnImageClickListener() {
                     @Override
                     public void onImageClick(int position, View view) {
-                        if (mImageWatcher != null) {
-                            if (item.getAttach() != null && item.getAttach().size() > 0) {
-                                ImagePreview
-                                        .getInstance()
-                                        // 上下文，必须是activity，不需要担心内存泄漏，本框架已经处理好
-                                        .setContext(mContext)
-                                        // 从第几张图片开始，索引从0开始哦~
-                                        .setIndex(position)
-                                        // 只有一张图片的情况，可以直接传入这张图片的url
-                                        .setImageList(item.getAttach())
-                                        // 加载策略，详细说明见下面“加载策略介绍”。默认为手动模式
-                                        .setLoadStrategy(ImagePreview.LoadStrategy.AlwaysThumb)
-                                        // 保存的文件夹名称，会在SD卡根目录进行文件夹的新建。
-                                        // (你也可设置嵌套模式，比如："BigImageView/Download"，会在SD卡根目录新建BigImageView文件夹，并在BigImageView文件夹中新建Download文件夹)
-                                        .setFolderName("YsyDownload")
-                                        // 缩放动画时长，单位ms
-                                        .setZoomTransitionDuration(300)
-                                        // 是否启用上拉/下拉关闭。默认不启用
-                                        .setEnableDragClose(true)
-                                        // 是否显示下载按钮，在页面右下角。默认显示
-                                        .setShowDownButton(false)
-                                        // 设置是否显示顶部的指示器（1/9）默认显示
-                                        .setShowIndicator(false)
-                                        // 设置失败时的占位图，默认为R.drawable.load_failed，设置为 0 时不显示
-                                        .setErrorPlaceHolder(R.drawable.load_failed)
-                                        // 开启预览
-                                        .start();
-                            }
-
-                            //mImageWatcher.show((ImageView) view, nineGridView.getImageViews(), item.getAttach());
+                        if (item.getAttach() != null && item.getAttach().size() > 0) {
+                            ImagePreview
+                                    .getInstance()
+                                    // 上下文，必须是activity，不需要担心内存泄漏，本框架已经处理好
+                                    .setContext(mContext)
+                                    // 从第几张图片开始，索引从0开始哦~
+                                    .setIndex(position)
+                                    // 只有一张图片的情况，可以直接传入这张图片的url
+                                    .setImageList(item.getAttach())
+                                    // 加载策略，详细说明见下面“加载策略介绍”。默认为手动模式
+                                    .setLoadStrategy(ImagePreview.LoadStrategy.AlwaysThumb)
+                                    // 保存的文件夹名称，会在SD卡根目录进行文件夹的新建。
+                                    // (你也可设置嵌套模式，比如："BigImageView/Download"，会在SD卡根目录新建BigImageView文件夹，并在BigImageView文件夹中新建Download文件夹)
+                                    .setFolderName("YsyDownload")
+                                    // 缩放动画时长，单位ms
+                                    .setZoomTransitionDuration(300)
+                                    // 是否启用上拉/下拉关闭。默认不启用
+                                    .setEnableDragClose(true)
+                                    // 是否显示下载按钮，在页面右下角。默认显示
+                                    .setShowDownButton(false)
+                                    // 设置是否显示顶部的指示器（1/9）默认显示
+                                    .setShowIndicator(false)
+                                    // 设置失败时的占位图，默认为R.drawable.load_failed，设置为 0 时不显示
+                                    .setErrorPlaceHolder(R.drawable.load_failed)
+                                    // 开启预览
+                                    .start();
                         }
                     }
                 });
@@ -113,6 +105,16 @@ public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, Ba
         } else if (item.getGender() == 2) {
             sexImg.setImageResource(R.drawable.ic_user_woman);
         }
+
+        switch (item.getIs_vip()) {
+            case 0:
+                helper.getView(R.id.img_vip).setVisibility(View.GONE);
+                break;
+            case 1:
+                helper.getView(R.id.img_vip).setVisibility(View.VISIBLE);
+                break;
+        }
+
         PileLayout pileLayout = helper.getView(R.id.round_head);
         if (item.getReward_sum() > 0) {
             helper.getView(R.id.tv_reward).setVisibility(View.GONE);
@@ -128,14 +130,6 @@ public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, Ba
         helper.addOnClickListener(R.id.img_head);
         GlideUtil.load(mContext, item.getAvatar(), (ImageView) helper.getView(R.id.img_head));
         helper.setText(R.id.tv_nick, item.getNickname());
-        switch (item.getGender()) {
-            case C.Man:
-                GlideUtil.load(mContext, R.drawable.ic_user_man, (ImageView) helper.getView(R.id.iv_sex));
-                break;
-            case C.Woman:
-                GlideUtil.load(mContext, R.drawable.ic_user_woman, (ImageView) helper.getView(R.id.iv_sex));
-                break;
-        }
 
         List<String> info = new ArrayList<>();
         if (!TextUtils.isEmpty(String.valueOf(item.getAge()))) {

@@ -61,6 +61,7 @@ import com.taobao.sophix.SophixManager;
 import com.taobao.sophix.listener.PatchLoadStatusListener;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 import com.xuexiang.xupdate.XUpdate;
@@ -243,6 +244,7 @@ public class MyApp extends BaseApplication {
         PlatformConfig.setWeixin("wx061451b819a2c377", "a2ede8246092bd70ac33cac9dc24d69f");
         PlatformConfig.setSinaWeibo("240524518", "cc4933f41b939f5188e3ec06c5c921d9", "http://api.yushuiyuan.cn/api/user/weibo");
         PlatformConfig.setQQZone("101511982", "cae47898315b8ce1a93cf51bc2de7354");
+        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
 
         //腾讯x5
         QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
@@ -274,7 +276,7 @@ public class MyApp extends BaseApplication {
 
     private void initUpdate() {
         XUpdate.get()
-                .debug(true) //开启debug模式，可用于问题的排查
+                .debug(false) //开启debug模式，可用于问题的排查
                 .isWifiOnly(false)     //默认设置只在wifi下检查版本更新
                 .isGet(true)          //默认设置使用get请求检查版本
                 .isAutoMode(false)    //默认设置非自动模式，可根据具体使用配置

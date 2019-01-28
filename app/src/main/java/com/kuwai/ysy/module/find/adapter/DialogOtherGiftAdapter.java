@@ -20,7 +20,7 @@ public class DialogOtherGiftAdapter extends BaseQuickAdapter<CommisDetailBean.Da
     @Override
     protected void convert(BaseViewHolder helper, CommisDetailBean.DataBean.GiftBean item) {
         helper.setText(R.id.textView, item.getGirft_name());
-        GlideUtil.load(mContext, item.getGirft_img_url(), (ImageView) helper.getView(R.id.imageView));
+        GlideUtil.loadRetangle(mContext, item.getGirft_img_url(), (ImageView) helper.getView(R.id.imageView));
     }
 
 }

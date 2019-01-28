@@ -54,16 +54,6 @@ public class GiftDialog extends CustomDialog{
 
     private void initValues(Context mContext) {
 
-      /*  mDataList = new ArrayList<>();
-        //初始化图标资源
-        for (int i = 0; i < 18; i++) {
-            Drawable imageId = mContext.getResources().getDrawable(R.drawable.gift6);
-            Model model = new Model();
-            model.setImage(imageId);
-            model.setMoney("520钻石");
-            mDataList.add(model);
-        }*/
-
         mInflater = LayoutInflater.from(mContext);
         //总的页数=总数/每页数量，并取整
         pageCount = (int) Math.ceil(mDataList.size() * 1.0 / pageSize);

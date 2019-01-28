@@ -40,6 +40,7 @@ import com.kuwai.ysy.module.circle.business.DyDashang.DyDashangListFragment;
 import com.kuwai.ysy.module.circle.business.dycomment.DySecFragment;
 import com.kuwai.ysy.module.circle.business.DyZan.DyZanListFragment;
 import com.kuwai.ysy.module.find.bean.GiftPopBean;
+import com.kuwai.ysy.module.mine.MyWalletActivity;
 import com.kuwai.ysy.module.mine.OtherHomeActivity;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.others.NineImageAdapter;
@@ -92,7 +93,7 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
      */
     private TextView mTvNick;
 
-    private ImageView mIvSex;
+    private ImageView mIvSex, misVip;
     /**
      * 19岁|185cm|本科|12万元
      */
@@ -201,7 +202,8 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
         mImgHead = (NiceImageView) mRootView.findViewById(R.id.img_head);
         mTvNick = (TextView) mRootView.findViewById(R.id.tv_nick);
         mImgHead.setOnClickListener(this);
-        mIvSex = mRootView.findViewById(R.id.iv_sex);
+        mIvSex = mRootView.findViewById(R.id.img_sex);
+        misVip = mRootView.findViewById(R.id.img_vip);
         rl_play = mRootView.findViewById(R.id.rl_play);
         iv_playimg = mRootView.findViewById(R.id.iv_playimg);
         mTvInfo = (TextView) mRootView.findViewById(R.id.tv_info);
@@ -555,6 +557,15 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
                 break;
         }
 
+        switch (dyDetailBean.getData().getIs_vip()) {
+            case 0:
+                misVip.setVisibility(View.GONE);
+                break;
+            case 1:
+                misVip.setVisibility(View.VISIBLE);
+                break;
+        }
+
         List<String> info = new ArrayList<>();
         if (!TextUtils.isEmpty(String.valueOf(dyDetailBean.getData().getAge()))) {
             info.add(dyDetailBean.getData().getAge() + "岁");
@@ -569,7 +580,13 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
             info.add(dyDetailBean.getData().getAnnual_income());
         }
         mTvInfo.setText(StringUtils.join(info.toArray(), "|"));
-        mTvContent.setText(mDyDetailBean.getData().getText());
+
+        if (!Utils.isNullString(mDyDetailBean.getData().getText())) {
+            mTvContent.setVisibility(View.VISIBLE);
+            mTvContent.setText(mDyDetailBean.getData().getText());
+        } else {
+            mTvContent.setVisibility(View.GONE);
+        }
         switch (dyDetailBean.getData().getType()) {
             case C.DY_TXT:
                 break;
@@ -632,11 +649,19 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
     }
 
     @Override
-    public void rewardSuc() {
-        EventBusUtil.sendEvent(new MessageEvent(C.MSG_REWARD_DY));
+    public void rewardSuc(SimpleResponse response) {
+
         if (customDialog != null) {
             customDialog.dismiss();
         }
+
+        if (response.code == 200) {
+            EventBusUtil.sendEvent(new MessageEvent(C.MSG_REWARD_DY));
+        } else if (response.code == 202) {
+            //余额不足跳转充值
+            startActivity(new Intent(getActivity(), MyWalletActivity.class));
+        }
+
     }
 
     @Override

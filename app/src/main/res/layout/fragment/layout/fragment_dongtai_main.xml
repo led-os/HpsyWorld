@@ -9,20 +9,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.kuwai.ysy.widget.MultipleStatusView
-            android:id="@+id/multipleStatusView"
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:errorView="@layout/layout_empty_view">
+            android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
+            <com.kuwai.ysy.widget.MultipleStatusView
+                android:id="@+id/multipleStatusView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="56dp">
+                app:errorView="@layout/layout_empty_view">
 
-            </android.support.v7.widget.RecyclerView>
-        </com.kuwai.ysy.widget.MultipleStatusView>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="56dp">
+
+                </android.support.v7.widget.RecyclerView>
+
+            </com.kuwai.ysy.widget.MultipleStatusView>
+        </android.support.v4.widget.NestedScrollView>
 
         <com.kuwai.ysy.widget.DragFloatActionButton
             android:id="@+id/tv_edit"
@@ -33,11 +39,5 @@
             android:layout_marginBottom="80dp"
             android:layout_marginRight="30dp"
             android:drawableLeft="@drawable/dyn_dyn_btn_edit" />
-
-        <ch.ielse.view.imagewatcher.ImageWatcher
-            android:id="@+id/image_watcher"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
     </RelativeLayout>
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

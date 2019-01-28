@@ -26,7 +26,7 @@ public class PhoneBookAdapter extends BaseQuickAdapter<PhotoBook, BaseViewHolder
         helper.setText(R.id.tv_nick, item.getName());
         helper.setText(R.id.tv_phone, "手机号：" + item.getTelPhone());
         //GlideUtil.load(mContext, item.getBgPicture(), ((ImageView) helper.getView(R.id.iv_category)));
-        //helper.addOnClickListener(R.id.fbl_item_team);
+        helper.addOnClickListener(R.id.invite);
     }
 
 }

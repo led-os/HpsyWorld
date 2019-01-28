@@ -38,6 +38,7 @@
     <string name="meetagree_text">茫茫人海中，希望你能够选中我。期待与你的约会！</string>
     <string name="empty_view_hint">暂时木有内容呀~~</string>
     <string name="login_error">你还没有登录呢～</string>
+    <string name="ing_error">功能开发中，敬请期待～</string>
 
     <string name="language_cn">中文</string>
     <string name="language_en">ENGLISH</string>

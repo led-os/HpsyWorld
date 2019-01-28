@@ -28,7 +28,7 @@ public class MineDyAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, Bas
         helper.setText(R.id.month, TimeFormatterUtils.stampToDaty(item.getUpdate_time()) + "");
         if (item.getAttach().size() > 0) {
             helper.getView(R.id.img_pic).setVisibility(View.VISIBLE);
-            GlideUtil.load(mContext, item.getAttach().get(0), (ImageView) helper.getView(R.id.img_pic));
+            GlideUtil.loadRetangle(mContext, item.getAttach().get(0), (ImageView) helper.getView(R.id.img_pic));
         } else {
             helper.getView(R.id.img_pic).setVisibility(View.GONE);
         }

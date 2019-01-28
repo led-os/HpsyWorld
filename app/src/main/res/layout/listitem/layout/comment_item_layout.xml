@@ -35,6 +35,7 @@
         android:src="@drawable/ic_user_vip" />
 
     <ImageView
+        android:id="@+id/img_sex"
         android:layout_width="14dp"
         android:layout_height="14dp"
         android:layout_marginLeft="6dp"

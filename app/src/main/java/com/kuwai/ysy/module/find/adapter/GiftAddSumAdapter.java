@@ -26,7 +26,7 @@ public class GiftAddSumAdapter extends BaseQuickAdapter<GiftPopBean.DataBean, Ba
     protected void convert(BaseViewHolder helper, final GiftPopBean.DataBean item) {
         SuperButton roundView = helper.getView(R.id.gift_name);
         roundView.setText(item.getGirft_name());
-        GlideUtil.load(mContext, item.getGirft_img_url(), (ImageView) helper.getView(R.id.img_gift));
+        GlideUtil.loadRetangle(mContext, item.getGirft_img_url(), (ImageView) helper.getView(R.id.img_gift));
         helper.setText(R.id.tv_num, "x" + item.num);
         helper.setText(R.id.tv_sum, Double.parseDouble(item.getPrice()) * item.num + "桃花币");
 

@@ -45,6 +45,8 @@
                 android:background="@null"
                 android:hint="输入昵称、ID号快速查找"
                 android:paddingRight="10dp"
+                android:singleLine="true"
+                android:maxLength="14"
                 android:textColor="@color/balck_28"
                 android:textSize="14sp"
                 app:delete_height="48"

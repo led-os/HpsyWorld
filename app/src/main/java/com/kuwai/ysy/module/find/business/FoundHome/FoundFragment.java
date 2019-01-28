@@ -317,7 +317,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
         bannerRound.setImages(mBannerList);
         bannerRound.setDelayTime(3500);
         bannerRound.setBannerStyle(BannerConfig.NOT_INDICATOR);
-        mIndicatorLine.setViewPager(mViewpager, 4);
+        mIndicatorLine.setViewPager(mViewpager, 3);
         bannerRound.start();
 
         mfoundCityAdapter.replaceData(foundBean.getData().getAppointment());

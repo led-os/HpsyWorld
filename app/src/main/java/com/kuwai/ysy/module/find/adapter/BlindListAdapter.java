@@ -32,7 +32,7 @@ public class BlindListAdapter extends BaseQuickAdapter<TuoDanBean.DataBean, Base
         } else {
             helper.getView(R.id.tv_fee).setVisibility(View.GONE);
         }
-        GlideUtil.load(mContext, item.getAttach(), ((ImageView) helper.getView(R.id.img_pic)));
+        GlideUtil.loadRetangle(mContext, item.getAttach(), ((ImageView) helper.getView(R.id.img_pic)));
 
         switch (item.getStatus()) {
             case 1:

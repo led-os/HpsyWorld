@@ -14,6 +14,7 @@ import com.kuwai.ysy.callback.GiftClickCallback;
 import com.kuwai.ysy.module.chat.api.ChatApiFactory;
 import com.kuwai.ysy.module.find.api.AppointApiFactory;
 import com.kuwai.ysy.module.find.bean.GiftPopBean;
+import com.kuwai.ysy.module.mine.MyWalletActivity;
 import com.kuwai.ysy.widget.GiftPannelView;
 import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.utils.base.ToastUtils;
@@ -35,6 +36,7 @@ public class GiftPlugin implements IPluginModule, GiftClickCallback {
 
     private CustomDialog customDialog;
     private String targetId;
+    private Context mContext;
 
     @Override
     public Drawable obtainDrawable(Context context) {
@@ -48,6 +50,7 @@ public class GiftPlugin implements IPluginModule, GiftClickCallback {
 
     @Override
     public void onClick(Fragment fragment, RongExtension rongExtension) {
+        mContext = fragment.getActivity();
         createDialog(fragment.getActivity());
         rongExtension.collapseExtension();
         targetId = rongExtension.getTargetId();
@@ -125,6 +128,11 @@ public class GiftPlugin implements IPluginModule, GiftClickCallback {
                     public void accept(@NonNull SimpleResponse dateTheme) throws Exception {
                         if (dateTheme.code == 200) {
                             sendMessage(gift);
+                        } else if (dateTheme.code == 202) {
+                            //余额不足跳转充值
+                            if (mContext != null) {
+                                mContext.startActivity(new Intent(mContext, MyWalletActivity.class));
+                            }
                         }
                         ToastUtils.showShort(dateTheme.msg);
                     }

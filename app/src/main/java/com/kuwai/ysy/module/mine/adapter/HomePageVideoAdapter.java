@@ -72,7 +72,7 @@ public class HomePageVideoAdapter extends RecyclerView.Adapter<HomePageVideoAdap
             } else {
                 holder.ivVideo.setVisibility(View.GONE);
             }
-            GlideUtil.load(context, mList.get(position).getAttach(), holder.ivPhoto);
+            GlideUtil.loadRetangle(context, mList.get(position).getAttach(), holder.ivPhoto);
             //holder.ivPhoto.setImageBitmap(BitmapFactory.decodeFile(mList.get(position)));
         }
         if (mList.size() >= MAX_SIZE) {

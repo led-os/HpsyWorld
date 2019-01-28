@@ -25,7 +25,7 @@ public class MyApplyAdapter extends BaseQuickAdapter<MyBlindBean.DataBean, BaseV
         helper.setText(R.id.tv_nick, item.getTitle());
         helper.setText(R.id.tv_type, "地点：" + item.getArea());
         helper.setText(R.id.tv_time, "时间：" + DateTimeUitl.getTime(String.valueOf(item.getStart_time())));
-        GlideUtil.load(mContext, item.getAttach(), ((ImageView) helper.getView(R.id.img_pic)));
+        GlideUtil.loadRetangle(mContext, item.getAttach(), ((ImageView) helper.getView(R.id.img_pic)));
         switch (item.getStatus()){
             case 1:
                 helper.setText(R.id.tv_time_state,"进行中");

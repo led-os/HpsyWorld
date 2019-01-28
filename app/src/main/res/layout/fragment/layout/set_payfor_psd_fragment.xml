@@ -34,6 +34,8 @@
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:textSize="14sp"
+            android:singleLine="true"
+            android:maxLength="14"
             android:inputType="textPassword"/>
 
     </LinearLayout>

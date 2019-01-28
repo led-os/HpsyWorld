@@ -517,7 +517,7 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BaseQuic
                 } else {
                     holder.nameTv.setVisibility(View.GONE);
                 }
-                GlideUtil.load(getContext(), mList.get(position).getPath(), holder.ivPhoto);
+                GlideUtil.loadRetangle(getContext(), mList.get(position).getPath(), holder.ivPhoto);
                 //BGAImage.display(helper.getImageView(R.id.iv_item_nine_photo_photo), mPlaceholderDrawableResId, model, mImageSize);
             }
 

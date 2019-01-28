@@ -35,9 +35,12 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="13dp"
             android:layout_marginTop="10dp"
+            android:paddingRight="10dp"
             android:layout_toEndOf="@+id/tv_status"
             android:text="盛夏相亲会：专属单身白领的派对！"
             android:textColor="@color/balck_28"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:textSize="@dimen/sp_16"
             android:textStyle="bold" />
 

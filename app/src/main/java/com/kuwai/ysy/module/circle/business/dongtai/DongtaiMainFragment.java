@@ -32,14 +32,11 @@ import com.kuwai.ysy.module.circle.business.publishdy.PublishDyActivity;
 import com.kuwai.ysy.module.circle.adapter.DongtaiAdapter;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.DyMainListBean;
-import com.kuwai.ysy.module.home.business.HomeActivity;
 import com.kuwai.ysy.module.mine.OtherHomeActivity;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
-import com.kuwai.ysy.module.mine.business.homepage.OtherHomepageFragment;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.DragFloatActionButton;
-import com.kuwai.ysy.widget.GlideSimpleTarget;
 import com.kuwai.ysy.widget.popwindow.YsyPopWindow;
 import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.base.RBaseFragment;
@@ -63,7 +60,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.ielse.view.imagewatcher.ImageWatcher;
 import io.reactivex.functions.Consumer;
 
 import static com.kuwai.ysy.app.C.TYPE_DY_ALL;
@@ -76,7 +72,6 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
 
     private YsyPopWindow mListPopWindow;
     private CustomDialog customDialog;
-    private ImageWatcher mImageWatcher;
     private DyMainListBean mDyMainListBean;
     private int page = 1;
     private String type = TYPE_DY_ALL;
@@ -124,7 +119,6 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
         mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
         mDongtaiList = mRootView.findViewById(R.id.recyclerView);
         mPublishTv = mRootView.findViewById(R.id.tv_edit);
-        mImageWatcher = mRootView.findViewById(R.id.image_watcher);
 
         mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
@@ -151,21 +145,17 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
             }
         });
 
-        mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        mDongtaiAdapter = new DongtaiAdapter(mImageWatcher);
+        mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        mDongtaiAdapter = new DongtaiAdapter();
         //mDongtaiList.addOnScrollListener(new HomeActivity.ListScrollListener());
         mDongtaiList.setAdapter(mDongtaiAdapter);
         ((SimpleItemAnimator) mDongtaiList.getItemAnimator()).setSupportsChangeAnimations(false);
         mPublishTv.setOnClickListener(this);
-        mImageWatcher.setTranslucentStatus(Utils.calcStatusBarHeight(getActivity()) + Utils.dp2px(54));
-        mImageWatcher.setErrorImageRes(R.mipmap.error_picture);
-        //mImageWatcher.setOnPictureLongPressListener(null);
-        mImageWatcher.setLoader(new ImageWatcher.Loader() {
-            @Override
-            public void load(Context context, String url, ImageWatcher.LoadCallback lc) {
-                Glide.with(context).asBitmap().load(url).into(new GlideSimpleTarget(lc));
-            }
-        });
 
         mDongtaiAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -343,13 +333,11 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
                 //like(SPManager.get().getStringValue("uid"), String.valueOf(mDongtaiAdapter.getData().get(pos).getUid()), 1);
             }
         });
-        if (customDialog == null) {
-            customDialog = new CustomDialog.Builder(getActivity())
-                    .setView(pannel)
-                    .setTouchOutside(true)
-                    .setDialogGravity(Gravity.CENTER)
-                    .build();
-        }
+        customDialog = new CustomDialog.Builder(getActivity())
+                .setView(pannel)
+                .setTouchOutside(true)
+                .setDialogGravity(Gravity.CENTER)
+                .build();
         customDialog.show();
     }
 

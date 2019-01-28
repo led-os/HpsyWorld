@@ -19,6 +19,7 @@ import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.chat.api.ChatApiFactory;
+import com.kuwai.ysy.module.chat.bean.MyFriends;
 import com.kuwai.ysy.module.chat.bean.UserInfoBean;
 import com.kuwai.ysy.module.chat.business.NoticeFragment;
 import com.kuwai.ysy.module.mine.business.gift.GiftMyAcceptFragment;
@@ -27,7 +28,9 @@ import com.kuwai.ysy.module.mine.business.gift.GiftRealExchangeFragment;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NavigationLayout;
+import com.kuwai.ysy.widget.pageitem.RoundMessageView;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.StatusBarUtil;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
@@ -52,6 +55,7 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
 
     private RadioButton radioButtonLookme, radioButtonMylook;
     private UserInfo userInfo;
+    private RoundMessageView red_tv;
 
     public static ChatMainFragment newInstance() {
         Bundle args = new Bundle();
@@ -89,6 +93,7 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
         pager = mRootView.findViewById(R.id.vp_dy_detail);
         mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
         imgChat = mRootView.findViewById(R.id.chat);
+        red_tv = mRootView.findViewById(R.id.red_tv);
         radioGroup = (RadioGroup) mRootView.findViewById(R.id.main_radiogroup);
         radioButtonLookme = mRootView.findViewById(R.id.tv_chat_count);
         radioButtonMylook = mRootView.findViewById(R.id.tv_notice);
@@ -210,6 +215,11 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         //getConversation();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         refreshContent();
     }
 
@@ -238,9 +248,16 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void isLogin(MessageEvent event) {
         if (C.MSG_LOGIN == event.getCode()) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             refreshContent();
         } else if (C.MSG_LOG_OUT == event.getCode()) {
             refreshContent();
+        } else if (C.MSG_FRIEND_REFRESH == event.getCode()) {
+            getNewFriends();
         }
     }
 
@@ -248,5 +265,40 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
     public void onDestroyView() {
         super.onDestroyView();
         EventBusUtil.unregister(this);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        if (getActivity() != null) {
+            if (isVisibleToUser) {
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    getNewFriends();
+                }
+            }
+        }
+    }
+
+    void getNewFriends() {
+        addSubscription(ChatApiFactory.getNewFriends(SPManager.get().getStringValue("uid")).subscribe(new Consumer<MyFriends>() {
+            @Override
+            public void accept(MyFriends myBlindBean) throws Exception {
+                if (myBlindBean.getCode() == 200) {
+                    if (myBlindBean.getData() != null && myBlindBean.getData().size() > 0) {
+                        red_tv.setHasMessage(true);
+                    } else {
+                        red_tv.setHasMessage(false);
+                    }
+                } else {
+                    //ToastUtils.showShort(myBlindBean.getMsg());
+                }
+
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: "+throwable);
+                //ToastUtils.showShort("网络错误");
+            }
+        }));
     }
 }

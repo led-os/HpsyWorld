@@ -3,6 +3,7 @@ package com.kuwai.ysy.module.mine.business.mine;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -40,6 +41,7 @@ public class MineLoginFragment extends BaseFragment<MinePresenter> implements Vi
 
     private RelativeLayout my_integral;
     private RelativeLayout my_money;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private SuperTextView st_credit;
     private CircleImageView mHeadImg;
     private SuperTextView st_setting;
@@ -111,6 +113,13 @@ public class MineLoginFragment extends BaseFragment<MinePresenter> implements Vi
         st_credit = mRootView.findViewById(R.id.st_credit);
         mHomeLay = mRootView.findViewById(R.id.lay_home);
         tv_text = mRootView.findViewById(R.id.tv_text);
+        swipeRefreshLayout = mRootView.findViewById(R.id.swipe);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initData();
+            }
+        });
         mHeadImg = mRootView.findViewById(R.id.img_head);
         mHomeLay.setOnClickListener(this);
         st_ask = mRootView.findViewById(R.id.st_ask);
@@ -147,6 +156,7 @@ public class MineLoginFragment extends BaseFragment<MinePresenter> implements Vi
         if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
             mPresenter.requestUserData(SPManager.get().getStringValue("uid"));
         } else {
+            swipeRefreshLayout.setRefreshing(false);
             mLayoutStatusView.showError();
             //SuperButton button = mRootView.findViewById(R.id.no_login);
         }
@@ -173,6 +183,7 @@ public class MineLoginFragment extends BaseFragment<MinePresenter> implements Vi
 
     @Override
     public void setUserData(UserInfo cityMeetBean) {
+        swipeRefreshLayout.setRefreshing(false);
         mLayoutStatusView.showContent();
         tv_text.setText(cityMeetBean.getData().getNickname());
         GlideUtil.load(getActivity(), cityMeetBean.getData().getAvatar(), mHeadImg);
@@ -181,7 +192,7 @@ public class MineLoginFragment extends BaseFragment<MinePresenter> implements Vi
         //SPManager.get().putInt("isvip_", cityMeetBean.getData().getIs_vip());
         img_vip.setVisibility(cityMeetBean.getData().getIs_vip() == 1 ? View.VISIBLE : View.GONE);
         tv_money.setText(cityMeetBean.getData().getAmount());
-        tv_integral.setText(cityMeetBean.getData().getIntegral_sum() + "");
+        tv_integral.setText(cityMeetBean.getData().getIntegral_exchange() + "");
         //st_credit.setRightString(cityMeetBean.getData().getAuthentication_sum() + "个未认证");
     }
 

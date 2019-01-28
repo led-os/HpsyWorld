@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/top_lay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="30dp">
+        android:layout_marginLeft="16dp">
 
         <RadioGroup
             android:id="@+id/main_radiogroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:orientation="horizontal">
 
             <RadioButton
@@ -48,8 +47,18 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="18dp"
+            android:layout_marginTop="30dp"
             android:scaleType="fitXY"
             android:src="@drawable/ic_chat_nav_myfriend" />
+
+        <com.kuwai.ysy.widget.pageitem.RoundMessageView
+            android:id="@+id/red_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="26dp"></com.kuwai.ysy.widget.pageitem.RoundMessageView>
 
     </RelativeLayout>
 
@@ -57,9 +66,9 @@
         android:id="@+id/multipleStatusView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/top_lay"
         android:paddingBottom="58dp"
-        app:errorView="@layout/layout_login_no"
-        android:layout_below="@id/top_lay">
+        app:errorView="@layout/layout_login_no">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_dy_detail"

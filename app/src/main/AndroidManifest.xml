@@ -33,6 +33,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_sading_round"
         android:supportsRtl="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme">
         <activity
             android:name=".module.home.business.loginmoudle.StartupPageActivity"
@@ -96,11 +97,14 @@
             android:name=".module.find.business.FoundLocation.FoundLocationFragment"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".module.find.business.TuoDan.TuodanActivity" />
-        <activity android:name=".module.find.SearchMeetActivity" />
+        <activity
+            android:name=".module.find.SearchMeetActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".module.find.CityMeetActivity" />
         <activity android:name=".module.find.CommisDetailOtherActivity" />
         <activity android:name=".module.find.business.CommisDetailMyActivity" />
         <activity android:name=".module.find.business.FoundLocation.SearchCityFragment" />
+        <activity android:name=".module.find.MapActivity" />
 
         //我的
         <activity

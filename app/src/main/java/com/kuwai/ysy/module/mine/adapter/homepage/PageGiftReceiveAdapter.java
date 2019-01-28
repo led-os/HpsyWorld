@@ -23,7 +23,7 @@ public class PageGiftReceiveAdapter extends BaseQuickAdapter<PersolHomePageBean.
     @Override
     protected void convert(BaseViewHolder helper, PersolHomePageBean.DataBean.GiftBean item) {
         GlideUtil.load(mContext,item.getAvatar(), (ImageView) helper.getView(R.id.img_user));
-        GlideUtil.load(mContext,item.getGirft_img_url(), (ImageView) helper.getView(R.id.img_gift));
+        GlideUtil.loadRetangle(mContext,item.getGirft_img_url(), (ImageView) helper.getView(R.id.img_gift));
 
         helper.setText(R.id.tv_user,item.getGirft_name());
 

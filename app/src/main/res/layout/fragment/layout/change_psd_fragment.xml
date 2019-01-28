@@ -35,6 +35,8 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="48dp"
             android:background="@color/white"
+            android:singleLine="true"
+            android:maxLength="14"
             android:hint="请输入当前密码"
             android:inputType="textPassword" />
 
@@ -62,6 +64,8 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="48dp"
             android:hint="请输入新密码"
+            android:singleLine="true"
+            android:maxLength="14"
             android:background="@color/white"
             android:inputType="textPassword" />
 
@@ -90,6 +94,8 @@
             android:layout_marginStart="48dp"
             android:background="@color/white"
             android:hint="确认新密码"
+            android:singleLine="true"
+            android:maxLength="14"
             android:inputType="textPassword" />
 
     </LinearLayout>

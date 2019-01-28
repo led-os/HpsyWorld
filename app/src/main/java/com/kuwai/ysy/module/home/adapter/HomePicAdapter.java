@@ -10,7 +10,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
-import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.home.bean.HomeVideoBean;
 import com.kuwai.ysy.module.mine.OtherHomeActivity;
 import com.kuwai.ysy.utils.Utils;
@@ -30,16 +29,24 @@ public class HomePicAdapter extends BaseQuickAdapter<HomeVideoBean.DataBean, Bas
     protected void convert(BaseViewHolder helper, final HomeVideoBean.DataBean item) {
         if (Utils.isNullString(item.getVideo_id())) {
             if (item.getAttach() != null && item.getAttach().size() > 0) {
-                GlideUtil.load(mContext, item.getAttach().get(0), (ImageView) helper.getView(R.id.top_img));
+                GlideUtil.loadRetangle(mContext, item.getAttach().get(0), (ImageView) helper.getView(R.id.top_img));
             }
             helper.getView(R.id.img_video).setVisibility(View.GONE);
         } else {
-            GlideUtil.load(mContext, item.getVideo_attach(), (ImageView) helper.getView(R.id.top_img));
+            GlideUtil.loadRetangle(mContext, item.getVideo_attach(), (ImageView) helper.getView(R.id.top_img));
             helper.getView(R.id.img_video).setVisibility(View.VISIBLE);
         }
         GlideUtil.load(mContext, item.getAvatar(), (ImageView) helper.getView(R.id.img_head));
         helper.setText(R.id.tv_name, item.getNickname());
-        helper.setText(R.id.tv_location, item.getDistance() + "km");
+        if (!Utils.isNullString(item.getDistance()) && Double.parseDouble(item.getDistance()) > 1) {
+            if (Double.parseDouble(item.getDistance()) < 99) {
+                helper.setText(R.id.tv_location, Utils.format1Number(Double.parseDouble(item.getDistance())) + "km");
+            } else {
+                helper.setText(R.id.tv_location, ">99km");
+            }
+        } else {
+            helper.setText(R.id.tv_location, "<1km");
+        }
 
         ImageView topImg = helper.getView(R.id.top_img);
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) topImg.getLayoutParams();

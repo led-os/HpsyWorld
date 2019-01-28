@@ -29,7 +29,7 @@ public class LikeMsgAdapter extends BaseQuickAdapter<AllLikeBean.DataBean, BaseV
         CircleImageView head = helper.getView(R.id.img_head);
         GlideUtil.load(mContext, item.getAvatar(), head);
         if(!Utils.isNullString(item.getAttach())){
-            GlideUtil.load(mContext, item.getAttach(), (ImageView) helper.getView(R.id.img_gift));
+            GlideUtil.loadRetangle(mContext, item.getAttach(), (ImageView) helper.getView(R.id.img_gift));
         }
         helper.setText(R.id.tv_msg, DateTimeUitl.getStandardDate(String.valueOf(item.getCreate_time())));
         helper.setText(R.id.tv_nick, item.getNickname());

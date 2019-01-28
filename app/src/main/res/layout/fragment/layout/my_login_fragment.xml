@@ -1,328 +1,333 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:layout_height="match_parent">
 
-    <com.kuwai.ysy.widget.MultipleStatusView
-        android:id="@+id/multipleStatusView"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:errorView="@layout/layout_no_login">
+        android:layout_height="match_parent">
 
-        <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.kuwai.ysy.widget.MultipleStatusView
+            android:id="@+id/multipleStatusView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#f4f4f4"
-            android:orientation="vertical">
+            app:errorView="@layout/layout_no_login">
 
-            <RelativeLayout
+            <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:layout_height="144dp"
-                android:layout_gravity="bottom"
-                android:background="@color/white">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/center_img_xxx_pressed" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="#99ffffff" />
+                android:layout_height="match_parent"
+                android:background="#f4f4f4"
+                android:orientation="vertical">
 
                 <RelativeLayout
-                    android:id="@+id/user_headicon_default"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginStart="18dp"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center_horizontal">
+                    android:layout_width="match_parent"
+                    android:layout_height="144dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/white">
 
-                    <com.allen.library.CircleImageView
-                        android:id="@+id/img_head"
-                        android:layout_width="66dp"
-                        android:layout_height="66dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="16dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/center_img_user_default"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/center_img_xxx_pressed" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="#99ffffff" />
+
+                    <RelativeLayout
+                        android:id="@+id/user_headicon_default"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginStart="18dp"
+                        android:gravity="center_horizontal">
+
+                        <com.allen.library.CircleImageView
+                            android:id="@+id/img_head"
+                            android:layout_width="66dp"
+                            android:layout_height="66dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="16dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/center_img_user_default" />
+
+                        <TextView
+                            android:id="@+id/tv_level"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginLeft="10dp"
+                            android:background="@drawable/center_center_huangguan"
+                            android:gravity="center_horizontal|bottom"
+                            android:paddingBottom="2dp"
+                            android:rotation="36"
+                            android:text="2"
+                            android:textColor="@color/theme"
+                            android:textSize="10sp" />
+
+                    </RelativeLayout>
 
                     <TextView
-                        android:id="@+id/tv_level"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:id="@+id/tv_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_toRightOf="@+id/user_headicon_default"
+                        android:singleLine="true"
+                        android:text="ID:0000000"
+                        android:textColor="#ffbdbdbd"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/tv_id"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_toRightOf="@+id/user_headicon_default"
+                        android:text="张某某"
+                        android:textColor="#282828"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/img_vip"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_above="@+id/tv_id"
+                        android:layout_marginBottom="14dp"
+                        android:layout_marginStart="9dp"
+                        android:layout_marginTop="28dp"
+                        android:layout_toRightOf="@+id/tv_text"
+                        android:src="@drawable/center_ic_head_pressed" />
+
+                    <TextView
+                        android:id="@+id/lay_home"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
-                        android:layout_marginLeft="10dp"
-                        android:background="@drawable/center_center_huangguan"
-                        android:gravity="center_horizontal|bottom"
-                        android:paddingBottom="2dp"
-                        android:rotation="36"
-                        android:text="2"
-                        android:textColor="@color/theme"
-                        android:textSize="10sp" />
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginRight="14dp"
+                        android:drawableRight="@drawable/ic_arrow_right"
+                        android:gravity="center_vertical"
+                        android:text="个人主页"
+                        android:textColor="#ff7b7b7b"
+                        android:textSize="14sp" />
 
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tv_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="17dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="12dp"
-                    android:layout_toRightOf="@+id/user_headicon_default"
-                    android:singleLine="true"
-                    android:text="ID:0000000"
-                    android:textColor="#ffbdbdbd"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/tv_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/tv_id"
-                    android:layout_marginStart="17dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_toRightOf="@+id/user_headicon_default"
-                    android:text="张某某"
-                    android:textColor="#282828"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/img_vip"
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:layout_above="@+id/tv_id"
-                    android:layout_marginStart="9dp"
-                    android:layout_marginTop="28dp"
-                    android:layout_marginBottom="14dp"
-                    android:layout_toRightOf="@+id/tv_text"
-                    android:src="@drawable/center_ic_head_pressed" />
-
-                <TextView
-                    android:id="@+id/lay_home"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginRight="14dp"
-                    android:layout_marginBottom="30dp"
-                    android:drawableRight="@drawable/ic_arrow_right"
-                    android:gravity="center_vertical"
-                    android:text="个人主页"
-                    android:textColor="#ff7b7b7b"
-                    android:textSize="14sp" />
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_marginTop="3dp"
-                    android:background="@android:color/white">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                    <RelativeLayout
-                        android:id="@+id/my_integral"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="3dp"
+                        android:background="@android:color/white">
 
-                        <TextView
-                            android:id="@+id/tv_integral"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="11dp"
-                            android:text="1500"
-                            android:textColor="#ff7642fe"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                        <RelativeLayout
+                            android:id="@+id/my_integral"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/tv_integral"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="4dp"
-                            android:text="我的积分"
-                            android:textColor="#ff282828"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/tv_integral"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="11dp"
+                                android:text="0"
+                                android:textColor="#ff7642fe"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
 
-                    </RelativeLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tv_integral"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="4dp"
+                                android:text="我的积分"
+                                android:textColor="#ff282828"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
 
-                    <View
-                        android:layout_width="0.5dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="#eeeeee" />
+                        </RelativeLayout>
 
-                    <RelativeLayout
-                        android:id="@+id/my_money"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
+                        <View
+                            android:layout_width="0.5dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="#eeeeee" />
 
-                        <TextView
-                            android:id="@+id/tv_money"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="11dp"
-                            android:text="1000"
-                            android:textColor="#ff7642fe"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                        <RelativeLayout
+                            android:id="@+id/my_money"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/tv_money"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="4dp"
-                            android:text="我的钱包"
-                            android:textColor="#ff282828"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/tv_money"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="11dp"
+                                android:text="0"
+                                android:textColor="#ff7642fe"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
 
-                    </RelativeLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tv_money"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="4dp"
+                                android:text="我的钱包"
+                                android:textColor="#ff282828"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
 
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <com.allen.library.SuperTextView
+                        android:id="@+id/st_credit"
+                        android:layout_width="match_parent"
+                        android:layout_height="53dp"
+                        android:layout_marginTop="6dp"
+                        app:sDividerLineHeight="1px"
+                        app:sLeftTextColor="#ff282828"
+                        app:sLeftTextGravity="center"
+                        app:sLeftTextSize="17sp"
+                        app:sLeftTextString="信用认证"
+                        app:sLeftTvDrawableLeft="@drawable/center_ic_list_1"
+                        app:sRightTextColor="#ffbdbdbd"
+                        app:sRightTextGravity="center"
+                        app:sRightTextSize="14sp"
+                        app:sRightTextString="去认证"
+                        app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
+
+                    </com.allen.library.SuperTextView>
+
+                    <com.allen.library.SuperTextView
+                        android:id="@+id/st_ask"
+                        android:layout_width="match_parent"
+                        android:layout_height="53dp"
+                        app:sDividerLineHeight="1px"
+                        app:sLeftTextColor="#ff282828"
+                        app:sLeftTextGravity="center"
+                        app:sLeftTextSize="17sp"
+                        app:sLeftTextString="我的想问"
+                        app:sLeftTvDrawableLeft="@drawable/center_ic_list_2"
+                        app:sRightTextColor="#ffbdbdbd"
+                        app:sRightTextGravity="center"
+                        app:sRightTextSize="14sp"
+                        app:sRightTextString="去设置"
+                        app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
+
+                    </com.allen.library.SuperTextView>
+
+                    <com.allen.library.SuperTextView
+                        android:id="@+id/st_like"
+                        android:layout_width="match_parent"
+                        android:layout_height="53dp"
+                        app:sDividerLineHeight="1px"
+                        app:sLeftTextColor="#ff282828"
+                        app:sLeftTextGravity="center"
+                        app:sLeftTextSize="17sp"
+                        app:sLeftTextString="喜欢"
+                        app:sLeftTvDrawableLeft="@drawable/center_ic_list_3"
+                        app:sRightTextGravity="center"
+                        app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
+
+                    </com.allen.library.SuperTextView>
+
+                    <com.allen.library.SuperTextView
+                        android:id="@+id/st_visitor"
+                        android:layout_width="match_parent"
+                        android:layout_height="53dp"
+                        app:sDividerLineHeight="1px"
+                        app:sLeftTextColor="#ff282828"
+                        app:sLeftTextGravity="center"
+                        app:sLeftTextSize="17sp"
+                        app:sLeftTextString="访客记录"
+                        app:sLeftTvDrawableLeft="@drawable/center_ic_list_4"
+                        app:sRightTextGravity="center"
+                        app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
+
+                    </com.allen.library.SuperTextView>
+
+                    <com.allen.library.SuperTextView
+                        android:id="@+id/st_gift"
+                        android:layout_width="match_parent"
+                        android:layout_height="53dp"
+                        app:sDividerLineHeight="1px"
+                        app:sLeftTextColor="#ff282828"
+                        app:sLeftTextGravity="center"
+                        app:sLeftTextSize="17sp"
+                        app:sLeftTextString="我的礼物"
+                        app:sLeftTvDrawableLeft="@drawable/center_ic_list_5"
+                        app:sRightTextGravity="center"
+                        app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
+
+                    </com.allen.library.SuperTextView>
+
+                    <com.allen.library.SuperTextView
+                        android:id="@+id/st_menber"
+                        android:layout_width="match_parent"
+                        android:layout_height="53dp"
+                        app:sDividerLineHeight="1px"
+                        app:sLeftTextColor="#ff282828"
+                        app:sLeftTextGravity="center"
+                        app:sLeftTextSize="17sp"
+                        app:sLeftTextString="会员中心"
+                        app:sLeftTvDrawableLeft="@drawable/center_ic_list_6"
+                        app:sRightTextColor="#ffbdbdbd"
+                        app:sRightTextGravity="center"
+                        app:sRightTextSize="14sp"
+                        app:sRightTextString="去开通会员"
+                        app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
+
+                    </com.allen.library.SuperTextView>
+
+                    <com.allen.library.SuperTextView
+                        android:id="@+id/st_setting"
+                        android:layout_width="match_parent"
+                        android:layout_height="53dp"
+                        android:layout_marginBottom="58dp"
+                        android:layout_marginTop="11dp"
+                        app:sDividerLineHeight="1px"
+                        app:sLeftTextColor="#ff282828"
+                        app:sLeftTextGravity="center"
+                        app:sLeftTextSize="17sp"
+                        app:sLeftTextString="设置"
+                        app:sLeftTvDrawableLeft="@drawable/center_ic_list_7"
+                        app:sRightTextGravity="center"
+                        app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
+
+                    </com.allen.library.SuperTextView>
                 </LinearLayout>
-
-                <com.allen.library.SuperTextView
-                    android:id="@+id/st_credit"
-                    android:layout_width="match_parent"
-                    android:layout_height="53dp"
-                    android:layout_marginTop="6dp"
-                    app:sDividerLineHeight="1px"
-                    app:sLeftTextColor="#ff282828"
-                    app:sLeftTextSize="17sp"
-                    app:sLeftTextString="信用认证"
-                    app:sLeftTvDrawableLeft="@drawable/center_ic_list_1"
-                    app:sRightTextColor="#ffbdbdbd"
-                    app:sRightTextSize="14sp"
-                    app:sLeftTextGravity="center"
-                    app:sRightTextGravity="center"
-                    app:sRightTextString="去认证"
-                    app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
-
-                </com.allen.library.SuperTextView>
-
-                <com.allen.library.SuperTextView
-                    android:id="@+id/st_ask"
-                    android:layout_width="match_parent"
-                    android:layout_height="53dp"
-                    app:sDividerLineHeight="1px"
-                    app:sLeftTextGravity="center"
-                    app:sRightTextGravity="center"
-                    app:sLeftTextColor="#ff282828"
-                    app:sLeftTextSize="17sp"
-                    app:sLeftTextString="我的想问"
-                    app:sLeftTvDrawableLeft="@drawable/center_ic_list_2"
-                    app:sRightTextColor="#ffbdbdbd"
-                    app:sRightTextSize="14sp"
-                    app:sRightTextString="去设置"
-                    app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
-
-                </com.allen.library.SuperTextView>
-
-                <com.allen.library.SuperTextView
-                    android:id="@+id/st_like"
-                    android:layout_width="match_parent"
-                    android:layout_height="53dp"
-                    app:sDividerLineHeight="1px"
-                    app:sLeftTextGravity="center"
-                    app:sRightTextGravity="center"
-                    app:sLeftTextColor="#ff282828"
-                    app:sLeftTextSize="17sp"
-                    app:sLeftTextString="喜欢"
-                    app:sLeftTvDrawableLeft="@drawable/center_ic_list_3"
-                    app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
-
-                </com.allen.library.SuperTextView>
-
-                <com.allen.library.SuperTextView
-                    android:id="@+id/st_visitor"
-                    android:layout_width="match_parent"
-                    android:layout_height="53dp"
-                    app:sDividerLineHeight="1px"
-                    app:sLeftTextColor="#ff282828"
-                    app:sLeftTextGravity="center"
-                    app:sRightTextGravity="center"
-                    app:sLeftTextSize="17sp"
-                    app:sLeftTextString="访客记录"
-                    app:sLeftTvDrawableLeft="@drawable/center_ic_list_4"
-                    app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
-
-                </com.allen.library.SuperTextView>
-
-                <com.allen.library.SuperTextView
-                    android:id="@+id/st_gift"
-                    android:layout_width="match_parent"
-                    android:layout_height="53dp"
-                    app:sDividerLineHeight="1px"
-                    app:sLeftTextColor="#ff282828"
-                    app:sLeftTextSize="17sp"
-                    app:sLeftTextGravity="center"
-                    app:sRightTextGravity="center"
-                    app:sLeftTextString="我的礼物"
-                    app:sLeftTvDrawableLeft="@drawable/center_ic_list_5"
-                    app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
-
-                </com.allen.library.SuperTextView>
-
-                <com.allen.library.SuperTextView
-                    android:id="@+id/st_menber"
-                    android:layout_width="match_parent"
-                    android:layout_height="53dp"
-                    app:sDividerLineHeight="1px"
-                    app:sLeftTextColor="#ff282828"
-                    app:sLeftTextSize="17sp"
-                    app:sLeftTextString="会员中心"
-                    app:sLeftTextGravity="center"
-                    app:sRightTextGravity="center"
-                    app:sLeftTvDrawableLeft="@drawable/center_ic_list_6"
-                    app:sRightTextColor="#ffbdbdbd"
-                    app:sRightTextSize="14sp"
-                    app:sRightTextString="去开通会员"
-                    app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
-
-                </com.allen.library.SuperTextView>
-
-                <com.allen.library.SuperTextView
-                    android:id="@+id/st_setting"
-                    android:layout_width="match_parent"
-                    android:layout_height="53dp"
-                    android:layout_marginTop="11dp"
-                    app:sDividerLineHeight="1px"
-                    app:sLeftTextColor="#ff282828"
-                    app:sLeftTextSize="17sp"
-                    app:sLeftTextGravity="center"
-                    app:sRightTextGravity="center"
-                    app:sLeftTextString="设置"
-                    android:layout_marginBottom="58dp"
-                    app:sLeftTvDrawableLeft="@drawable/center_ic_list_7"
-                    app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
-
-                </com.allen.library.SuperTextView>
             </LinearLayout>
-        </LinearLayout>
-    </com.kuwai.ysy.widget.MultipleStatusView>
-
-</ScrollView>
+        </com.kuwai.ysy.widget.MultipleStatusView>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -49,6 +49,11 @@ public class Utils {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0); //强制隐藏键盘
     }
 
+    public static void showOrHide(Context context) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
     /**
      * 将double类型的数字保留两位小数（四舍五入）
      *
@@ -58,6 +63,18 @@ public class Utils {
     public static String format2Number(double number) {
         DecimalFormat df = new DecimalFormat();
         df.applyPattern("#0.00");
+        return df.format(number);
+    }
+
+    /**
+     * 将double类型的数字保留两位小数（四舍五入）
+     *
+     * @param number
+     * @return
+     */
+    public static String format1Number(double number) {
+        DecimalFormat df = new DecimalFormat();
+        df.applyPattern("#0.0");
         return df.format(number);
     }
 
@@ -229,8 +246,8 @@ public class Utils {
     /**
      * 获取版本号名称
      *
-     * @para
      * @return
+     * @para
      */
     public static String getVerName() {
         String verName = "";

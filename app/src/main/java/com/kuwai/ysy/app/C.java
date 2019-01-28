@@ -28,7 +28,7 @@ public class C {
     public static final String YUNSHI = "today-fate.html?uid=";
     public static final String HUODONGXIANGQING = "activity-detail.html?";
     public static final String BAOMING = "join-activity.html?uid=";
-    public static final String ABOUTUS = "about-us.html";
+    public static final String ABOUTUS = "about-us.html?version=";
     public static final String CONTACTUS = "contact-us.html?uid=";
     //level:会员等级
     //			part:会员特权（内容特权，身份特权等依次为1,2,3,4）
@@ -76,8 +76,8 @@ public class C {
     @Retention(RetentionPolicy.SOURCE)
     public @interface BaseURL {
         String TEST_URL = "http://baobab.kaiyanapp.com/api/";
-        String BASE_URL = "http://192.168.1.88/api/";
-        //String BASE_URL = "http://api.yushuiyuan.cn/api/";
+        //String BASE_URL = "http://192.168.1.88/api/";
+        String BASE_URL = "http://api.yushuiyuan.cn/api/";
     }
 
     /**
@@ -163,6 +163,7 @@ public class C {
     public static final int MSG_FILTER_DATE = 0x00000108;
     public static final int MSG_DY_REFRESH = 0x00000109;
     public static final int MSG_HOLE_REFRESH = 0x00000110;
+    public static final int MSG_FRIEND_REFRESH = 0x00000111;
 
     public static final int MSG_CHANGE_INFO = 0x000001001;
     public static final int MSG_RECHARGE_SUCC = 0x000001002;
@@ -196,7 +197,6 @@ public class C {
     public static final String SP_NAME = "startpage";
 
     public static final String QiDong = BASE_URL + "User/appStartupPage";//更新app
-
 
 
 }

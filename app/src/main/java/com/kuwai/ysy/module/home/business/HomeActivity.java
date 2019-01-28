@@ -409,7 +409,7 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
                 .get()
                 .url(startPageBean.getData().getImg_url())
                 .build()
-                .execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath() + "/dskgxt/pic/", "start_page.jpg") {
+                .execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath() + "/dskgxt/pic/", "ysy_start_page.jpg") {
                     @Override
                     public void onError(Call call, Response response, Exception e, int id) {
 

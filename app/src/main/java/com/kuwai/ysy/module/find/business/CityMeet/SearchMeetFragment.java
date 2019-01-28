@@ -3,6 +3,7 @@ package com.kuwai.ysy.module.find.business.CityMeet;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.MyEditText;
 import com.kuwai.ysy.widget.MyRecycleViewDivider;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.ArrayList;
@@ -95,6 +97,7 @@ public class SearchMeetFragment extends BaseFragment implements View.OnClickList
         rl_meet.setAdapter(mDongtaiAdapter);
         et_search = mRootView.findViewById(R.id.et_search);
         et_search.setHint("搜索");
+        //Utils.showOrHide(getActivity(), et_search);
         mFriendRl.setAdapter(myFriendsAdapter);
         mFriendRl.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mFriendRl.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 1), R.color.line_color));
@@ -143,6 +146,7 @@ public class SearchMeetFragment extends BaseFragment implements View.OnClickList
                     rl_meet.setVisibility(View.VISIBLE);
                     mFriendRl.setVisibility(View.GONE);
                 } else {
+                    ToastUtils.showShort("该主题下无约会或已过期");
                     mDongtaiAdapter.getData().clear();
                     mDongtaiAdapter.notifyDataSetChanged();
                 }
@@ -150,7 +154,7 @@ public class SearchMeetFragment extends BaseFragment implements View.OnClickList
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                //Log.i(TAG, "accept: " + throwable);
+                Log.i("", "accept: " + throwable);
             }
         }));
     }

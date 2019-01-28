@@ -126,6 +126,7 @@ dependencies {
         exclude(module: 'alicloud-android-utdid')
     }
     implementation 'com.hjq:titlebar:3.2'
+
     implementation 'ch.ielse:imagewatcher:1.0.3'
     api project(":UMLibrary")
     implementation project(':IMKit')
@@ -141,7 +142,7 @@ dependencies {
     implementation 'com.aliyun.dpa:oss-android-sdk:2.4.5'
 
     api (name: 'alipaySdk-15.5.9-20181123210657-noUtdid', ext: 'aar')
-    implementation 'com.github.SherlockGougou:BigImageViewPager:v4_3.2.0'
+    implementation 'com.github.SherlockGougou:BigImageViewPager:v4_4.0.1'
     //compile (name: 'AlivcPlayer-3.4.8', ext: 'aar')
     //compile (name: 'AlivcReporter-1.2', ext: 'aar')
     //compile (name: 'AliyunVodPlayer-3.4.8', ext: 'aar')
@@ -152,6 +153,5 @@ dependencies {
     implementation 'com.github.xuexiangjys:XUpdate:1.0.6'
     //网络请求的实现一
     implementation 'com.qianwen:okhttp-utils:3.8.0'
-
 
 }

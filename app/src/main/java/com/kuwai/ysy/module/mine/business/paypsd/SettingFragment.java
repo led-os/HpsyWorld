@@ -22,6 +22,7 @@ import com.kuwai.ysy.module.mine.business.SecurityFragment;
 import com.kuwai.ysy.module.mine.business.black.BlackFragment;
 import com.kuwai.ysy.utils.DataCleanManager;
 import com.kuwai.ysy.utils.EventBusUtil;
+import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.dialoglib.MDAlertDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
@@ -86,7 +87,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
             case R.id.st_about:
                 Intent intent1 = new Intent(getActivity(), WebviewH5Activity.class);
                 intent1.putExtra("type", "about");
-                intent1.putExtra(C.H5_FLAG, C.H5_URL + C.ABOUTUS);
+                intent1.putExtra(C.H5_FLAG, C.H5_URL + C.ABOUTUS + Utils.getVerName());
                 startActivity(intent1);
                 break;
             case R.id.st_black:

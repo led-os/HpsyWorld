@@ -75,7 +75,7 @@ public class MyPicAdapter extends RecyclerView.Adapter<MyPicAdapter.ViewHolder> 
         } else {
             holder.ivAdd.setVisibility(View.GONE);
             holder.ivPhoto.setVisibility(View.VISIBLE);
-            GlideUtil.load(context, mList.get(position - 1).getImg(), holder.ivPhoto);
+            GlideUtil.loadRetangle(context, mList.get(position - 1).getImg(), holder.ivPhoto);
             //holder.ivPhoto.setImageBitmap(BitmapFactory.decodeFile(mList.get(position)));
         }
         holder.ivPhoto.setTag(R.id.image_key, position);

@@ -23,6 +23,7 @@ import com.kuwai.ysy.listener.JoinActivityCall;
 import com.kuwai.ysy.listener.UpdateCall;
 import com.kuwai.ysy.module.chat.business.ReportFragment;
 import com.kuwai.ysy.module.circle.bean.DyMainListBean;
+import com.kuwai.ysy.module.find.MapActivity;
 import com.kuwai.ysy.utils.CustomUpdateParser;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NavigationLayout;
@@ -170,16 +171,23 @@ public class WebviewH5Activity extends BaseActivity {
     }
 
     @JavascriptInterface
-    public void viewmap(String url, String title, String message) {
+    public void viewmap(String lat, String lng, String place) {
         //callBack.sharetoother(url, title, message);
-        Intent intent = new Intent(WebviewH5Activity.this, WebviewH5Activity.class);
-        intent.putExtra(C.H5_FLAG, C.H5_URL + C.INVITE_SHARE + SPManager.get().getStringValue("uid"));
+        Intent intent = new Intent(WebviewH5Activity.this, MapActivity.class);
+        intent.putExtra("lat", lat);
+        intent.putExtra("lon", lng);
+        intent.putExtra("name", place);
         startActivity(intent);
     }
 
     @JavascriptInterface
     public void sharetoother(String url, String title, String message) {
         share(url, title, message);
+    }
+
+    @JavascriptInterface
+    public void closewebview() {
+        finish();
     }
 
     /**

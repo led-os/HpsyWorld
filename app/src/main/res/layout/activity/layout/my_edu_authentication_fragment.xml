@@ -90,6 +90,8 @@
             android:layout_marginTop="15dp"
             android:background="@color/white"
             android:hint="输入你的真实姓名"
+            android:singleLine="true"
+            android:maxLength="14"
             android:padding="16dp"
             android:textColorHint="@color/baoyin"
             android:textSize="16sp" />
@@ -113,6 +115,7 @@
             android:background="@color/white"
             android:hint="输入毕业院校的完整名称"
             android:padding="16dp"
+            android:singleLine="true"
             android:textColorHint="@color/baoyin"
             android:textSize="16sp" />
 

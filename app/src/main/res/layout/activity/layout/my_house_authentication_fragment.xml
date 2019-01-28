@@ -59,7 +59,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:layout_marginTop="58dp"
-                    android:text="上传学历证书正面照"
+                    android:text="上传房产证正面照"
                     android:textColor="@color/baoyin"
                     android:textSize="18sp" />
             </RelativeLayout>

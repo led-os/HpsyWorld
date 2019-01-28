@@ -18,6 +18,7 @@ import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.DyDetailActivity;
 import com.kuwai.ysy.module.circle.HoleDetailActivity;
+import com.kuwai.ysy.module.circle.MessageActivity;
 import com.kuwai.ysy.module.circle.ReportActivity;
 import com.kuwai.ysy.module.circle.adapter.TreeHoleAdapter;
 import com.kuwai.ysy.module.circle.api.CircleApiFactory;
@@ -90,7 +91,11 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_edit:
-                startActivity(new Intent(getActivity(), PublishHoleActivity.class));
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    startActivity(new Intent(getActivity(), PublishHoleActivity.class));
+                } else {
+                    ToastUtils.showShort(R.string.login_error);
+                }
                 break;
         }
     }
@@ -127,9 +132,14 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-                Intent intent = new Intent(getActivity(), HoleDetailActivity.class);
-                intent.putExtra("tid", String.valueOf(mHoleMainListBean.getData().getTreeHoleList().get(position).getT_id()));
-                startActivity(intent);
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    Intent intent = new Intent(getActivity(), HoleDetailActivity.class);
+                    intent.putExtra("tid", String.valueOf(mHoleMainListBean.getData().getTreeHoleList().get(position).getT_id()));
+                    startActivity(intent);
+                } else {
+                    ToastUtils.showShort(R.string.login_error);
+                }
+
             }
         });
         mDongtaiAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
@@ -144,7 +154,11 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.img_more:
-                        showMore(position);
+                        if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                            showMore(position);
+                        } else {
+                            ToastUtils.showShort(R.string.login_error);
+                        }
                         break;
                 }
             }

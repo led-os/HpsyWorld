@@ -2,6 +2,7 @@ package com.kuwai.ysy.module.chat.api;
 
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.SimpleResponse;
+import com.kuwai.ysy.module.chat.bean.ChatQuestion;
 import com.kuwai.ysy.module.chat.bean.MyFriends;
 import com.kuwai.ysy.module.chat.bean.NoticeBean;
 import com.kuwai.ysy.module.chat.bean.NoticeDateBean;
@@ -22,7 +23,7 @@ import io.reactivex.Observable;
 
 public class ChatApiFactory {
 
-    public static Observable<MyFriends> getFriends(Map<String,String> map) {
+    public static Observable<MyFriends> getFriends(Map<String, String> map) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
                 .getFriends(map)
@@ -36,77 +37,77 @@ public class ChatApiFactory {
                 .compose(RxSchedulers.<MyFriends>ioMain());
     }
 
-    public static Observable<UserInfoBean> getUserInfo(String uid,String myid) {
+    public static Observable<UserInfoBean> getUserInfo(String uid, String myid) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
-                .getUserInfo(uid,myid)
+                .getUserInfo(uid, myid)
                 .compose(RxSchedulers.<UserInfoBean>ioMain());
     }
 
     public static Observable<SimpleResponse> agreeNewFriends(String uid, String other_id, int state) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
-                .agreeNewFriends(uid,other_id,state)
+                .agreeNewFriends(uid, other_id, state)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
     public static Observable<SimpleResponse> addFriends(String uid, String other_id) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
-                .addFriends(uid,other_id)
+                .addFriends(uid, other_id)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
-    public static Observable<MyFriends> getTuiFriends(String uid,String gender, int page) {
+    public static Observable<MyFriends> getTuiFriends(String uid, String gender, int page) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
-                .getTuiFriends(uid,gender,page)
+                .getTuiFriends(uid, gender, page)
                 .compose(RxSchedulers.<MyFriends>ioMain());
     }
 
     public static Observable<MyFriends> searchFriends(String search_criteria, int page) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
-                .searchFriends(search_criteria,page)
+                .searchFriends(search_criteria, page)
                 .compose(RxSchedulers.<MyFriends>ioMain());
     }
 
-    public static Observable<MyFriends> getNearFriends(String uid, int page,String longitude,String latitude) {
+    public static Observable<MyFriends> getNearFriends(String uid, int page, String longitude, String latitude) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
-                .getNearFriends(uid,page,longitude,latitude)
+                .getNearFriends(uid, page, longitude, latitude)
                 .compose(RxSchedulers.<MyFriends>ioMain());
     }
 
-    public static Observable<SimpleResponse> setRemark(String uid, String otherId,String remark) {
+    public static Observable<SimpleResponse> setRemark(String uid, String otherId, String remark) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
-                .setRemark(uid,otherId,remark)
+                .setRemark(uid, otherId, remark)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
     public static Observable<SimpleResponse> setBlack(String uid, String otherId) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
-                .setBlack(uid,otherId)
+                .setBlack(uid, otherId)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
     public static Observable<SimpleResponse> cancelBlack(String uid, String otherId) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
-                .cancelBlack(uid,otherId)
+                .cancelBlack(uid, otherId)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
     public static Observable<SimpleResponse> cancelPing(String uid, String otherId) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
-                .cancelPing(uid,otherId)
+                .cancelPing(uid, otherId)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
-    public static Observable<RedBean> sendRed(Map<String,Object> param) {
+    public static Observable<RedBean> sendRed(Map<String, Object> param) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
                 .sendRed(param)
@@ -116,35 +117,35 @@ public class ChatApiFactory {
     public static Observable<SimpleResponse> receiveRed(String uid, String otherId) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
-                .receiveRed(uid,otherId)
+                .receiveRed(uid, otherId)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
     public static Observable<RedMySendBean> redDetailMine(String uid, String rid) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
-                .redDetailMine(uid,rid)
+                .redDetailMine(uid, rid)
                 .compose(RxSchedulers.<RedMySendBean>ioMain());
     }
 
     public static Observable<ReceiveBean> redDetailOther(String otherId, String rid) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
-                .redDetailOther(otherId,rid)
+                .redDetailOther(otherId, rid)
                 .compose(RxSchedulers.<ReceiveBean>ioMain());
     }
 
     public static Observable<RedRecordBean> redList(String uid, String otherId, int page) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
-                .redList(uid,otherId,page)
+                .redList(uid, otherId, page)
                 .compose(RxSchedulers.<RedRecordBean>ioMain());
     }
 
     public static Observable<NoticeBean> getSystemNotice(String uid, int page) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
-                .getSystemNotice(uid,page)
+                .getSystemNotice(uid, page)
                 .compose(RxSchedulers.<NoticeBean>ioMain());
     }
 
@@ -162,10 +163,24 @@ public class ChatApiFactory {
                 .compose(RxSchedulers.<StsBean>ioMain());
     }
 
-    public static Observable<SimpleResponse> rewardPe(Map<String,Object> param) {
+    public static Observable<SimpleResponse> rewardPe(Map<String, Object> param) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
                 .rewardPe(param)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<ChatQuestion> getChatQuestion(String uid, String otherId) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(ChatService.class)
+                .getChatQuestion(uid, otherId)
+                .compose(RxSchedulers.<ChatQuestion>ioMain());
+    }
+
+    public static Observable<SimpleResponse> sendChatAnswer(String uid, String otherId, int pid, String answer) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(ChatService.class)
+                .sendChatAnswer(uid, otherId, pid, answer)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 }

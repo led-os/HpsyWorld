@@ -36,6 +36,8 @@
         android:background="@null"
         android:gravity="center"
         android:hint="输入你的邀请ID"
+        android:singleLine="true"
+        android:maxLength="14"
         android:inputType="textPassword"
         android:textColor="#ff282838"
         android:textColorHint="@color/gray_7b"

@@ -18,7 +18,6 @@ package com.kuwai.ysy.utils;
 
 import com.google.gson.Gson;
 import com.kuwai.ysy.bean.CustomResult;
-import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.xuexiang.xupdate.entity.UpdateEntity;
 import com.xuexiang.xupdate.proxy.IUpdateParser;
 

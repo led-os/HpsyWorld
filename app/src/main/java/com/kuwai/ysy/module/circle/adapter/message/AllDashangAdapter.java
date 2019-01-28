@@ -45,7 +45,7 @@ public class AllDashangAdapter extends BaseQuickAdapter<AllRewardBean.DataBean, 
 
         helper.setText(R.id.tv_time, DateTimeUitl.getStandardDate(String.valueOf(item.getCreate_time())));
 
-        GlideUtil.load(mContext, item.getGirft_img_url(), (ImageView) helper.getView(R.id.iv_gift));
+        GlideUtil.loadRetangle(mContext, item.getGirft_img_url(), (ImageView) helper.getView(R.id.iv_gift));
 
         helper.setText(R.id.sb_gift_num, "x" + String.valueOf(item.getG_nums()));
 

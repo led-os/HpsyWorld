@@ -29,7 +29,7 @@ public class QuestionActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initView() {
-        loadRootFragment(R.id.container, QuestionListFragment.newInstance(),false,true);
+        loadRootFragment(R.id.container, QuestionListFragment.newInstance(getIntent().getStringExtra("id")),false,true);
     }
 
     @Override

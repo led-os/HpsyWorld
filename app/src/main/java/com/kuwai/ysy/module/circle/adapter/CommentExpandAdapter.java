@@ -15,6 +15,7 @@ import com.allen.library.CircleImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.module.circle.bean.DyCommentListBean;
 import com.kuwai.ysy.module.circle.bean.second.CommentDetailBean;
 import com.kuwai.ysy.module.circle.bean.second.CommentsBean;
@@ -105,6 +106,24 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
             }
         });
 
+        switch (commentBeanList.get(groupPosition).getIs_vip()) {
+            case 0:
+                groupHolder.vip.setVisibility(View.GONE);
+                break;
+            case 1:
+                groupHolder.vip.setVisibility(View.VISIBLE);
+                break;
+        }
+
+        switch (commentBeanList.get(groupPosition).getGender()) {
+            case C.Man:
+                GlideUtil.load(context, R.drawable.ic_user_man, groupHolder.img_sex);
+                break;
+            case C.Woman:
+                GlideUtil.load(context, R.drawable.ic_user_woman, groupHolder.img_sex);
+                break;
+        }
+
         groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getNickname());
         groupHolder.tv_time.setText(DateTimeUitl.getStandardDate(String.valueOf(commentBeanList.get(groupPosition).getUpdate_time())));
         groupHolder.tv_content.setText(commentBeanList.get(groupPosition).getText());
@@ -165,7 +184,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     private class GroupHolder {
         private CircleImageView logo;
         private TextView tv_name, tv_content, tv_time;
-        private ImageView iv_like, iv_comment;
+        private ImageView iv_like, iv_comment, vip, img_sex;
 
         public GroupHolder(View view) {
             logo = (CircleImageView) view.findViewById(R.id.comment_item_logo);
@@ -174,6 +193,8 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
             tv_time = (TextView) view.findViewById(R.id.comment_item_time);
             iv_like = (ImageView) view.findViewById(R.id.comment_item_like);
             iv_comment = view.findViewById(R.id.comment_item_ping);
+            vip = view.findViewById(R.id.vip);
+            img_sex = view.findViewById(R.id.img_sex);
         }
     }
 

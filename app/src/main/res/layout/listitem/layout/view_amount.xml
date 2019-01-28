@@ -25,6 +25,8 @@
         android:inputType="number"
         android:minWidth="50dp"
         android:text="1"
+        android:singleLine="true"
+        android:maxLength="6"
         android:textColor="@color/theme"
         android:textSize="12sp" />
 

@@ -68,6 +68,7 @@ public class UserInfo {
         private int grade;
         private String amount;
         private int Authentication_sum;
+        private int integral_exchange;
         private int is_vip;
 
         public String getNickname() {
@@ -80,6 +81,14 @@ public class UserInfo {
 
         public String getAvatar() {
             return avatar;
+        }
+
+        public int getIntegral_exchange() {
+            return integral_exchange;
+        }
+
+        public void setIntegral_exchange(int integral_exchange) {
+            this.integral_exchange = integral_exchange;
         }
 
         public void setAvatar(String avatar) {

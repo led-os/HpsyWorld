@@ -65,6 +65,9 @@ public class WithDrawFragment extends BaseFragment implements View.OnClickListen
                 } else if (Utils.isNullString(mEtZhiName.getText().toString())) {
                     ToastUtils.showShort("请输入真实姓名");
                     return;
+                } else if (Double.parseDouble(mEtCashMoney.getText().toString()) < 100) {
+                    ToastUtils.showShort("单次提现金额需大于100");
+                    return;
                 } else {
                     withDraw();
                 }

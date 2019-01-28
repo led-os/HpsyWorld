@@ -20,7 +20,7 @@ public class GiftBoxAdapter extends BaseQuickAdapter<GiftBoxBean.DataBean, BaseV
     @Override
     protected void convert(BaseViewHolder helper, GiftBoxBean.DataBean item) {
 
-        GlideUtil.load(mContext,item.getGirft_img_url(), (ImageView) helper.getView(R.id.iv_gift));
+        GlideUtil.loadRetangle(mContext,item.getGirft_img_url(), (ImageView) helper.getView(R.id.iv_gift));
         helper.setText(R.id.tv_name,item.getGirft_name());
         helper.setText(R.id.tv_num,String.valueOf(item.getG_nums()));
 

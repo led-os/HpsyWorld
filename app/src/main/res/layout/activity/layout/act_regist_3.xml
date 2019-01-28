@@ -35,6 +35,8 @@
         android:layout_toLeftOf="@id/img_eye"
         android:background="@null"
         android:gravity="bottom"
+        android:singleLine="true"
+        android:maxLength="14"
         android:hint="请输入登录密码"
         android:inputType="textPassword"
         android:textColor="#ff282838"

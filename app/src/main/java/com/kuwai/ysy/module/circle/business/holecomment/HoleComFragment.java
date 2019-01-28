@@ -129,6 +129,7 @@ public class HoleComFragment extends BaseFragment<HoleCommentPresenter> implemen
                 String replyContent = commentText.getText().toString().trim();
                 if (!TextUtils.isEmpty(replyContent)) {
                     dialog.dismiss();
+                    Utils.showOrHide(getActivity(), commentText);
                     mPresenter.addSecComment(comId, SPManager.get().getStringValue("uid"), replyContent, comUid);
                     expandableListView.expandGroup(position);
                 } else {

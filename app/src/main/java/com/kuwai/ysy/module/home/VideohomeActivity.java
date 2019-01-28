@@ -45,6 +45,7 @@ import com.kuwai.ysy.module.home.bean.HomeVideoBean;
 import com.kuwai.ysy.module.home.bean.VideoBean;
 import com.kuwai.ysy.module.home.bean.login.LoginBean;
 import com.kuwai.ysy.module.home.business.HomeActivity;
+import com.kuwai.ysy.module.mine.MyWalletActivity;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.module.mine.bean.LikeEach;
 import com.kuwai.ysy.utils.DialogUtil;
@@ -189,7 +190,7 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (Utils.isNullString(mPicAdapter.getData().get(position).getVideo_id())) {
                     if (mPicAdapter.getData().get(position).getAttach() != null && mPicAdapter.getData().get(position).getAttach().size() > 0) {
-                        ImagePreview
+                        /*ImagePreview
                                 .getInstance()
                                 // 上下文，必须是activity，不需要担心内存泄漏，本框架已经处理好
                                 .setContext(mContext)
@@ -213,7 +214,10 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
                                 // 设置失败时的占位图，默认为R.drawable.load_failed，设置为 0 时不显示
                                 .setErrorPlaceHolder(R.drawable.load_failed)
                                 // 开启预览
-                                .start();
+                                .start();*/
+                        Intent intent = new Intent(getActivity(), HomePicActivity.class);
+                        intent.putStringArrayListExtra("list", mPicAdapter.getData().get(position).getAttach());
+                        startActivity(intent);
                     }
                 } else {
                     Intent intent = new Intent(getActivity(), VideoPlayActivity.class);
@@ -581,8 +585,8 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
         if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
             param.put("uid", SPManager.get().getStringValue("uid"));
         }
-        param.put("longitude", SPManager.get().getStringValue("longitude"));
-        param.put("latitude", SPManager.get().getStringValue("longitude"));
+        param.put("longitude", SPManager.get().getStringValue("longitude", "120.525565"));
+        param.put("latitude", SPManager.get().getStringValue("latitude", "31.27831"));
         param.put("page", nearPage + 1);
         addSubscription(HomeApiFactory.getHomeData(param).subscribe(new Consumer<HomeVideoBean>() {
             @Override
@@ -614,31 +618,41 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
 
     @Override
     public void giftClick(int pos) {
-        if (giftPopBean != null) {
-            checkPos = pos;
-            GiftPannelView pannelView = new GiftPannelView(getActivity());
-            pannelView.setData(giftPopBean.getData(), getActivity());
-            pannelView.setGiftClickCallBack(this);
-            if (customDialog == null) {
-                customDialog = new CustomDialog.Builder(getActivity())
-                        .setView(pannelView)
-                        .setTouchOutside(true)
-                        .setItemHeight(0.4f)
-                        .setDialogGravity(Gravity.BOTTOM)
-                        .build();
+        if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+            if (giftPopBean != null) {
+                checkPos = pos;
+                GiftPannelView pannelView = new GiftPannelView(getActivity());
+                pannelView.setData(giftPopBean.getData(), getActivity());
+                pannelView.setGiftClickCallBack(this);
+                if (customDialog == null) {
+                    customDialog = new CustomDialog.Builder(getActivity())
+                            .setView(pannelView)
+                            .setTouchOutside(true)
+                            .setItemHeight(0.4f)
+                            .setDialogGravity(Gravity.BOTTOM)
+                            .build();
+                }
+                customDialog.show();
             }
-            customDialog.show();
+        } else {
+            ToastUtils.showShort(R.string.login_error);
         }
+
     }
 
     @Override
     public void heartClick(int pos) {
-        checkPos = pos;
-        if (urlList.get(pos).getLove() == 1) {
-            like(SPManager.get().getStringValue("uid"), String.valueOf(urlList.get(checkPos).getUid()), 2);
+        if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+            checkPos = pos;
+            if (urlList.get(pos).getLove() == 1) {
+                like(SPManager.get().getStringValue("uid"), String.valueOf(urlList.get(checkPos).getUid()), 2);
+            } else {
+                like(SPManager.get().getStringValue("uid"), String.valueOf(urlList.get(checkPos).getUid()), 1);
+            }
         } else {
-            like(SPManager.get().getStringValue("uid"), String.valueOf(urlList.get(checkPos).getUid()), 1);
+            ToastUtils.showShort(R.string.login_error);
         }
+
     }
 
     public void like(String uid, String otherId, int type) {
@@ -717,6 +731,9 @@ public class VideohomeActivity extends BaseFragment implements View.OnClickListe
                                 urlList.get(checkPos).setPlay(false);
                             }
                             videoAdapter.notifyItemChanged(checkPos);
+                        } else if (dateTheme.code == 202) {
+                            //余额不足跳转充值
+                            startActivity(new Intent(getActivity(), MyWalletActivity.class));
                         }
                     }
                 }, new Consumer<Throwable>() {

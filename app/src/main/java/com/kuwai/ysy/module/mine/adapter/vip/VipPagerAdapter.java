@@ -49,7 +49,7 @@ public class VipPagerAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "当前条目：" + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "当前条目：" + position, Toast.LENGTH_SHORT).show();
             }
         });
 

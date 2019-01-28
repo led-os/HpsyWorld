@@ -24,7 +24,7 @@ public class HoleDetailContract {
 
         void setGifts(GiftPopBean popBean);
 
-        void rewardSuc();
+        void rewardSuc(SimpleResponse response);
     }
 
     public interface IHomePresenter {
