@@ -111,7 +111,9 @@ public class ControlView extends RelativeLayout implements View.OnTouchListener 
         //底部滤镜，美颜，美肌对应的按钮图片
         //底部动图mv对应的按钮图片
         UIConfigManager.setImageResourceConfig(
-            new ImageView[]{aliyunComplete,findViewById(R.id.iv_beauty_face),findViewById(R.id.iv_gif_effect)}
+            new ImageView[]{aliyunComplete,findViewById(R.id.iv_beauty_face),
+//                    findViewById(R.id.iv_gif_effect)
+            }
             ,new int[]{  R.attr.finishImageUnable, R.attr.faceImage, R.attr.magicImage}
             ,new int[]{  R.mipmap.alivc_svideo_icon_next_not_ready, R.mipmap.alivc_svideo_icon_beauty_face, R.mipmap.alivc_svideo_icon_gif_effect}
         );
@@ -139,7 +141,7 @@ public class ControlView extends RelativeLayout implements View.OnTouchListener 
      */
     private Drawable getSwitchCameraDrawable() {
 
-        Drawable drawable = UIConfigManager.getDrawableResources(getContext(),R.attr.switchCameraImage,R.mipmap.alivc_svideo_icon_magic_turn);
+        Drawable drawable = UIConfigManager.getDrawableResources(getContext(),R.attr.switchCameraImage,R.drawable.dyn_re_camera_ic_swap);
         Drawable pressDrawable = drawable.getConstantState().newDrawable().mutate();
         pressDrawable.setAlpha(66);//透明度60%
         StateListDrawable stateListDrawable = new StateListDrawable();
