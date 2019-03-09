@@ -39,6 +39,18 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="IdentityImageView">
+        <attr name="iciv_bigimage" format="reference"></attr><!--大图片-->
+        <attr name="iciv_smallimage" format="reference"></attr><!--小图片-->
+        <attr name="iciv_angle" format="float"></attr><!--标识角度-->
+        <attr name="iciv_radiusscale" format="float"></attr><!--大小图片比例-->
+        <attr name="iciv_isprogress" format="boolean"></attr><!--是否有进度条-->
+        <attr name="iciv_progress_collor" format="color|reference"></attr><!--进度条颜色-->
+        <attr name="iciv_border_color" format="color|reference"></attr><!--边框颜色-->
+        <attr name="iciv_border_width" format="integer"></attr><!--边框宽度-->
+        <attr name="iciv_hint_smallimageview" format="boolean"></attr><!--是否隐藏小图片-->
+    </declare-styleable>
+
     <declare-styleable name="IndexBar">
         <attr name="normalTextColor" format="reference|color"/>
         <attr name="activeTextColor" format="reference|color"/>
@@ -311,5 +323,12 @@
         <attr name="borderColor" format="color"/>
         <attr name="passwordWidth" format="dimension"/>
         <attr name="passwordColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="SwipeFlingAdapterView">
+        <attr name="y_offset_step" format="dimension" />
+        <attr name="rotation_degrees" format="float" />
+        <attr name="min_adapter_stack" format="integer" />
+        <attr name="max_visible" format="integer" />
     </declare-styleable>
 </resources>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title1="个人信息"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentScrim="@color/transparent"
+                app:expandedTitleMarginEnd="48dp"
+                app:expandedTitleMarginStart="48dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+
+                <ImageView
+                    android:id="@+id/iv_cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
+                    android:scaleType="centerCrop"
+                    android:transitionName="TransitionName" />
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_gravity="center_horizontal"
+                android:minHeight="80dp"
+                android:orientation="vertical"
+                android:padding="10dp"
+                app:layout_anchor="@+id/app_bar_layout"
+                app:layout_anchorGravity="bottom|center"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/img_head"
+                    android:text="伊利可爱多"
+                    android:textColor="#ff575757"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:layout_alignLeft="@id/tv_name"
+                    android:layout_below="@id/tv_name"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_sex_round"
+                    android:drawableLeft="@drawable/home_icon_female"
+                    android:drawablePadding="3dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:text="26"
+                    android:textColor="#ffffffff"
+                    android:textSize="10sp" />
+
+                <com.allen.library.SuperButton
+                    android:id="@+id/tv_star"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:layout_alignBottom="@id/tv_sex"
+                    android:layout_marginLeft="6dp"
+                    android:layout_toRightOf="@id/tv_sex"
+                    android:gravity="center"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:text="白羊座"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    app:sCornersRadius="2dp"
+                    app:sSolidColor="#ffffdf70" />
+
+                <com.allen.library.SuperButton
+                    android:id="@+id/tv_edu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:layout_alignBottom="@id/tv_sex"
+                    android:layout_marginLeft="6dp"
+                    android:layout_toRightOf="@id/tv_star"
+                    android:gravity="center"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:text="本科"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    app:sCornersRadius="2dp"
+                    app:sSolidColor="#ff70c1ff" />
+
+                <com.allen.library.SuperButton
+                    android:id="@+id/tv_heigt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:layout_alignBottom="@id/tv_sex"
+                    android:layout_marginLeft="6dp"
+                    android:layout_toRightOf="@id/tv_edu"
+                    android:gravity="center"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:text="187cm"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    app:sCornersRadius="2dp"
+                    app:sSolidColor="#ffffd3b8" />
+
+                <TextView
+                    android:id="@+id/tv_sign"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/tv_sex"
+                    android:layout_below="@id/tv_sex"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_toLeftOf="@id/tv_state"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="我是伊利可爱多，想找一个果粒多休息休息... "
+                    android:textColor="#ff808080"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/tv_name"
+                    android:layout_marginLeft="12dp"
+                    android:layout_toRightOf="@id/tv_name"
+                    android:drawableLeft="@drawable/home_icon_position"
+                    android:drawablePadding="4dp"
+                    android:text="吴中区 0.2km"
+                    android:textColor="#ff505050"
+                    android:textSize="9sp" />
+
+                <ImageView
+                    android:id="@+id/btn_online"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/btn_online_remind" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/swipeLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="36dp"
+                    android:scaleType="center"
+                    android:src="@drawable/personal_icon_gift"
+                    android:transitionName="TransitionName1" />
+
+                <ImageView
+                    android:id="@+id/swipecenter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="center"
+                    android:src="@drawable/personal_icon_talk"
+                    android:transitionName="TransitionName2" />
+
+                <ImageView
+                    android:id="@+id/swipeRight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="36dp"
+                    android:scaleType="center"
+                    android:src="@drawable/personal_icon_like"
+                    android:transitionName="TransitionName3" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bottom_lay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.flyco.tablayout.CommonTabLayout
+                    android:id="@+id/tl_9"
+                    android:layout_width="200dp"
+                    android:layout_height="36dp"
+                    android:layout_centerHorizontal="true"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    app:tl_indicator_color="@color/theme"
+                    app:tl_indicator_corner_radius="25dp"
+                    app:tl_indicator_height="3dp"
+                    app:tl_indicator_margin_left="2dp"
+                    app:tl_indicator_margin_right="2dp"
+                    app:tl_indicator_width="30dp"
+                    app:tl_textBold="SELECT"
+                    app:tl_textSelectColor="@color/balck_28"
+                    app:tl_textUnselectColor="@color/gray_7b"
+                    app:tl_textsize="16sp" />
+
+            </RelativeLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

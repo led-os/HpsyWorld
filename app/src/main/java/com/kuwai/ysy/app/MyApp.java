@@ -379,6 +379,7 @@ public class MyApp extends BaseApplication {
         OkHttpClient okHttpClient = OkHttpManager.create();
         ApiClient.create(C.BaseURL.TEST_URL, okHttpClient);
         ApiClient.create(C.BaseURL.BASE_URL, okHttpClient);
+        ApiClient.create(C.BaseURL.LOCAL_URL, okHttpClient);
     }
 
     //融云自定义 + 号后模板

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center_horizontal"
+    android:layout_margin="10dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.NiceImageView
+        android:id="@+id/iv_add"
+        android:layout_width="104dp"
+        android:layout_height="104dp"
+        android:scaleType="centerCrop"
+        app:corner_radius="4dp"
+        android:src="@drawable/user_pic_video_add" />
+
+    <com.kuwai.ysy.widget.NiceImageView
+        android:id="@+id/iv_photo"
+        android:layout_width="104dp"
+        android:layout_height="104dp"
+        android:scaleType="centerCrop"
+        app:corner_radius="4dp"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_video"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/ic_mine_msg_film"
+        android:visibility="gone" />
+
+</RelativeLayout>

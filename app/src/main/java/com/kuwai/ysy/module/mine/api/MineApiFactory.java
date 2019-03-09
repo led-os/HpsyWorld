@@ -24,6 +24,7 @@ import com.kuwai.ysy.module.mine.bean.LikeParentBean;
 import com.kuwai.ysy.module.mine.bean.MyAskBean;
 import com.kuwai.ysy.module.mine.bean.MyWalletBean;
 import com.kuwai.ysy.module.mine.bean.NoticeSetBean;
+import com.kuwai.ysy.module.mine.bean.PersolHome2PageBean;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.kuwai.ysy.module.mine.bean.PersonalTreeHole;
 import com.kuwai.ysy.module.mine.bean.TaGiftBean;
@@ -77,6 +78,13 @@ public class MineApiFactory {
                 .create(MineService.class)
                 .getOtherPersonalInfo(uid, otherid)
                 .compose(RxSchedulers.<PersolHomePageBean>ioMain());
+    }
+
+    public static Observable<PersolHome2PageBean> getOtherHomepage2Info(String uid, String otherid) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getOtherPersonal2Info(uid, otherid)
+                .compose(RxSchedulers.<PersolHome2PageBean>ioMain());
     }
 
     public static Observable<SimpleResponse> delVisitorsRecord(String uid, int otherid, String type) {

@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,10 +22,6 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.amap.api.maps2d.CameraUpdateFactory;
-import com.amap.api.maps2d.LocationSource;
-import com.amap.api.maps2d.model.LatLng;
-import com.amap.api.services.core.LatLonPoint;
 import com.google.gson.Gson;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
@@ -34,19 +29,15 @@ import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.StartPageBean;
 import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.controller.NavigationController;
-import com.kuwai.ysy.module.chat.ChatFragment;
 import com.kuwai.ysy.module.chat.ChatMainFragment;
-import com.kuwai.ysy.module.chat.api.ChatApiFactory;
-import com.kuwai.ysy.module.chat.bean.StsBean;
-import com.kuwai.ysy.module.chat.bean.UserInfoBean;
 import com.kuwai.ysy.module.circle.business.DongtaiFragment;
 import com.kuwai.ysy.module.find.business.FoundHome.FoundFragment;
-import com.kuwai.ysy.module.home.VideohomeActivity;
 import com.kuwai.ysy.module.home.api.HomeApiFactory;
 import com.kuwai.ysy.module.home.bean.login.LoginBean;
-import com.kuwai.ysy.module.home.business.loginmoudle.StartupPageActivity;
-import com.kuwai.ysy.module.home.business.loginmoudle.login.LoginActivity;
+import com.kuwai.ysy.module.home.business.main.HomeRadioFragment;
 import com.kuwai.ysy.module.mine.business.mine.MineLoginFragment;
+import com.kuwai.ysy.socket.WsManager;
+import com.kuwai.ysy.socket.WsStatusListener;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.PageNavigationView;
@@ -71,6 +62,7 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
 import okhttp3.Call;
 import okhttp3.Response;
+import okio.ByteString;
 
 import static com.kuwai.ysy.app.C.MSG_LOGIN;
 
@@ -81,6 +73,7 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
     public static final int THIRD = 2;
     public static final int FORTH = 3;
     public static final int FIFTH = 4;
+    private static final String WEBSOCKET_URL = "ws://192.168.0.161:2346";
 
     public static NavigationController mNavigationController;
     private RBaseFragment[] mFragments = new RBaseFragment[5];
@@ -93,6 +86,7 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
     private StartPageBean startPageBean;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private WsManager wsBaseManager;
 
     private boolean needImmersive() {
         return false;
@@ -106,7 +100,8 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
         super.onCreate(savedInstanceState);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mFragments[FIRST] = VideohomeActivity.newInstance();
+        //mFragments[FIRST] = VideohomeActivity.newInstance();
+        mFragments[FIRST] = HomeRadioFragment.newInstance(null);
         mFragments[SECOND] = DongtaiFragment.newInstance();
         mFragments[THIRD] = ChatMainFragment.newInstance();
         mFragments[FORTH] = new FoundFragment();
@@ -132,7 +127,52 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
         autoLogin();
         requestReadPermission();
         // connectRongYun(user1);
+       /* wsBaseManager = new WsManager.Builder(getBaseContext())
+                .client(new OkHttpClient().newBuilder()
+                        .pingInterval(15, TimeUnit.SECONDS)
+                        .retryOnConnectionFailure(true)
+                        .build())
+                .needReconnect(true)
+                .wsUrl(WEBSOCKET_URL)
+                .build();
+        wsBaseManager.setWsStatusListener(wsBaseStatusListener);
+        wsBaseManager.startConnect();*/
     }
+
+    WsStatusListener wsBaseStatusListener = new WsStatusListener() {
+        @Override
+        public void onOpen(Response response) {
+            super.onOpen(response);
+            //协议初始化  心跳等
+        }
+
+        @Override
+        public void onMessage(String text) {
+            super.onMessage(text);
+            //消息处理
+        }
+
+        @Override
+        public void onMessage(ByteString bytes) {
+            super.onMessage(bytes);
+            //消息处理
+        }
+
+        @Override
+        public void onClosing(int code, String reason) {
+            super.onClosing(code, reason);
+        }
+
+        @Override
+        public void onClosed(int code, String reason) {
+            super.onClosed(code, reason);
+        }
+
+        @Override
+        public void onFailure(Throwable t, Response response) {
+            super.onFailure(t, response);
+        }
+    };
 
     private void autoLogin() {
         HashMap<String, String> param = new HashMap<>();
@@ -265,6 +305,8 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
                 if (mAmapLocation != null) {
                     SPManager.get().putString("longitude", String.valueOf(mAmapLocation.getLongitude()));
                     SPManager.get().putString("latitude", String.valueOf(mAmapLocation.getLatitude()));
+                    SPManager.get().putString("ysy_city", mAmapLocation.getCity());
+                    SPManager.get().putString("ysy_dis", mAmapLocation.getDistrict());
                 }
 
             } else {
@@ -384,7 +426,7 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Response response, Exception e, int id) {
-                        Log.e("","");
+                        Log.e("", "");
                     }
 
                     @Override
@@ -397,7 +439,7 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
 
                             getPageIMG();
                         } catch (Exception e) {
-                            Log.e("","");
+                            Log.e("", "");
                         }
                     }
                 });

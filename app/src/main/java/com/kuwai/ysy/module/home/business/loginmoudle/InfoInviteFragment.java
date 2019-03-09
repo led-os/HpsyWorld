@@ -3,6 +3,7 @@ package com.kuwai.ysy.module.home.business.loginmoudle;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.home.api.HomeApiFactory;
 import com.kuwai.ysy.module.home.bean.login.CodeBean;
+import com.kuwai.ysy.module.home.bean.login.LoginBean;
 import com.kuwai.ysy.module.home.business.HomeActivity;
 import com.kuwai.ysy.module.home.business.loginmoudle.login.LoginActivity;
 import com.kuwai.ysy.net.glide.ProgressInterceptor;
@@ -31,8 +33,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.functions.Consumer;
+import io.rong.imlib.RongIMClient;
 import okhttp3.RequestBody;
 import retrofit2.http.PATCH;
+
+import static com.kuwai.ysy.app.C.MSG_LOGIN;
 
 public class InfoInviteFragment extends BaseFragment implements View.OnClickListener {
 
@@ -131,16 +136,39 @@ public class InfoInviteFragment extends BaseFragment implements View.OnClickList
     }
 
     private void regist(Map<String, RequestBody> param) {
-        addSubscription(HomeApiFactory.regist(param).subscribe(new Consumer<SimpleResponse>() {
+        addSubscription(HomeApiFactory.regist(param).subscribe(new Consumer<LoginBean>() {
             @Override
-            public void accept(SimpleResponse codeBean) throws Exception {
+            public void accept(LoginBean loginBean) throws Exception {
                 DialogUtil.dismissDialog(true);
-                if (codeBean.code == 200) {
+                /*if (codeBean.code == 200) {
                     ToastUtils.showShort("注册成功");
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                     getActivity().finish();
                 } else {
                     ToastUtils.showShort(codeBean.msg);
+                }*/
+
+                if (loginBean.getCode() == 200) {
+                    SPManager.get().putString(C.SAN_FANG, SPManager.get().getStringValue(C.SAN_FANG));
+                    SPManager.get().putString("uid", String.valueOf(loginBean.getData().getUid()));
+                    SPManager.get().putString("nickname", loginBean.getData().getNickname());
+                    SPManager.get().putString("phone_", loginBean.getData().getPhone());
+                    SPManager.get().putString("isvip_", String.valueOf(loginBean.getData().getIs_vip()));
+                    SPManager.get().putString("password_", SPManager.get().getStringValue(C.REGIST_PSD));
+                    SPManager.get().putString("icon", loginBean.getData().getAvatar());
+                    SPManager.get().putString("sex_", String.valueOf(loginBean.getData().getGender()));
+                    SPManager.get().putString(C.HAS_THIRD_PASS, String.valueOf(loginBean.getData().getPayment()));
+                    SPManager.get().putString("rongyun_token", loginBean.getData().getRongyun_token());
+                    SPManager.get().putString("token", loginBean.getData().getToken());
+                    SPManager.get().putString("cityName", "苏州");
+                    SPManager.get().putString("cityId", "114");
+                    connectRongYun(loginBean.getData().getRongyun_token(), loginBean);
+                    EventBusUtil.sendEvent(new MessageEvent(MSG_LOGIN));
+                    ToastUtils.showShort("注册成功");
+                    startActivity(new Intent(getActivity(), HomeActivity.class));
+                    getActivity().finish();
+                } else {
+                    ToastUtils.showShort(loginBean.getMsg());
                 }
             }
         }, new Consumer<Throwable>() {
@@ -151,5 +179,25 @@ public class InfoInviteFragment extends BaseFragment implements View.OnClickList
                 ToastUtils.showShort(R.string.server_error);
             }
         }));
+    }
+
+    private void connectRongYun(String token, final LoginBean loginBean) {
+
+        RongIMClient.connect(token, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onTokenIncorrect() {
+                Log.i("xxx", "onTokenIncorrect: ");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                Log.i("xxx", "onTokenIncorrect: ");
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.i("xxx", "onTokenIncorrect: ");
+            }
+        });
     }
 }

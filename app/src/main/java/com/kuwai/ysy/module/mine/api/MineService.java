@@ -23,6 +23,7 @@ import com.kuwai.ysy.module.mine.bean.LikeParentBean;
 import com.kuwai.ysy.module.mine.bean.MyAskBean;
 import com.kuwai.ysy.module.mine.bean.MyWalletBean;
 import com.kuwai.ysy.module.mine.bean.NoticeSetBean;
+import com.kuwai.ysy.module.mine.bean.PersolHome2PageBean;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.kuwai.ysy.module.mine.bean.PersonalTreeHole;
 import com.kuwai.ysy.module.mine.bean.RechargeRecordBean;
@@ -92,6 +93,14 @@ public interface MineService {
     @POST("My/OtherPersonalInfo")
     Observable<PersolHomePageBean> getOtherPersonalInfo(@Field("uid") String uid,
                                                         @Field("other_uid") String otherid);
+
+    /**
+     * 个人主页-资料-别人查看
+     */
+    @FormUrlEncoded
+    @POST("HomePage/OtherPersonalInfo_two")
+    Observable<PersolHome2PageBean> getOtherPersonal2Info(@Field("uid") String uid,
+                                                         @Field("other_uid") String otherid);
 
     /**
      * 购买查看素颜的特权

@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
 
 /**
  * <pre>
@@ -58,6 +59,31 @@ public class ConvertUtils {
             ret[j++] = HEX_DIGITS[bytes[i] & 0x0f];
         }
         return new String(ret);
+    }
+
+    /**
+     * encrypt32
+     *
+     * @param encryptStr
+     * @return String
+     */
+    public static String encrypt32(String encryptStr) {
+        MessageDigest md5;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+            byte[] md5Bytes = md5.digest(encryptStr.getBytes());
+            StringBuffer hexValue = new StringBuffer();
+            for (int i = 0; i < md5Bytes.length; i++) {
+                int val = ((int) md5Bytes[i]) & 0xff;
+                if (val < 16)
+                    hexValue.append("0");
+                hexValue.append(Integer.toHexString(val));
+            }
+            encryptStr = hexValue.toString();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return encryptStr;
     }
 
     /**

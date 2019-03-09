@@ -197,13 +197,22 @@ public class GlideUtil {
                 // .priority(Priority.HIGH)
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
         Glide.with(context).load(url).apply(options).into(imageView);
+    }
 
+    public static void loadwithNobg(Context context, String url, ImageView imageView) {
+        RequestOptions options = new RequestOptions()
+                //.centerCrop()
+                //.placeholder(placeholderSoWhite) //占位图
+                //.error(context.getResources().getDrawable(R.drawable.center_img_user_default))       //错误图
+                // .priority(Priority.HIGH)
+                .diskCacheStrategy(DiskCacheStrategy.ALL);
+        Glide.with(context).load(url).apply(options).into(imageView);
     }
 
     public static void loadRetangle(Context context, String url, ImageView imageView) {
         //DrawableCrossFadeFactory drawableCrossFadeFactory = new DrawableCrossFadeFactory.Builder(400).setCrossFadeEnabled(true).build();
         RequestOptions options = new RequestOptions()
-                .centerCrop()
+                //.centerCrop()
                 .placeholder(context.getResources().getDrawable(R.drawable.default_img)) //占位图
                 .error(context.getResources().getDrawable(R.drawable.default_img))       //错误图
                 // .priority(Priority.HIGH)

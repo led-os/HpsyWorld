@@ -28,6 +28,7 @@ import com.kuwai.ysy.module.chat.business.redpack.SendRedActivity;
 import com.kuwai.ysy.module.find.CityMeetActivity;
 import com.kuwai.ysy.module.find.CommisDetailOtherActivity;
 import com.kuwai.ysy.module.find.FoundLocationActivity;
+import com.kuwai.ysy.module.find.PerVideoActivity;
 import com.kuwai.ysy.module.find.SearchMeetActivity;
 import com.kuwai.ysy.module.find.business.CityMeet.SearchMeetFragment;
 import com.kuwai.ysy.module.find.business.CommisDetail.CommisDetailFragment;
@@ -208,6 +209,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
             @Override
             public void onItemClick(String data, int position) {
                 Log.i("点击了：", String.valueOf(position) + ">>" + data);
+                getActivity().startActivity(new Intent(getActivity(), PerVideoActivity.class));
             }
         });
 

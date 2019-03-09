@@ -2,6 +2,7 @@ package com.rayhahah.rbase;
 
 import android.app.Application;
 
+import com.rayhahah.rbase.utils.RSAEncrypt;
 import com.rayhahah.rbase.utils.useful.RLog;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
@@ -20,6 +21,7 @@ public class BaseApplication extends Application {
         onFastInit();
         mAppContext = this;
         SPManager.init(mAppContext);
+        //RSAEncrypt.getInstance().getFromAssets(mAppContext);
         initLog();
 
         //LeakCanary.install(mAppContext);

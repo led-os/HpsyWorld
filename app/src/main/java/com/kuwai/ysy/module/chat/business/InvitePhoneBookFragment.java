@@ -16,7 +16,6 @@ import com.kuwai.ysy.module.chat.adapter.FindFriendsAdapter;
 import com.kuwai.ysy.module.chat.adapter.PhoneBookAdapter;
 import com.kuwai.ysy.module.chat.bean.PhotoBook;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
-import com.kuwai.ysy.module.home.business.MyFragment;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.utils.security.PhoneUtil;
 import com.kuwai.ysy.widget.MyRecycleViewDivider;

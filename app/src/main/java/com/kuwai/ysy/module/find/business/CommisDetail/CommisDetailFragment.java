@@ -280,8 +280,10 @@ public class CommisDetailFragment extends BaseFragment<CommisDetailPresenter> im
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        rid = getArguments().getInt("rid");
-        uid = getArguments().getString("uid");
+        if(getArguments()!=null){
+            rid = getArguments().getInt("rid");
+            uid = getArguments().getString("uid");
+        }
 
         mLayoutStatusView = mRootView.findViewById(R.id.mLayoutStatusView);
         mCover = mRootView.findViewById(R.id.iv_cover);

@@ -29,7 +29,6 @@ import com.kuwai.ysy.module.chat.bean.MyFriends;
 import com.kuwai.ysy.module.chat.bean.StsBean;
 import com.kuwai.ysy.module.circle.api.CircleApiFactory;
 import com.kuwai.ysy.module.circle.business.publishdy.PublishDyActivity;
-import com.kuwai.ysy.module.home.business.MyFragment;
 import com.kuwai.ysy.module.mine.adapter.HomePageVideoAdapter;
 import com.kuwai.ysy.module.mine.adapter.MyPicAdapter;
 import com.kuwai.ysy.module.mine.adapter.MyVideoAdapter;

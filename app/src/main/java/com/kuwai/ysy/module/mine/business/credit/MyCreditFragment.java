@@ -3,17 +3,30 @@ package com.kuwai.ysy.module.mine.business.credit;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 
 import com.allen.library.SuperTextView;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.bean.ResponseWithData;
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.home.api.HomeApiFactory;
+import com.kuwai.ysy.module.home.bean.login.CodeBean;
 import com.kuwai.ysy.module.mine.bean.CreditBean;
+import com.kuwai.ysy.utils.security.RSAEncrypt;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.dialoglib.DialogInterface;
 import com.rayhahah.dialoglib.NormalAlertDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
+import io.reactivex.functions.Consumer;
 
 public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements MyCreditContract.IHomeView, View.OnClickListener {
 
@@ -49,6 +62,7 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
             case R.id.st_headicon:
                 break;
             case R.id.st_phone:
+                //getCode(SPManager.get().getStringValue("uid"), "123");
                 break;
             case R.id.tv_auth:
 
@@ -67,6 +81,27 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
         }
     }
 
+    public void getCode(String phone, String type) {
+        addSubscription(HomeApiFactory.getAes(phone, type).subscribe(new Consumer<ResponseWithData>() {
+            @Override
+            public void accept(ResponseWithData codeBean) throws Exception {
+                if (codeBean.getCode() == 200) {
+                    // start(InputCodeFragment.newInstance(mEtCode.getText().toString()));
+                    //code = String.valueOf(codeBean.getData().getMsgTxt());
+                    Log.e("code+++++++", codeBean.toString());
+                    ToastUtils.showShort(codeBean.getMsg());
+                } else {
+                    ToastUtils.showShort(codeBean.getMsg());
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.i("", "accept: " + throwable);
+            }
+        }));
+    }
+
     @Override
     public void initView(Bundle savedInstanceState) {
 
@@ -76,6 +111,7 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
         mTvAuth = (SuperTextView) mRootView.findViewById(R.id.tv_auth);
         mStEdu = (SuperTextView) mRootView.findViewById(R.id.st_edu);
         mStHouse = (SuperTextView) mRootView.findViewById(R.id.st_house);
+        mStPhone.setOnClickListener(this);
         mStCar = (SuperTextView) mRootView.findViewById(R.id.st_car);
         mNavigation.setLeftClick(new View.OnClickListener() {
             @Override

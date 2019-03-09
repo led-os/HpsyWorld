@@ -1,10 +1,14 @@
 package com.kuwai.ysy.module.home.api;
 
+import com.kuwai.ysy.bean.ResponseWithData;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.home.bean.HomeBean;
+import com.kuwai.ysy.module.home.bean.HomeCardBean;
 import com.kuwai.ysy.module.home.bean.HomeVideoBean;
 import com.kuwai.ysy.module.home.bean.login.CodeBean;
 import com.kuwai.ysy.module.home.bean.login.LoginBean;
+import com.kuwai.ysy.module.home.bean.main.NearPerBean;
+import com.kuwai.ysy.module.home.bean.main.PersonPicBean;
 
 import java.util.Map;
 
@@ -36,6 +40,10 @@ public interface HomeService {
     Observable<CodeBean> getCode(@Field("phone") String phone, @Field("type") String type);
 
     @FormUrlEncoded
+    @POST("Cesuan/varilication")
+    Observable<ResponseWithData> getAes(@Field("uid") String phone, @Field("type") String type);
+
+    @FormUrlEncoded
     @POST("User/resetPassword")
     Observable<SimpleResponse> resetPassword(@Field("phone") String phone, @Field("pass_word") String pass_word, @Field("check_code") String check_code);
 
@@ -45,9 +53,21 @@ public interface HomeService {
 
     @Multipart
     @POST("User/register")
-    Observable<SimpleResponse> regist(@PartMap Map<String, RequestBody> num);
+    Observable<LoginBean> regist(@PartMap Map<String, RequestBody> num);
 
     @FormUrlEncoded
     @POST("HomePage/HomePageList")
     Observable<HomeVideoBean> getHomeData(@FieldMap Map<String, Object> num);
+
+    @FormUrlEncoded
+    @POST("HomePage/HomePageList_two")
+    Observable<HomeCardBean> getHomeCardData(@FieldMap Map<String, Object> num);
+
+    @FormUrlEncoded
+    @POST("HomePage/HomePage_nearby")
+    Observable<NearPerBean> getNearPer(@FieldMap Map<String, Object> num);
+
+    @FormUrlEncoded
+    @POST("HomePage/photo")
+    Observable<PersonPicBean> getPic(@Field("uid") String uid);
 }

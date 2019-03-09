@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
+import java.security.MessageDigest;
 
 /** Junk drawer of utility methods. */
 final class Util {
@@ -29,6 +30,31 @@ final class Util {
   static final Charset UTF_8 = Charset.forName("UTF-8");
 
   private Util() {
+  }
+
+  /**
+   * encrypt32
+   *
+   * @param encryptStr
+   * @return String
+   */
+  public static String encrypt32(String encryptStr) {
+    MessageDigest md5;
+    try {
+      md5 = MessageDigest.getInstance("MD5");
+      byte[] md5Bytes = md5.digest(encryptStr.getBytes());
+      StringBuffer hexValue = new StringBuffer();
+      for (int i = 0; i < md5Bytes.length; i++) {
+        int val = ((int) md5Bytes[i]) & 0xff;
+        if (val < 16)
+          hexValue.append("0");
+        hexValue.append(Integer.toHexString(val));
+      }
+      encryptStr = hexValue.toString();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+    return encryptStr;
   }
 
   static String readFully(Reader reader) throws IOException {

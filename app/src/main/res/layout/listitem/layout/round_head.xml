@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.kuwai.ysy.widget.IdentityImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/iiv"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:background="@color/colorPrimary"
+    app:iciv_progress_collor="@color/colorPrimary"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+</com.kuwai.ysy.widget.IdentityImageView>

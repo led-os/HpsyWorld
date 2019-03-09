@@ -1,47 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.kuwai.ysy.widget.MultipleStatusView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/multipleStatusView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
-    app:emptyView="@layout/layout_empty_view"
-    app:errorView="@layout/layout_error_view"
-    app:loadingView="@layout/layout_loading_view"
-    app:noNetworkView="@layout/layout_network_view">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/chinese"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="@string/language_cn"
-        android:gravity="center"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/english"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="@string/language_en"
-        android:gravity="center"
-        android:layout_marginTop="30dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/mRecyclerView"
+    <com.kuwai.ysy.widget.home.SwipeFlingAdapterView
+        android:id="@+id/swipe_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingBottom="51dp"
-        tools:listitem="@layout/item_category" />
+        app:max_visible="4"
+        app:min_adapter_stack="4"
+        app:y_offset_step="20dp" />
 
-</com.kuwai.ysy.widget.MultipleStatusView>
+    <View
+        android:id="@+id/anchor"
+        android:layout_width="1dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="92dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/swipeLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/anchor"
+        android:layout_marginLeft="36dp"
+        android:scaleType="center"
+        android:src="@drawable/home_icon_gift"
+        android:transitionName="TransitionName1"
+        app:backgroundTint="@color/white"
+        app:borderWidth="0dp"
+        app:rippleColor="@color/white" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/swipeCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/anchor"
+        android:layout_centerHorizontal="true"
+        android:scaleType="center"
+        android:src="@drawable/home_icon_talk"
+        android:transitionName="TransitionName2"
+        app:backgroundTint="@color/white"
+        app:borderWidth="0dp"
+        app:rippleColor="@color/white" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/swipeRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/anchor"
+        android:layout_marginRight="36dp"
+        android:scaleType="center"
+        android:src="@drawable/home_icon_like"
+        android:transitionName="TransitionName3"
+        app:backgroundTint="@color/white"
+        app:borderWidth="0dp"
+        app:rippleColor="@color/white" />
+</RelativeLayout>

@@ -32,7 +32,6 @@ import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.VideoPlayActivity;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.home.WebviewH5Activity;
-import com.kuwai.ysy.module.home.business.MyFragment;
 import com.kuwai.ysy.module.mine.MinePicAdapter;
 import com.kuwai.ysy.module.mine.adapter.HomePageVideoAdapter;
 import com.kuwai.ysy.module.mine.adapter.PicAdapter;

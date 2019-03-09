@@ -1,5 +1,7 @@
 package com.kuwai.ysy.app;
 
+import android.media.audiofx.Visualizer;
+
 import com.rayhahah.rbase.utils.base.FileUtils;
 
 import java.lang.annotation.Retention;
@@ -76,8 +78,9 @@ public class C {
     @Retention(RetentionPolicy.SOURCE)
     public @interface BaseURL {
         String TEST_URL = "http://baobab.kaiyanapp.com/api/";
-        //String BASE_URL = "http://192.168.1.88/api/";
-        String BASE_URL = "http://api.yushuiyuan.cn/api/";
+        String BASE_URL = "http://test.yushuiyuan.cn/api/";
+        String LOCAL_URL = "http://test.yushuiyuan.cn/api/";
+        //String BASE_URL = "http://api.yushuiyuan.cn/api/";
     }
 
     /**

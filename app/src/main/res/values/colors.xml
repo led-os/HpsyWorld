@@ -14,6 +14,7 @@
     <color name="base_DCDCDC">#DCDCDC</color>
 
     <color name="line_fd">#fdf294</color>
+    <color name="text_57">#575757</color>
 
     <color name="colorPrimaryDay">#C01E2F</color>
     <color name="colorPrimaryDayDark">#A82828</color>
@@ -45,6 +46,9 @@
     <color name="gray_68">#686868</color>
     <color name="gray_e6">#e6e6e6</color>
     <color name="balck_28">#282828</color>
+    <color name="text_blue">#68caff</color>
+    <color name="text_blue_7a">#7AC7FF</color>
+    <color name="black_66">#666666</color>
     <color name="grey_bd">#bdbdbd</color>
     <color name="bg_tequan">#33eabc8f</color>
     <color name="line_color">#eeeeee</color>
