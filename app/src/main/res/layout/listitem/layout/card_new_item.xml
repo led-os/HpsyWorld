@@ -82,7 +82,7 @@
             app:sSolidColor="#ff70c1ff" />
 
         <com.allen.library.SuperButton
-            android:id="@+id/tv_heigt"
+            android:id="@+id/tv_height"
             android:layout_width="wrap_content"
             android:layout_height="18dp"
             android:layout_marginLeft="6dp"
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:text="我是伊利可爱多，想找一个果粒多休息休息... "
             android:textColor="#ff808080"
-            android:layout_below="@id/tv_sex"
+            android:layout_below="@+id/tv_sex"
             android:layout_marginTop="3dp"
             android:singleLine="true"
             android:ellipsize="end"

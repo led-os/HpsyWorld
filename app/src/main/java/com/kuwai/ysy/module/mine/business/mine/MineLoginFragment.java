@@ -193,6 +193,7 @@ public class MineLoginFragment extends BaseFragment<MinePresenter> implements Vi
         img_vip.setVisibility(cityMeetBean.getData().getIs_vip() == 1 ? View.VISIBLE : View.GONE);
         tv_money.setText(cityMeetBean.getData().getAmount());
         tv_integral.setText(cityMeetBean.getData().getIntegral_exchange() + "");
+        SPManager.get().putString("photo", cityMeetBean.getData().getPhoto());
         //st_credit.setRightString(cityMeetBean.getData().getAuthentication_sum() + "个未认证");
     }
 

@@ -15,6 +15,7 @@ import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.mine.MyCreditActivity;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
+import com.kuwai.ysy.module.mine.bean.PersolHome2PageBean;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.kuwai.ysy.module.mine.business.change.ChangeInfoFragment;
 import com.kuwai.ysy.module.mine.business.change.ChangePlaceFragment;
@@ -49,7 +50,7 @@ public class PageDetailMineFragment extends BaseFragment implements View.OnClick
     private TagAdapter tagAdapter, zeouAdapter;
     private LayoutInflater mInflater;
     private List<String> mVals = new ArrayList<>();
-    private List<String> mValsZeou = new ArrayList<>();
+    private List<PersolHome2PageBean.DataBean.SelectionBean> mValsZeou = new ArrayList<>();
     private TextView changeXuan, renzheng, superInfo, chooseZeou, managePlace;
     private TextView mTvHouse;
     private TextView mTvCar;
@@ -58,7 +59,7 @@ public class PageDetailMineFragment extends BaseFragment implements View.OnClick
     private TextView mTvChild;
     private TextView mTvJob;
 
-    private PersolHomePageBean mPersolHomePageBean;
+    private PersolHome2PageBean mPersolHomePageBean;
 
     public static PageDetailMineFragment newInstance() {
         Bundle args = new Bundle();
@@ -150,9 +151,9 @@ public class PageDetailMineFragment extends BaseFragment implements View.OnClick
     }
 
     private void getPersonInfo() {
-        addSubscription(MineApiFactory.getUsetInfoMine(SPManager.get().getStringValue("uid")).subscribe(new Consumer<PersolHomePageBean>() {
+        addSubscription(MineApiFactory.getOtherHomepage2Info(SPManager.get().getStringValue("uid"),"").subscribe(new Consumer<PersolHome2PageBean>() {
             @Override
-            public void accept(PersolHomePageBean persolHomePageBean) throws Exception {
+            public void accept(PersolHome2PageBean persolHomePageBean) throws Exception {
 
                 mPersolHomePageBean = persolHomePageBean;
                 mTvHouse.setText(persolHomePageBean.getData().getInfo().getBuy_house());
@@ -198,29 +199,17 @@ public class PageDetailMineFragment extends BaseFragment implements View.OnClick
                 }
 
                 //择偶标准
+                //择偶标准
                 mValsZeou.clear();
-                PersolHomePageBean.DataBean.SelectionBean selectionBean = persolHomePageBean.getData().getSelection();
-                if (!Utils.isNullString(selectionBean.getAnnual_income())) {
-                    mValsZeou.add(selectionBean.getAnnual_income());
-                }
-                if (!Utils.isNullString(selectionBean.getLove_education())) {
-                    mValsZeou.add(selectionBean.getLove_education());
-                }
-                if (!Utils.isNullString(selectionBean.getLove_address())) {
-                    mValsZeou.add(selectionBean.getLove_address());
-                }
-                if (!Utils.isNullString(selectionBean.getLove_age())) {
-                    mValsZeou.add(selectionBean.getLove_age());
-                }
-                if (!Utils.isNullString(selectionBean.getLove_height())) {
-                    mValsZeou.add(selectionBean.getLove_height());
+                if (persolHomePageBean.getData().getSelection() != null && persolHomePageBean.getData().getSelection().size() > 0) {
+                    mValsZeou = persolHomePageBean.getData().getSelection();
                 }
 
-                zeouAdapter = new TagAdapter<String>(mValsZeou) {
+                zeouAdapter = new TagAdapter<PersolHome2PageBean.DataBean.SelectionBean>(mValsZeou) {
                     @Override
-                    public View getView(FlowLayout parent, int position, String s) {
+                    public View getView(FlowLayout parent, int position, PersolHome2PageBean.DataBean.SelectionBean s) {
                         SuperButton tv = (SuperButton) mInflater.inflate(R.layout.item_zeou, tagFlowLayout, false);
-                        tv.setText(s);
+                        tv.setText(s.getText());
                         return tv;
                     }
                 };

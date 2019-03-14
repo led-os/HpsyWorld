@@ -1,10 +1,11 @@
 package com.kuwai.ysy.module.mine.business.change;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,10 +19,14 @@ import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.listener.AddressPickTask;
 import com.kuwai.ysy.module.home.bean.GoodsCategory;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
+import com.kuwai.ysy.module.mine.bean.PersolHome2PageBean;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NavigationLayout;
+import com.kuwai.ysy.widget.shadow.FlowLayout;
+import com.kuwai.ysy.widget.shadow.TagAdapter;
+import com.kuwai.ysy.widget.shadow.TagFlowLayout;
 import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.dialoglib.DialogInterface;
 import com.rayhahah.dialoglib.MDEditDialog;
@@ -44,14 +49,17 @@ import cn.qqtheme.framework.picker.DateTimePicker;
 import cn.qqtheme.framework.picker.NumberPicker;
 import cn.qqtheme.framework.picker.SinglePicker;
 import io.reactivex.functions.Consumer;
-import okio.Okio;
 
 public class ChangeInfoFragment extends BaseFragment implements View.OnClickListener {
+
+    private TagAdapter zeouAdapter;
+    private LayoutInflater mInflater;
+    private List<PersolHome2PageBean.DataBean.SelectionBean> mValsZeou = new ArrayList<>();
 
     private NavigationLayout mNavigation;
     private SuperTextView mTvId;
     private SuperTextView mTvAge;
-    private SuperTextView mTvHeight;
+    private SuperTextView mTvHeight, tvWeight;
     private SuperTextView mTvNick;
     private SuperTextView mTvGender;
     private SuperTextView mTvBirth;
@@ -63,40 +71,32 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
     private SuperTextView mTvMarry;
     private SuperTextView mTvZongjiao;
     private SuperTextView mTvChild;
-    private SuperTextView mTvZeAge;
-    private SuperTextView mTvZeHeight;
-    private SuperTextView mTvZeEdu;
-    private SuperTextView mTvZeIncome;
-    private SuperTextView mTvZePlace;
+    private SuperTextView mTvZeou, mJobTv, mGoodAtTv, mAboutLoveTv, mAboutSexTv, mAgreeTv;
 
-    private CustomDialog incomeDialog, heightDialog, eduDialog, birthDialog, zongDialog, marryDialog, zeAgeDialog, zeHeightDialog, childDialog;
+    private CustomDialog incomeDialog, heightDialog, eduDialog, birthDialog, zongDialog, marryDialog, childDialog;
     private String height = "165cm";
     private int incomeId = 4;
     private String income = "";
-    private int zeincomeId = 4;
-    private String zeincome = "";
     private String mYear = "1990";
     private String mMonth = "01";
     private String mDay = "01";
     private String eduTv = "大专";
-    private String zeeduTv = "大专";
     private String cityId = "0";
-    private String zecityId = "0";
     private String zongJiao = "";
     private String marryString = "";
-    private String zeAgeString = "";
-    private String zeHeightString = "";
     private String childString = "";
+    private TagFlowLayout tv_tag;
+    private String jobId = "";
+    private StringBuffer addBuffer = new StringBuffer();
+    private StringBuffer delBuffer = new StringBuffer();
 
     private String[] chaildArray = new String[]{"有", "无"};
     private String[] marry = new String[]{"未婚", "已婚", "离异"};
     private String[] zong = new String[]{"佛教", "道教", "基督教", "伊斯兰教"};
-    private String[] zeHeightArray = new String[]{"150cm以下", "150-155cm", "155-160cm", "160-165cm", "165-170cm", "170-175cm", "175-180cm", "180-185cm", "185-190cm", "190cm以上"};
-    private String[] zeAgeArray = new String[]{"20-25岁", "25-30岁", "30-35岁", "35-40岁", "40-45岁", "45-50岁", "50岁以上"};
 
     public static String TYPE_MINE = "MY";
     public static String TYPE_OTHER = "OTHER";
-    private PersolHomePageBean mPersolHomePageBean;
+    private PersolHome2PageBean mPersolHomePageBean;
 
     public static ChangeInfoFragment newInstance(Bundle bundle) {
         ChangeInfoFragment fragment = new ChangeInfoFragment();
@@ -117,7 +117,7 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
     @Override
     public void initView(Bundle savedInstanceState) {
 
-        mPersolHomePageBean = (PersolHomePageBean) getArguments().getSerializable("data");
+        mPersolHomePageBean = (PersolHome2PageBean) getArguments().getSerializable("data");
 
         mNavigation = mRootView.findViewById(R.id.navigation);
         mNavigation.setRightClick(new View.OnClickListener() {
@@ -134,7 +134,10 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
         });
         mTvId = mRootView.findViewById(R.id.tvId);
         mTvAge = mRootView.findViewById(R.id.tvAge);
+        tv_tag = mRootView.findViewById(R.id.tv_tag);
+        mTvZeou = mRootView.findViewById(R.id.tvZeou);
         mTvHeight = mRootView.findViewById(R.id.tvHeight);
+        tvWeight = mRootView.findViewById(R.id.tvWeight);
         mTvNick = mRootView.findViewById(R.id.tvNick);
         mTvGender = mRootView.findViewById(R.id.tvGender);
         if (mPersolHomePageBean.getData().getInfo().getGender() == 1) {
@@ -146,6 +149,12 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
         }
         mTvBirth = mRootView.findViewById(R.id.tvBirth);
         mTvEdu = mRootView.findViewById(R.id.tvEdu);
+        mJobTv = mRootView.findViewById(R.id.tvJob);
+        mGoodAtTv = mRootView.findViewById(R.id.tvGoodAt);
+        mAboutLoveTv = mRootView.findViewById(R.id.tvAboutLove);
+        mAboutSexTv = mRootView.findViewById(R.id.tvAboutSex);
+        mAgreeTv = mRootView.findViewById(R.id.tvAgree);
+        mInflater = LayoutInflater.from(getActivity());
         mTvIncome = mRootView.findViewById(R.id.tvIncome);
         mTvPlace = mRootView.findViewById(R.id.tvPlace);
         mTvHouse = mRootView.findViewById(R.id.tvHouse);
@@ -153,42 +162,105 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
         mTvMarry = mRootView.findViewById(R.id.tvMarry);
         mTvZongjiao = mRootView.findViewById(R.id.tvZongjiao);
         mTvChild = mRootView.findViewById(R.id.tvChild);
-        mTvZeAge = mRootView.findViewById(R.id.tvZeAge);
-        mTvZeHeight = mRootView.findViewById(R.id.tvZeHeight);
-        mTvZeEdu = mRootView.findViewById(R.id.tvZeEdu);
-        mTvZeIncome = mRootView.findViewById(R.id.tvZeIncome);
-        mTvZePlace = mRootView.findViewById(R.id.tvZePlace);
 
         mTvHeight.setOnClickListener(this);
         mTvNick.setOnClickListener(this);
         mTvBirth.setOnClickListener(this);
         mTvEdu.setOnClickListener(this);
         mTvIncome.setOnClickListener(this);
+        mTvZeou.setOnClickListener(this);
         mTvPlace.setOnClickListener(this);
         mTvHouse.setOnClickListener(this);
         mTvCar.setOnClickListener(this);
         mTvMarry.setOnClickListener(this);
         mTvZongjiao.setOnClickListener(this);
         mTvChild.setOnClickListener(this);
-        mTvZeAge.setOnClickListener(this);
-        mTvZeHeight.setOnClickListener(this);
-        mTvZeIncome.setOnClickListener(this);
-        mTvZeEdu.setOnClickListener(this);
-        mTvZePlace.setOnClickListener(this);
+
+        mJobTv.setOnClickListener(this);
+        mGoodAtTv.setOnClickListener(this);
+        mAboutLoveTv.setOnClickListener(this);
+        mAboutSexTv.setOnClickListener(this);
+        mAgreeTv.setOnClickListener(this);
 
         setData();
     }
 
     private void setData() {
         if (mPersolHomePageBean != null) {
-            PersolHomePageBean.DataBean.InfoBean bean = mPersolHomePageBean.getData().getInfo();
+            PersolHome2PageBean.DataBean.InfoBean bean = mPersolHomePageBean.getData().getInfo();
             mTvId.setCenterString(bean.getUid() + "");
-            mTvHeight.setCenterString(bean.getHeight() + "");
+            mTvHeight.setCenterString(bean.getHeight() + "cm");
             mTvNick.setCenterString(bean.getNickname());
             mTvBirth.setCenterString(bean.getBirthday());
             mTvEdu.setCenterString(bean.getEducation());
             mTvIncome.setCenterString(bean.getAnnual_income());
             mTvPlace.setCenterString(bean.getCity());
+            mTvMarry.setCenterString(bean.getMarriage());
+            mTvZongjiao.setCenterString(bean.getReligion());
+            mTvChild.setCenterString(bean.getChildren());
+            mJobTv.setCenterString(bean.getOccupation());
+            mGoodAtTv.setCenterString(bean.getAdvantages());
+            mAboutLoveTv.setCenterString(bean.getLove_view());
+            mAboutSexTv.setCenterString(bean.getNature_view());
+            mAgreeTv.setCenterString(bean.getRound());
+
+            if(bean.getIs_house() == 1){
+                mTvHouse.setCenterString("已认证");
+            }else if(bean.getIs_house() == 2){
+                mTvHouse.setCenterString("审核中");
+            }else{
+                mTvHouse.setCenterString("未认证");
+            }
+
+            if(bean.getIs_vehicle() == 1){
+                mTvCar.setCenterString("已认证");
+            }else if(bean.getIs_house() == 2){
+                mTvCar.setCenterString("审核中");
+            }else{
+                mTvCar.setCenterString("未认证");
+            }
+
+
+            zeouAdapter = new TagAdapter<PersolHome2PageBean.DataBean.SelectionBean>(mValsZeou) {
+                @Override
+                public View getView(FlowLayout parent, final int position, final PersolHome2PageBean.DataBean.SelectionBean s) {
+                    SuperButton tv = (SuperButton) mInflater.inflate(R.layout.item_zeou, tv_tag, false);
+                    tv.setText(s.getText());
+                    tv.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            new NormalAlertDialog.Builder(getActivity())
+                                    .setTitleVisible(false)
+                                    .setContentText("确定删除该条件？")
+                                    .setLeftButtonText("确定")
+                                    .setRightButtonText("取消")
+                                    .setOnclickListener(new DialogInterface.OnLeftAndRightClickListener<NormalAlertDialog>() {
+                                        @Override
+                                        public void clickLeftButton(NormalAlertDialog dialog, View view) {
+                                            delBuffer.append(s.getS_id() + ',');
+                                            mValsZeou.remove(s);
+                                            zeouAdapter.notifyDataChanged();
+                                            dialog.dismiss();
+                                        }
+
+                                        @Override
+                                        public void clickRightButton(NormalAlertDialog dialog, View view) {
+                                            dialog.dismiss();
+                                        }
+                                    })
+                                    .setCanceledOnTouchOutside(true)
+                                    .build().show();
+                            return false;
+                        }
+                    });
+                    return tv;
+                }
+            };
+
+            tv_tag.setAdapter(zeouAdapter);
+
+            mValsZeou.addAll(mPersolHomePageBean.getData().getSelection());
+            zeouAdapter.notifyDataChanged();
         }
     }
 
@@ -196,27 +268,25 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvNick:
-                new MDEditDialog.Builder(getActivity())
-                        .setTitleText("修改昵称")
-                        .setContentText(mTvNick.getCenterString())
-                        .setCanceledOnTouchOutside(true)
-                        .setOnclickListener(new DialogInterface.OnLeftAndRightClickListener<MDEditDialog>() {
-                            @Override
-                            public void clickLeftButton(MDEditDialog dialog, View view) {
-                                dialog.dismiss();
-                            }
-
-                            @Override
-                            public void clickRightButton(MDEditDialog dialog, View view) {
-                                dialog.dismiss();
-                                if (dialog.getEditTextContent().length() > 10) {
-                                    ToastUtils.showShort("昵称最长10个字符");
-                                    return;
-                                }
-                                mTvNick.setCenterString(dialog.getEditTextContent());
-                            }
-                        })
-                        .build().show();
+                showEdit(mTvNick.getCenterString(), "修改昵称");
+                break;
+            case R.id.tvAboutLove:
+                showEdit("", "对爱情的看法");
+                break;
+            case R.id.tvAboutSex:
+                showEdit("", "对性的看法");
+                break;
+            case R.id.tvAgree:
+                showEdit("", "最满意的地方");
+                break;
+            case R.id.tvZeou:
+                showEdit("", "添加择偶条件");
+                break;
+            case R.id.tvWeight:
+                showEdit("", "体重");
+                break;
+            case R.id.tvJob:
+                startForResult(JobChooseFragment.newInstance(), 0);
                 break;
             case R.id.tvPlace:
                 popAddressCustom(TYPE_MINE);
@@ -246,21 +316,18 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
             case R.id.tvChild:
                 popChildCustom();
                 break;
-            case R.id.tvZeAge:
-                popZeAgeCustom();
-                break;
-            case R.id.tvZeEdu:
-                popEduCustom(TYPE_OTHER);
-                break;
-            case R.id.tvZeHeight:
-                popZeHeightCustom();
-                break;
-            case R.id.tvZeIncome:
-                popIncomeCustom(TYPE_OTHER);
-                break;
-            case R.id.tvZePlace:
-                popAddressCustom(TYPE_OTHER);
-                break;
+        }
+    }
+
+    @Override
+    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            // 在此通过Bundle data 获取返回的数据
+            if (data != null) {
+                mJobTv.setCenterString(data.getString("job"));
+                jobId = data.getString("id");
+            }
         }
     }
 
@@ -558,115 +625,6 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
         childDialog.show();
     }
 
-    private void popZeAgeCustom() {
-        if (zeAgeDialog == null) {
-
-            View pannel = View.inflate(getActivity(), R.layout.dialog_year_picker, null);
-            LinearLayout layout = pannel.findViewById(R.id.wheelview_container);
-            SuperButton submit = pannel.findViewById(R.id.submit);
-            TextView top = pannel.findViewById(R.id.top);
-            top.setText("选择择偶年龄");
-
-            pannel.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (zeAgeDialog != null) {
-                        zeAgeDialog.dismiss();
-                    }
-                }
-            });
-
-            final SinglePicker<String> picker = new SinglePicker<>(getActivity(), Arrays.asList(zeAgeArray));
-            picker.setCanceledOnTouchOutside(false);
-            picker.setSelectedIndex(1);
-            picker.setOffset(2);
-            picker.setCycleDisable(true);
-            picker.setDividerColor(0xFF5415f9);
-            picker.setTextSize(26);
-            picker.setTextColor(getResources().getColor(R.color.balck_28));
-            picker.setTextPadding(20);
-            picker.setOnWheelListener(new SinglePicker.OnWheelListener<String>() {
-                @Override
-                public void onWheeled(int index, String item) {
-                    zeAgeString = item;
-                }
-            });
-            //得到选择器视图，可内嵌到其他视图容器，不需要调用show方法
-            layout.addView(picker.getContentView());
-
-            submit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (zeAgeDialog != null) {
-                        zeAgeDialog.dismiss();
-                        mTvZeAge.setCenterString(picker.getSelectedItem());
-                    }
-                }
-            });
-            zeAgeDialog = new CustomDialog.Builder(getActivity())
-                    .setView(pannel)
-                    .setItemWidth(0.8f)
-                    .setTouchOutside(true)
-                    .setDialogGravity(Gravity.CENTER)
-                    .build();
-        }
-        zeAgeDialog.show();
-    }
-
-    private void popZeHeightCustom() {
-        if (zeHeightDialog == null) {
-
-            View pannel = View.inflate(getActivity(), R.layout.dialog_year_picker, null);
-            LinearLayout layout = pannel.findViewById(R.id.wheelview_container);
-            SuperButton submit = pannel.findViewById(R.id.submit);
-            TextView top = pannel.findViewById(R.id.top);
-            top.setText("选择择偶身高");
-
-            pannel.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (zeHeightDialog != null) {
-                        zeHeightDialog.dismiss();
-                    }
-                }
-            });
-
-            final SinglePicker<String> picker = new SinglePicker<>(getActivity(), Arrays.asList(zeHeightArray));
-            picker.setCanceledOnTouchOutside(false);
-            picker.setSelectedIndex(1);
-            picker.setOffset(2);
-            picker.setCycleDisable(true);
-            picker.setDividerColor(0xFF5415f9);
-            picker.setTextSize(26);
-            picker.setTextColor(getResources().getColor(R.color.balck_28));
-            picker.setTextPadding(20);
-            picker.setOnWheelListener(new SinglePicker.OnWheelListener<String>() {
-                @Override
-                public void onWheeled(int index, String item) {
-                    zeHeightString = item;
-                }
-            });
-            //得到选择器视图，可内嵌到其他视图容器，不需要调用show方法
-            layout.addView(picker.getContentView());
-
-            submit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (zeHeightDialog != null) {
-                        zeHeightDialog.dismiss();
-                        mTvZeHeight.setCenterString(picker.getSelectedItem());
-                    }
-                }
-            });
-            zeHeightDialog = new CustomDialog.Builder(getActivity())
-                    .setView(pannel)
-                    .setItemWidth(0.8f)
-                    .setTouchOutside(true)
-                    .setDialogGravity(Gravity.CENTER)
-                    .build();
-        }
-        zeHeightDialog.show();
-    }
 
     private void popEduCustom(final String type) {
         View pannel = View.inflate(getActivity(), R.layout.dialog_year_picker, null);
@@ -706,7 +664,7 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
                 if (TYPE_MINE.equals(type)) {
                     eduTv = item.getName();
                 } else {
-                    zeeduTv = item.getName();
+                    //zeeduTv = item.getName();
                 }
             }
         });
@@ -721,7 +679,7 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
                     if (TYPE_MINE.equals(type)) {
                         mTvEdu.setCenterString(picker.getSelectedItem().getName());
                     } else {
-                        mTvZeEdu.setCenterString(picker.getSelectedItem().getName());
+                        //mTvZeEdu.setCenterString(picker.getSelectedItem().getName());
                     }
                 }
             }
@@ -776,8 +734,8 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
                     incomeId = item.getId();
                     income = item.getName();
                 } else {
-                    zeincomeId = item.getId();
-                    zeincome = item.getName();
+                    //zeincomeId = item.getId();
+                    //zeincome = item.getName();
                 }
 
             }
@@ -794,8 +752,8 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
                         incomeId = picker.getSelectedItem().getId();
                         mTvIncome.setCenterString(picker.getSelectedItem().getName());
                     } else {
-                        zeincomeId = picker.getSelectedItem().getId();
-                        mTvZeIncome.setCenterString(picker.getSelectedItem().getName());
+                        //zeincomeId = picker.getSelectedItem().getId();
+                        //mTvZeIncome.setCenterString(picker.getSelectedItem().getName());
                     }
 
                 }
@@ -830,8 +788,8 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
                     cityId = city.getAreaId();
                     mTvPlace.setCenterString(province.getAreaName() + "省" + city.getAreaName());
                 } else {
-                    zecityId = city.getAreaId();
-                    mTvZePlace.setCenterString(province.getAreaName() + "省" + city.getAreaName());
+                    //zecityId = city.getAreaId();
+                    //mTvZePlace.setCenterString(province.getAreaName() + "省" + city.getAreaName());
                 }
                 //mBtnGetPos.setText(province.getAreaName() + "省" + city.getAreaName());
             }
@@ -886,23 +844,32 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
         if (!Utils.isNullString(mTvChild.getCenterString())) {
             params.put("children", mTvChild.getCenterString());
         }
-        if (!Utils.isNullString(mTvZeAge.getCenterString())) {
-            params.put("love_age", mTvZeAge.getCenterString().replace("岁", ""));
+        if (!Utils.isNullString(tvWeight.getCenterString())) {
+            params.put("weight", tvWeight.getCenterString());
         }
-        if (!Utils.isNullString(mTvZeHeight.getCenterString())) {
-            params.put("love_height", mTvZeHeight.getCenterString().replace("cm", ""));
+        if (!Utils.isNullString(mGoodAtTv.getCenterString())) {
+            params.put("advantages", mGoodAtTv.getCenterString());
         }
-        if (!Utils.isNullString(mTvZeEdu.getCenterString())) {
-            params.put("love_education", mTvZeEdu.getCenterString());
+        if (!Utils.isNullString(mAboutLoveTv.getCenterString())) {
+            params.put("love_view", mAboutLoveTv.getCenterString());
         }
-        if (!Utils.isNullString(mTvZeIncome.getCenterString())) {
-            params.put("love_annual_income", zeincomeId);
+        if (!Utils.isNullString(mAboutSexTv.getCenterString())) {
+            params.put("nature_view", mAboutSexTv.getCenterString());
         }
-        if (!Utils.isNullString(mTvZePlace.getCenterString())) {
-            params.put("love_address", zecityId);
+        if (!Utils.isNullString(mAgreeTv.getCenterString())) {
+            params.put("round", mAgreeTv.getCenterString());
+        }
+        if (!Utils.isNullString(mJobTv.getCenterString())) {
+            params.put("job", jobId);
+        }
+        if (addBuffer.length() > 0) {
+            params.put("add_selection", addBuffer.toString().substring(0, addBuffer.length() - 1));
+        }
+        if (delBuffer.length() > 0) {
+            params.put("del_selection", delBuffer.toString().substring(0, delBuffer.length() - 1));
         }
 
-        addSubscription(MineApiFactory.changeInfo(params).subscribe(new Consumer<SimpleResponse>() {
+        addSubscription(MineApiFactory.change2Info(params).subscribe(new Consumer<SimpleResponse>() {
             @Override
             public void accept(SimpleResponse response) throws Exception {
                 if (response.code == 200) {
@@ -917,5 +884,52 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
                 //Log.i(TAG, "accept: "+throwable);
             }
         }));
+    }
+
+    private void showEdit(String content, final String title) {
+        new MDEditDialog.Builder(getActivity())
+                .setTitleText(title)
+                .setContentText(content)
+                .setCanceledOnTouchOutside(true)
+                .setOnclickListener(new DialogInterface.OnLeftAndRightClickListener<MDEditDialog>() {
+                    @Override
+                    public void clickLeftButton(MDEditDialog dialog, View view) {
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void clickRightButton(MDEditDialog dialog, View view) {
+                        dialog.dismiss();
+                        switch (title) {
+                            case "修改昵称":
+                                if (dialog.getEditTextContent().length() > 10) {
+                                    ToastUtils.showShort("昵称最长10个字符");
+                                    return;
+                                }
+                                mTvNick.setCenterString(dialog.getEditTextContent());
+                                break;
+                            case "对爱情的看法":
+                                mAboutLoveTv.setCenterString(dialog.getEditTextContent());
+                                break;
+                            case "对性的看法":
+                                mAboutSexTv.setCenterString(dialog.getEditTextContent());
+                                break;
+                            case "最满意的地方":
+                                mAgreeTv.setCenterString(dialog.getEditTextContent());
+                                break;
+                            case "添加择偶条件":
+                                addBuffer.append(dialog.getEditTextContent() + ',');
+                                PersolHome2PageBean.DataBean.SelectionBean bean = new PersolHome2PageBean.DataBean.SelectionBean();
+                                bean.setText(dialog.getEditTextContent());
+                                mValsZeou.add(bean);
+                                zeouAdapter.notifyDataChanged();
+                                break;
+                            case "体重":
+                                tvWeight.setCenterString(dialog.getEditTextContent());
+                                break;
+                        }
+                    }
+                })
+                .build().show();
     }
 }

@@ -73,6 +73,8 @@ import java.util.List;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
+import io.rong.calllib.IVideoFrameListener;
+import io.rong.calllib.RongCallClient;
 import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtensionManager;
@@ -232,6 +234,7 @@ public class MyApp extends BaseApplication {
                 }
             }
         });
+
     }
 
     @Override

@@ -86,9 +86,9 @@ public class PageDetail2Fragment extends BaseFragment<PageDetail2Presenter> impl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ta_gift:
-                Bundle bundle = new Bundle();
+                /*Bundle bundle = new Bundle();
                 bundle.putString("uid", otherid);
-                ((BaseFragment) getParentFragment()).start(TaAcceptGiftFragment.newInstance(bundle));
+                start(TaAcceptGiftFragment.newInstance(bundle));*/
                 break;
             case R.id.tv_about_love:
                 initCleanDialog("对爱情的看法", mPersonBean.getInfo().getLove_view());

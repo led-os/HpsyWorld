@@ -1,5 +1,9 @@
 package com.kuwai.ysy.widget;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -10,16 +14,27 @@ import android.support.v7.widget.TintTypedArray;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 
 import com.allen.library.CircleImageView;
+import com.amap.api.maps2d.model.Circle;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.widget.home.WaveView;
 
-public class IdentityImageView extends ViewGroup{
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+public class IdentityImageView extends ViewGroup {
 
     private Context mContext;
     private CircleImageView bigImageView;//大圆
     private CircleImageView smallImageView;//小圆
+    private WaveView waveView;
     private float radiusScale;//小图片与大图片的比例，默认0.28，刚刚好，大了不好看
     int radius;//大图片半径
     private int smallRadius;//小图片半径
@@ -39,6 +54,89 @@ public class IdentityImageView extends ViewGroup{
     private int setborderColor = 0;//动态设置边框颜色值
     private int totalwidth;
 
+    private float mInitialRadius = 60;   // 初始波纹半径
+    private float mMaxRadius;   // 最大波纹半径
+    private long mDuration = 2000; // 一个波纹从创建到消失的持续时间
+    private int mSpeed = 500;   // 波纹的创建速度，每500ms创建一个
+    private float mMaxRadiusRate = 1.0f;
+    private boolean mMaxRadiusSet;
+    private boolean mIsRunning;
+    private long mLastCreateTime;
+    private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Interpolator mInterpolator = new LinearInterpolator();
+    private List<Circle> mCircleList = new ArrayList<Circle>();
+
+    private class Circle {
+        private long mCreateTime;
+
+        Circle() {
+            mCreateTime = System.currentTimeMillis();
+        }
+
+        int getAlpha() {
+            float percent = (getCurrentRadius() - mInitialRadius) / (mMaxRadius - mInitialRadius);
+            return (int) (255 - mInterpolator.getInterpolation(percent) * 255);
+        }
+
+        float getCurrentRadius() {
+            float percent = (System.currentTimeMillis() - mCreateTime) * 1.0f / mDuration;
+            return mInitialRadius + mInterpolator.getInterpolation(percent) * (mMaxRadius - mInitialRadius);
+        }
+    }
+
+    private Runnable mCreateCircle = new Runnable() {
+        @Override
+        public void run() {
+            if (mIsRunning) {
+                newCircle();
+                postDelayed(mCreateCircle, mSpeed);
+            }
+        }
+    };
+
+    @SuppressLint("WrongConstant")
+    private AnimatorSet animation() {
+            List<Animator> animators = new ArrayList<>();
+           /* ObjectAnimator translationXAnim = ObjectAnimator.ofFloat(this, "translationX", -26.0f,26.0f,-26.0f);
+            translationXAnim.setDuration(1500);
+            translationXAnim.setRepeatCount(ValueAnimator.INFINITE);//无限循环
+            translationXAnim.setRepeatMode(ValueAnimator.INFINITE);//
+            translationXAnim.start();
+            animators.add(translationXAnim);*/
+            ObjectAnimator translationYAnim = ObjectAnimator.ofFloat(this, "translationY", -24.0f,24.0f,-24.0f);
+            translationYAnim.setDuration(1500);
+            translationYAnim.setRepeatCount(ValueAnimator.INFINITE);
+            translationYAnim.setRepeatMode(ValueAnimator.INFINITE);
+            translationYAnim.start();
+            animators.add(translationYAnim);
+
+            AnimatorSet btnSexAnimatorSet = new AnimatorSet();
+            btnSexAnimatorSet.playTogether(animators);
+            btnSexAnimatorSet.setStartDelay(1500);
+            return  btnSexAnimatorSet;
+    }
+
+    private void newCircle() {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - mLastCreateTime < mSpeed) {
+            return;
+        }
+        Circle circle = new Circle();
+        mCircleList.add(circle);
+        invalidate();
+        mLastCreateTime = currentTime;
+    }
+
+    /**
+     * 开始
+     */
+    public void start() {
+        if (!mIsRunning) {
+            mIsRunning = true;
+            mCreateCircle.run();
+        }
+    }
+
     public IdentityImageView(Context context) {
         this(context, null);
     }
@@ -51,10 +149,11 @@ public class IdentityImageView extends ViewGroup{
         super(context, attrs, defStyleAttr);
         mContext = context;
         setWillNotDraw(false);//是的ondraw方法被执行
-
+        mPaint.setColor(getResources().getColor(R.color.white));
         addThreeView();
-
         initAttrs(attrs);
+        animation().start();
+       // startAnimation(animation());
     }
 
     @Override
@@ -82,6 +181,11 @@ public class IdentityImageView extends ViewGroup{
                 totalwidth = (int) ((radius + radius * radiusScale) * 2);
                 break;
         }
+
+        if (!mMaxRadiusSet) {
+            mMaxRadius = totalwidth * mMaxRadiusRate / 2.0f;
+        }
+
         setMeasuredDimension(totalwidth, totalwidth);
         adjustThreeView();
     }
@@ -90,14 +194,28 @@ public class IdentityImageView extends ViewGroup{
     protected void onDraw(Canvas canvas) {
         initPaint();
 
-        if (borderWidth > 0) {
+        /*if (borderWidth > 0) {
             drawBorder(canvas);
-        }
-        if (isprogress) {
+        }*/
+        /*if (isprogress) {
             drawProgress(canvas);
+        }*/
+
+        Iterator<Circle> iterator = mCircleList.iterator();
+
+        while (iterator.hasNext()) {
+            Circle circle = iterator.next();
+            float radius = circle.getCurrentRadius();
+            if (System.currentTimeMillis() - circle.mCreateTime < mDuration) {
+                mPaint.setAlpha(circle.getAlpha());
+                canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, radius, mPaint);
+            } else {
+                iterator.remove();
+            }
         }
-
-
+        if (mCircleList.size() > 0) {
+            postInvalidateDelayed(10);
+        }
     }
 
     /**
@@ -126,7 +244,7 @@ public class IdentityImageView extends ViewGroup{
         }
         if (setborderColor != 0) {
             mBorderPaint.setColor(getResources().getColor(setborderColor));
-        }else {
+        } else {
             mBorderPaint.setColor(borderColor);
         }
         mBorderPaint.setStrokeWidth(borderWidth);
@@ -152,10 +270,10 @@ public class IdentityImageView extends ViewGroup{
         double cos = Math.cos(angle * Math.PI / 180);
         double sin = Math.sin(angle * Math.PI / 180);
         double left = totalwidth / 2 + (radius * cos - smallRadius);
-        double top = totalwidth / 2 + (radius * sin - smallRadius);
+        double top = totalwidth / 2 + (radius * sin - smallRadius) - 10;
         int right = (int) (left + 2 * smallRadius);
-        int bottom = (int) (top + 2 * smallRadius);
-        bigImageView.layout(smallRadius + borderWidth / 2, smallRadius + borderWidth / 2, totalwidth - smallRadius - borderWidth / 2, totalwidth - smallRadius - borderWidth / 2);
+        int bottom = (int) (top + 2 * smallRadius) - 10;
+        bigImageView.layout((smallRadius + borderWidth / 2) + 20, (smallRadius + borderWidth / 2) + 20, (totalwidth - smallRadius - borderWidth / 2)- 20, (totalwidth - smallRadius - borderWidth / 2) - 20);
         textView.layout((int) left, (int) top, right, bottom);
         smallImageView.layout((int) left, (int) top, right, bottom);
 
@@ -172,6 +290,7 @@ public class IdentityImageView extends ViewGroup{
 
 
         bigImageView = new CircleImageView(mContext);//大圆
+        //bigImageView.start();
 
         smallImageView = new CircleImageView(mContext);//小圆
 

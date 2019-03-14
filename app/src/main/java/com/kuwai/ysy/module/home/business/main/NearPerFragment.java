@@ -1,11 +1,13 @@
 package com.kuwai.ysy.module.home.business.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.home.adapter.NearPerAdapter;
@@ -36,7 +38,7 @@ import io.reactivex.functions.Consumer;
 public class NearPerFragment extends BaseFragment implements View.OnClickListener {
 
     RecyclerView mRecyclerView;
-    NearPerAdapter adapter;
+    NearPerAdapter mAdapter;
 
     private int mPage = 1;
     private SmartRefreshLayout mRefreshLayout;
@@ -84,9 +86,17 @@ public class NearPerFragment extends BaseFragment implements View.OnClickListene
             }
         });
         mRecyclerView.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 0.5f), R.color.line_color));
-        adapter = new NearPerAdapter();
+        mAdapter = new NearPerAdapter();
 
-        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(getActivity(), CardDetailActivity.class);
+                intent.putExtra("id", String.valueOf(mAdapter.getData().get(position).getUid()));
+                startActivity(intent);
+            }
+        });
         // important! setLayoutManager should be called after setAdapter
         //mRecyclerView.setLayoutManager(manager);
     }
@@ -110,7 +120,7 @@ public class NearPerFragment extends BaseFragment implements View.OnClickListene
         addSubscription(HomeApiFactory.getNearPer(param).subscribe(new Consumer<NearPerBean>() {
             @Override
             public void accept(NearPerBean nearPerBean) throws Exception {
-                adapter.replaceData(nearPerBean.getData());
+                mAdapter.replaceData(nearPerBean.getData());
                 mRefreshLayout.finishRefresh();
                 //adapter.addAll(homeCardBean.getData());
             }
@@ -136,11 +146,11 @@ public class NearPerFragment extends BaseFragment implements View.OnClickListene
             @Override
             public void accept(NearPerBean nearPerBean) throws Exception {
                 mRefreshLayout.finishLoadmore();
-                if(nearPerBean.getCode() == 200){
+                if (nearPerBean.getCode() == 200) {
                     if (nearPerBean.getData() != null && nearPerBean.getData().size() > 0) {
                         mPage++;
                     }
-                    adapter.addData(nearPerBean.getData());
+                    mAdapter.addData(nearPerBean.getData());
                 }
                 //adapter.addAll(homeCardBean.getData());
             }

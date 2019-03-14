@@ -18,6 +18,7 @@ import com.kuwai.ysy.module.mine.bean.GiftAcceptBean;
 import com.kuwai.ysy.module.mine.bean.GiftBoxBean;
 import com.kuwai.ysy.module.mine.bean.GiftWithdrawalsBean;
 import com.kuwai.ysy.module.mine.bean.IntegralDetailBean;
+import com.kuwai.ysy.module.mine.bean.JobBean;
 import com.kuwai.ysy.module.mine.bean.LikeEach;
 import com.kuwai.ysy.module.mine.bean.LikeParent;
 import com.kuwai.ysy.module.mine.bean.LikeParentBean;
@@ -71,6 +72,13 @@ public class MineApiFactory {
                 .create(MineService.class)
                 .getCancelReminder(uid, otherId)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<JobBean> getAllJob() {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getAllJob()
+                .compose(RxSchedulers.<JobBean>ioMain());
     }
 
     public static Observable<PersolHomePageBean> getOtherHomepageInfo(String uid, String otherid) {
@@ -406,6 +414,13 @@ public class MineApiFactory {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)
                 .changeInfo(param)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<SimpleResponse> change2Info(Map<String, Object> param) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .change2Info(param)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 

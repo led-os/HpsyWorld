@@ -114,7 +114,7 @@ public class PersolHomePageBean implements Serializable{
             this.gift = gift;
         }
 
-        public static class InfoBean {
+        public static class InfoBean implements Serializable{
             /**
              * nickname : 无所谓
              * avatar : http://192.168.1.88/public/static/img/avatar/201812/19/1159e6106c38a19e6dd82d12de770cb5.jpg
@@ -389,7 +389,7 @@ public class PersolHomePageBean implements Serializable{
                 this.image = image;
             }
 
-            public static class VideoBean {
+            public static class VideoBean implements Serializable{
                 /**
                  * v_id : 1525
                  * video_id : b426ae6fb91e46708975390738b1c3c8
@@ -425,7 +425,7 @@ public class PersolHomePageBean implements Serializable{
                 }
             }
 
-            public static class ImageBean {
+            public static class ImageBean implements Serializable{
                 /**
                  * img : http://192.168.1.88/public/static/img/image/201812/27/53c13c7dab3e5289609a4a7c8b760fd2.jpg
                  */
@@ -442,7 +442,7 @@ public class PersolHomePageBean implements Serializable{
             }
         }
 
-        public static class SelectionBean {
+        public static class SelectionBean implements Serializable{
             /**
              * love_age : 18-20
              * love_height : 170-175
@@ -498,7 +498,7 @@ public class PersolHomePageBean implements Serializable{
             }
         }
 
-        public static class FootprintsBean {
+        public static class FootprintsBean implements Serializable{
             /**
              * f_id : 2
              * region_name : 南通市
@@ -524,7 +524,7 @@ public class PersolHomePageBean implements Serializable{
             }
         }
 
-        public static class GiftBean {
+        public static class GiftBean implements Serializable{
             /**
              * g_id : 5
              * girft_name : 锁定你

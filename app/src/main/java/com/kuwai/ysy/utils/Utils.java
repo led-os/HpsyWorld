@@ -298,4 +298,59 @@ public class Utils {
             w = 0;
         return weekDays[w];
     }
+
+    /* 根据月份和日期判断星座 */
+    public static String getStar(String date) {
+        if (TextUtils.isEmpty(date)) {
+            return "未知";
+        }
+        String temp[] = date.split("-");
+        int year = Integer.parseInt(temp[0]);
+        int month = Integer.parseInt(temp[1]);
+        int day = Integer.parseInt(temp[2]);
+        String xz = null;
+        if ((month == 3 && day >= 21 && day <= 31) || (month == 4 && day >= 1 && day <= 19)) {
+            xz = "白羊";
+        }
+        if ((month == 4 && day >= 20 && day <= 30) || (month == 5 && day >= 1 && day <= 20)) {
+            xz = "金牛";
+        }
+        if ((month == 5 && day >= 21 && day <= 31) || (month == 6 && day >= 1 && day <= 21)) {
+            xz = "双子";
+        }
+        if ((month == 6 && day >= 22 && day <= 30) || (month == 7 && day >= 1 && day <= 22)) {
+            xz = "巨蟹";
+        }
+        if ((month == 7 && day >= 23 && day <= 31) || (month == 8 && day >= 1 && day <= 22)) {
+            xz = "狮子";
+        }
+        if ((month == 8 && day >= 23 && day <= 31) || (month == 9 && day >= 1 && day <= 22)) {
+            xz = "处女";
+        }
+        if ((month == 9 && day >= 23 && day <= 30) || (month == 10 && day >= 1 && day <= 23)) {
+            xz = "天秤";
+        }
+        if ((month == 10 && day >= 24 && day <= 31) || (month == 11 && day >= 1 && day <= 22)) {
+            xz = "天蝎";
+        }
+        if ((month == 11 && day >= 23 && day <= 30) || (month == 12 && day >= 1 && day <= 21)) {
+            xz = "射手";
+        }
+        if ((month == 12 && day >= 22 && day <= 31) || (month == 1 && day >= 1 && day <= 19)) {
+            xz = "摩羯";
+        }
+        if ((month == 1 && day >= 20 && day <= 31) || (month == 2 && day >= 1 && day <= 18)) {
+            xz = "水瓶";
+        }
+        if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) { // 闰年2月29天
+            if ((month == 2 && day >= 19 && day <= 29) || (month == 3 && day >= 1 && day <= 20)) {
+                xz = "双鱼";
+            }
+        } else { // 平年2月28天
+            if ((month == 2 && day >= 19 && day <= 28) || (month == 3 && day >= 1 && day <= 20)) {
+                xz = "双鱼";
+            }
+        }
+        return xz;
+    }
 }

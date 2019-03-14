@@ -11,6 +11,7 @@ import com.kuwai.ysy.module.find.bean.MyBlindBean;
 import com.kuwai.ysy.module.find.bean.MyCommisDetailBean;
 import com.kuwai.ysy.module.find.bean.ProvincesAndCityBean;
 import com.kuwai.ysy.module.find.bean.TuoDanBean;
+import com.kuwai.ysy.module.find.bean.VideoChatBean;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -111,4 +112,8 @@ public interface FoundService {
 //                                      @Query("Message") String message,@Query("other") String othertheme);
 
 
+    //相亲活动列表
+    @FormUrlEncoded
+    @POST("HomePage/VideoChatRoomList")
+    Observable<VideoChatBean> getVideoList(@FieldMap Map<String,Object> map);
 }

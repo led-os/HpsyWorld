@@ -70,6 +70,15 @@ public class UserInfo {
         private int Authentication_sum;
         private int integral_exchange;
         private int is_vip;
+        private String photo;
+
+        public String getPhoto() {
+            return photo == null ? "" : photo;
+        }
+
+        public void setPhoto(String photo) {
+            this.photo = photo == null ? "" : photo;
+        }
 
         public String getNickname() {
             return nickname;

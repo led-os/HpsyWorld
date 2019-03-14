@@ -39,6 +39,7 @@ public class FindFriendNearFragment extends BaseFragment implements View.OnClick
     private MyFriends mDyMainListBean;
     private String latitude = "1";
     private String longitude = "1";
+    private String city,area;
 
     public static FindFriendNearFragment newInstance() {
         Bundle args = new Bundle();
@@ -68,6 +69,8 @@ public class FindFriendNearFragment extends BaseFragment implements View.OnClick
         uid = SPManager.get().getStringValue("uid");
         latitude = SPManager.get().getStringValue("latitude","31.27831");
         longitude = SPManager.get().getStringValue("longitude","120.525565");
+        city = SPManager.get().getStringValue("ysy_city", "苏州市");
+        area = SPManager.get().getStringValue("ysy_dis", "吴中区");
         mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -127,7 +130,7 @@ public class FindFriendNearFragment extends BaseFragment implements View.OnClick
     }
 
     void getFriends() {
-        addSubscription(ChatApiFactory.getNearFriends(uid, mPage,longitude,latitude).subscribe(new Consumer<MyFriends>() {
+        addSubscription(ChatApiFactory.getNearFriends(uid, mPage,longitude,latitude,city,area).subscribe(new Consumer<MyFriends>() {
             @Override
             public void accept(MyFriends myBlindBean) throws Exception {
                 mRefreshLayout.finishRefresh();
@@ -148,7 +151,7 @@ public class FindFriendNearFragment extends BaseFragment implements View.OnClick
     }
 
     private void getMore() {
-        addSubscription(ChatApiFactory.getNearFriends(uid, mPage + 1,longitude,latitude).subscribe(new Consumer<MyFriends>() {
+        addSubscription(ChatApiFactory.getNearFriends(uid, mPage + 1,longitude,latitude,city,area).subscribe(new Consumer<MyFriends>() {
             @Override
             public void accept(MyFriends myFriends) throws Exception {
                 if (myFriends.getData() != null) {

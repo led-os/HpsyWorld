@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title1="个人信息"></com.kuwai.ysy.widget.NavigationLayout>
@@ -110,7 +111,7 @@
                     app:sSolidColor="#ff70c1ff" />
 
                 <com.allen.library.SuperButton
-                    android:id="@+id/tv_heigt"
+                    android:id="@+id/tv_height"
                     android:layout_width="wrap_content"
                     android:layout_height="18dp"
                     android:layout_alignBottom="@id/tv_sex"
@@ -147,6 +148,7 @@
                     android:layout_alignBottom="@id/tv_name"
                     android:layout_marginLeft="12dp"
                     android:layout_toRightOf="@id/tv_name"
+                    android:visibility="gone"
                     android:drawableLeft="@drawable/home_icon_position"
                     android:drawablePadding="4dp"
                     android:text="吴中区 0.2km"
@@ -169,7 +171,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/swipeLeft"
+                    android:id="@+id/btn_send_gift"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="36dp"
@@ -178,7 +180,7 @@
                     android:transitionName="TransitionName1" />
 
                 <ImageView
-                    android:id="@+id/swipecenter"
+                    android:id="@+id/btn_chat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -187,7 +189,7 @@
                     android:transitionName="TransitionName2" />
 
                 <ImageView
-                    android:id="@+id/swipeRight"
+                    android:id="@+id/btn_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

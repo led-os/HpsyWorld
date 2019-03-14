@@ -72,10 +72,10 @@ public class ChatApiFactory {
                 .compose(RxSchedulers.<MyFriends>ioMain());
     }
 
-    public static Observable<MyFriends> getNearFriends(String uid, int page, String longitude, String latitude) {
+    public static Observable<MyFriends> getNearFriends(String uid, int page, String longitude, String latitude,String s1,String s2) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(ChatService.class)
-                .getNearFriends(uid, page, longitude, latitude)
+                .getNearFriends(uid, page, longitude, latitude,s1,s2)
                 .compose(RxSchedulers.<MyFriends>ioMain());
     }
 

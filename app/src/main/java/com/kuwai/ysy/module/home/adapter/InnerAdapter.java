@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.home.adapter;
 
+import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.allen.library.SuperButton;
+import com.allen.library.SuperTextView;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.MyApp;
 import com.kuwai.ysy.callback.CardCallback;
@@ -100,7 +103,33 @@ public class InnerAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.nameView.setText(talent.getNickname());
+        holder.signTv.setText(talent.getSig());
+        holder.sexTv.setText(talent.getAge());
+        holder.heightTv.setText(talent.getHeight() + "cm");
+        holder.eduView.setText(talent.getEducation());
         GlideUtil.loadwithNobg(parent.getContext(), talent.getAttach().get(0).getImg(), holder.portraitView);
+        holder.starTv.setText(Utils.getStar(talent.getConstellation()) + "座");
+        if (!Utils.isNullString(String.valueOf(talent.getDistance())) && talent.getDistance() > 1) {
+            if (talent.getDistance() < 99) {
+                holder.cityView.setText(talent.getLastcity() + Utils.format1Number(talent.getDistance()) + "km");
+            } else {
+                holder.cityView.setText(talent.getLastcity() + ">99km");
+            }
+        } else {
+            holder.cityView.setText(talent.getLastcity() + "<1km");
+        }
+        if (talent.getGender() == 1) {
+            Drawable drawableLeft = parent.getContext().getResources().getDrawable(
+                    R.drawable.home_icon_male);
+            holder.sexTv.setCompoundDrawablesWithIntrinsicBounds(drawableLeft,
+                    null, null, null);
+        } else {
+            Drawable drawableLeft = parent.getContext().getResources().getDrawable(
+                    R.drawable.home_icon_female);
+            holder.sexTv.setCompoundDrawablesWithIntrinsicBounds(drawableLeft,
+                    null, null, null);
+        }
+
         //holder.portraitView.setImageResource(talent.getAvatar());
         return convertView;
     }
@@ -109,13 +138,21 @@ public class InnerAdapter extends BaseAdapter {
         ImageView portraitView;
         TextView nameView;
         TextView cityView;
-        TextView eduView;
-        TextView workView;
-        CheckedTextView collectView;
+        SuperButton eduView;
+        TextView sexTv;
+        TextView signTv;
+        SuperButton starTv;
+        SuperButton heightTv;
 
         public ViewHolder(View itemView) {
             portraitView = (ImageView) itemView.findViewById(R.id.portrait);
             nameView = itemView.findViewById(R.id.tv_name);
+            cityView = itemView.findViewById(R.id.tv_location);
+            eduView = itemView.findViewById(R.id.tv_edu);
+            starTv = itemView.findViewById(R.id.tv_star);
+            heightTv = itemView.findViewById(R.id.tv_height);
+            sexTv = itemView.findViewById(R.id.tv_sex);
+            signTv = itemView.findViewById(R.id.tv_sign);
         }
 
         public ImageView getImageView() {

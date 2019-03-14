@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.chat.api.ChatApiFactory;
 import com.kuwai.ysy.module.chat.bean.NoticeDateBean;
@@ -18,6 +19,7 @@ import com.kuwai.ysy.module.home.api.HomeApiFactory;
 import com.kuwai.ysy.module.home.bean.main.PersonPicBean;
 import com.kuwai.ysy.module.mine.adapter.GiftBoxAdapter;
 import com.kuwai.ysy.module.mine.adapter.HomePageVideoAdapter;
+import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.module.mine.bean.GiftBoxBean;
 import com.kuwai.ysy.module.mine.business.homepage.GiftBoxContract;
 import com.kuwai.ysy.module.mine.business.homepage.GiftBoxPresenter;
@@ -26,6 +28,7 @@ import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.MyRecycleViewDivider;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
 import cc.shinichi.library.ImagePreview;
@@ -35,8 +38,11 @@ public class PicFragment extends BaseFragment implements OtherPicAdapter.OnAddIt
     private RecyclerView mRVBox;
     private OtherPicAdapter mAdapter;
     private int page = 1;
+    private String otherId = "";
 
-    public static PicFragment newInstance(Bundle bundle) {
+    public static PicFragment newInstance(String uid) {
+        Bundle bundle = new Bundle();
+        bundle.putString("id",uid);
         PicFragment fragment = new PicFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -44,7 +50,7 @@ public class PicFragment extends BaseFragment implements OtherPicAdapter.OnAddIt
 
     @Override
     public void initView(Bundle savedInstanceState) {
-
+        otherId = getArguments().getString("id");
         mRVBox = mRootView.findViewById(R.id.lay_recycle);
         mAdapter = new OtherPicAdapter(this);
         mRVBox.setLayoutManager(new GridLayoutManager(getActivity(), 3));
@@ -71,7 +77,7 @@ public class PicFragment extends BaseFragment implements OtherPicAdapter.OnAddIt
     @Override
     public void onItemAddClick() {
         //邀请上传
-        startActivity(new Intent(getActivity(), UpdateActivity.class));
+        invite(SPManager.get().getStringValue("uid"),otherId);
     }
 
     @Override
@@ -115,14 +121,14 @@ public class PicFragment extends BaseFragment implements OtherPicAdapter.OnAddIt
                     startActivity(intent);
                 }
             }else {
-                startActivity(new Intent(getActivity(), UpdateActivity.class));
+                invite(SPManager.get().getStringValue("uid"),otherId);
             }
 
         }
     }
 
     void getNotice() {
-        addSubscription(HomeApiFactory.getPic("1").subscribe(new Consumer<PersonPicBean>() {
+        addSubscription(HomeApiFactory.getPic(otherId).subscribe(new Consumer<PersonPicBean>() {
             @Override
             public void accept(PersonPicBean noticeBean) throws Exception {
                 if (noticeBean.getCode() == 200) {
@@ -133,6 +139,23 @@ public class PicFragment extends BaseFragment implements OtherPicAdapter.OnAddIt
             @Override
             public void accept(Throwable throwable) throws Exception {
                 //ToastUtils.showShort("网络错误");
+            }
+        }));
+    }
+
+    public void invite(String uid, String otherId) {
+        addSubscription(MineApiFactory.inviteToUpdate(uid, otherId).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(SimpleResponse response) throws Exception {
+                if (response.code == 200) {
+
+                }
+                ToastUtils.showShort(response.msg);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //Log.i(TAG, "accept: " + throwable);
             }
         }));
     }

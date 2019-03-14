@@ -25,7 +25,10 @@
         android:layout_marginTop="20dp"
         android:layout_weight="1"
         android:background="@null"
+        android:cursorVisible="true"
+        android:textCursorDrawable="@null"
         android:gravity="bottom|left"
+        android:inputType="text|textMultiLine"
         android:textSize="18sp"
         />
 

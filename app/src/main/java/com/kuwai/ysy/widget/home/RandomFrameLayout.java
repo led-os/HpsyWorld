@@ -4,10 +4,16 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.callback.VideoCallBack;
+import com.kuwai.ysy.module.find.bean.VideoChatBean;
 import com.kuwai.ysy.widget.IdentityImageView;
+import com.rayhahah.rbase.utils.base.ToastUtils;
+import com.rayhahah.rbase.utils.useful.GlideUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,6 +28,9 @@ public class RandomFrameLayout extends FrameLayout {
     private int termX, termY;
     private List<RandomView> textList;
     private OnRemoveListener onRemoveListener;
+    private VideoCallBack videoCallBack;
+
+    private boolean isBig = true;
 
     public RandomFrameLayout(Context context) {
         super(context);
@@ -29,8 +38,8 @@ public class RandomFrameLayout extends FrameLayout {
 
     public RandomFrameLayout(Context context, AttributeSet attributes) {
         super(context, attributes);
-        tagViews = Collections.synchronizedList(new ArrayList<TagViewBean>());
         textList = new ArrayList<>();
+        tagViews = Collections.synchronizedList(new ArrayList<TagViewBean>());
         termX = 80;
         termY = 80;
     }
@@ -43,25 +52,34 @@ public class RandomFrameLayout extends FrameLayout {
         this.onRemoveListener = onRemoveListener;
     }
 
+    public void setVideoClick(VideoCallBack callBack) {
+        this.videoCallBack = callBack;
+    }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
     }
 
-    public void updateView(String value) {
+    public void updateView(VideoChatBean.DataBean.ArrBean value) {
         initXY(value);
     }
 
-    private void initXY(final String value) {
+    public void removeeView() {
+        removeAllViews();
+        tagViews = Collections.synchronizedList(new ArrayList<TagViewBean>());
+    }
+
+    private void initXY(final VideoChatBean.DataBean.ArrBean value) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 synchronized (tagViews) {
-                    int x = new Random().nextInt(getWidth() - 180);
-                    int y = new Random().nextInt(getHeight() - 180);
+                    int x = new Random().nextInt(getWidth() - 360);
+                    int y = new Random().nextInt(getHeight() - 360);
                     while (!isContains(x, y)) {
-                        x = new Random().nextInt(getWidth() - 180);
-                        y = new Random().nextInt(getHeight() - 180);
+                        x = new Random().nextInt(getWidth() - 360);
+                        y = new Random().nextInt(getHeight() - 360);
                     }
                     tagBean = new TagViewBean();
                     tagBean.setX(x);
@@ -84,8 +102,8 @@ public class RandomFrameLayout extends FrameLayout {
         }
         for (int i = 0; i < tagViews.size(); i++) {
             try {
-                if (tagViews.get(i).getX() < x + 180 && tagViews.get(i).getX() > x - 180) {
-                    if (tagViews.get(i).getY() < y + 180 && tagViews.get(i).getY() > y - 180) {
+                if (tagViews.get(i).getX() < x + 240 && tagViews.get(i).getX() > x - 240) {
+                    if (tagViews.get(i).getY() < y + 240 && tagViews.get(i).getY() > y - 240) {
                         return false;
                     }
                 }
@@ -101,15 +119,37 @@ public class RandomFrameLayout extends FrameLayout {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-
+            final VideoChatBean.DataBean.ArrBean chatBean = (VideoChatBean.DataBean.ArrBean) msg.obj;
             IdentityImageView imageView = new IdentityImageView(getContext());
-            LayoutParams params = new LayoutParams(200, 200);
-            imageView.getBigCircleImageView().setImageResource(R.drawable.center_img_user_default);
-            imageView.getSmallCircleImageView().setImageResource(R.drawable.center_charm_ic_man);
+            LayoutParams params = null;
+            if(isBig){
+                 params = new LayoutParams(200, 200);
+                 isBig = false;
+            }else{
+                params = new LayoutParams(300, 300);
+                isBig = true;
+            }
+            GlideUtil.load(getContext(),chatBean.getAvatar(),imageView.getBigCircleImageView());
+           // imageView.getBigCircleImageView().setImageResource(R.drawable.icon);
+            if(chatBean.getGender() == 1){
+                imageView.getSmallCircleImageView().setImageResource(R.drawable.center_charm_ic_man);
+            }else{
+                imageView.getSmallCircleImageView().setImageResource(R.drawable.center_charm_ic_woman);
+            }
+
             imageView.setBorderColor(R.color.text_blue);
             imageView.setBorderWidth(4);
             params.leftMargin = msg.arg1;
             params.topMargin = msg.arg2;
+            imageView.start();
+            imageView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(videoCallBack!=null){
+                        videoCallBack.videoClick(chatBean);
+                    }
+                }
+            });
             addView(imageView,params);
            /* RandomView textView = new RandomView(getContext());
             textView.setText(msg.obj.toString());

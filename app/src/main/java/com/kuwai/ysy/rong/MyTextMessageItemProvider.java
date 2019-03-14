@@ -36,7 +36,7 @@ public class MyTextMessageItemProvider extends TextMessageItemProvider{
     public View newView(Context context, ViewGroup group) {
         View view = LayoutInflater.from(context).inflate(R.layout.rc_item_text_message, (ViewGroup)null);
         ViewHolder holder = new ViewHolder();
-        holder.message = (AutoLinkTextView)view.findViewById(R.id.text1);
+        holder.message = (AutoLinkTextView)view.findViewById(android.R.id.text1);
         view.setTag(holder);
         return view;
     }

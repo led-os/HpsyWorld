@@ -1,8 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.kuwai.ysy.widget.home.RandomFrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fl_random"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/videochat_bg">
-</com.kuwai.ysy.widget.home.RandomFrameLayout>
+    android:background="@drawable/videochat_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:layout_marginTop="28dp">
+
+        <ImageView
+            android:id="@+id/img_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/personal_icon_back"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="视频聊天室"
+            android:textColor="#80ffffff"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            />
+
+        <ImageView
+            android:id="@+id/img_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/videochat_history"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="当前聊天室人数：13806人"
+        android:textColor="#80ffffff"
+        android:textSize="12sp"
+        />
+
+    <com.kuwai.ysy.widget.home.RandomFrameLayout
+        android:id="@+id/fl_random"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"></com.kuwai.ysy.widget.home.RandomFrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="20dp"
+        android:padding="12dp">
+
+        <ImageView
+            android:id="@+id/img_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/videochat_icon_batch"/>
+
+        <ImageView
+            android:id="@+id/img_woman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/img_refresh"
+            android:layout_marginRight="60dp"
+            android:src="@drawable/videochat_icon_femalechoose"/>
+
+        <ImageView
+            android:id="@+id/img_man"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/img_refresh"
+            android:layout_marginLeft="60dp"
+            android:src="@drawable/videochat_icon_malechoose"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="换一批"
+            android:layout_below="@id/img_refresh"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="14dp"
+            android:textColor="#80ffffff"
+            android:textSize="12sp"
+            />
+    </RelativeLayout>
+</LinearLayout>

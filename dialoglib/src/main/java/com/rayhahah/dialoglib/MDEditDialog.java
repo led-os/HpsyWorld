@@ -227,7 +227,7 @@ public class MDEditDialog {
             titleTextSize = 20;
             contentTextSize = 18;
             buttonTextSize = 16;
-            inputTpye = InputType.TYPE_NULL;
+            inputTpye = InputType.TYPE_CLASS_TEXT;
             buttonBgResource = R.drawable.selector_widget_md_dialog;
             mLineViewVisibility = View.VISIBLE;
         }

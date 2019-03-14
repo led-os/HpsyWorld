@@ -46,7 +46,6 @@ public class ChangeXuanFragment extends BaseFragment implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
         }
     }
 

@@ -17,6 +17,7 @@ import com.kuwai.ysy.module.mine.bean.GiftBoxBean;
 import com.kuwai.ysy.module.mine.bean.GiftExchangeBean;
 import com.kuwai.ysy.module.mine.bean.GiftWithdrawalsBean;
 import com.kuwai.ysy.module.mine.bean.IntegralDetailBean;
+import com.kuwai.ysy.module.mine.bean.JobBean;
 import com.kuwai.ysy.module.mine.bean.LikeEach;
 import com.kuwai.ysy.module.mine.bean.LikeParent;
 import com.kuwai.ysy.module.mine.bean.LikeParentBean;
@@ -578,6 +579,13 @@ public interface MineService {
     Observable<SimpleResponse> changeInfo(@FieldMap Map<String, Object> infos);
 
     /**
+     * 修改个人资料2.0
+     */
+    @FormUrlEncoded
+    @POST("HomePage/EditingMaterials_two")
+    Observable<SimpleResponse> change2Info(@FieldMap Map<String, Object> infos);
+
+    /**
      * 照片墙添加视频
      */
     @Multipart
@@ -604,6 +612,12 @@ public interface MineService {
     @FormUrlEncoded
     @POST("UserVip/OpenMembership")
     Observable<SimpleResponse> openVip(@FieldMap Map<String, Object> infos);
+
+    /**
+     * 职业接口
+     */
+    @GET("HomePage/OccupationList")
+    Observable<JobBean> getAllJob();
 
     /**
      * 照片墙删除图片/视频

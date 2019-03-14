@@ -184,6 +184,9 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void accept(WallBean wallBean) throws Exception {
                 mImagBean = wallBean.getData();
+                if (wallBean.getData().getImage() == null || wallBean.getData().getImage().size() == 0) {
+                    SPManager.get().putString("photo", "0");
+                }
                 myVideoAdapter.setData(wallBean.getData().getVideo());
                 myPicAdapter.setData(wallBean.getData().getImage());
             }
@@ -449,6 +452,7 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
                 //UploadHelper.getInstance().clear();
                 //mView.setPublishCallBack(dyDetailBean);
                 if (dyDetailBean.code == 200) {
+                    SPManager.get().putString("photo", "1");
                     EventBusUtil.sendEvent(new MessageEvent(C.MSG_UPDATE_VIDEO));
                     getWall();
                 }

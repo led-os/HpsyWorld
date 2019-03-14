@@ -119,11 +119,7 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_chat:
-                //RongIM.getInstance().setMessageAttachedUserInfo(true);
-                RongIM.getInstance().startPrivateChat(getActivity(), otherid, mTvNick.getText().toString());
-                //私聊
-                break;
+
             case R.id.tv_shangxian:
                 if ("已提醒".equals(mTvShangxian.getText().toString())) {
                     mPresenter.cancelRemind(SPManager.get().getStringValue("uid"), otherid);
@@ -134,6 +130,11 @@ public class OtherHomepageFragment extends BaseFragment<OtherHomepagePresenter> 
                 break;
             case R.id.tv_xinyong:
                 //信用度
+                break;
+            case R.id.btn_chat:
+                //RongIM.getInstance().setMessageAttachedUserInfo(true);
+                RongIM.getInstance().startPrivateChat(getActivity(), otherid, mTvNick.getText().toString());
+                //私聊
                 break;
             case R.id.btn_like:
                 if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {

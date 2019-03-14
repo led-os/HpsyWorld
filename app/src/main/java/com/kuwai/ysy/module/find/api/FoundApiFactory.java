@@ -12,6 +12,7 @@ import com.kuwai.ysy.module.find.bean.MyBlindBean;
 import com.kuwai.ysy.module.find.bean.MyCommisDetailBean;
 import com.kuwai.ysy.module.find.bean.ProvincesAndCityBean;
 import com.kuwai.ysy.module.find.bean.TuoDanBean;
+import com.kuwai.ysy.module.find.bean.VideoChatBean;
 import com.kuwai.ysy.net.ApiClient;
 import com.rayhahah.rbase.utils.useful.RxSchedulers;
 
@@ -142,5 +143,11 @@ public class FoundApiFactory {
                 .compose(RxSchedulers.<BlindBean>ioMain());
     }
 
+    public static Observable<VideoChatBean> getVideoList(HashMap<String, Object> params) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(FoundService.class)
+                .getVideoList(params)
+                .compose(RxSchedulers.<VideoChatBean>ioMain());
+    }
 
 }

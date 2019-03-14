@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.kuwai.ysy.R;
@@ -20,6 +21,10 @@ public class HomeRadioFragment extends BaseFragment implements View.OnClickListe
     private List<Fragment> mFragments;
     private RadioGroup radioGroup;
     private int mIndex = 0;
+
+    private RadioButton mTvTui;
+    private View mLine;
+    private RadioButton mTvNear;
 
     public static HomeRadioFragment newInstance(Bundle bundle) {
         HomeRadioFragment fragment = new HomeRadioFragment();
@@ -41,9 +46,13 @@ public class HomeRadioFragment extends BaseFragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_tui:
+                mTvTui.setTextSize(20);
+                mTvNear.setTextSize(16);
                 setIndexSelected(0);
                 break;
             case R.id.tv_near:
+                mTvTui.setTextSize(16);
+                mTvNear.setTextSize(20);
                 setIndexSelected(1);
                 break;
         }
@@ -52,6 +61,10 @@ public class HomeRadioFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void initView(Bundle savedInstanceState) {
         mFragments = new ArrayList<>();
+        mTvTui = mRootView.findViewById(R.id.tv_tui);
+        mLine = mRootView.findViewById(R.id.line);
+        mTvTui.setTextSize(20);
+        mTvNear = mRootView.findViewById(R.id.tv_near);
         radioGroup = (RadioGroup) mRootView.findViewById(R.id.main_radiogroup);
         mRootView.findViewById(R.id.tv_tui).setOnClickListener(this);
         mRootView.findViewById(R.id.tv_near).setOnClickListener(this);

@@ -41,10 +41,10 @@ public class DyLikeMesFragment extends BaseFragment implements View.OnClickListe
 
     private LikeMsgAdapter mDateAdapter;
     private RecyclerView mDongtaiList;
+    private SmartRefreshLayout mRefreshLayout;
     private NavigationLayout navigationLayout;
     private int mPage = 1;
     private String uid = "";
-    private SmartRefreshLayout mRefreshLayout;
     private AllLikeBean mAllLikeBean;
 
     public static DyLikeMesFragment newInstance() {

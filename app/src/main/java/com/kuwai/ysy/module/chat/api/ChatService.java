@@ -86,7 +86,7 @@ public interface ChatService {
     //寻找好友列表-附近
     @FormUrlEncoded
     @POST("Chat/NearbydFriendList")
-    Observable<MyFriends> getNearFriends(@Field("uid") String uid, @Field("page") int page, @Field("longitude") String longitude, @Field("latitude") String latitude);
+    Observable<MyFriends> getNearFriends(@Field("uid") String uid, @Field("page") int page, @Field("longitude") String longitude, @Field("latitude") String latitude, @Field("lastcity") String lastcity, @Field("lastarea") String lastarea);
 
     //设置备注
     @FormUrlEncoded
