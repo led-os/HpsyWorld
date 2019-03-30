@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/allday"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="全天"
+        android:textColor="@color/balck_28"
+        android:textSize="16sp" />
+
+    <View style="@style/horizontal_line" />
+
+    <TextView
+        android:id="@+id/day"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="白天"
+        android:textColor="@color/balck_28"
+        android:textSize="16sp" />
+
+    <View style="@style/horizontal_line" />
+
+    <TextView
+        android:id="@+id/night"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="晚上"
+        android:textColor="@color/balck_28"
+        android:textSize="16sp" />
+
+    <View style="@style/horizontal_line" />
+
+    <TextView
+        android:id="@+id/week"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="周末"
+        android:textColor="@color/balck_28"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/gray_7b" />
+
+    <TextView
+        android:id="@+id/top_del"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="@color/balck_28"
+        android:textSize="16sp" />
+
+</LinearLayout>

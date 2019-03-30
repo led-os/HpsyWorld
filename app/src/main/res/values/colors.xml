@@ -4,9 +4,9 @@
     <color name="colorPrimaryDark">@color/theme</color>
     <color name="colorAccent">#ad99fc</color>
 
-    <color name="theme">#5417f5</color>
-    <color name="bg_theme">#5417f5</color>
-    <color name="bg_gray_06">#6732f8</color>
+    <color name="theme">#5FBEFF</color>
+    <color name="bg_theme">#5FBEFF</color>
+    <color name="bg_gray_06">#5FBEFF</color>
     <!-- title 半透明背景颜色 -->
     <color name="color_title_bg">#CCFFFFFF</color>
     <!-- 默认背景色 -->
@@ -67,6 +67,8 @@
     <color name="filter_solid_select">#ddd0fe</color>
     <color name="filter_text_select">#5415f9</color>
 
+    <color name="card_shadow"> #D9E8F6</color>
+
     <color name="city_bg">#33bdbdbd</color>
     <color name="city_press">#b35415f9</color>
     <color name="qupai_white_opacity_50pct">#80FFFFFF</color>
@@ -100,4 +102,13 @@
     <color name="huangjin">#ffe87c</color>
     <color name="baoyin">#bdbdbd</color>
     <color name="qingtong">#e4a13f</color>
+    <color name="text_blue_two">#5FBEFF</color>
+    <color name="grey_bf">#bfbfbf</color>
+    <color name="grey_e7">#e7e7e7</color>
+    <color name="online">#5FF77B</color>
+    <color name="bg_vip">#454F61</color>
+
+    <color name="radom_one">#6EE0FF</color>
+    <color name="radom_two">#FF856E</color>
+    <color name="radom_three">#8A6EFF</color>
 </resources>

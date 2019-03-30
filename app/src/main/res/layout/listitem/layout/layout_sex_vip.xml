@@ -19,6 +19,5 @@
         android:layout_width="12dp"
         android:layout_height="12dp"
         android:layout_marginLeft="6dp"
-        android:layout_toRightOf="@id/vip"
-        android:src="@drawable/ic_user_woman" />
+        android:layout_toRightOf="@id/vip"/>
 </LinearLayout>

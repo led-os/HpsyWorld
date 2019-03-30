@@ -417,7 +417,7 @@ public class MineApiFactory {
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
-    public static Observable<SimpleResponse> change2Info(Map<String, Object> param) {
+    public static Observable<SimpleResponse> change2Info(Map<String, String> param) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)
                 .change2Info(param)

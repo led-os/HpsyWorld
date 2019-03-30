@@ -200,6 +200,9 @@ public class Regist2Fragment extends BaseFragment implements View.OnClickListene
                     SPManager.get().putString("rongyun_token", loginBean.getData().getRongyun_token());
                     SPManager.get().putString("nickname", loginBean.getData().getNickname());
                     SPManager.get().putString("phone_", loginBean.getData().getPhone());
+                    SPManager.get().putString("city_", loginBean.getData().getCity());
+                    SPManager.get().putString("grade_", String.valueOf(loginBean.getData().getVip_grade()));
+                    SPManager.get().putString("ident_", String.valueOf(loginBean.getData().getIdent()));
                     SPManager.get().putString("isvip_", String.valueOf(loginBean.getData().getIs_vip()));
                     SPManager.get().putString("sex_", String.valueOf(loginBean.getData().getGender()));
                     SPManager.get().putString("icon", loginBean.getData().getAvatar());

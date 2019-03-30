@@ -28,9 +28,9 @@ import io.reactivex.functions.Consumer;
 public class FindFriendFragment extends BaseFragment implements View.OnClickListener {
 
     private final String[] mTitles = {"推荐", "附近"};
-    private ViewPager viewPager;
     private SlidingTabLayout slidingTabLayout;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
+    private ViewPager viewPager;
     private MyPagerAdapter mAdapter;
     private TextView mPhoneBookTv,mWechatLay,mQqlay;
     private NavigationLayout navigationLayout;

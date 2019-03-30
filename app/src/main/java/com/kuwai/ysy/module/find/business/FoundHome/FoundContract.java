@@ -1,6 +1,7 @@
 package com.kuwai.ysy.module.find.business.FoundHome;
 
 import com.kuwai.ysy.module.find.bean.FoundHome.FoundBean;
+import com.kuwai.ysy.module.findtwo.bean.FindHomeBean;
 import com.rayhahah.rbase.base.IRBaseView;
 
 import java.util.Map;
@@ -12,7 +13,7 @@ public class FoundContract {
         /**
          * 设置第一次请求的数据
          */
-        void setHomeData(FoundBean foundBean);
+        void setHomeData(FindHomeBean foundBean);
 
         /**
          * 设置加载更多的数据

@@ -3,10 +3,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">鱼水缘</string>
 
-    <string name="tab_home">首页</string>
-    <string name="tab_action">动态</string>
-    <string name="tab_chat">聊天</string>
-    <string name="tab_near">发现</string>
+    <string name="tab_home">探索</string>
+    <string name="tab_action">发现</string>
+    <string name="tab_chat">消息</string>
+    <string name="tab_near">动态</string>
     <string name="tab_mine">我的</string>
 
     <string name="version_name">版本号</string>
@@ -92,5 +92,7 @@
     <string name="pay_success">支付成功</string>
     <string name="pay_failed">支付失败</string>
 
-    <string name="tip_recharge">桃花币有什么用途？\n桃花币是平台的虚拟币，可以在平台上进行打赏，发红包等用途；\n\n充值未到账怎么办？\n一般充值后桃花币会即刻发放到您的账户中。如遇到服务器拥堵，桃花币可能会有短时间的延迟，建议耐心等待。并刷新“我的钱包”界面查看桃花币到账情况。若超过30分钟桃花币仍未到账，请您联系官方客服进行处理。\n\n误充或充错账户，可以退款吗？\n误充或充值错账户后，不能进行退款哦！建议您在充值前仔细核对充值账号信息，以避免发生误充、充错账号的情况。\n\n充值了桃花币之后，可以转移到其他的账户上吗？\n鱼水缘平台的桃花币无法在账号之间进行转移。\n\n关于充值防骗。\n请您不要接受他人以代充为借口向您索要账号密码的行为，任何情况下不要将密码泄露给他人。同时，建议您选择鱼水缘官方充值渠道、鱼水缘指定充值系统进行充值，以避免通过不合法渠道充值导致您的资金损失。</string>
+    <string name="tip_recharge">桃花币有什么用途？\n桃花币是平台的虚拟币,可以在平台上进行打赏,发红包等用途;\n\n充值未到账怎么办？\n一般充值后桃花币会即刻发放到您的账户中。如遇到服务器拥堵,桃花币可能会有短时间的延迟,建议耐心等待。并刷新“我的钱包”界面查看桃花币到账情况。若超过30分钟桃花币仍未到账，请您联系官方客服进行处理。\n\n误充或充错账户，可以退款吗？\n误充或充值错账户后，不能进行退款哦！建议您在充值前仔细核对充值账号信息，以避免发生误充、充错账号的情况。\n\n充值了桃花币之后，可以转移到其他的账户上吗？\n鱼水缘平台的桃花币无法在账号之间进行转移。\n\n关于充值防骗。\n请您不要接受他人以代充为借口向您索要账号密码的行为，任何情况下不要将密码泄露给他人。同时，建议您选择鱼水缘官方充值渠道、鱼水缘指定充值系统进行充值，以避免通过不合法渠道充值导致您的资金损失。</string>
+
+    <string name="close_note">亲密值是双方亲密程度的体现,可以通过日常点击喜欢,聊天,视频聊天,送礼等方式提升;\n亲密值是双方的共同财产,可在后续的版本中兑换各种亲密礼品,兑换时需要双方共同同意。</string>
 </resources>

@@ -25,6 +25,8 @@ import com.kuwai.ysy.module.chat.bean.NoticeDateBean;
 import com.kuwai.ysy.module.chat.business.redpack.SendRedActivity;
 import com.kuwai.ysy.module.find.CommisDetailOtherActivity;
 import com.kuwai.ysy.module.find.business.CommisDetailMyActivity;
+import com.kuwai.ysy.module.findtwo.business.MeetDetailFragment;
+import com.kuwai.ysy.module.findtwo.business.MeetDetailOtherFragment;
 import com.kuwai.ysy.module.home.WebviewH5Activity;
 import com.kuwai.ysy.module.home.bean.HomeVideoBean;
 import com.kuwai.ysy.utils.EventBusUtil;
@@ -109,7 +111,7 @@ public class NoticeFragment extends BaseFragment implements View.OnClickListener
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //跳转约会详情
                 if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
-                    Bundle bundle = new Bundle();
+                   /* Bundle bundle = new Bundle();
                     bundle.putInt("rid", dateAdapter.getData().get(position).getR_id());
                     bundle.putString("uid", String.valueOf(dateAdapter.getData().get(position).getUid()));
 
@@ -120,6 +122,15 @@ public class NoticeFragment extends BaseFragment implements View.OnClickListener
                     } else {
                         Intent intent = new Intent(getActivity(), CommisDetailOtherActivity.class);
                         intent.putExtra("data", bundle);
+                        startActivity(intent);
+                    }*/
+                    if (Integer.valueOf(SPManager.get().getStringValue("uid")) == (dateAdapter.getData().get(position).getUid())) {
+                        Intent intent = new Intent(getActivity(), CommisDetailMyActivity.class);
+                        intent.putExtra("rid", String.valueOf(dateAdapter.getData().get(position).getR_id()));
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(getActivity(), CommisDetailOtherActivity.class);
+                        intent.putExtra("rid", String.valueOf(dateAdapter.getData().get(position).getR_id()));
                         startActivity(intent);
                     }
                 } else {

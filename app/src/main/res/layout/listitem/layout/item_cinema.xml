@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="18dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="金逸影城(影视中心店)"
+        android:textColor="#ff666666"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="36m"
+        android:layout_alignParentRight="true"
+        android:textColor="#ff666666"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_sub_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:layout_marginTop="8dp"
+        android:text="吴中区木渎镇金山南路288号苏州国际影视娱乐城"
+        android:textColor="#ffbfbfbf"
+        android:textSize="12sp" />
+
+    <View style="@style/horizontal_line"
+        android:layout_below="@id/tv_sub_title"
+        android:layout_marginTop="12dp"/>
+</RelativeLayout>

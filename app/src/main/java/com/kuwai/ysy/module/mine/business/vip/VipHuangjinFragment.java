@@ -20,9 +20,11 @@ import com.kuwai.ysy.module.mine.adapter.vip.TequanAdapter;
 import com.kuwai.ysy.module.mine.adapter.vip.VipRightAdapter;
 import com.kuwai.ysy.module.mine.bean.vip.VipBean;
 import com.kuwai.ysy.module.mine.bean.vip.VipPayBean;
+import com.kuwai.ysy.utils.DataCleanManager;
 import com.kuwai.ysy.widget.CustomFontTextview;
 import com.kuwai.ysy.widget.layoutmanager.MyGridLayoutManager;
 import com.rayhahah.dialoglib.DialogInterface;
+import com.rayhahah.dialoglib.MDAlertDialog;
 import com.rayhahah.dialoglib.NormalAlertDialog;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
@@ -65,12 +67,29 @@ public class VipHuangjinFragment extends BaseFragment<VipHuangjinPresenter> impl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_submit:
-                Map<String, Object> param = new HashMap<String, Object>();
-                param.put("uid", SPManager.get().getStringValue("uid"));
-                param.put("v_id", mDataList.get(selectPos).getVipType());
-                param.put("type", mDataList.get(selectPos).getDay());
-                param.put("source", "Android");
-                mPresenter.getAliOrderInfo(param);
+                new MDAlertDialog.Builder(getActivity())
+                        .setTitleVisible(false)
+                        .setContentText("确认开通黄金会员？")
+                        .setHeight(0.16f)
+                        .setOnclickListener(new com.rayhahah.dialoglib.DialogInterface.OnLeftAndRightClickListener<MDAlertDialog>() {
+                            @Override
+                            public void clickLeftButton(MDAlertDialog dialog, View view) {
+                                dialog.dismiss();
+                            }
+
+                            @Override
+                            public void clickRightButton(MDAlertDialog dialog, View view) {
+                                dialog.dismiss();
+                                Map<String, Object> param = new HashMap<String, Object>();
+                                param.put("uid", SPManager.get().getStringValue("uid"));
+                                param.put("v_id", mDataList.get(selectPos).getVipType());
+                                param.put("type", mDataList.get(selectPos).getDay());
+                                param.put("source", "Android");
+                                mPresenter.getAliOrderInfo(param);
+                            }
+                        })
+                        .setCanceledOnTouchOutside(true)
+                        .build().show();
                 break;
             case R.id.tv_xieyi:
                 Intent intent = new Intent(getActivity(), WebviewH5Activity.class);

@@ -167,6 +167,15 @@ public class PersolHome2PageBean implements Serializable {
             private String nature_view;
             private String round;
             private String weight;
+            private double intimate;
+
+            public double getIntimate() {
+                return intimate;
+            }
+
+            public void setIntimate(double intimate) {
+                this.intimate = intimate;
+            }
 
             public Long getLogin_time() {
                 return login_time;

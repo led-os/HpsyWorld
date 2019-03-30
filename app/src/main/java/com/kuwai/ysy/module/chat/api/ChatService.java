@@ -144,7 +144,7 @@ public interface ChatService {
 
     //约会通知列表
     @FormUrlEncoded
-    @POST("Chat/ReleaseDataNoticeList")
+    @POST("HomePage/ReleaseDataNoticeList")
     Observable<NoticeDateBean> getDateNotice(@Field("uid") String uid);
 
     //打赏人

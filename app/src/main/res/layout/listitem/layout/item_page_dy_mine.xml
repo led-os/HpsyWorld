@@ -36,8 +36,7 @@
             android:layout_height="64dp"
             android:layout_centerVertical="true"
             android:scaleType="centerCrop"
-            android:visibility="gone"
-            android:src="@drawable/center_problem_banner" />
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_content"

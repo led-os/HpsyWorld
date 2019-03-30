@@ -78,9 +78,9 @@ public class C {
     @Retention(RetentionPolicy.SOURCE)
     public @interface BaseURL {
         String TEST_URL = "http://baobab.kaiyanapp.com/api/";
-        String BASE_URL = "http://test.yushuiyuan.cn/api/";
-        String LOCAL_URL = "http://test.yushuiyuan.cn/api/";
-        //String BASE_URL = "http://api.yushuiyuan.cn/api/";
+        //String BASE_URL = "http://test.yushuiyuan.cn/api/";
+        String LOCAL_URL = "http://api.yushuiyuan.cn/api/";
+        String BASE_URL = "http://api.yushuiyuan.cn/api/";
     }
 
     /**
@@ -176,6 +176,7 @@ public class C {
     public static final int MSG_DELETE_VIDEO = 0x000001006;
     public static final int MSG_UPDATE_OTHER = 0x000001007;
     public static final int EVENT_FORCE_OUT = 0x000001008;
+    public static final int EVENT_UPDATE_DATE = 0x000001009;
 
 
     //注册参数
@@ -194,6 +195,15 @@ public class C {
     public static final String REGIST_INCOME = "RE_INCOME";//收入
     public static final String REGIST_EDUCATION = "RE_EDUCATION";//学历
 
+    //约会类型
+    public static final String DATE_FOOD = "美食";//
+    public static final String DATE_MOVIE = "电影";//
+    public static final String DATE_TRAVEL = "旅行";//
+    public static final String DATE_SPORT = "运动";//
+    public static final String DATE_SING = "唱歌";//
+    public static final String DATE_PLAY = "游乐";//
+    public static final String DATE_GAME = "游戏";//
+    public static final String DATE_OTHER = "其他";//
 
     public static final String UpDate = BASE_URL + "User/appVersion?app_type=android";//更新app
 

@@ -23,6 +23,7 @@ import com.kuwai.ysy.module.find.bean.CityMeetBean;
 import com.kuwai.ysy.module.find.bean.FoundHome.LocalNextBean;
 import com.kuwai.ysy.module.find.bean.TuoDanBean;
 import com.kuwai.ysy.module.find.business.MyBlind.MyApplyFragment;
+import com.kuwai.ysy.module.findtwo.MyActActivity;
 import com.kuwai.ysy.module.home.WebviewH5Activity;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NavigationLayout;
@@ -75,7 +76,7 @@ public class BlindListFragment extends BaseFragment<TuoDanPresenter> implements 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.right_txt:
-                start(MyApplyFragment.newInstance());
+                startActivity(new Intent(getActivity(), MyActActivity.class));
                 break;
             case R.id.tv_city:
                 showPopListView();

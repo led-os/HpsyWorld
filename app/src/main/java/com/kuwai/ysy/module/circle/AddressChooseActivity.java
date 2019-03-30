@@ -327,14 +327,14 @@ public class AddressChooseActivity extends AppCompatActivity implements Location
 //        Log.i("MY", "doSearchQuery");
         currentPage = 0;
         query = new PoiSearch.Query(searchKey, searchType, "");// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
-        query.setCityLimit(true);
+        query.setCityLimit(false);
         query.setPageSize(20);
         query.setPageNum(currentPage);
 
         if (searchLatlonPoint != null) {
             poiSearch = new PoiSearch(this, query);
             poiSearch.setOnPoiSearchListener(this);
-            poiSearch.setBound(new PoiSearch.SearchBound(searchLatlonPoint, 1000, true));//
+            poiSearch.setBound(new PoiSearch.SearchBound(searchLatlonPoint, 100000, true));//
             poiSearch.searchPOIAsyn();
         }
     }

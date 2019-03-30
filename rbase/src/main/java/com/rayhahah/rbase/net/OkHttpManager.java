@@ -41,7 +41,7 @@ public class OkHttpManager {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .readTimeout(30, TimeUnit.SECONDS)
                 .connectTimeout(30, TimeUnit.SECONDS)
-                //.addInterceptor(new DataEncryptInterceptor())
+                .addInterceptor(new DataEncryptInterceptor())
                 .addNetworkInterceptor(interceptor)
                 //.addNetworkInterceptor(new StethoInterceptor())
                 .cache(cache)

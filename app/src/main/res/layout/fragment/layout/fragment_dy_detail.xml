@@ -72,17 +72,93 @@
                         android:layout_toRightOf="@id/img_head"
                         android:background="@color/bg_theme_f6"
                         android:paddingBottom="4dp"
+                        android:visibility="gone"
                         android:paddingLeft="6dp"
                         android:paddingRight="6dp"
                         android:paddingTop="4dp"
                         android:textColor="@color/theme"
                         android:textSize="10sp" />
 
+                    <LinearLayout
+                        android:id="@+id/ll_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_nick"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_toRightOf="@id/img_head"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_sex"
+                            android:layout_width="wrap_content"
+                            android:layout_height="16dp"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp"
+                            android:gravity="center_vertical"
+                            android:drawablePadding="3dp"
+                            android:background="@drawable/bg_sex_round"
+                            android:drawableLeft="@drawable/home_icon_female"
+                            android:text="26"
+                            android:layout_below="@id/tv_name"
+                            android:layout_alignLeft="@id/tv_name"
+                            android:textColor="#ffffffff"
+                            android:textSize="10sp" />
+
+                        <com.allen.library.SuperButton
+                            android:id="@+id/tv_star"
+                            android:layout_width="wrap_content"
+                            android:layout_height="16dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_toRightOf="@id/tv_sex"
+                            android:gravity="center"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp"
+                            android:layout_alignBottom="@id/tv_sex"
+                            android:text="白羊座"
+                            android:textColor="@color/white"
+                            app:sCornersRadius="2dp"
+                            android:textSize="10sp"
+                            app:sSolidColor="#ffffdf70" />
+
+                        <com.allen.library.SuperButton
+                            android:id="@+id/tv_edu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="16dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_toRightOf="@id/tv_star"
+                            android:gravity="center"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp"
+                            android:layout_alignBottom="@id/tv_sex"
+                            android:text="本科"
+                            app:sCornersRadius="2dp"
+                            android:textColor="@color/white"
+                            android:textSize="10sp"
+                            app:sSolidColor="#ff70c1ff" />
+
+                        <com.allen.library.SuperButton
+                            android:id="@+id/tv_height"
+                            android:layout_width="wrap_content"
+                            android:layout_height="16dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_toRightOf="@id/tv_edu"
+                            android:gravity="center"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp"
+                            android:layout_alignBottom="@id/tv_sex"
+                            android:text="187cm"
+                            app:sCornersRadius="2dp"
+                            android:textColor="@color/white"
+                            android:textSize="10sp"
+                            app:sSolidColor="#ffffd3b8" />
+                    </LinearLayout>
+
                     <TextView
                         android:id="@+id/tv_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_info"
+                        android:layout_below="@id/ll_info"
                         android:layout_marginTop="18dp"
                         android:textColor="@color/balck_28"
                         android:textSize="14sp" />

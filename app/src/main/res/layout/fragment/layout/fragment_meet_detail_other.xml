@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/img_left"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:src="@drawable/icon_back_single" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="约会详情"
+            android:textColor="#ff575757"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/tv_sure"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/personal_icon_more" />
+    </RelativeLayout>
+
+    <com.kuwai.ysy.widget.NiceImageView
+        android:id="@+id/img_head"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_below="@id/navigation"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="18dp"
+        android:src="@drawable/icon"
+        app:corner_radius="4dp" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/img_head"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/img_head"
+        android:text="端庄的白昼"
+        android:textColor="#ff666666"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_name"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="2dp"
+        android:layout_toRightOf="@id/tv_name"
+        android:background="@drawable/bg_sex_round"
+        android:drawableLeft="@drawable/home_icon_female"
+        android:drawablePadding="3dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:text="26"
+        android:textColor="#ffffffff"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/tv_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/tv_name"
+        android:layout_below="@id/tv_name"
+        android:layout_marginTop="8dp"
+        android:drawableLeft="@drawable/home_icon_position"
+        android:text="吴中区 3.5km"
+        android:textColor="#ff505050"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_head"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="14dp"
+        android:text="王者荣耀.微信区"
+        android:textColor="#ff808080"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:id="@+id/game_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:layout_marginTop="14dp"
+        android:layout_marginLeft="14dp"
+        android:visibility="gone"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="游戏昵称："
+            android:textColor="#ff666666"
+            android:textSize="14sp" />
+
+        <com.allen.library.SuperButton
+            android:id="@+id/btn_look_name"
+            android:layout_width="62dp"
+            android:layout_height="26dp"
+            android:layout_centerHorizontal="true"
+            android:text="查看"
+            app:sSolidColor="@color/white"
+            android:textColor="#ff666666"
+            app:sStrokeColor="#ff666666"
+            app:sStrokeWidth="1dp"
+            app:sCornersRadius="@dimen/dp_12"/>
+    </LinearLayout>
+
+    <www.linwg.org.lib.LCardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/game_lay"
+        app:cardBackgroundColor="@color/white"
+        app:cornerRadius="10dp"
+        android:layout_marginTop="10dp"
+        app:elevation="14dp"
+        app:shadowColor="@color/card_shadow"
+        app:shadowFluidShape="linear"
+        app:shadowSize="12dp"
+        app:shadowStartAlpha="100">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rl_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+    </www.linwg.org.lib.LCardView>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rl_pic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_below="@id/card"></android.support.v7.widget.RecyclerView>
+
+    <ImageView
+        android:id="@+id/btn_yingyue"
+        android:layout_width="160dp"
+        android:layout_height="50dp"
+        android:src="@drawable/discover_btn_commissioned"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>

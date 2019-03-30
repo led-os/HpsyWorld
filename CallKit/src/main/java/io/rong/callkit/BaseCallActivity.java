@@ -67,7 +67,7 @@ public class BaseCallActivity extends BaseNoActionBarActivity implements IRongCa
     private static final String TAG = "BaseCallActivity";
     private static final String MEDIAPLAYERTAG = "MEDIAPLAYERTAG";
     private final static long DELAY_TIME = 1000;
-    static final int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 100;
+    public static final int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 100;
     static final int REQUEST_CODE_ADD_MEMBER = 110;
     public final int REQUEST_CODE_ADD_MEMBER_NONE=120;
     static final int VOIP_MAX_NORMAL_COUNT = 6;
@@ -90,8 +90,8 @@ public class BaseCallActivity extends BaseNoActionBarActivity implements IRongCa
     protected PowerManager powerManager;
     protected PowerManager.WakeLock wakeLock;
 
-    static final String[] VIDEO_CALL_PERMISSIONS = {Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA};
-    static final String[] AUDIO_CALL_PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
+    protected static final String[] VIDEO_CALL_PERMISSIONS = {Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA};
+    public static final String[] AUDIO_CALL_PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
 
     public static final int CALL_NOTIFICATION_ID = 4000;
 
@@ -261,6 +261,7 @@ public class BaseCallActivity extends BaseNoActionBarActivity implements IRongCa
         }
     }
 
+    //视频时间显示
     public void setupTime(final TextView timeView) {
         try {
             if (updateTimeRunnable != null) {
@@ -318,6 +319,7 @@ public class BaseCallActivity extends BaseNoActionBarActivity implements IRongCa
         }
     }
 
+    @SuppressLint("MissingPermission")
     protected void startVibrator() {
         if (mVibrator == null) {
             mVibrator = (Vibrator) RongContext.getInstance().getSystemService(Context.VIBRATOR_SERVICE);
@@ -594,7 +596,7 @@ public class BaseCallActivity extends BaseNoActionBarActivity implements IRongCa
     }
 
     @TargetApi(23)
-    boolean requestCallPermissions(RongCallCommon.CallMediaType type, int requestCode) {
+    public boolean requestCallPermissions(RongCallCommon.CallMediaType type, int requestCode) {
         String[] permissions = null;
         Log.i(TAG,"BaseActivty requestCallPermissions requestCode="+requestCode);
         if (type.equals(RongCallCommon.CallMediaType.VIDEO) || type.equals(RongCallCommon.CallMediaType.AUDIO)) {
@@ -632,7 +634,7 @@ public class BaseCallActivity extends BaseNoActionBarActivity implements IRongCa
         }
     }
 
-    void onMinimizeClick(View view) {
+    public void onMinimizeClick(View view) {
         if (checkDrawOverlaysPermission(true)) {
             finish();
         } else {
@@ -640,7 +642,7 @@ public class BaseCallActivity extends BaseNoActionBarActivity implements IRongCa
         }
     }
 
-    private boolean checkDrawOverlaysPermission(boolean needOpenPermissionSetting) {
+    public boolean checkDrawOverlaysPermission(boolean needOpenPermissionSetting) {
         if (Build.BRAND.toLowerCase().contains("xiaomi") || Build.VERSION.SDK_INT >= 23) {
             if (PermissionCheckUtil.canDrawOverlays(this, needOpenPermissionSetting)) {
                 checkingOverlaysPermission = false;

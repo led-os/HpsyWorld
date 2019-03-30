@@ -104,11 +104,11 @@ public class InnerAdapter extends BaseAdapter {
         }
         holder.nameView.setText(talent.getNickname());
         holder.signTv.setText(talent.getSig());
-        holder.sexTv.setText(talent.getAge());
         holder.heightTv.setText(talent.getHeight() + "cm");
         holder.eduView.setText(talent.getEducation());
-        GlideUtil.loadwithNobg(parent.getContext(), talent.getAttach().get(0).getImg(), holder.portraitView);
         holder.starTv.setText(Utils.getStar(talent.getConstellation()) + "座");
+        holder.sexTv.setText(talent.getAge());
+        GlideUtil.loadwithNobg(parent.getContext(), talent.getAttach().get(0).getImg(), holder.portraitView);
         if (!Utils.isNullString(String.valueOf(talent.getDistance())) && talent.getDistance() > 1) {
             if (talent.getDistance() < 99) {
                 holder.cityView.setText(talent.getLastcity() + Utils.format1Number(talent.getDistance()) + "km");
@@ -123,11 +123,13 @@ public class InnerAdapter extends BaseAdapter {
                     R.drawable.home_icon_male);
             holder.sexTv.setCompoundDrawablesWithIntrinsicBounds(drawableLeft,
                     null, null, null);
+            holder.sexTv.setBackgroundResource(R.drawable.bg_sex_man);
         } else {
             Drawable drawableLeft = parent.getContext().getResources().getDrawable(
                     R.drawable.home_icon_female);
             holder.sexTv.setCompoundDrawablesWithIntrinsicBounds(drawableLeft,
                     null, null, null);
+            holder.sexTv.setBackgroundResource(R.drawable.bg_sex_round);
         }
 
         //holder.portraitView.setImageResource(talent.getAvatar());

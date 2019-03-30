@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/img_left"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:src="@drawable/icon_back_single"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="其他约会主题"
+            android:textColor="#ff575757"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_sure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="确定"
+            android:textColor="#ff3a3737"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="请勿发布商品广告及色情招嫖等违法信息，否则将永久封禁"
+        android:textColor="#ffbfbfbf"
+        android:gravity="center"
+        android:layout_marginTop="12dp"
+        android:textSize="12sp" />
+
+    <com.kuwai.ysy.widget.MyEditText
+        android:id="@+id/et_sport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="12dp"
+        android:background="@null" />
+
+    <View style="@style/horizontal_line"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"/>
+
+    <com.kuwai.ysy.widget.shadow.TagFlowLayout
+        android:id="@+id/tv_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"></com.kuwai.ysy.widget.shadow.TagFlowLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rl_sport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
+</LinearLayout>

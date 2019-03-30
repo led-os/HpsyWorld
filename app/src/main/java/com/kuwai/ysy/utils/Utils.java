@@ -1,23 +1,40 @@
 package com.kuwai.ysy.utils;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.ComponentCallbacks;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.DimenRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 
 import com.alivc.player.VcPlayerLog;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.kuwai.ysy.utils.language.HanziToPinyin;
 import com.rayhahah.rbase.BaseApplication;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -55,6 +72,77 @@ public class Utils {
     }
 
     /**
+     * Gif 加载 可以设置次数，监听播放完成回调
+     * @param context  上下文对象
+     * @param model 传入的gif地址，可以是网络，也可以是本地，（https://raw.githubusercontent.com/Jay-YaoJie/KotlinDialogs/master/diagram/test.gif）
+     * @param imageView 要显示的imageView
+     * @param loopCount 播放次数
+     * @param gifListener  Gif播放完毕回调
+     */
+    public static void loadOneTimeGif(Context context, Object model, final ImageView imageView , final int loopCount, final GifListener gifListener) {
+        Glide.with(context).asGif().load(model).listener(new RequestListener<GifDrawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<GifDrawable> target, boolean isFirstResource) {
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(final GifDrawable resource, Object model, Target<GifDrawable> target, DataSource dataSource, boolean isFirstResource) {
+                try {
+                    Field gifStateField = GifDrawable.class.getDeclaredField("state");
+                    gifStateField.setAccessible(true);
+                    Class gifStateClass = Class.forName("com.bumptech.glide.load.resource.gif.GifDrawable$GifState");
+                    Field gifFrameLoaderField = gifStateClass.getDeclaredField("frameLoader");
+                    gifFrameLoaderField.setAccessible(true);
+                    Class gifFrameLoaderClass = Class.forName("com.bumptech.glide.load.resource.gif.GifFrameLoader");
+                    Field gifDecoderField = gifFrameLoaderClass.getDeclaredField("gifDecoder");
+                    gifDecoderField.setAccessible(true);
+                    Class gifDecoderClass = Class.forName("com.bumptech.glide.gifdecoder.GifDecoder");
+                    Object gifDecoder = gifDecoderField.get(gifFrameLoaderField.get(gifStateField.get(resource)));
+                    Method getDelayMethod = gifDecoderClass.getDeclaredMethod("getDelay", int.class);
+                    getDelayMethod.setAccessible(true);
+                    ////设置播放次数
+                    resource.setLoopCount(loopCount);
+                    //获得总帧数
+                    int count = resource.getFrameCount();
+                    int delay = 0;
+                    for (int i = 0; i < count; i++) {
+                        //计算每一帧所需要的时间进行累加
+                        delay += (int) getDelayMethod.invoke(gifDecoder, i);
+                    }
+                    imageView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            resource.start();
+                            if (gifListener != null) {
+                                gifListener.gifPlayComplete();
+                            }
+                        }
+                    }, delay);
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+                return false;
+            }
+        }).into(imageView);
+    }
+
+    /**
+     * Gif播放完毕回调
+     */
+    public interface GifListener {
+        void gifPlayComplete();
+    }
+
+    /**
      * 将double类型的数字保留两位小数（四舍五入）
      *
      * @param number
@@ -76,6 +164,56 @@ public class Utils {
         DecimalFormat df = new DecimalFormat();
         df.applyPattern("#0.0");
         return df.format(number);
+    }
+
+    public static String formatNumber(double number) {
+        DecimalFormat df = new DecimalFormat();
+        df.applyPattern("#.#");
+        return df.format(number);
+    }
+
+    public static String format1Number(float number) {
+        DecimalFormat df = new DecimalFormat();
+        df.applyPattern("#0.0");
+        return df.format(number);
+    }
+
+    private static float sNoncompatDensity;
+    private static float sNoncompatScaledDensity;
+    // 今日头条的屏幕适配方案
+    // 通过修改density值，强行把所有不同尺寸分辨率的手机的宽度dp值改成一个统一的值，这样就解决了所有的适配问题
+    // @param activity
+    // @param application
+    public static void setCustomDensity(@NonNull Activity activity, @NonNull final Application application) {
+        DisplayMetrics appDisplayMetrics = application.getResources().getDisplayMetrics();
+        if (sNoncompatDensity == 0) {
+            sNoncompatDensity = appDisplayMetrics.density;
+            sNoncompatScaledDensity = appDisplayMetrics.scaledDensity;
+            application.registerComponentCallbacks(new ComponentCallbacks() {
+                @Override
+                public void onConfigurationChanged(Configuration newConfig) {
+                    if (newConfig != null && newConfig.fontScale > 0) {
+                        sNoncompatScaledDensity = application.getResources().getDisplayMetrics().scaledDensity;
+                    }
+                }
+
+                @Override
+                public void onLowMemory() {
+
+                }
+            });
+        }
+        float targetDensity = appDisplayMetrics.widthPixels / 360;
+        float targetScaleDensity = targetDensity * (sNoncompatScaledDensity / sNoncompatDensity);
+        int targetDensityDpi = (int) (160 * targetDensity);
+        appDisplayMetrics.density = targetDensity;
+        appDisplayMetrics.scaledDensity = targetScaleDensity;
+        appDisplayMetrics.densityDpi = targetDensityDpi;
+
+        final DisplayMetrics activityDisplayMetrics = activity.getResources().getDisplayMetrics();
+        activityDisplayMetrics.density = targetDensity;
+        activityDisplayMetrics.scaledDensity = targetScaleDensity;
+        activityDisplayMetrics.densityDpi = targetDensityDpi;
     }
 
     /**

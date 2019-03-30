@@ -815,7 +815,7 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
     }
 
     private void changeInfo() {
-        Map<String, Object> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
         params.put("uid", SPManager.get().getStringValue("uid"));
         if (!Utils.isNullString(mTvHeight.getCenterString())) {
             params.put("height", mTvHeight.getCenterString().replace("cm", ""));
@@ -827,7 +827,7 @@ public class ChangeInfoFragment extends BaseFragment implements View.OnClickList
             params.put("education", mTvEdu.getCenterString());
         }
         if (!Utils.isNullString(mTvIncome.getCenterString())) {
-            params.put("annual_income", incomeId);
+            params.put("annual_income", String.valueOf(incomeId));
         }
         if (!Utils.isNullString(mTvBirth.getCenterString())) {
             params.put("age", mTvBirth.getCenterString());

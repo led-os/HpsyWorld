@@ -26,15 +26,14 @@ public class PageGiftReceiveAdapter extends BaseQuickAdapter<PersolHomePageBean.
         GlideUtil.loadRetangle(mContext,item.getGirft_img_url(), (ImageView) helper.getView(R.id.img_gift));
 
         helper.setText(R.id.tv_user,item.getGirft_name());
-
         CircleImageView circleImageView = helper.getView(R.id.img_user);
-        if (helper.getAdapterPosition() == 0) {
+        if (getParentPosition(item) == 0) {
             circleImageView.setBorderWidth(Utils.dp2px(2));
             circleImageView.setBorderColor(mContext.getResources().getColor(R.color.huangjin));
-        } else if (helper.getAdapterPosition() == 1) {
+        } else if (getParentPosition(item) == 1) {
             circleImageView.setBorderWidth(Utils.dp2px(2));
             circleImageView.setBorderColor(mContext.getResources().getColor(R.color.baoyin));
-        } else if (helper.getAdapterPosition() == 2) {
+        } else if (getParentPosition(item) == 2) {
             circleImageView.setBorderWidth(Utils.dp2px(2));
             circleImageView.setBorderColor(mContext.getResources().getColor(R.color.qingtong));
         } else {

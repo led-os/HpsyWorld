@@ -118,7 +118,12 @@ public class DongtaiOtherFragment extends BaseFragment<com.kuwai.ysy.module.mine
             }
         });
 
-        mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        mDongtaiList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
         mDongtaiAdapter = new DongtaiAdapter();
         ((SimpleItemAnimator)mDongtaiList.getItemAnimator()).setSupportsChangeAnimations(false);
         mDongtaiList.setAdapter(mDongtaiAdapter);

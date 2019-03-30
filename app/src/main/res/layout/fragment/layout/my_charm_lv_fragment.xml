@@ -16,8 +16,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="@drawable/center_charm_img_bg">
+        android:layout_height="120dp">
 
         <ImageView
             android:id="@+id/charm_headicon"

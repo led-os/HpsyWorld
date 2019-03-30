@@ -1,8 +1,10 @@
 package com.kuwai.ysy.module.circle.adapter;
 
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -41,6 +43,15 @@ public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, Ba
         } else {
             helper.getView(R.id.tv_content).setVisibility(View.GONE);
         }
+        TextView tvAge = helper.getView(R.id.tv_sex);
+        helper.setText(R.id.tv_height,item.getHeight()+"cm");
+        helper.setText(R.id.tv_edu,item.getEducation());
+        helper.setText(R.id.tv_star,Utils.getStar(item.getConstellation()) + "座");
+        helper.setText(R.id.tv_sex,item.getAge());
+        //holder.heightTv.setText(talent.getHeight() + "cm");
+        //holder.eduView.setText(talent.getEducation());
+        //holder.starTv.setText(Utils.getStar(talent.getConstellation()) + "座");
+        //holder.sexTv.setText(talent.getAge());
         switch (item.getType()) {
             case C.DY_TXT:
                 helper.getView(R.id.nine_grid_view).setVisibility(View.GONE);
@@ -100,10 +111,23 @@ public class DongtaiAdapter extends BaseQuickAdapter<DyMainListBean.DataBean, Ba
 
         ImageView sexImg = helper.getView(R.id.img_sex);
 
-        if (item.getGender() == 1) {
+        /*if (item.getGender() == 1) {
             sexImg.setImageResource(R.drawable.ic_user_man);
         } else if (item.getGender() == 2) {
             sexImg.setImageResource(R.drawable.ic_user_woman);
+        }*/
+        if (item.getGender() == 1) {
+            Drawable drawableLeft = mContext.getResources().getDrawable(
+                    R.drawable.home_icon_male);
+            tvAge.setCompoundDrawablesWithIntrinsicBounds(drawableLeft,
+                    null, null, null);
+            tvAge.setBackgroundResource(R.drawable.bg_sex_man);
+        } else {
+            Drawable drawableLeft = mContext.getResources().getDrawable(
+                    R.drawable.home_icon_female);
+            tvAge.setCompoundDrawablesWithIntrinsicBounds(drawableLeft,
+                    null, null, null);
+            tvAge.setBackgroundResource(R.drawable.bg_sex_round);
         }
 
         switch (item.getIs_vip()) {

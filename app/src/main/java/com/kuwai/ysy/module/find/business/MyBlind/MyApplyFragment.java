@@ -1,16 +1,20 @@
 package com.kuwai.ysy.module.find.business.MyBlind;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.find.adapter.MyApplyAdapter;
 import com.kuwai.ysy.module.find.bean.MyBlindBean;
+import com.kuwai.ysy.module.home.WebviewH5Activity;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.useful.SPManager;
@@ -53,7 +57,7 @@ public class MyApplyFragment extends BaseFragment<MyblindPresenter> implements M
         ((NavigationLayout) mRootView.findViewById(R.id.navigation)).setLeftClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pop();
+                getActivity().finish();
             }
         });
 //        mDataList.add(new CategoryBean());
@@ -63,6 +67,17 @@ public class MyApplyFragment extends BaseFragment<MyblindPresenter> implements M
         //mDongtaiList.addItemDecoration(new MyRecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, Utils.dip2px(getActivity(), 1), R.color.line_color));
         mDateAdapter = new MyApplyAdapter();
         mDongtaiList.setAdapter(mDateAdapter);
+
+        mDateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(getActivity(), WebviewH5Activity.class);
+                intent.putExtra("type", "huodong");
+                intent.putExtra("id", mDateAdapter.getData().get(position).getAid());
+                intent.putExtra(C.H5_FLAG, C.H5_URL + C.HUODONGXIANGQING + "uid=" + SPManager.get().getStringValue("uid") + "&aid=" + mDateAdapter.getData().get(position).getAid());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

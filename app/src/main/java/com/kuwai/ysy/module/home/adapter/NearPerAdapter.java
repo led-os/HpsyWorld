@@ -54,11 +54,13 @@ public class NearPerAdapter extends BaseQuickAdapter<NearPerBean.DataBean, BaseV
                     R.drawable.home_icon_male);
             sexTv.setCompoundDrawablesWithIntrinsicBounds(drawableLeft,
                     null, null, null);
+            sexTv.setBackgroundResource(R.drawable.bg_sex_man);
         } else {
             Drawable drawableLeft = mContext.getResources().getDrawable(
                     R.drawable.home_icon_female);
             sexTv.setCompoundDrawablesWithIntrinsicBounds(drawableLeft,
                     null, null, null);
+            sexTv.setBackgroundResource(R.drawable.bg_sex_round);
         }
 
         /*switch (item.getGender()) {

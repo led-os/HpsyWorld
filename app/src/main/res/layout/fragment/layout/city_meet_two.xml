@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rightImg="@drawable/ic_blind_sign"
+        app:title1="同城相约"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rl_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/navigation"></android.support.v7.widget.RecyclerView>
+
+    <www.linwg.org.lib.LCardView
+        android:id="@+id/lay_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_type"
+        app:cardBackgroundColor="@color/white"
+        app:cornerRadius="4dp"
+        app:elevation="14dp"
+        app:shadowColor="@color/card_shadow"
+        app:shadowFluidShape="linear"
+        app:shadowSize="12dp"
+        app:shadowStartAlpha="100">
+
+        <RelativeLayout
+            android:id="@+id/lay_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tv_current_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/home_home_ic_filter"
+                android:drawablePadding="6dp"
+                android:gravity="center_vertical"
+                android:text="全部"
+                android:textColor="#ff808080"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="筛选"
+                android:textColor="#ff5fbeff"
+                android:textSize="14sp" />
+        </RelativeLayout>
+    </www.linwg.org.lib.LCardView>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rl_date"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/lay_center"></android.support.v7.widget.RecyclerView>
+
+    <ImageView
+        android:id="@+id/btn_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="90dp"
+        android:layout_marginRight="30dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/date_icon_release" />
+</RelativeLayout>

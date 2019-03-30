@@ -71,10 +71,13 @@ import com.xuexiang.xupdate.utils.UpdateUtils;
 
 import java.util.List;
 
+import cn.qqtheme.framework.util.LogUtils;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
+import io.rong.calllib.IRongReceivedCallListener;
 import io.rong.calllib.IVideoFrameListener;
 import io.rong.calllib.RongCallClient;
+import io.rong.calllib.RongCallSession;
 import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtensionManager;
@@ -87,8 +90,6 @@ import okhttp3.OkHttpClient;
 public class MyApp extends BaseApplication {
 
     private RCrashHandler.CrashUploader mCrashUploader;
-    private static float sNoncompatDensity;
-    private static float sNoncompatScaledDensity;
     private UserInfo userInfo;
 
     @Override
@@ -107,6 +108,7 @@ public class MyApp extends BaseApplication {
     @Override
     protected void onFastInit() {
         //initSophix();
+        LogUtils.setIsDebug(true);
         initRong();
     }
 
@@ -234,7 +236,6 @@ public class MyApp extends BaseApplication {
                 }
             }
         });
-
     }
 
     @Override
@@ -403,41 +404,6 @@ public class MyApp extends BaseApplication {
         }
     }
 
-    // 今日头条的屏幕适配方案
-    // 通过修改density值，强行把所有不同尺寸分辨率的手机的宽度dp值改成一个统一的值，这样就解决了所有的适配问题
-    // @param activity
-    // @param application
-    public static void setCustomDensity(@NonNull Activity activity, @NonNull final Application application) {
-        DisplayMetrics appDisplayMetrics = application.getResources().getDisplayMetrics();
-        if (sNoncompatDensity == 0) {
-            sNoncompatDensity = appDisplayMetrics.density;
-            sNoncompatScaledDensity = appDisplayMetrics.scaledDensity;
-            application.registerComponentCallbacks(new ComponentCallbacks() {
-                @Override
-                public void onConfigurationChanged(Configuration newConfig) {
-                    if (newConfig != null && newConfig.fontScale > 0) {
-                        sNoncompatScaledDensity = application.getResources().getDisplayMetrics().scaledDensity;
-                    }
-                }
-
-                @Override
-                public void onLowMemory() {
-
-                }
-            });
-        }
-        float targetDensity = appDisplayMetrics.widthPixels / 360;
-        float targetScaleDensity = targetDensity * (sNoncompatScaledDensity / sNoncompatDensity);
-        int targetDensityDpi = (int) (160 * targetDensity);
-        appDisplayMetrics.density = targetDensity;
-        appDisplayMetrics.scaledDensity = targetScaleDensity;
-        appDisplayMetrics.densityDpi = targetDensityDpi;
-
-        final DisplayMetrics activityDisplayMetrics = activity.getResources().getDisplayMetrics();
-        activityDisplayMetrics.density = targetDensity;
-        activityDisplayMetrics.scaledDensity = targetScaleDensity;
-        activityDisplayMetrics.densityDpi = targetDensityDpi;
-    }
 
     public static void initThirdService() {
         new Thread() {

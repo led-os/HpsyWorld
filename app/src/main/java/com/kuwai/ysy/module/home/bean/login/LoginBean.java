@@ -66,6 +66,24 @@ public class LoginBean {
         private int vip_grade;
         private int payment;
         private String token;
+        private String city;
+        private int ident;
+
+        public String getCity() {
+            return city == null ? "" : city;
+        }
+
+        public void setCity(String city) {
+            this.city = city == null ? "" : city;
+        }
+
+        public int getIdent() {
+            return ident;
+        }
+
+        public void setIdent(int ident) {
+            this.ident = ident;
+        }
 
         public String getToken() {
             return token == null ? "" : token;

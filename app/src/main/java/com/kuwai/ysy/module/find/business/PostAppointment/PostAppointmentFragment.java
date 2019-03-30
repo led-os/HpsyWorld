@@ -297,39 +297,6 @@ public class PostAppointmentFragment extends BaseFragment<PostAppointmentPresent
             picker.setTextSize(16);
             picker.setSelectedItem(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH), 8, 0);
             picker.setTextColor(getResources().getColor(R.color.balck_28));
-           /* picker.setOnDateTimePickListener(new DateTimePicker.OnYearMonthDayTimePickListener() {
-                @Override
-                public void onDateTimePicked(String year, String month, String day, String hour, String minute) {
-                    //showToast(year + "-" + month + "-" + day + " " + hour + ":" + minute);
-                }
-            });*/
-
-          /*  picker.setOnWheelListener(new DateTimePicker.OnWheelListener() {
-                @Override
-                public void onYearWheeled(int index, String year) {
-                    mYear = year;
-                }
-
-                @Override
-                public void onMonthWheeled(int index, String month) {
-                    mMonth = month;
-                }
-
-                @Override
-                public void onDayWheeled(int index, String day) {
-                    mDay = day;
-                }
-
-                @Override
-                public void onHourWheeled(int index, String hour) {
-                    mHour = hour;
-                }
-
-                @Override
-                public void onMinuteWheeled(int index, String minute) {
-                    mMinute = minute;
-                }
-            });*/
             //得到选择器视图，可内嵌到其他视图容器，不需要调用show方法
             layout.addView(picker.getContentView());
 

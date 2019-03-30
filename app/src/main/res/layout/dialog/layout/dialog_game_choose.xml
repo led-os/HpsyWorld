@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/wangzhe"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="王者荣耀"
+        android:textColor="@color/balck_28"
+        android:textSize="16sp" />
+
+    <View style="@style/horizontal_line" />
+
+    <TextView
+        android:id="@+id/zhanchang"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="刺激战场"
+        android:textColor="@color/balck_28"
+        android:textSize="16sp" />
+
+    <View style="@style/horizontal_line" />
+
+    <TextView
+        android:id="@+id/chuji"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="全军出击"
+        android:textColor="@color/balck_28"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/gray_7b" />
+
+    <TextView
+        android:id="@+id/top_del"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="@color/balck_28"
+        android:textSize="16sp" />
+
+</LinearLayout>

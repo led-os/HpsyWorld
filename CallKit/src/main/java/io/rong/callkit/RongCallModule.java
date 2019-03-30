@@ -72,7 +72,7 @@ public class RongCallModule implements IExternalModule {
             }
         };
 
-        RongCallClient.setReceivedCallListener(callListener);
+        //RongCallClient.setReceivedCallListener(callListener);
     }
 
     /**

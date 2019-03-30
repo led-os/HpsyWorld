@@ -51,6 +51,15 @@
         <attr name="iciv_hint_smallimageview" format="boolean"></attr><!--是否隐藏小图片-->
     </declare-styleable>
 
+    <declare-styleable name="StyleFloatRatingBar">
+        <attr name="FloatRatingBarStarForegroundDrawable" format="reference"></attr>
+        <attr name="FloatRatingBarStarBackgroundDrawable" format="reference"></attr>
+        <attr name="FloatRatingBarStarDistance" format="dimension"></attr>
+        <attr name="FloatRatingBarStarWidth" format="dimension"></attr>
+        <attr name="FloatRatingBarStarHeight" format="dimension"></attr>
+        <attr name="FloatRatingBarStarRate" format="float"></attr>
+    </declare-styleable>
+
     <declare-styleable name="IndexBar">
         <attr name="normalTextColor" format="reference|color"/>
         <attr name="activeTextColor" format="reference|color"/>

@@ -110,7 +110,7 @@ public class NearPerFragment extends BaseFragment implements View.OnClickListene
     void getHomeData() {
         HashMap<String, Object> param = new HashMap<>();
         if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
-            //param.put("uid", SPManager.get().getStringValue("uid"));
+            param.put("uid", SPManager.get().getStringValue("uid"));
         }
         param.put("longitude", SPManager.get().getStringValue("longitude", "120.525565"));
         param.put("latitude", SPManager.get().getStringValue("latitude", "31.27831"));
@@ -135,13 +135,13 @@ public class NearPerFragment extends BaseFragment implements View.OnClickListene
     void getMoreData() {
         HashMap<String, Object> param = new HashMap<>();
         if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
-            //param.put("uid", SPManager.get().getStringValue("uid"));
+            param.put("uid", SPManager.get().getStringValue("uid"));
         }
         param.put("longitude", SPManager.get().getStringValue("longitude", "120.525565"));
         param.put("latitude", SPManager.get().getStringValue("latitude", "31.27831"));
         param.put("lastcity", SPManager.get().getStringValue("ysy_city", "苏州市"));
         param.put("lastarea", SPManager.get().getStringValue("ysy_dis", "吴中区"));
-        param.put("page", mPage);
+        param.put("page", mPage + 1);
         addSubscription(HomeApiFactory.getNearPer(param).subscribe(new Consumer<NearPerBean>() {
             @Override
             public void accept(NearPerBean nearPerBean) throws Exception {

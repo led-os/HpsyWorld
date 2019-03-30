@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.find.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class VideoChatBean {
@@ -62,7 +63,7 @@ public class VideoChatBean {
             this.arr = arr;
         }
 
-        public static class ArrBean {
+        public static class ArrBean implements Serializable{
             /**
              * uid : 10041
              * gender : 2

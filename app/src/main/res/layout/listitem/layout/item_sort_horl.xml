@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<www.linwg.org.lib.LCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lay_center"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white"
+    app:cornerRadius="4dp"
+    app:elevation="14dp"
+    app:shadowColor="@color/card_shadow"
+    app:shadowFluidShape="linear"
+    app:shadowSize="12dp"
+    app:shadowStartAlpha="100">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.kuwai.ysy.widget.NiceImageView
+                android:id="@+id/img_head"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:src="@drawable/icon"
+                app:corner_top_left_radius="4dp"
+                app:corner_top_right_radius="4dp" />
+
+            <TextView
+                android:id="@+id/tv_agree"
+                android:layout_width="110dp"
+                android:layout_height="40dp"
+                android:layout_below="@id/img_head"
+                android:gravity="center"
+                android:text="同意"
+                android:textColor="#ff808080"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/img_sex"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_margin="6dp"
+                android:src="@drawable/home_icon_female" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</www.linwg.org.lib.LCardView>

@@ -12,6 +12,8 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         flavorDimensions "versionCode"
         multiDexEnabled true                    //添加多 dex分包支持
+        renderscriptTargetApi 25
+        renderscriptSupportModeEnabled true
 
 //        minifyEnabled true                      //是否混淆
 //        zipAlignEnabled true                    //是否设置zip对齐优化
@@ -101,6 +103,10 @@ android {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
     }*/
 
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -122,6 +128,7 @@ dependencies {
     api 'com.amap.api:location:latest.integration'
     //api 'com.amap.api:map2d:latest.integration'
     //api 'com.amap.api:search:latest.integration'
+    //implementation 'com.amap.api:navi-3dmap:latest.integration'
 
     implementation('com.aliyun.ams:alicloud-android-hotfix:3.2.8') {
         exclude(module: 'alicloud-android-utdid')
@@ -142,17 +149,20 @@ dependencies {
     implementation 'com.aliyun.dpa:oss-android-sdk:2.4.5'
 
     api (name: 'alipaySdk-15.5.9-20181123210657-noUtdid', ext: 'aar')
+    implementation 'com.hedgehog.ratingbar:app:1.1.2'
     implementation 'com.github.SherlockGougou:BigImageViewPager:v4_4.0.1'
     //compile (name: 'AlivcPlayer-3.4.8', ext: 'aar')
     //compile (name: 'AlivcReporter-1.2', ext: 'aar')
     //compile (name: 'AliyunVodPlayer-3.4.8', ext: 'aar')
     //腾讯x5
     api files('libs/tbs_sdk_thirdapp_v3.5.0.1004_43500_sharewithdownload_withoutGame_obfs_20170801_113025.jar')
-
-
+    implementation 'org.linwg1988:lcardview:1.4.2'
+    implementation 'com.ms-square:etsyblur:0.2.1'
     implementation 'com.github.xuexiangjys:XUpdate:1.0.6'
+    implementation 'me.jessyan:autosize:0.9.1'
     //网络请求的实现一
     implementation 'com.qianwen:okhttp-utils:3.8.0'
     implementation project(':CallKit')
+    //implementation project(':CallLib')
     implementation project(':IMKit')
 }

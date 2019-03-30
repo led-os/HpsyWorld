@@ -35,7 +35,7 @@ public class MyApplyAdapter extends BaseQuickAdapter<MyBlindBean.DataBean, BaseV
                 break;
         }
 
-        helper.addOnClickListener(R.id.rl_my_activity);
+        //helper.addOnClickListener(R.id.rl_my_activity);
     }
 
 }

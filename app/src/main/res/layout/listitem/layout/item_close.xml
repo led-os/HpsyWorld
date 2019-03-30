@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="72dp">
+
+    <com.allen.library.CircleImageView
+        android:id="@+id/img_head"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/icon" />
+
+    <com.allen.library.CircleImageView
+        android:id="@+id/img_online"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
+        android:layout_marginLeft="33dp"
+        android:layout_marginTop="59dp"
+        android:src="#5FF77B" />
+
+    <ImageView
+        android:id="@+id/img_auth"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_alignBottom="@id/tv_name"
+        android:layout_marginLeft="6dp"
+        android:layout_toRightOf="@id/tv_name"
+        android:visibility="gone"
+        android:src="@drawable/mine_icon_sure_c" />
+
+    <ImageView
+        android:id="@+id/img_vip"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_alignBottom="@id/tv_name"
+        android:layout_marginLeft="6dp"
+        android:visibility="gone"
+        android:layout_toRightOf="@id/img_auth"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@id/img_head"
+        android:text="伊利可爱多"
+        android:textColor="#ff575757"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="14dp"
+        android:layout_alignLeft="@id/tv_name"
+        android:layout_below="@id/tv_name"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/bg_sex_round"
+        android:drawableLeft="@drawable/home_icon_female"
+        android:drawablePadding="3dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:text="26"
+        android:textColor="#ffffffff"
+        android:textSize="10sp" />
+
+    <com.allen.library.SuperButton
+        android:id="@+id/tv_star"
+        android:layout_width="wrap_content"
+        android:layout_height="14dp"
+        android:layout_alignBottom="@id/tv_sex"
+        android:layout_marginLeft="6dp"
+        android:layout_toRightOf="@id/tv_sex"
+        android:gravity="center"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:text="白羊座"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        app:sCornersRadius="2dp"
+        app:sSolidColor="#ffffdf70" />
+
+    <com.allen.library.SuperButton
+        android:id="@+id/tv_edu"
+        android:layout_width="wrap_content"
+        android:layout_height="14dp"
+        android:layout_alignBottom="@id/tv_sex"
+        android:layout_marginLeft="6dp"
+        android:layout_toRightOf="@id/tv_star"
+        android:gravity="center"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:text="本科"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        app:sCornersRadius="2dp"
+        app:sSolidColor="#ff70c1ff" />
+
+    <com.allen.library.SuperButton
+        android:id="@+id/tv_height"
+        android:layout_width="wrap_content"
+        android:layout_height="14dp"
+        android:layout_alignBottom="@id/tv_sex"
+        android:layout_marginLeft="6dp"
+        android:layout_toRightOf="@id/tv_edu"
+        android:gravity="center"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:text="187cm"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        app:sCornersRadius="2dp"
+        app:sSolidColor="#ffffd3b8" />
+
+    <TextView
+        android:id="@+id/tv_sign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/tv_sex"
+        android:layout_below="@+id/tv_sex"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_toLeftOf="@id/tv_state"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="我是伊利可爱多，想找一个果粒多休息休息... "
+        android:textColor="#ff808080"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="10dp"
+        android:drawablePadding="4dp"
+        android:gravity="center_vertical"
+        android:text="亲密值 9999"
+        android:textColor="#ff505050"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignBottom="@id/tv_close"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_toLeftOf="@id/tv_close"
+        android:src="@drawable/icon_closevalue" />
+
+    <ImageView
+        android:id="@+id/img_sort"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/mine_icon_first" />
+</RelativeLayout>

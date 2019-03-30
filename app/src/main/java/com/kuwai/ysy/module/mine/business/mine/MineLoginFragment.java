@@ -108,11 +108,6 @@ public class MineLoginFragment extends BaseFragment<MinePresenter> implements Vi
     public void initView(Bundle savedInstanceState) {
         EventBusUtil.register(this);
         mLayoutStatusView = mRootView.findViewById(R.id.multipleStatusView);
-        my_integral = mRootView.findViewById(R.id.my_integral);
-        my_money = mRootView.findViewById(R.id.my_money);
-        st_credit = mRootView.findViewById(R.id.st_credit);
-        mHomeLay = mRootView.findViewById(R.id.lay_home);
-        tv_text = mRootView.findViewById(R.id.tv_text);
         swipeRefreshLayout = mRootView.findViewById(R.id.swipe);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -120,6 +115,12 @@ public class MineLoginFragment extends BaseFragment<MinePresenter> implements Vi
                 initData();
             }
         });
+        my_integral = mRootView.findViewById(R.id.my_integral);
+        my_money = mRootView.findViewById(R.id.my_money);
+        st_credit = mRootView.findViewById(R.id.st_credit);
+        mHomeLay = mRootView.findViewById(R.id.lay_home);
+        tv_text = mRootView.findViewById(R.id.tv_text);
+
         mHeadImg = mRootView.findViewById(R.id.img_head);
         mHomeLay.setOnClickListener(this);
         st_ask = mRootView.findViewById(R.id.st_ask);

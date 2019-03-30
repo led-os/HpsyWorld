@@ -20,6 +20,18 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white"
+        android:gravity="center"
+        android:paddingStart="16dp"
+        android:text="补全认证信息，让有品质的TA更容易找到你"
+        android:textColor="#ff666666"
+        android:textSize="14sp"/>
+
+    <View style="@style/horizontal_line"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
         android:gravity="center_vertical"
         android:paddingStart="16dp"
         android:text="基本认证"
@@ -29,7 +41,6 @@
 
     </TextView>
 
-    <View style="@style/horizontal_line"/>
 
     <com.allen.library.SuperTextView
         android:id="@+id/st_headicon"
@@ -39,7 +50,6 @@
         android:paddingStart="6dp"
         app:sLeftTextColor="#282828"
         app:sLeftTextSize="16sp"
-        android:visibility="gone"
         app:sLeftTextString="真实照片认证"
         app:sRightTextColor="#ffbdbdbd"
         app:sRightTextSize="14sp"

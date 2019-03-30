@@ -31,8 +31,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/center_img_xxx_pressed" />
+                        android:layout_alignParentRight="true" />
 
                     <View
                         android:layout_width="match_parent"
@@ -220,7 +219,6 @@
                         app:sLeftTextGravity="center"
                         app:sLeftTextSize="17sp"
                         app:sLeftTextString="信用认证"
-                        app:sLeftTvDrawableLeft="@drawable/center_ic_list_1"
                         app:sRightTextColor="#ffbdbdbd"
                         app:sRightTextGravity="center"
                         app:sRightTextSize="14sp"
@@ -238,7 +236,6 @@
                         app:sLeftTextGravity="center"
                         app:sLeftTextSize="17sp"
                         app:sLeftTextString="我的想问"
-                        app:sLeftTvDrawableLeft="@drawable/center_ic_list_2"
                         app:sRightTextColor="#ffbdbdbd"
                         app:sRightTextGravity="center"
                         app:sRightTextSize="14sp"
@@ -256,7 +253,6 @@
                         app:sLeftTextGravity="center"
                         app:sLeftTextSize="17sp"
                         app:sLeftTextString="喜欢"
-                        app:sLeftTvDrawableLeft="@drawable/center_ic_list_3"
                         app:sRightTextGravity="center"
                         app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
 
@@ -271,7 +267,6 @@
                         app:sLeftTextGravity="center"
                         app:sLeftTextSize="17sp"
                         app:sLeftTextString="访客记录"
-                        app:sLeftTvDrawableLeft="@drawable/center_ic_list_4"
                         app:sRightTextGravity="center"
                         app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
 
@@ -286,7 +281,6 @@
                         app:sLeftTextGravity="center"
                         app:sLeftTextSize="17sp"
                         app:sLeftTextString="我的礼物"
-                        app:sLeftTvDrawableLeft="@drawable/center_ic_list_5"
                         app:sRightTextGravity="center"
                         app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
 
@@ -301,7 +295,6 @@
                         app:sLeftTextGravity="center"
                         app:sLeftTextSize="17sp"
                         app:sLeftTextString="会员中心"
-                        app:sLeftTvDrawableLeft="@drawable/center_ic_list_6"
                         app:sRightTextColor="#ffbdbdbd"
                         app:sRightTextGravity="center"
                         app:sRightTextSize="14sp"
@@ -321,7 +314,6 @@
                         app:sLeftTextGravity="center"
                         app:sLeftTextSize="17sp"
                         app:sLeftTextString="设置"
-                        app:sLeftTvDrawableLeft="@drawable/center_ic_list_7"
                         app:sRightTextGravity="center"
                         app:sRightTvDrawableRight="@drawable/center_ic_list_arrow">
 

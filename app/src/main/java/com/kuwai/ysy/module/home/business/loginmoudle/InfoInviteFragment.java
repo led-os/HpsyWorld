@@ -156,6 +156,9 @@ public class InfoInviteFragment extends BaseFragment implements View.OnClickList
                     SPManager.get().putString("isvip_", String.valueOf(loginBean.getData().getIs_vip()));
                     SPManager.get().putString("password_", SPManager.get().getStringValue(C.REGIST_PSD));
                     SPManager.get().putString("icon", loginBean.getData().getAvatar());
+                    SPManager.get().putString("city_", loginBean.getData().getCity());
+                    SPManager.get().putString("grade_", String.valueOf(loginBean.getData().getVip_grade()));
+                    SPManager.get().putString("ident_", String.valueOf(loginBean.getData().getIdent()));
                     SPManager.get().putString("sex_", String.valueOf(loginBean.getData().getGender()));
                     SPManager.get().putString(C.HAS_THIRD_PASS, String.valueOf(loginBean.getData().getPayment()));
                     SPManager.get().putString("rongyun_token", loginBean.getData().getRongyun_token());

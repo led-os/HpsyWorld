@@ -65,7 +65,7 @@ public class DyDetailBean {
         private String avatar;
         private String nickname;
         private int uid;
-        private int age;
+        private String age;
         private int gender;
         private String height;
         private String education;
@@ -81,7 +81,16 @@ public class DyDetailBean {
         private int update_time;
         private int reward;
         private int whatgood;
+        private String constellation;
         private int is_vip;
+
+        public String getConstellation() {
+            return constellation == null ? "" : constellation;
+        }
+
+        public void setConstellation(String constellation) {
+            this.constellation = constellation == null ? "" : constellation;
+        }
 
         public int getIs_vip() {
             return is_vip;
@@ -115,11 +124,11 @@ public class DyDetailBean {
             this.uid = uid;
         }
 
-        public int getAge() {
+        public String getAge() {
             return age;
         }
 
-        public void setAge(int age) {
+        public void setAge(String age) {
             this.age = age;
         }
 

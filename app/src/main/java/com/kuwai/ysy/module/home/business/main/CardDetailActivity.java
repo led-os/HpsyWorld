@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.module.chat.api.ChatApiFactory;
 import com.kuwai.ysy.module.find.api.AppointApiFactory;
 import com.kuwai.ysy.module.find.bean.GiftPopBean;
+import com.kuwai.ysy.module.findtwo.api.Appoint2ApiFactory;
 import com.kuwai.ysy.module.home.business.main.NearPerFragment;
 import com.kuwai.ysy.module.mine.MyWalletActivity;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
@@ -57,7 +59,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.functions.Consumer;
-import io.rong.callkit.RongCallKit;
 import io.rong.imkit.RongIM;
 
 public class CardDetailActivity extends BaseActivity implements View.OnClickListener, GiftClickCallback {
@@ -77,14 +78,15 @@ public class CardDetailActivity extends BaseActivity implements View.OnClickList
     TextView cityView;
     SuperButton eduView;
     TextView sexTv;
-    TextView signTv;
+    TextView signTv, btn_online;
     SuperButton starTv;
     SuperButton heightTv;
+    private LinearLayout animLay;
 
     private String otherId = "";
     private int cardWidth;
     private String TAG = "";
-    private ImageView btn_chat,btn_gift,btn_like;
+    private ImageView btn_chat, btn_gift, btn_like;
 
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
@@ -103,7 +105,7 @@ public class CardDetailActivity extends BaseActivity implements View.OnClickList
         DisplayMetrics dm = getResources().getDisplayMetrics();
         float density = dm.density;
         cardWidth = (int) (dm.widthPixels);
-
+        animLay = findViewById(R.id.ll_anim);
         nameView = findViewById(R.id.tv_name);
         cityView = findViewById(R.id.tv_location);
         eduView = findViewById(R.id.tv_edu);
@@ -118,6 +120,7 @@ public class CardDetailActivity extends BaseActivity implements View.OnClickList
         btn_chat = findViewById(R.id.btn_chat);
         btn_gift = findViewById(R.id.btn_send_gift);
         btn_like = findViewById(R.id.btn_like);
+        btn_online = findViewById(R.id.btn_online);
         btn_like.setOnClickListener(this);
         btn_gift.setOnClickListener(this);
         btn_chat.setOnClickListener(this);
@@ -176,20 +179,11 @@ public class CardDetailActivity extends BaseActivity implements View.OnClickList
             }
         });
 
-        ImageView iv = (ImageView) findViewById(R.id.btn_online);
-        iv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RongCallKit.startSingleCall(CardDetailActivity.this, "10005", RongCallKit.CallMediaType.CALL_MEDIA_TYPE_VIDEO);
-            }
-        });
-        ObjectAnimator anim1 = ObjectAnimator.ofFloat(iv, "scaleX", 0f, 1.2f, 0.9f);
-        ObjectAnimator anim2 = ObjectAnimator.ofFloat(iv, "scaleY", 0f, 1.2f, 0.9f);
+        //ImageView iv = (ImageView) findViewById(R.id.btn_online);
         ObjectAnimator animator = ObjectAnimator.ofFloat(mBottomLay, "translationX", Utils.getScreenWidth(), 0f);
         ObjectAnimator animator1 = ObjectAnimator.ofFloat(viewPager, "translationX", Utils.getScreenWidth(), 0f);
         AnimatorSet set = new AnimatorSet();
-        set.play(anim1).with(anim2);
-        set.playTogether(anim1, anim2, animator, animator1);
+        set.playTogether(animator, animator1);
         set.setDuration(1400);
         set.start();
 
@@ -207,6 +201,18 @@ public class CardDetailActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    void startTextAnim() {
+        animLay.setVisibility(View.VISIBLE);
+        float s = animLay.getTranslationX();
+        ObjectAnimator anim1 = ObjectAnimator.ofFloat(animLay, "alpha", 1f, 0f);
+        ObjectAnimator anim2 = ObjectAnimator.ofFloat(animLay, "translationY", s, s - 30);
+        AnimatorSet set = new AnimatorSet();
+        //set.play(anim1).with(anim2);
+        set.playTogether(anim1, anim2);
+        set.setDuration(1200);
+        set.start();
     }
 
     @Override
@@ -227,7 +233,8 @@ public class CardDetailActivity extends BaseActivity implements View.OnClickList
                     } else {
                         mPresenter.like(SPManager.get().getStringValue("uid"), otherid, 2);
                     }*/
-                    like(SPManager.get().getStringValue("uid"), otherId, 1);
+                    startAnim();
+                    like(SPManager.get().getStringValue("uid"), otherId);
                 } else {
                     ToastUtils.showShort(R.string.login_error);
                 }
@@ -310,11 +317,27 @@ public class CardDetailActivity extends BaseActivity implements View.OnClickList
         }));
     }
 
+    void startAnim() {
+        ObjectAnimator anim1 = ObjectAnimator.ofFloat(btn_like, "scaleX", 1.2f, 0.8f);
+        ObjectAnimator anim2 = ObjectAnimator.ofFloat(btn_like, "scaleY", 1.2f, 0.8f);
+        AnimatorSet set = new AnimatorSet();
+       // set.play(anim1).with(anim2);
+        set.playTogether(anim1, anim2);
+        set.setDuration(1000);
+        set.start();
+    }
+
     private void setPersonData(PersolHome2PageBean persolHomePageBean) {
         //高级资料
         persolHome2PageBean = persolHomePageBean;
         PersolHome2PageBean.DataBean.InfoBean infoBean = persolHomePageBean.getData().getInfo();
-        GlideUtil.loadwithNobg(CardDetailActivity.this, infoBean.getImage().get(0).getImg(), iv_cover);
+        if (infoBean.getImage() != null && infoBean.getImage().size() > 0) {
+            GlideUtil.loadwithNobg(CardDetailActivity.this, infoBean.getImage().get(0).getImg(), iv_cover);
+        }else if(infoBean.getGender() == 1){
+            GlideUtil.load(CardDetailActivity.this, R.drawable.defult_man, iv_cover);
+        }else{
+            GlideUtil.load(CardDetailActivity.this, R.drawable.default_woman, iv_cover);
+        }
         nameView.setText(infoBean.getNickname());
         signTv.setText(infoBean.getSig());
         sexTv.setText(infoBean.getAge());
@@ -335,19 +358,28 @@ public class CardDetailActivity extends BaseActivity implements View.OnClickList
                     R.drawable.home_icon_male);
             sexTv.setCompoundDrawablesWithIntrinsicBounds(drawableLeft,
                     null, null, null);
+            sexTv.setBackgroundResource(R.drawable.bg_sex_man);
         } else {
             Drawable drawableLeft = getResources().getDrawable(
                     R.drawable.home_icon_female);
             sexTv.setCompoundDrawablesWithIntrinsicBounds(drawableLeft,
                     null, null, null);
+            sexTv.setBackgroundResource(R.drawable.bg_sex_round);
         }
+
+        btn_online.setText("亲密值 " + Utils.formatNumber(persolHomePageBean.getData().getInfo().getIntimate()));
     }
 
-    public void like(String uid, String otherId, int type) {
-        addSubscription(MineApiFactory.getUserLike(uid, otherId, type).subscribe(new Consumer<SimpleResponse>() {
+    public void like(String uid, String otherId) {
+        addSubscription(Appoint2ApiFactory.likeTwo(uid, otherId).subscribe(new Consumer<SimpleResponse>() {
             @Override
             public void accept(SimpleResponse response) throws Exception {
-                //mView.likeResult(response);
+
+                if(response.code ==200){
+                    startTextAnim();
+                    btn_online.setText("亲密值 " + Utils.formatNumber(persolHome2PageBean.getData().getInfo().getIntimate() + 1));
+                }
+
             }
         }, new Consumer<Throwable>() {
             @Override

@@ -709,6 +709,17 @@ public class DateTimeUitl {
         return nRet;
     }
 
+    public static long toSystemTimeSec(String time) {
+        long nRet = 0;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat(TIME_WITH_SECOND_FORMATE);
+            Date de = dateFormat.parse(time);
+            nRet = de.getTime() / 1000;
+        } catch (Exception e) {/*DISCARD EXCEPTION*/
+        }
+        return nRet;
+    }
+
     /**
      * 将时间字符串转化为秒值（相对 1970年１月１日）
      *
@@ -913,6 +924,26 @@ public class DateTimeUitl {
 
     }
 
+    public static String dateTime(String time) {
+        SimpleDateFormat sdr = new SimpleDateFormat("MM/dd HH:mm");
+        @SuppressWarnings("unused")
+        long lcc = Long.valueOf(time);
+        int i = Integer.parseInt(time);
+        String times = sdr.format(new Date(i * 1000L));
+        return times;
+
+    }
+
+    public static String dateToTime(String time) {
+        SimpleDateFormat sdr = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        @SuppressWarnings("unused")
+        long lcc = Long.valueOf(time);
+        int i = Integer.parseInt(time);
+        String times = sdr.format(new Date(i * 1000L));
+        return times;
+
+    }
+
     public static String getIntegralTime(String time) {
         SimpleDateFormat sdr = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
         @SuppressWarnings("unused")
@@ -1035,6 +1066,16 @@ public class DateTimeUitl {
         long time1 = toSystemTime(str1);
         long time2 = toSystemTime(str2);
         if (((time1 - time2) / 60 / 60 / 24) > 365 * 18) {
+            result = true;
+        }
+        return result;
+    }
+
+    public static boolean getDisTimeSec(String str1, String str2) {
+        boolean result = false;
+        long time1 = toSystemTimeSec(str1);
+        long time2 = toSystemTimeSec(str2);
+        if (((time1 - time2) / 60 / 60) < 0) {
             result = true;
         }
         return result;

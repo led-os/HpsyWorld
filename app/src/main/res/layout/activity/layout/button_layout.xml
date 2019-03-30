@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="30dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rc_voip_call_mute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
+            android:layout_marginLeft="45dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/rc_voip_call_mute_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:onClick="onMuteButtonClick"
+                android:src="@drawable/rc_voip_mute_selector" />
+
+            <TextView
+                style="@style/rc_voip_text_style_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rc_voip_call_mute_btn"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:text="@string/rc_voip_mute" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lay_gua"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
+            android:layout_marginLeft="45dp">
+
+            <ImageView
+                android:id="@+id/img_beau"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:onClick="onBeauClick"
+                android:src="@drawable/viedeochat_icon_meiyan" />
+
+            <ImageView
+                android:id="@+id/img_close_she"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:onClick="onSheClick"
+                android:layout_below="@id/img_beau"
+                android:layout_marginTop="28dp"
+                android:src="@drawable/videochat_icon_cameraon" />
+
+            <ImageView
+                android:id="@+id/rc_voip_call_hang_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:onClick="onHangupBtnClick"
+                android:layout_below="@id/img_close_she"
+                android:layout_marginTop="46dp"
+                android:src="@drawable/videochat_icon_guaduan" />
+
+            <TextView
+                style="@style/rc_voip_text_style_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rc_voip_call_hang_up"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:text="@string/rc_voip_mute"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lay_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom">
+
+            <ImageView
+                android:id="@+id/img_love"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:onClick="onLoveClick"
+                android:src="@drawable/videochat_icon_like" />
+
+            <TextView
+                style="@style/rc_voip_text_style_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/img_love"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="9.5dp"
+                android:text="@string/rc_voip_hangup"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lay_gift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_marginRight="45dp">
+
+            <ImageView
+                android:id="@+id/video_icon_gift"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:onClick="onGiftClick"
+                android:src="@drawable/video_icon_gift" />
+
+            <TextView
+                style="@style/rc_voip_text_style_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/video_icon_gift"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:text="@string/rc_voip_camera"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rc_voip_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_marginRight="45dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/rc_voip_camera_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:onClick="onSwitchCameraClick"
+                android:src="@drawable/rc_voip_camera" />
+
+            <TextView
+                style="@style/rc_voip_text_style_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rc_voip_camera_btn"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:text="@string/rc_voip_camera" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rc_voip_handfree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_marginRight="45dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/rc_voip_handfree_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:onClick="onHandFreeButtonClick"
+                android:src="@drawable/rc_voip_speaker_selector" />
+
+            <TextView
+                style="@style/rc_voip_text_style_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rc_voip_handfree_btn"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:text="@string/rc_voip_handfree" />
+        </RelativeLayout>
+
+    </FrameLayout>
+
+</RelativeLayout>

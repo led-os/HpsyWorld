@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<www.linwg.org.lib.LCardView
+    android:id="@+id/lay_center"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white"
+    app:cornerRadius="4dp"
+    app:shadowColor="@color/card_shadow"
+    app:shadowFluidShape="linear"
+    app:shadowSize="12dp"
+    app:shadowStartAlpha="100">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.allen.library.CircleImageView
+            android:id="@+id/img_head"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_margin="12dp"
+            android:src="@drawable/icon" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="伊利可爱多"
+                android:textColor="#ff575757"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_alignLeft="@id/tv_name"
+                android:layout_below="@id/tv_name"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_sex_round"
+                android:drawableLeft="@drawable/home_icon_female"
+                android:drawablePadding="3dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="26"
+                android:textColor="#ffffffff"
+                android:textSize="10sp" />
+
+            <com.allen.library.SuperButton
+                android:id="@+id/tv_star"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_alignBottom="@id/tv_sex"
+                android:layout_marginLeft="6dp"
+                android:layout_toRightOf="@id/tv_sex"
+                android:gravity="center"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="白羊座"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                app:sCornersRadius="2dp"
+                app:sSolidColor="#ffffdf70" />
+
+            <com.allen.library.SuperButton
+                android:id="@+id/tv_edu"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_alignBottom="@id/tv_sex"
+                android:layout_marginLeft="6dp"
+                android:layout_toRightOf="@id/tv_star"
+                android:gravity="center"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="本科"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                app:sCornersRadius="2dp"
+                app:sSolidColor="#ff70c1ff" />
+
+            <TextView
+                android:id="@+id/tv_sign"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/tv_sex"
+                android:layout_below="@+id/tv_sex"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="3dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="我是伊利可爱多，想找一个果粒多休息休息... "
+                android:textColor="#ff808080"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/tv_agree"
+            android:background="@color/line_color" />
+
+        <TextView
+            android:id="@+id/tv_agree"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="同意"
+            android:textColor="#ff5fbeff"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</www.linwg.org.lib.LCardView>

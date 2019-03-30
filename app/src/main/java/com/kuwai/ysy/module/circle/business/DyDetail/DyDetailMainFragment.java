@@ -1,6 +1,7 @@
 package com.kuwai.ysy.module.circle.business.DyDetail;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -125,6 +126,11 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
 
     private RelativeLayout rl_play;
     private ImageView iv_playimg;
+    private TextView mTvSex;
+    private SuperButton mTvStar;
+    private SuperButton mTvEdu;
+    private SuperButton mTvHeight;
+
 
     public static DyDetailMainFragment newInstance(Bundle bundle) {
         DyDetailMainFragment fragment = new DyDetailMainFragment();
@@ -204,6 +210,10 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
         mImgHead.setOnClickListener(this);
         mIvSex = mRootView.findViewById(R.id.img_sex);
         misVip = mRootView.findViewById(R.id.img_vip);
+        mTvSex = mRootView.findViewById(R.id.tv_sex);
+        mTvStar = mRootView.findViewById(R.id.tv_star);
+        mTvEdu = mRootView.findViewById(R.id.tv_edu);
+        mTvHeight = mRootView.findViewById(R.id.tv_height);
         rl_play = mRootView.findViewById(R.id.rl_play);
         iv_playimg = mRootView.findViewById(R.id.iv_playimg);
         mTvInfo = (TextView) mRootView.findViewById(R.id.tv_info);
@@ -548,7 +558,7 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
         otherId = String.valueOf(mDyDetailBean.getData().getUid());
         mTvNick.setText(dyDetailBean.getData().getNickname());
         isLike = mDyDetailBean.getData().getWhatgood() == 0 ? false : true;
-        switch (dyDetailBean.getData().getGender()) {
+      /*  switch (dyDetailBean.getData().getGender()) {
             case C.Man:
                 GlideUtil.load(mContext, R.drawable.ic_user_man, mIvSex);
                 break;
@@ -556,6 +566,25 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
                 GlideUtil.load(mContext, R.drawable.ic_user_woman, mIvSex);
                 break;
         }
+*/
+        if (dyDetailBean.getData().getGender() == 1) {
+            Drawable drawableLeft = mContext.getResources().getDrawable(
+                    R.drawable.home_icon_male);
+            mTvSex.setCompoundDrawablesWithIntrinsicBounds(drawableLeft,
+                    null, null, null);
+            mTvSex.setBackgroundResource(R.drawable.bg_sex_man);
+        } else {
+            Drawable drawableLeft = mContext.getResources().getDrawable(
+                    R.drawable.home_icon_female);
+            mTvSex.setCompoundDrawablesWithIntrinsicBounds(drawableLeft,
+                    null, null, null);
+            mTvSex.setBackgroundResource(R.drawable.bg_sex_round);
+        }
+
+        mTvHeight.setText(mDyDetailBean.getData().getHeight()+"cm");
+        mTvEdu.setText(mDyDetailBean.getData().getEducation());
+        mTvStar.setText(Utils.getStar(mDyDetailBean.getData().getConstellation()) + "座");
+        mTvSex.setText(mDyDetailBean.getData().getAge());
 
         switch (dyDetailBean.getData().getIs_vip()) {
             case 0:

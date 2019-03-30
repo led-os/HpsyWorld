@@ -1,17 +1,24 @@
 package com.kuwai.ysy.module.home.business.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.home.WebviewH5Activity;
+import com.kuwai.ysy.utils.Utils;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
+import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +28,7 @@ public class HomeRadioFragment extends BaseFragment implements View.OnClickListe
     private List<Fragment> mFragments;
     private RadioGroup radioGroup;
     private int mIndex = 0;
+    private ImageView mTvDate;
 
     private RadioButton mTvTui;
     private View mLine;
@@ -55,6 +63,16 @@ public class HomeRadioFragment extends BaseFragment implements View.OnClickListe
                 mTvNear.setTextSize(20);
                 setIndexSelected(1);
                 break;
+            case R.id.tv_date:
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    Intent intent = new Intent(getActivity(), WebviewH5Activity.class);
+                    intent.putExtra("type", "yunshi");
+                    intent.putExtra(C.H5_FLAG, C.H5_URL + C.YUNSHI + SPManager.get().getStringValue("uid"));
+                    startActivity(intent);
+                } else {
+                    ToastUtils.showShort(R.string.login_error);
+                }
+                break;
         }
     }
 
@@ -63,6 +81,8 @@ public class HomeRadioFragment extends BaseFragment implements View.OnClickListe
         mFragments = new ArrayList<>();
         mTvTui = mRootView.findViewById(R.id.tv_tui);
         mLine = mRootView.findViewById(R.id.line);
+        mTvDate  =mRootView.findViewById(R.id.tv_date);
+        mTvDate.setOnClickListener(this);
         mTvTui.setTextSize(20);
         mTvNear = mRootView.findViewById(R.id.tv_near);
         radioGroup = (RadioGroup) mRootView.findViewById(R.id.main_radiogroup);

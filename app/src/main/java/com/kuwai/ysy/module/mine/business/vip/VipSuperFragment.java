@@ -25,6 +25,7 @@ import com.kuwai.ysy.module.mine.bean.vip.VipPayBean;
 import com.kuwai.ysy.widget.CustomFontTextview;
 import com.kuwai.ysy.widget.layoutmanager.MyGridLayoutManager;
 import com.rayhahah.dialoglib.DialogInterface;
+import com.rayhahah.dialoglib.MDAlertDialog;
 import com.rayhahah.dialoglib.NormalAlertDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
@@ -65,12 +66,30 @@ public class VipSuperFragment extends BaseFragment<VipHuangjinPresenter> impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_submit:
-                Map<String, Object> param = new HashMap<String, Object>();
-                param.put("uid", SPManager.get().getStringValue("uid"));
-                param.put("v_id", mVipdata.getV_id());
-                param.put("type", "365");
-                param.put("source", "Android");
-                mPresenter.getAliOrderInfo(param);
+
+                new MDAlertDialog.Builder(getActivity())
+                        .setTitleVisible(false)
+                        .setContentText("确认开通定制会员？")
+                        .setHeight(0.16f)
+                        .setOnclickListener(new com.rayhahah.dialoglib.DialogInterface.OnLeftAndRightClickListener<MDAlertDialog>() {
+                            @Override
+                            public void clickLeftButton(MDAlertDialog dialog, View view) {
+                                dialog.dismiss();
+                            }
+
+                            @Override
+                            public void clickRightButton(MDAlertDialog dialog, View view) {
+                                dialog.dismiss();
+                                Map<String, Object> param = new HashMap<String, Object>();
+                                param.put("uid", SPManager.get().getStringValue("uid"));
+                                param.put("v_id", mVipdata.getV_id());
+                                param.put("type", "365");
+                                param.put("source", "Android");
+                                mPresenter.getAliOrderInfo(param);
+                            }
+                        })
+                        .setCanceledOnTouchOutside(true)
+                        .build().show();
                 break;
             case R.id.tv_xieyi:
                 Intent intent = new Intent(getActivity(), WebviewH5Activity.class);

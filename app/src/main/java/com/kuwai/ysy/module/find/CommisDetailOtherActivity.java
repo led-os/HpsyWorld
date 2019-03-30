@@ -8,6 +8,7 @@ import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.module.find.business.CommisDetail.CommisDetailFragment;
 import com.kuwai.ysy.module.find.business.MyCommicDetail.CommicDetailMyFragment;
+import com.kuwai.ysy.module.findtwo.business.MeetDetailOtherFragment;
 import com.rayhahah.rbase.base.RBasePresenter;
 
 public class CommisDetailOtherActivity extends BaseActivity implements View.OnClickListener {
@@ -31,7 +32,7 @@ public class CommisDetailOtherActivity extends BaseActivity implements View.OnCl
 
     @Override
     protected void initView() {
-        loadRootFragment(R.id.container, CommisDetailFragment.newInstance(getIntent().getBundleExtra("data")), false, true);
+        loadRootFragment(R.id.container, MeetDetailOtherFragment.newInstance(getIntent().getStringExtra("rid"),getIntent().getStringExtra("type")), false, true);
     }
 
     @Override

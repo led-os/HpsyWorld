@@ -22,20 +22,26 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.bailingcloud.bailingvideo.engine.binstack.util.FinLog;
 import com.google.gson.Gson;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
+import com.kuwai.ysy.app.MyApp;
 import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.StartPageBean;
 import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.controller.NavigationController;
 import com.kuwai.ysy.module.chat.ChatMainFragment;
 import com.kuwai.ysy.module.circle.business.DongtaiFragment;
+import com.kuwai.ysy.module.find.PerVideoActivity;
 import com.kuwai.ysy.module.find.business.FoundHome.FoundFragment;
 import com.kuwai.ysy.module.home.api.HomeApiFactory;
 import com.kuwai.ysy.module.home.bean.login.LoginBean;
 import com.kuwai.ysy.module.home.business.main.HomeRadioFragment;
+import com.kuwai.ysy.module.mine.PersonVideoActivity;
+import com.kuwai.ysy.module.mine.SingleCallActivity;
 import com.kuwai.ysy.module.mine.business.mine.MineLoginFragment;
+import com.kuwai.ysy.module.mine.business.mine.MineLoginTwoFragment;
 import com.kuwai.ysy.socket.WsManager;
 import com.kuwai.ysy.socket.WsStatusListener;
 import com.kuwai.ysy.utils.EventBusUtil;
@@ -55,12 +61,22 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import cn.qqtheme.framework.util.LogUtils;
 import io.reactivex.functions.Consumer;
+import io.rong.callkit.RongCallAction;
+import io.rong.callkit.RongVoIPIntent;
+import io.rong.calllib.IRongReceivedCallListener;
+import io.rong.calllib.RongCallClient;
+import io.rong.calllib.RongCallCommon;
+import io.rong.calllib.RongCallSession;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 import okhttp3.Call;
+import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import okio.ByteString;
 
@@ -78,15 +94,17 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
     public static NavigationController mNavigationController;
     private RBaseFragment[] mFragments = new RBaseFragment[5];
     private AMapLocation mAmapLocation;
+    private AMapLocationClient mlocationClient;
 
     private String user1 = "bBp48xhvTH1txJ8TJcYxZLmIC5Mv+fpWZ4zmDkh2pTLGVZEU6ZNOS4PwHGMF7gUw95eSiYc7cZpNLaX6kxdHOA==";
     private String user2 = "r15Y4G6BcSpmSgXbJrf/ClUbwhMPS+kf5yBTiVt919N9HJEQV3wopiEsnyZK5KbUzIcg7rRdn8ZWr7Sv9AIj0A==";
     private UserInfo userInfo;
-    private AMapLocationClient mlocationClient;
+
     private StartPageBean startPageBean;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private WsManager wsBaseManager;
+    private boolean mViewLoaded;
 
     private boolean needImmersive() {
         return false;
@@ -98,15 +116,16 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
         Log.e("type", Build.HARDWARE);
         Log.e("type", Build.DEVICE);
         super.onCreate(savedInstanceState);
+        //Utils.setCustomDensity(this, MyApp.getAppContext());
+        mViewLoaded = true;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //mFragments[FIRST] = VideohomeActivity.newInstance();
         mFragments[FIRST] = HomeRadioFragment.newInstance(null);
-        mFragments[SECOND] = DongtaiFragment.newInstance();
+        mFragments[SECOND] = new FoundFragment();
         mFragments[THIRD] = ChatMainFragment.newInstance();
-        mFragments[FORTH] = new FoundFragment();
-        mFragments[FIFTH] = MineLoginFragment.newInstance();
-
+        mFragments[FORTH] = DongtaiFragment.newInstance();
+        mFragments[FIFTH] = MineLoginTwoFragment.newInstance();
         PageNavigationView pageBottomTabLayout = (PageNavigationView) findViewById(R.id.tab);
 
         mNavigationController = pageBottomTabLayout.material()
@@ -127,7 +146,7 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
         autoLogin();
         requestReadPermission();
         // connectRongYun(user1);
-       /* wsBaseManager = new WsManager.Builder(getBaseContext())
+        /*wsBaseManager = new WsManager.Builder(getBaseContext())
                 .client(new OkHttpClient().newBuilder()
                         .pingInterval(15, TimeUnit.SECONDS)
                         .retryOnConnectionFailure(true)
@@ -203,13 +222,17 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
         addSubscription(HomeApiFactory.login(param).subscribe(new Consumer<LoginBean>() {
             @Override
             public void accept(LoginBean loginBean) throws Exception {
+                LogUtils.error("autoLogin",loginBean.toString());
                 if (loginBean.getCode() == 200) {
                     SPManager.get().putString(C.SAN_FANG, type);
                     SPManager.get().putString("uid", String.valueOf(loginBean.getData().getUid()));
                     SPManager.get().putString("nickname", loginBean.getData().getNickname());
                     SPManager.get().putString("phone_", loginBean.getData().getPhone());
+                    SPManager.get().putString("city_", loginBean.getData().getCity());
+                    SPManager.get().putString("ident_", String.valueOf(loginBean.getData().getIdent()));
                     SPManager.get().putString("password_", SPManager.get().getStringValue("password_"));
                     SPManager.get().putString("icon", loginBean.getData().getAvatar());
+                    SPManager.get().putString("grade_", String.valueOf(loginBean.getData().getVip_grade()));
                     SPManager.get().putString("sex_", String.valueOf(loginBean.getData().getGender()));
                     SPManager.get().putString("isvip_", String.valueOf(loginBean.getData().getIs_vip()));
                     SPManager.get().putString(C.HAS_THIRD_PASS, String.valueOf(loginBean.getData().getPayment()));
@@ -234,6 +257,7 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
             @Override
             public void accept(Throwable throwable) throws Exception {
                 //ToastUtils.showShort(R.string.server_error);
+                LogUtils.error("autoLogin",throwable);
             }
         }));
     }
@@ -249,6 +273,30 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
             @Override
             public void onSuccess(String s) {
                 Log.i("xxx", "onTokenIncorrect: ");
+                IRongReceivedCallListener callListener = new IRongReceivedCallListener() {
+                    @Override
+                    public void onReceivedCall(final RongCallSession callSession) {
+                        FinLog.d("VoIPReceiver", "onReceivedCall");
+                        if (mViewLoaded) {
+                            FinLog.d("VoIPReceiver", "onReceivedCall->onCreate->mViewLoaded=true");
+                            startVoIPActivity(mContext, callSession, false);
+                        } else {
+                            FinLog.d("VoIPReceiver", "onReceivedCall->onCreate->mViewLoaded=false");
+                            //mCallSession = callSession;
+                        }
+                    }
+
+                    @Override
+                    public void onCheckPermission(RongCallSession callSession) {
+                        FinLog.d("VoIPReceiver", "onCheckPermissions");
+                        //mCallSession = callSession;
+                        if (mViewLoaded) {
+                            startVoIPActivity(mContext, callSession, true);
+                        }
+                    }
+                };
+
+                RongCallClient.setReceivedCallListener(callListener);
             }
 
             @Override
@@ -256,6 +304,29 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
                 Log.i("xxx", "onTokenIncorrect: ");
             }
         });
+    }
+
+    private void startVoIPActivity(Context context, final RongCallSession callSession, boolean startForCheckPermissions) {
+        FinLog.d("VoIPReceiver", "startVoIPActivity");
+        String action;
+            if (callSession.getMediaType().equals(RongCallCommon.CallMediaType.VIDEO)) {
+                action = RongVoIPIntent.RONG_INTENT_ACTION_VOIP_SINGLEVIDEO;
+            } else {
+                action = RongVoIPIntent.RONG_INTENT_ACTION_VOIP_SINGLEAUDIO;
+            }
+            Intent intent = new Intent(HomeActivity.this, SingleCallActivity.class);
+            intent.putExtra("callSession", callSession);
+            intent.putExtra("callAction", RongCallAction.ACTION_INCOMING_CALL.getName());
+            if (startForCheckPermissions) {
+                intent.putExtra("checkPermissions", true);
+            } else {
+                intent.putExtra("checkPermissions", false);
+            }
+            intent.setAction(action);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            //intent.setPackage(context.getPackageName());
+            context.startActivity(intent);
+        //mCallSession = null;
     }
 
     private void getLocation() {

@@ -8,8 +8,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/ic_sel_draw" />
+        android:layout_marginTop="20dp" />
 
     <ImageView
         android:id="@+id/ic_select"

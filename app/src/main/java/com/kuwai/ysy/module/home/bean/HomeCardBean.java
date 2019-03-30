@@ -68,7 +68,7 @@ public class HomeCardBean {
         private String lastcity;
         private String constellation;
         private int weight;
-        private int distance;
+        private float distance;
         private List<AttachBean> attach;
 
         public int getUid() {
@@ -83,11 +83,11 @@ public class HomeCardBean {
             return avatar;
         }
 
-        public int getDistance() {
+        public float getDistance() {
             return distance;
         }
 
-        public void setDistance(int distance) {
+        public void setDistance(float distance) {
             this.distance = distance;
         }
 

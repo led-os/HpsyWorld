@@ -67,7 +67,7 @@ public class DyMainListBean {
         private String avatar;
         private String nickname;
         private int uid;
-        private int age;
+        private String age;
         private int gender;
         private int height;
         private String education;
@@ -84,6 +84,15 @@ public class DyMainListBean {
         private int reward_sum;
         private int whatgood;
         private int is_vip;
+        private String constellation;
+
+        public String getConstellation() {
+            return constellation == null ? "" : constellation;
+        }
+
+        public void setConstellation(String constellation) {
+            this.constellation = constellation == null ? "" : constellation;
+        }
 
         private List<RewardBean> reward;
 
@@ -111,11 +120,11 @@ public class DyMainListBean {
             this.uid = uid;
         }
 
-        public int getAge() {
+        public String getAge() {
             return age;
         }
 
-        public void setAge(int age) {
+        public void setAge(String age) {
             this.age = age;
         }
 

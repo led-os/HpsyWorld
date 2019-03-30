@@ -155,14 +155,14 @@ public class MydateMainFragment extends BaseFragment<MyInvitedPresenter> impleme
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        EventBusUtil.unregister(this);
+    public void showViewError(Throwable t) {
+
     }
 
     @Override
-    public void showViewError(Throwable t) {
-
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBusUtil.unregister(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

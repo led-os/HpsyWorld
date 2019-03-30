@@ -7,6 +7,7 @@ import com.hjq.bar.TitleBar;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.module.find.business.CityMeet.CityMeetListFragment;
+import com.kuwai.ysy.module.findtwo.CityMeetTwoFragment;
 import com.rayhahah.rbase.base.RBasePresenter;
 
 public class CityMeetActivity extends BaseActivity implements View.OnClickListener {
@@ -30,7 +31,7 @@ public class CityMeetActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initView() {
-        loadRootFragment(R.id.container, CityMeetListFragment.newInstance(),false,true);
+        loadRootFragment(R.id.container, CityMeetTwoFragment.newInstance(),false,true);
     }
 
     @Override

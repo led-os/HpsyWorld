@@ -34,10 +34,18 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_sading"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_sading_round"
         android:supportsRtl="true"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="360"/>
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="640"/>
+
         <activity
             android:name=".module.home.business.loginmoudle.StartupPageActivity"
             android:launchMode="singleTop"
@@ -54,81 +62,156 @@
         <activity
             android:name=".module.home.business.HomeActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".module.home.business.loginmoudle.login.LoginActivity" />
-        <activity android:name=".module.home.WebviewH5Activity" />
-        <activity android:name=".module.home.FilterActivity" />
-        <activity android:name=".module.home.HomePicActivity" />
-        <activity android:name=".module.home.business.main.CardDetailActivity" />
+        <activity android:name=".module.home.business.loginmoudle.login.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.home.WebviewH5Activity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.home.FilterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.home.HomePicActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.home.business.main.CardDetailActivity"
+            android:screenOrientation="portrait"/>
 
         //聊天
-        <activity android:name=".module.chat.MyFriendActivity" />
-        <activity android:name=".module.chat.DialogAcitvity" />
-        <activity android:name=".module.chat.business.ChatSettingActivity" />
-        <activity android:name=".module.chat.business.QuestionActivity" />
-        <activity android:name=".module.chat.business.redpack.SendRedActivity" />
-        <activity android:name=".module.chat.business.redpack.RedRecordActivity" />
-        <activity android:name=".module.chat.business.redpack.RedReceiveActivity" />
-        <activity android:name=".module.chat.business.redpack.RedSendMyActivity" />
-        <activity android:name=".module.mine.SetPayPassActivity" />
+        <activity android:name=".module.chat.MyFriendActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.chat.DialogAcitvity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.chat.business.ChatSettingActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.chat.business.QuestionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.chat.business.redpack.SendRedActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.chat.business.redpack.RedRecordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.chat.business.redpack.RedReceiveActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.chat.business.redpack.RedSendMyActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.mine.SetPayPassActivity"
+            android:screenOrientation="portrait"/>
 
         //动态
         <activity
             android:name=".module.circle.aliyun.AlivcSvideoRecordActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AlivcRecordUIStyle" />
         <activity
             android:name=".module.circle.DyDetailActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".module.circle.HoleDetailActivity" />
         <activity
             android:name=".module.circle.ReportActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".module.find.VideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".module.circle.MessageActivity" />
-        <activity android:name=".module.circle.VideoPlayActivity" />
-        <activity android:name=".module.circle.business.PublishHoleActivity" />
-        <activity android:name=".module.circle.business.RightChooseActivity" />
-        <activity android:name=".module.circle.AddressChooseActivity" />
-        <activity android:name=".module.circle.business.publishdy.PublishDyActivity" />
-        <activity android:name=".module.circle.aliyun.AlivcRecorderActivity" />
+        <activity android:name=".module.circle.MessageActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.circle.VideoPlayActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.circle.business.PublishHoleActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.circle.business.RightChooseActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.circle.AddressChooseActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.circle.business.publishdy.PublishDyActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.circle.aliyun.AlivcRecorderActivity"
+            android:screenOrientation="portrait"/>
 
         //发现
         <activity
             android:name=".module.find.business.FoundLocation.FoundLocationFragment"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity android:name=".module.find.business.TuoDan.TuodanActivity" />
+        <activity android:name=".module.find.business.TuoDan.TuodanActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".module.find.SearchMeetActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".module.find.CityMeetActivity" />
-        <activity android:name=".module.find.CommisDetailOtherActivity" />
-        <activity android:name=".module.find.business.CommisDetailMyActivity" />
-        <activity android:name=".module.find.business.FoundLocation.SearchCityFragment" />
-        <activity android:name=".module.find.MapActivity" />
-        <activity android:name=".module.find.PerVideoActivity" />
+        <activity android:name=".module.find.CityMeetActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.find.CommisDetailOtherActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.find.business.CommisDetailMyActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.find.business.FoundLocation.SearchCityFragment"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.find.MapActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.findtwo.MyActActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.findtwo.MyDateActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.find.PerVideoActivity"
+            android:screenOrientation="portrait"/>
 
         //我的
         <activity
             android:name=".module.mine.MyPointActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".module.mine.MyWalletActivity" />
-        <activity android:name="com.kuwai.ysy.module.mine.business.teamplayer.SingleListActivity" />
+        <activity android:name=".module.mine.MyWalletActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.kuwai.ysy.module.mine.business.teamplayer.SingleListActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".module.mine.MyCreditActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".module.mine.SettingActivity" />
-        <activity android:name=".module.mine.business.updatevideo.UpdateActivity" />
-        <activity android:name=".module.mine.VipCenterActivity" />
-        <activity android:name=".module.mine.business.like.StLikeActivity" />
-        <activity android:name=".module.mine.business.visitor.VisitorActivity" />
-        <activity android:name=".module.mine.business.gift.GiftActivity" />
-        <activity android:name=".module.mine.business.question.AskQuestionActivity" />
-        <activity android:name=".module.mine.OtherHomeActivity" />
-        <activity android:name=".module.mine.business.homepage.HomePageActivity" />
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.mine.SettingActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.mine.business.updatevideo.UpdateActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.mine.VipCenterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.mine.CloseActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.mine.business.like.StLikeActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.mine.business.visitor.VisitorActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.mine.business.gift.GiftActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.mine.business.question.AskQuestionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.mine.OtherHomeActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.mine.business.homepage.HomePageActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.mine.SingleCallActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="io.rong.intent.action.voip.SINGLEVIDEO" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="io.rong.intent.action.voip.SINGLEAUDIO" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".module.mine.PersonVideoActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/protect_transparent"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <!--会话界面-->
         <activity

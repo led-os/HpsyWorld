@@ -10,6 +10,7 @@
         android:layout_height="24dp"
         android:layout_marginLeft="18dp"
         android:layout_marginTop="30dp"
+        android:visibility="gone"
         android:src="@drawable/home_home_ic_filter" />
 
     <ImageView
@@ -26,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:paddingBottom="14dp"
+        android:paddingBottom="4dp"
         android:layout_marginTop="30dp"
         android:orientation="horizontal">
 

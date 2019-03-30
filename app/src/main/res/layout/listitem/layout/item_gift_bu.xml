@@ -30,8 +30,7 @@
                 android:id="@+id/img_gift"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/ic_gift_bang" />
+                android:layout_centerInParent="true" />
 
             <com.kuwai.ysy.widget.AmountRoundView
                 android:id="@+id/amount"

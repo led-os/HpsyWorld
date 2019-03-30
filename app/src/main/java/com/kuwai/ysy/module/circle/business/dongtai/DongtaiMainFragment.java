@@ -32,6 +32,7 @@ import com.kuwai.ysy.module.circle.business.publishdy.PublishDyActivity;
 import com.kuwai.ysy.module.circle.adapter.DongtaiAdapter;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.DyMainListBean;
+import com.kuwai.ysy.module.home.business.main.CardDetailActivity;
 import com.kuwai.ysy.module.mine.OtherHomeActivity;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.utils.EventBusUtil;
@@ -164,9 +165,12 @@ public class DongtaiMainFragment extends BaseFragment<DongtaiMainPresenter> impl
                     case R.id.img_head:
                         if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
                             if (!SPManager.get().getStringValue("uid").equals(String.valueOf(mDongtaiAdapter.getData().get(position).getUid()))) {
-                                Intent intent1 = new Intent(getActivity(), OtherHomeActivity.class);
+                                /*Intent intent1 = new Intent(getActivity(), OtherHomeActivity.class);
                                 intent1.putExtra("uid", String.valueOf(mDongtaiAdapter.getData().get(position).getUid()));
-                                startActivity(intent1);
+                                startActivity(intent1);*/
+                                Intent intent = new Intent(getActivity(), CardDetailActivity.class);
+                                intent.putExtra("id", String.valueOf(mDongtaiAdapter.getData().get(position).getUid()));
+                                startActivity(intent);
                             }
                         } else {
                             ToastUtils.showShort(R.string.login_error);

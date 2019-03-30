@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    xmlns:tl="http://schemas.android.com/apk/res-auto">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/img_left"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:src="@drawable/icon_back_single"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择目的地"
+            android:textColor="#ff575757"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_sure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商议后决定"
+            android:textColor="#ff666666"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="苏州"
+        android:textColor="#ff5fbeff"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="22dp"
+        android:drawableLeft="@drawable/travel_icon_position"
+        android:drawablePadding="6dp"
+        android:textSize="20sp"
+        />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/travel_icon_search"/>
+    </LinearLayout>
+
+    <www.linwg.org.lib.LCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tl:cardBackgroundColor="@color/white"
+        tl:cornerRadius="1dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        tl:shadowColor="@color/card_shadow"
+        android:layout_marginTop="14dp"
+        tl:shadowFluidShape="linear"
+        tl:shadowSize="12dp"
+        tl:shadowStartAlpha="100">
+    <com.flyco.tablayout.SegmentTabLayout
+        android:id="@+id/tl_1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        tl:tl_bar_color="#ffffff"
+        tl:tl_textsize="14sp"
+        tl:tl_divider_width="0dp"
+        tl:tl_bar_stroke_color="@color/transparent"
+        tl:tl_indicator_color="#2C97DE"
+        tl:tl_indicator_corner_radius="1dp"
+        tl:tl_textBold="SELECT"
+        tl:tl_indicator_anim_enable="true"
+        tl:tl_tab_padding="4dp"/>
+    </www.linwg.org.lib.LCardView>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rl_jingdian"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tl:layoutManager="android.support.v7.widget.LinearLayoutManager"></android.support.v7.widget.RecyclerView>
+</LinearLayout>

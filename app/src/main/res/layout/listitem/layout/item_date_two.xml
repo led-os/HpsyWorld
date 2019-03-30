@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <com.kuwai.ysy.widget.NiceImageView
+        android:id="@+id/img_head"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="2dp"
+        android:src="@drawable/icon"
+        app:corner_radius="4dp" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/img_head"
+        android:text="端庄的白昼"
+        android:textColor="#ff666666"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="2dp"
+        android:layout_toRightOf="@id/tv_name"
+        android:background="@drawable/bg_sex_round"
+        android:drawableLeft="@drawable/home_icon_female"
+        android:drawablePadding="3dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:text="26"
+        android:textColor="#ffffffff"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/tv_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/tv_name"
+        android:layout_below="@id/tv_name"
+        android:layout_marginTop="8dp"
+        android:drawableLeft="@drawable/home_icon_position"
+        android:text="吴中区 3.5km"
+        android:textColor="#ff505050"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_head"
+        android:layout_marginTop="10dp"
+        android:text="王者荣耀.微信区"
+        android:textColor="#ff808080"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:layout_marginTop="8dp"
+        android:text="2019/3/15 18:00 限女生"
+        android:textColor="#ff808080"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_buy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_time"
+        android:layout_marginTop="8dp"
+        android:text="费用 我买单"
+        android:textColor="#ff808080"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_buy"
+        android:layout_marginTop="10dp"
+        android:text="每晚19:00~22:00在线，缺一个犀利的打野，男女皆可~"
+        android:textColor="#ff808080"
+        android:textSize="14sp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rl_pic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_content"
+        android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
+
+    <View
+        style="@style/horizontal_line"
+        android:layout_below="@id/rl_pic"
+        android:layout_marginTop="12dp" />
+</RelativeLayout>
