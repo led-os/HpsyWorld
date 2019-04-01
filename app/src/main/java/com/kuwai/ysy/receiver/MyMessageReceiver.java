@@ -52,6 +52,8 @@ public class MyMessageReceiver extends PushMessageReceiver {
                 Intent intent = new Intent(context, MyFriendActivity.class);
                 context.startActivity(intent);
             }
+        } else {
+            return false;
         }
         return true;
     }

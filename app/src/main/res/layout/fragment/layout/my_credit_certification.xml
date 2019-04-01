@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f4f4f4"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.kuwai.ysy.widget.NavigationLayout
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:rightTxt="实名作用？"
         app:rightColor="@color/theme"
+        app:rightTxt="实名作用？"
         app:title1="信用认证">
 
     </com.kuwai.ysy.widget.NavigationLayout>
@@ -24,9 +24,9 @@
         android:paddingStart="16dp"
         android:text="补全认证信息，让有品质的TA更容易找到你"
         android:textColor="#ff666666"
-        android:textSize="14sp"/>
+        android:textSize="14sp" />
 
-    <View style="@style/horizontal_line"/>
+    <View style="@style/horizontal_line" />
 
     <TextView
         android:layout_width="match_parent"
@@ -41,13 +41,15 @@
 
     </TextView>
 
+    <View style="@style/horizontal_line" />
 
     <com.allen.library.SuperTextView
         android:id="@+id/st_headicon"
-        android:layout_marginTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="1dp"
         android:paddingStart="6dp"
+        app:sLeftIconRes="@drawable/mine_icon_photo_sure"
         app:sLeftTextColor="#282828"
         app:sLeftTextSize="16sp"
         app:sLeftTextString="真实照片认证"
@@ -60,6 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:paddingStart="6dp"
+        app:sLeftIconRes="@drawable/mine_icon_phone_not"
         app:sLeftTextColor="#282828"
         app:sLeftTextSize="16sp"
         app:sLeftTextString="手机号码认证"
@@ -77,10 +80,10 @@
         app:sLeftTextSize="16sp"
         app:sLeftTextString="实名认证"
         app:sRightTextColor="#ff6161"
-        app:sRightTextSize="14sp"
         app:sRightTextGravity="center"
-        app:sRightTvDrawableRight="@drawable/center_ic_list_enter"
-        app:sRightTextString="去认证" />
+        app:sRightTextSize="14sp"
+        app:sRightTextString="去认证"
+        app:sRightTvDrawableRight="@drawable/center_ic_list_enter" />
 
     <com.allen.library.SuperTextView
         android:id="@+id/st_edu"
@@ -91,14 +94,13 @@
         app:sLeftTextSize="16sp"
         app:sLeftTextString="学历认证"
         app:sRightTextColor="#ff6161"
-        app:sRightTextSize="14sp"
         app:sRightTextGravity="center"
-        app:sRightTvDrawableRight="@drawable/center_ic_list_enter"
-        app:sRightTextString="去认证" />
+        app:sRightTextSize="14sp"
+        app:sRightTextString="去认证"
+        app:sRightTvDrawableRight="@drawable/center_ic_list_enter" />
 
 
     <TextView
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white"
@@ -108,23 +110,24 @@
         android:textColor="#282828"
         android:textSize="16sp"
         android:textStyle="bold">
-
     </TextView>
+
+    <View style="@style/horizontal_line" />
 
     <com.allen.library.SuperTextView
         android:id="@+id/st_house"
         android:layout_width="match_parent"
-        android:layout_marginTop="1dp"
         android:layout_height="50dp"
+        android:layout_marginTop="1dp"
         android:paddingStart="6dp"
         app:sLeftTextColor="#282828"
         app:sLeftTextSize="16sp"
         app:sLeftTextString="房产认证"
         app:sRightTextColor="#ff6161"
-        app:sRightTextSize="14sp"
         app:sRightTextGravity="center"
-        app:sRightTvDrawableRight="@drawable/center_ic_list_enter"
-        app:sRightTextString="去认证" />
+        app:sRightTextSize="14sp"
+        app:sRightTextString="去认证"
+        app:sRightTvDrawableRight="@drawable/center_ic_list_enter" />
 
     <com.allen.library.SuperTextView
         android:id="@+id/st_car"
@@ -135,10 +138,17 @@
         app:sLeftTextSize="16sp"
         app:sLeftTextString="车辆认证"
         app:sRightTextColor="#ff6161"
-        app:sRightTextSize="14sp"
         app:sRightTextGravity="center"
-        app:sRightTvDrawableRight="@drawable/center_ic_list_enter"
-        app:sRightTextString="去认证" />
+        app:sRightTextSize="14sp"
+        app:sRightTextString="去认证"
+        app:sRightTvDrawableRight="@drawable/center_ic_list_enter" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="我们会对您的信息以严格的标准进行保护，未经您的授 权不会对任何第三方提供。"
+        android:textColor="#ffbfbfbf"
+        android:textSize="14sp" />
 
 </LinearLayout>

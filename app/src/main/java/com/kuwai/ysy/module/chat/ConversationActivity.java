@@ -3,6 +3,8 @@ package com.kuwai.ysy.module.chat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseActivity;
@@ -16,9 +18,10 @@ import io.rong.imkit.RongIM;
 
 public class ConversationActivity extends BaseActivity {
 
-    private NavigationLayout navigationLayout;
+    private RelativeLayout navigationLayout;
     private String targetId = "";
     private String title = "";
+    private TextView title1;
 
     @Override
     protected RBasePresenter getPresenter() {
@@ -33,13 +36,31 @@ public class ConversationActivity extends BaseActivity {
     @Override
     protected void initView() {
         navigationLayout = findViewById(R.id.navigation);
-        navigationLayout.setLeftClick(new View.OnClickListener() {
+        title1 = findViewById(R.id.title);
+        findViewById(R.id.left).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        navigationLayout.setRightClick(new View.OnClickListener() {
+       /* navigationLayout.setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });*/
+       findViewById(R.id.right).setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Bundle bundle = new Bundle();
+               bundle.putString("id",targetId);
+               bundle.putString("name",title);
+               Intent intent =  new Intent(ConversationActivity.this, ChatSettingActivity.class);
+               intent.putExtras(bundle);
+               startActivity(intent);
+           }
+       });
+       /* navigationLayout.setRightClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
@@ -49,11 +70,11 @@ public class ConversationActivity extends BaseActivity {
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
-        });
+        });*/
         targetId = getIntent().getData().getQueryParameter("targetId");
         title = getIntent().getData().getQueryParameter("title");
         if (title != null && !title.isEmpty()) {
-            navigationLayout.setTitle(title);
+            title1.setText(title);
         }
     }
 

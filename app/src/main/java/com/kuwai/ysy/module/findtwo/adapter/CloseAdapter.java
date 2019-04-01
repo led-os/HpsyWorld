@@ -47,9 +47,9 @@ public class CloseAdapter extends BaseQuickAdapter<CloseBean.DataBean, BaseViewH
 
         ImageView online = helper.getView(R.id.img_online);
         if (item.getOnline() == 0) {
-            online.setImageResource(R.color.online);
-        } else {
             online.setImageResource(R.color.grey_bf);
+        } else {
+            online.setImageResource(R.color.online);
         }
 
         helper.setText(R.id.tv_name, item.getNickname());

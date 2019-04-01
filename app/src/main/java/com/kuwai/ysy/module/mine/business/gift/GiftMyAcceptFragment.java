@@ -185,7 +185,7 @@ public class GiftMyAcceptFragment extends BaseFragment<GiftMyAcceptPresenter> im
         mTvNickname.setText(giftBean.getGift().get(position).getNickname());
         mTvGiftNum.setText("x" + giftBean.getGift().get(position).getG_nums());
         mTvMsg.setText(DateTimeUitl.timedate(String.valueOf(giftBean.getGift().get(position).getCreate_time())));
-        mTvValue.setText(giftBean.getGift().get(position).getPrice() + " 鱼币");
+        mTvValue.setText(giftBean.getGift().get(position).getPrice() + " 桃花币");
 
         switch (giftBean.getGift().get(position).getIs_vip()) {
             case 0:

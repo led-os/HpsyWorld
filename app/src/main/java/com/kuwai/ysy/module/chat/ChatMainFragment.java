@@ -43,6 +43,7 @@ import java.util.List;
 import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
@@ -301,4 +302,5 @@ public class ChatMainFragment extends BaseFragment implements View.OnClickListen
             }
         }));
     }
+
 }

@@ -15,7 +15,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp">
+            android:layout_marginLeft="6dp">
 
             <ImageView
                 android:id="@+id/left"
@@ -23,7 +23,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/ic_left_theme" />
+                android:scaleType="center"
+                android:src="@drawable/icon_back_single" />
 
             <TextView
                 android:id="@+id/left_txt"

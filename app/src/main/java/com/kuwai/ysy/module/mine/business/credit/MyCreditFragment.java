@@ -1,26 +1,39 @@
 package com.kuwai.ysy.module.mine.business.credit;
 
+import android.Manifest;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.allen.library.SuperTextView;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.bean.ResponseWithData;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.circle.aliyun.AlivcSvideoRecordActivity;
+import com.kuwai.ysy.module.circle.aliyun.VideoRecordActivity;
+import com.kuwai.ysy.module.circle.business.publishdy.PublishDyActivity;
 import com.kuwai.ysy.module.home.api.HomeApiFactory;
 import com.kuwai.ysy.module.home.bean.login.CodeBean;
 import com.kuwai.ysy.module.mine.bean.CreditBean;
 import com.kuwai.ysy.utils.security.RSAEncrypt;
 import com.kuwai.ysy.widget.NavigationLayout;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.rayhahah.dialoglib.DialogInterface;
 import com.rayhahah.dialoglib.NormalAlertDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.FileUtils;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -38,6 +51,7 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
     private SuperTextView mStEdu;
     private SuperTextView mStHouse;
     private SuperTextView mStCar;
+    private String videoPath;
 
     public static MyCreditFragment newInstance() {
         Bundle args = new Bundle();
@@ -56,10 +70,24 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
         return new MyCreditPresenter(this);
     }
 
+    private static final int REQUST_CODE_VIDEO = 1002;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.st_headicon:
+                RxPermissions rxPermissions = new RxPermissions(getActivity());
+                rxPermissions.request(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        .subscribe(new Consumer<Boolean>() {
+                            @Override
+                            public void accept(Boolean aBoolean) throws Exception {
+                                if(aBoolean){
+                                    startActivityForResult(new Intent(getActivity(), VideoRecordActivity.class),REQUST_CODE_VIDEO);
+                                }else{
+                                    ToastUtils.showShort("请授予权限");
+                                }
+                            }
+                        });
                 break;
             case R.id.st_phone:
                 //getCode(SPManager.get().getStringValue("uid"), "123");
@@ -112,6 +140,7 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
         mStEdu = (SuperTextView) mRootView.findViewById(R.id.st_edu);
         mStHouse = (SuperTextView) mRootView.findViewById(R.id.st_house);
         mStPhone.setOnClickListener(this);
+        mStHeadicon.setOnClickListener(this);
         mStCar = (SuperTextView) mRootView.findViewById(R.id.st_car);
         mNavigation.setLeftClick(new View.OnClickListener() {
             @Override
@@ -151,17 +180,19 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
         switch (creditBean.getData().get(0).getIs_avatar()) {
             case 0:
                 mStHeadicon.setRightString("去认证")
+                        .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_photo_not))
                         .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
                         .setRightTextColor(Color.parseColor("#ff6161"));
-                mStHeadicon.setOnClickListener(this);
                 break;
             case 1:
                 mStHeadicon.setRightString("已认证")
+                        .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_photo_sure))
                         .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
             case 2:
                 mStHeadicon.setRightString("审核中")
+                        .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_photo_not))
                         .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
@@ -170,17 +201,20 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
         switch (creditBean.getData().get(0).getIs_phone()) {
             case 0:
                 mStPhone.setRightString("去认证")
+                        .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_phone_not))
                         .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
                         .setRightTextColor(Color.parseColor("#ff6161"));
                 mStPhone.setOnClickListener(this);
                 break;
             case 1:
                 mStPhone.setRightString("已认证")
+                        .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_phone_sure))
                         .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
             case 2:
                 mStPhone.setRightString("审核中")
+                        .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_photo_not))
                         .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
@@ -189,17 +223,20 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
         switch (creditBean.getData().get(0).getIs_real()) {
             case 0:
                 mTvAuth.setRightString("去认证")
+                        .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_name_not))
                         .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
                         .setRightTextColor(Color.parseColor("#ff6161"));
                 mTvAuth.setOnClickListener(this);
                 break;
             case 1:
                 mTvAuth.setRightString("已认证")
+                        .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_name_sure))
                         .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
             case 2:
                 mTvAuth.setRightString("审核中")
+                        .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_name_not))
                         .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
@@ -208,17 +245,20 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
         switch (creditBean.getData().get(0).getIs_education()) {
             case 0:
                 mStEdu.setRightString("去认证")
+                        .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_edu_not))
                         .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
                         .setRightTextColor(Color.parseColor("#ff6161"));
                 mStEdu.setOnClickListener(this);
                 break;
             case 1:
                 mStEdu.setRightString("已认证")
+                        .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_edu_sure))
                         .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
             case 2:
                 mStEdu.setRightString("审核中")
+                        .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_edu_not))
                         .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
@@ -227,17 +267,20 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
         switch (creditBean.getData().get(0).getIs_house()) {
             case 0:
                 mStHouse.setRightString("去认证")
+                        .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_house_not))
                         .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
                         .setRightTextColor(Color.parseColor("#ff6161"));
                 mStHouse.setOnClickListener(this);
                 break;
             case 1:
                 mStHouse.setRightString("已认证")
+                        .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_house_sure))
                         .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
             case 2:
                 mStHouse.setRightString("审核中")
+                        .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_house_not))
                         .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
@@ -246,17 +289,20 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
         switch (creditBean.getData().get(0).getIs_vehicle()) {
             case 0:
                 mStCar.setRightString("去认证")
+                        .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_car_not))
                         .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
                         .setRightTextColor(Color.parseColor("#ff6161"));
                 mStCar.setOnClickListener(this);
                 break;
             case 1:
                 mStCar.setRightString("已认证")
+                        .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_car_sure))
                         .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
             case 2:
                 mStCar.setRightString("审核中")
+                        .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_car_not))
                         .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
@@ -282,5 +328,35 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
     @Override
     public void showViewError(Throwable t) {
 
+    }
+
+    private Bitmap mBitmap;
+    private String imagePath;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUST_CODE_VIDEO:
+                    LocalMedia media = new LocalMedia();
+                    if (data.getStringExtra("path") != null) {
+                        videoPath = data.getStringExtra("path");
+                        media.setPath(data.getStringExtra("path"));
+                        media.setPictureType("video");
+                        media.setMimeType(PictureMimeType.ofVideo());
+                        mBitmap = FileUtils.voidToFirstBitmap(videoPath);
+                        imagePath = FileUtils.bitmapToStringPath(getActivity(), mBitmap);
+                    } else if (data.getStringExtra("imgpath") != null) {
+                        media.setPath(data.getStringExtra("imgpath"));
+                        media.setCompressPath(data.getStringExtra("imgpath"));
+                    }
+
+                    //selectList.add(media);
+                    //mPhotosSnpl.setData(selectList);
+                    break;
+            }
+
+        }
     }
 }

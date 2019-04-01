@@ -39,6 +39,7 @@ import com.rayhahah.rbase.utils.useful.SPManager;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import cc.shinichi.library.ImagePreview;
 import www.linwg.org.lib.LCardView;
 
 public class MineLoginTwoFragment extends BaseFragment<MinePresenter> implements View.OnClickListener, MineContract.IMineView {
@@ -67,6 +68,7 @@ public class MineLoginTwoFragment extends BaseFragment<MinePresenter> implements
     private TextView mTvActivity;
     private TextView mTvGift;
     private TextView mVipTv;
+    private UserInfo userInfo;
 
     public static MineLoginTwoFragment newInstance() {
         return new MineLoginTwoFragment();
@@ -120,6 +122,7 @@ public class MineLoginTwoFragment extends BaseFragment<MinePresenter> implements
         mTvDate.setOnClickListener(this);
         ll_vip.setOnClickListener(this);
         ll_auth.setOnClickListener(this);
+        mImgHead.setOnClickListener(this);
         mTvActivity.setOnClickListener(this);
     }
 
@@ -136,6 +139,26 @@ public class MineLoginTwoFragment extends BaseFragment<MinePresenter> implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.img_head:
+                ImagePreview
+                        .getInstance()
+                        // 上下文，必须是activity，不需要担心内存泄漏，本框架已经处理好
+                        .setContext(getActivity())
+                        // 只有一张图片的情况，可以直接传入这张图片的url
+                        .setImage(userInfo.getData().getAvatar())
+                        // 加载策略，详细说明见下面“加载策略介绍”。默认为手动模式
+                        .setLoadStrategy(ImagePreview.LoadStrategy.AlwaysThumb)
+                        .setFolderName("BigImageViewDownload")
+                        // 缩放动画时长，单位ms
+                        .setZoomTransitionDuration(300)
+                        // 是否启用上拉/下拉关闭。默认不启用
+                        .setEnableDragClose(true)
+                        // 是否显示下载按钮，在页面右下角。默认显示
+                        .setShowDownButton(false)
+                        // 设置失败时的占位图，默认为R.drawable.load_failed，设置为 0 时不显示
+                        .setErrorPlaceHolder(R.drawable.load_failed)
+                        .start();
+                break;
             case R.id.tv_close:
                 startActivity(new Intent(getActivity(), CloseActivity.class));
                 break;
@@ -192,6 +215,7 @@ public class MineLoginTwoFragment extends BaseFragment<MinePresenter> implements
     @Override
     public void setUserData(UserInfo cityMeetBean) {
         swipeRefreshLayout.setRefreshing(false);
+        userInfo = cityMeetBean;
         mLayoutStatusView.showContent();
         if (cityMeetBean.getData().getIs_vip() == 1) {
             top_lay.setCardBackgroundColor(getActivity().getResources().getColor(R.color.bg_vip));

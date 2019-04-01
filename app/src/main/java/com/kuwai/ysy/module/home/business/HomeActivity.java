@@ -72,6 +72,7 @@ import io.rong.calllib.RongCallClient;
 import io.rong.calllib.RongCallCommon;
 import io.rong.calllib.RongCallSession;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
@@ -82,7 +83,7 @@ import okio.ByteString;
 
 import static com.kuwai.ysy.app.C.MSG_LOGIN;
 
-public class HomeActivity extends BaseActivity implements AMapLocationListener {
+public class HomeActivity extends BaseActivity implements AMapLocationListener, IUnReadMessageObserver {
 
     public static final int FIRST = 0;
     public static final int SECOND = 1;
@@ -142,6 +143,12 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
         viewPager.setAdapter(new TestViewPagerAdapter(getSupportFragmentManager()));
         viewPager.setOffscreenPageLimit(5);
         mNavigationController.setupWithViewPager(viewPager);
+
+        final Conversation.ConversationType[] conversationTypes = {
+                Conversation.ConversationType.PRIVATE};
+
+        RongIM.getInstance().addUnReadMessageCountChangedObserver(this, conversationTypes);
+
         getLocation();
         autoLogin();
         requestReadPermission();
@@ -552,5 +559,15 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener {
                         getStartPage();
                     }
                 });
+    }
+
+    @Override
+    public void onCountChanged(int count) {
+       /* if(count>0){
+            mNavigationController.setHasMessage(2,true);
+        }else{
+            mNavigationController.setHasMessage(2,false);
+        }*/
+        mNavigationController.setMessageNumber(2,count);
     }
 }
