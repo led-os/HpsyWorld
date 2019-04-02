@@ -39,6 +39,16 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="CountDownProgressBar">
+        <attr name="countDown_circleWidth" format="dimension" />
+        <attr name="countDown_centerTextSize" format="dimension" />
+        <attr name="countDown_betaAngle" format="integer" />
+        <attr name="countDown_firstColor" format="color" />
+        <attr name="countDown_secondColor" format="color" />
+        <attr name="countDown_centerTextColor" format="color" />
+        <attr name="countDown_isShowGradient" format="boolean" />
+    </declare-styleable>
+
     <declare-styleable name="IdentityImageView">
         <attr name="iciv_bigimage" format="reference"></attr><!--大图片-->
         <attr name="iciv_smallimage" format="reference"></attr><!--小图片-->

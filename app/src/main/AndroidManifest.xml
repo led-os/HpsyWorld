@@ -186,6 +186,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".module.mine.business.gift.GiftActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".module.mine.VideoPreActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".module.mine.business.question.AskQuestionActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".module.mine.OtherHomeActivity"

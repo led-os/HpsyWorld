@@ -33,6 +33,8 @@ import com.aliyun.svideo.sdk.external.struct.encoder.VideoCodecs;
 import com.aliyun.svideo.sdk.external.struct.snap.AliyunSnapVideoParam;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.module.circle.business.publishdy.PublishDyActivity;
+import com.kuwai.ysy.module.mine.VideoPreActivity;
+import com.kuwai.ysy.module.mine.business.credit.MyCreditFragment;
 import com.kuwai.ysy.utils.PermissionUtils;
 
 import java.io.File;
@@ -118,7 +120,7 @@ public class VideoRecordActivity extends AppCompatActivity {
         videoRecordView.setBitrate(mBitrate);
         videoRecordView.setMaxRecordTime(mMaxDuration);
         videoRecordView.setMinRecordTime(mMinDuration);
-        videoRecordView.setRatioMode(mRatioMode);
+        //videoRecordView.setRatioMode(mRatioMode);
         videoRecordView.setVideoQuality(mVideoQuality);
         videoRecordView.setResolutionMode(mResolutionMode);
 
@@ -127,6 +129,7 @@ public class VideoRecordActivity extends AppCompatActivity {
                 videoRecordView.startRecord();
             }
         }, 5000);   //5秒
+        //videoRecordView.startRecord();
     }
 
     private String[] mEffDirs;
@@ -286,7 +289,7 @@ public class VideoRecordActivity extends AppCompatActivity {
         videoRecordView.setCompleteListener(new EasyRecordView.OnFinishListener() {
             @Override
             public void onComplete(String path,int duration) {
-                AliyunIImport mImport= AliyunImportCreator.getImportInstance(VideoRecordActivity.this);
+                /*AliyunIImport mImport= AliyunImportCreator.getImportInstance(VideoRecordActivity.this);
                 mImport.setVideoParam(mVideoParam);
                 mImport.addMediaClip(new AliyunVideoClip.Builder()
                     .source(path)
@@ -294,10 +297,10 @@ public class VideoRecordActivity extends AppCompatActivity {
                     .endTime(duration)
                     .displayMode(AliyunDisplayMode.DEFAULT)
                     .build());
-                String projectJsonPath = mImport.generateProjectConfigure();
-                Intent intent = new Intent(VideoRecordActivity.this, PublishDyActivity.class);
+                String projectJsonPath = mImport.generateProjectConfigure();*/
+                Intent intent = new Intent(VideoRecordActivity.this, VideoPreActivity.class);
                 intent.putExtra("path", path);
-                setResult(RESULT_OK, intent);
+                startActivity(intent);
                 finish();
             }
         });
@@ -305,27 +308,27 @@ public class VideoRecordActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        videoRecordView.stopPreview();
+        //videoRecordView.stopPreview();
         super.onPause();
-        if (phoningToast != null) {
+        /*if (phoningToast != null) {
             phoningToast.cancel();
             phoningToast = null;
-        }
+        }*/
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (phoneStateManger != null) {
+       /* if (phoneStateManger != null) {
             phoneStateManger.setOnPhoneStateChangeListener(null);
             phoneStateManger.unRegistPhoneStateListener();
             phoneStateManger = null;
-        }
+        }*/
     }
 
     @Override
     protected void onDestroy() {
-        videoRecordView.destroyRecorder();
+        //videoRecordView.destroyRecorder();
         super.onDestroy();
         if (copyAssetsTask != null) {
             copyAssetsTask.cancel(true);
@@ -357,50 +360,6 @@ public class VideoRecordActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * 开启录制
-     * @param context Context
-     * @param param AliyunSnapVideoParam
-     */
-    public static void startRecord(Context context, AliyunSnapVideoParam param){
-        startRecord(context, param, "");
-    }
-
-    /**
-     * 开启录制
-     * @param context Context
-     * @param param AliyunSnapVideoParam
-     * @param entrance 模块入口方式
-     */
-    public static void startRecord(Context context, AliyunSnapVideoParam param, String entrance){
-        Intent intent = new Intent(context,VideoRecordActivity.class);
-        intent.putExtra(AliyunSnapVideoParam.VIDEO_RESOLUTION,param.getResolutionMode());
-        intent.putExtra(AliyunSnapVideoParam.VIDEO_RATIO,param.getRatioMode());
-        intent.putExtra(AliyunSnapVideoParam.RECORD_MODE,param.getRecordMode());
-        intent.putExtra(AliyunSnapVideoParam.FILTER_LIST,param.getFilterList());
-        intent.putExtra(AliyunSnapVideoParam.BEAUTY_LEVEL,param.getBeautyLevel());
-        intent.putExtra(AliyunSnapVideoParam.BEAUTY_STATUS,param.getBeautyStatus());
-        intent.putExtra(AliyunSnapVideoParam.CAMERA_TYPE, param.getCameraType());
-        intent.putExtra(AliyunSnapVideoParam.FLASH_TYPE, param.getFlashType());
-        intent.putExtra(AliyunSnapVideoParam.NEED_CLIP,param.isNeedClip());
-        intent.putExtra(AliyunSnapVideoParam.MAX_DURATION,param.getMaxDuration());
-        intent.putExtra(AliyunSnapVideoParam.MIN_DURATION,param.getMinDuration());
-        intent.putExtra(AliyunSnapVideoParam.VIDEO_QUALITY,param.getVideoQuality());
-        intent.putExtra(AliyunSnapVideoParam.VIDEO_GOP,param.getGop());
-        intent.putExtra(AliyunSnapVideoParam.VIDEO_BITRATE, param.getVideoBitrate());
-        intent.putExtra(AliyunSnapVideoParam.SORT_MODE,param.getSortMode());
-        intent.putExtra(AliyunSnapVideoParam.VIDEO_CODEC, param.getVideoCodec());
-
-
-        intent.putExtra(AliyunSnapVideoParam.VIDEO_FRAMERATE,param.getFrameRate());
-        intent.putExtra(AliyunSnapVideoParam.CROP_MODE, param.getScaleMode());
-        intent.putExtra(AliyunSnapVideoParam.MIN_CROP_DURATION,param.getMinCropDuration());
-        intent.putExtra(AliyunSnapVideoParam.MIN_VIDEO_DURATION,param.getMinVideoDuration());
-        intent.putExtra(AliyunSnapVideoParam.MAX_VIDEO_DURATION,param.getMaxVideoDuration());
-        intent.putExtra(AliyunSnapVideoParam.SORT_MODE, param.getSortMode());
-        intent.putExtra(INTENT_PARAM_KEY_ENTRANCE, entrance);
-        context.startActivity(intent);
-    }
     public static final int PERMISSION_REQUEST_CODE = 1000;
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,

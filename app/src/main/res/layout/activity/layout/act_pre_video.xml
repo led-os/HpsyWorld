@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title1="照片认证"></com.kuwai.ysy.widget.NavigationLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="360dp">
+        
+        <ImageView
+            android:id="@+id/img_pre"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:text="请先确认你录制的视频，满意后再上传 (审核期间不能重新提交视频)"
+            android:textColor="#ffffffff"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="14dp"
+            android:textSize="14sp" />
+        
+        <ImageView
+            android:id="@+id/img_play"
+            android:layout_width="66dp"
+            android:layout_height="66dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/mine_icon_play"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_upload"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:text="上传"
+        android:textColor="#ffffffff"
+        android:gravity="center"
+        android:background="@color/theme"
+        android:layout_marginTop="12dp"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/tv_re_video"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:text="重新录制"
+        android:textColor="@color/theme"
+        android:gravity="center"
+        android:layout_marginTop="12dp"
+        android:textSize="18sp"/>
+</LinearLayout>

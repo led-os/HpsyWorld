@@ -76,7 +76,8 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.st_headicon:
-                RxPermissions rxPermissions = new RxPermissions(getActivity());
+                start(new PhotoAuthFragment());
+                /*RxPermissions rxPermissions = new RxPermissions(getActivity());
                 rxPermissions.request(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         .subscribe(new Consumer<Boolean>() {
                             @Override
@@ -87,7 +88,7 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
                                     ToastUtils.showShort("请授予权限");
                                 }
                             }
-                        });
+                        });*/
                 break;
             case R.id.st_phone:
                 //getCode(SPManager.get().getStringValue("uid"), "123");

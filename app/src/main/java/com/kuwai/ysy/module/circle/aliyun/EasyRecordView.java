@@ -54,6 +54,8 @@ import com.kuwai.ysy.utils.PermissionUtils;
 import com.kuwai.ysy.utils.SaveToGallery;
 import com.kuwai.ysy.utils.TimeFormatterUtils;
 import com.kuwai.ysy.utils.Utils;
+import com.kuwai.ysy.widget.CountDownProgressBar;
+import com.kuwai.ysy.widget.TakeView;
 import com.qu.preview.callback.OnFrameCallBack;
 import com.qu.preview.callback.OnTextureIdCallBack;
 import com.rayhahah.rbase.utils.base.ToastUtils;
@@ -81,7 +83,6 @@ public class EasyRecordView extends RelativeLayout
     private static int TEST_VIDEO_WIDTH = 540;
     private static int TEST_VIDEO_HEIGHT = 960;
     private GLSurfaceView mGLSurfaceView;
-    private ControlView mControlView;
     private RecordTimelineView mRecordTimeView;
     private AlivcCountDownView mCountDownView;
     private AliyunIRecorder recorder;
@@ -211,35 +212,6 @@ public class EasyRecordView extends RelativeLayout
     private static boolean faceInitResult;
 
     /**
-     * 恢复冲突的特效，这些特效都是会彼此冲突的，比如滤镜和MV，因为MV中也有滤镜效果，所以MV和滤镜的添加顺序 会影响最终产生视频的效果，在恢复时必须严格按照用户的操作顺序来恢复，
-     * 这样就需要维护一个添加过的特效类的列表，然后按照列表顺序 去恢复
-     */
-    private void restoreConflictEffect() {
-        if (!mConflictEffects.isEmpty()) {
-            for (Map.Entry<Integer, Object> entry : mConflictEffects.entrySet()) {
-                switch (entry.getKey()) {
-                    case TYPE_FILTER:
-                        recorder.applyFilter((EffectFilter) entry.getValue());
-                        break;
-                    case TYPE_MV:
-                        if (!isMusicViewShowing) {
-                            recorder.applyMv((EffectBean) entry.getValue());
-                        }
-                        break;
-                    case TYPE_MUSIC:
-                        EffectBean music = (EffectBean) entry.getValue();
-                        if (music != null) {
-                            recorder.setMusic(music.getPath(), music.getStartTime(), music.getDuration());
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    }
-
-    /**
      * 底层在onPause时会回收资源, 此处选择的滤镜的资源路径, 用于恢复状态
      */
     private String filterSourcePath;
@@ -248,6 +220,8 @@ public class EasyRecordView extends RelativeLayout
      * 美颜美肌点击了back按钮
      */
     private boolean isbeautyDetailBack;
+    CountDownProgressBar countDownProgressBar = null;
+    private TakeView takeView;
 
     public EasyRecordView(Context context) {
         super(context);
@@ -268,8 +242,17 @@ public class EasyRecordView extends RelativeLayout
         //初始化surfaceView
 
         initSurfaceView();
-        //initControlView();
-        //initCountDownView();
+        takeView = new TakeView(getContext());
+        addSubView(takeView);
+        takeView.setCallback(new TakeView.TakeCallback() {
+            @Override
+            public void cancelCallback() {
+                if (mBackClickListener != null) {
+                    mBackClickListener.onClick();
+                }
+            }
+        });
+        initCountDownView();
         initRecorder();
         initRecordTimeView();
     }
@@ -279,33 +262,11 @@ public class EasyRecordView extends RelativeLayout
      */
     public void startPreview() {
         if (recorder != null) {
-            //在startPreview的时候初始化faceUnity,保证和faceUnity的release成对出现
-            //initFaceUnity(getContext());
-
             recorder.startPreview();
-            if (isAllowChangeMv) {
-                restoreConflictEffect();
-            }
-            //            recorder.setZoom(scaleFactor);
-            /*if (clipManager.getDuration() >= clipManager.getMinDuration()) {
-                // 2018/7/11 让下一步按钮可点击
-                mControlView.setCompleteEnable(true);
-            } else {
-                mControlView.setCompleteEnable(false);
-            }*/
         }
         if (orientationDetector != null && orientationDetector.canDetectOrientation()) {
             orientationDetector.enable();
         }
-
-        /*mCountDownView.setOnCountDownFinishListener(new AlivcCountDownView.OnCountDownFinishListener() {
-            @Override
-            public void onFinish() {
-                ToastUtils.showShort("开始录制");
-                startRecord();
-            }
-        });*/
-
     }
 
     /**
@@ -319,7 +280,6 @@ public class EasyRecordView extends RelativeLayout
             recorder.setVideoQuality(mVideoQuality);
         }
     }
-
 
     /**
      * 设置视频码率
@@ -386,19 +346,9 @@ public class EasyRecordView extends RelativeLayout
                 }
             }
         });
-
-        if (mControlView != null && mCountDownView != null && mControlView.getRecordState().equals(RecordState.READY)) {
-            mCountDownView.cancle();
-            mControlView.setRecordState(RecordState.STOP);
-            mControlView.setRecording(false);
-        }
         //解决部分机型锁屏音乐不停止的问题，以后sdk同学需要解决
         if (isAllowChangeMv) {
             recorder.applyMv(null);
-        }
-        if (mControlView != null && mControlView.getRecordState().equals(RecordState.RECORDING)) {
-            recorder.cancelRecording();
-
         }
         recorder.stopPreview();
 
@@ -451,7 +401,8 @@ public class EasyRecordView extends RelativeLayout
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                     FrameLayout.LayoutParams.MATCH_PARENT);
             params.gravity = Gravity.CENTER;
-            addView(mCountDownView, params);
+            //addView(mCountDownView, params);
+
         }
     }
 
@@ -462,8 +413,19 @@ public class EasyRecordView extends RelativeLayout
                 R.color.alivc_bg_record_time);
         mRecordTimeView.setMaxDuration(clipManager.getMaxDuration());
         mRecordTimeView.setMinDuration(clipManager.getMinDuration());
-        addView(mRecordTimeView, params);
+        //addView(mRecordTimeView, params);
 
+        /*countDownProgressBar = new CountDownProgressBar(getContext());
+        LayoutParams params1 = new LayoutParams(200, 200);
+        params1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        params1.bottomMargin = 400;
+        countDownProgressBar.setDuration(5000, new CountDownProgressBar.OnFinishListener() {
+            @Override
+            public void onFinish() {
+                ToastUtils.showShort("完成了");
+            }
+        });
+        addView(countDownProgressBar,params1);*/
     }
 
     /**
@@ -497,127 +459,6 @@ public class EasyRecordView extends RelativeLayout
     }
 
     /**
-     * 初始化控制栏view
-     */
-    private void initControlView() {
-        mControlView = new ControlView(getContext());
-        mControlView.setControlViewListener(new ControlViewListener() {
-            @Override
-            public void onBackClick() {
-                if (mBackClickListener != null) {
-                    mBackClickListener.onClick();
-                }
-            }
-
-            @Override
-            public void onNextClick() {
-                // 完成录制
-                finishRecording();
-            }
-
-            @Override
-            public void onBeautyFaceClick() {
-                //showBeautyFaceView();
-            }
-
-            @Override
-            public void onMusicClick() {
-                //showMusicSelView();
-            }
-
-            @Override
-            public void onCameraSwitch() {
-                if (recorder != null) {
-                    int cameraId = recorder.switchCamera();
-                    for (CameraType type : CameraType
-                            .values()) {
-                        if (type.getType() == cameraId) {
-                            cameraType = type;
-                        }
-                    }
-                    if (mControlView != null) {
-                        for (CameraType type : CameraType.values()) {
-                            if (type.getType() == cameraId) {
-                                mControlView.setCameraType(type);
-                            }
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onLightSwitch(FlashType flashType) {
-                if (recorder != null) {
-                    for (FlashType type : FlashType
-                            .values()) {
-                        if (flashType.toString().equals(type.toString())) {
-                            recorder.setLight(type);
-                        }
-                    }
-
-                }
-            }
-
-            @Override
-            public void onRateSelect(float rate) {
-                if (recorder != null) {
-                    recorder.setRate(rate);
-                }
-            }
-
-            @Override
-            public void onGifEffectClick() {
-                //showGifEffectView();
-            }
-
-            @Override
-            public void onReadyRecordClick(boolean isCancel) {
-                if (isCancel) {
-                    cancelReadyRecord();
-                } else {
-                    showReadyRecordView();
-                }
-
-            }
-
-            @Override
-            public void onStartRecordClick() {
-                startRecord();
-            }
-
-            @Override
-            public void onStopRecordClick() {
-                stopRecord();
-            }
-
-            @Override
-            public void onDeleteClick() {
-                mRecordTimeView.deleteLast();
-                clipManager.deletePart();
-                isMaxDuration = false;
-                if (clipManager.getDuration() < clipManager.getMinDuration() && mControlView != null) {
-                    mControlView.setCompleteEnable(false);
-                }
-
-                if (clipManager.getDuration() == 0) {
-                    //音乐可以选择
-                    recorder.restartMv();
-                    mControlView.setHasRecordPiece(false);
-                    isAllowChangeMv = true;
-                }
-                mControlView.setRecordTime(TimeFormatterUtils.formatTime(clipManager.getDuration()));
-            }
-
-            @Override
-            public void photoClick() {
-                recorder.takePhoto(true);
-                //recorder.takePicture(true);
-            }
-        });
-        addSubView(mControlView);
-    }
-
-    /**
      * 权限申请
      */
     String[] permission = {
@@ -634,7 +475,7 @@ public class EasyRecordView extends RelativeLayout
         boolean checkResult = PermissionUtils.checkPermissionsGroup(getContext(), permission);
         if (!checkResult && mActivity != null) {
             PermissionUtils.requestPermissions(mActivity, permission,
-                    AlivcSvideoRecordActivity.PERMISSION_REQUEST_CODE);
+                    VideoRecordActivity.PERMISSION_REQUEST_CODE);
             return;
         }
 
@@ -669,12 +510,8 @@ public class EasyRecordView extends RelativeLayout
      */
     private void stopRecord() {
         Log.d(TAG, "stopRecord    isStopToCompleteDuration:" + isStopToCompleteDuration);
-        if (recorder != null && !isStopToCompleteDuration && mControlView.isRecording()) {//
+        if (recorder != null && !isStopToCompleteDuration) {//
             isStopToCompleteDuration = true;
-            if (mControlView.getFlashType() == FlashType.ON
-                    && mControlView.getCameraType() == CameraType.BACK) {
-                recorder.setLight(FlashType.OFF);
-            }
             //此处添加判断，progressBar弹出，也即当视频片段合成的时候，不调用stopRecording,
             //否则在finishRecording的时候调用stopRecording，会导致finishRecording阻塞
             //暂时规避，等待sdk解决该问题，取消该判断
@@ -813,28 +650,12 @@ public class EasyRecordView extends RelativeLayout
                     mRecordTimeView.setDuration((int) duration);
                 }
                 recordTime = (int) duration + clipManager.getDuration();
-               /* if (recordTime <= clipManager.getMaxDuration() && recordTime >= clipManager.getMinDuration()) {
-                    // 2018/7/11 让下一步按钮可点击
-                    mControlView.setCompleteEnable(true);
-                } else {
-                    mControlView.setCompleteEnable(false);
-                }
-                if (mControlView != null && mControlView.getRecordState().equals(RecordState.STOP)) {
-                    return;
-                }
-                if (mControlView != null) {
-                    mControlView.setRecordTime(TimeFormatterUtils.formatTime(recordTime));
-                }*/
             }
 
             @Override
             public void onMaxDuration() {
                 Log.e(TAG, "onMaxDuration:");
                 isMaxDuration = true;
-                /*if (mControlView != null) {
-                    mControlView.setCompleteEnable(false);
-                    mControlView.setRecordState(RecordState.STOP);
-                }*/
             }
 
             @Override
@@ -848,12 +669,6 @@ public class EasyRecordView extends RelativeLayout
             @Override
             public void onInitReady() {
                 Log.e(TAG, "onInitReady");
-                post(new Runnable() {
-                    @Override
-                    public void run() {
-                        restoreConflictEffect();
-                    }
-                });
             }
 
             @Override
@@ -882,9 +697,6 @@ public class EasyRecordView extends RelativeLayout
 
             @Override
             public int onScaledIdBack(int scaledId, int textureWidth, int textureHeight, float[] matrix) {
-                //if (test == null) {
-                //    test = new OpenGLTest();
-                //}
 
                 return scaledId;
             }
@@ -904,36 +716,10 @@ public class EasyRecordView extends RelativeLayout
     public void deleteAllPart() {
         if (clipManager != null) {
             clipManager.deleteAllPart();
-            if (clipManager.getDuration() < clipManager.getMinDuration() && mControlView != null) {
-                mControlView.setCompleteEnable(false);
-            }
             if (clipManager.getDuration() == 0) {
-                // 音乐可以选择
-                //                    musicBtn.setVisibility(View.VISIBLE);
-                //                    magicMusic.setVisibility(View.VISIBLE);
-                //recorder.restartMv();
                 mRecordTimeView.clear();
-                mControlView.setHasRecordPiece(false);
                 isAllowChangeMv = true;
             }
-        }
-    }
-
-    /**
-     * 美颜默认选中高级, 3档 美白: 0.6 红润: 0.6 磨皮: 6 大眼: 0.6 瘦脸: 0.6 * 1.5 (总范围0~1.5)
-     */
-    private void faceunityDefaultParam() {
-        float defaultValue = (float) defaultBeautyLevel.getValue() / 100;
-
-        beautyColorLevel = defaultValue;
-        beautyRedLevel = defaultValue;
-        beautyBlurLevel = defaultValue * 10;
-        if (faceUnityManager != null) {
-            faceUnityManager.setFaceBeautyColorLevel(defaultValue);
-            faceUnityManager.setFaceBeautyRedLevel(defaultValue);
-            faceUnityManager.setFaceBeautyEnlargeEye(defaultValue);
-            faceUnityManager.setFaceBeautyBlurLevel(beautyBlurLevel);
-            faceUnityManager.setFaceBeautyCheekThin(defaultValue * 1.5f);
         }
     }
 
@@ -1085,16 +871,10 @@ public class EasyRecordView extends RelativeLayout
 
     @Override
     public void onDialogDismiss() {
-        if (mControlView != null) {
-            mControlView.setEffectSelViewShow(false);
-        }
     }
 
     @Override
     public void onDialogShow() {
-        if (mControlView != null) {
-            mControlView.setEffectSelViewShow(true);
-        }
     }
 
     private float lastScaleFactor;

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="50dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/mine_icon_videobox1"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/mine_icon_videobox2"/>
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="提示:认证时请保证光线充足 且清晰的展示自己的正面"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bg_tou"
+        android:textColor="#ffffffff"
+        android:padding="10dp"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="取消"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="#88666666"
+        android:layout_marginBottom="40dp"
+        android:layout_alignParentBottom="true"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_above="@id/tv_cancel"
+        android:src="@drawable/mine_icon_videobox3"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:layout_above="@id/tv_cancel"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/mine_icon_videobox4"/>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:textColor="#99ffffff"
+        android:layout_centerInParent="true"
+        android:textSize="144sp"
+        />
+
+    <TextView
+        android:id="@+id/tv_dao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3S倒计时后开始"
+        android:textColor="#ffffffff"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tv_time"
+        android:textSize="20sp"
+        android:layout_marginTop="30dp"
+        />
+
+    <com.kuwai.ysy.widget.CountDownProgressBar
+        android:id="@+id/cpb_countdown"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        app:countDown_centerTextSize="10dp"
+        app:countDown_circleWidth="4dp"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        app:countDown_firstColor="#2395FF"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="140dp"
+        app:countDown_secondColor="@color/text_blue"
+        app:countDown_isShowGradient="true"
+        app:countDown_centerTextColor="@color/white" />
+</RelativeLayout>
