@@ -16,6 +16,7 @@ import com.kuwai.ysy.module.mine.bean.GiftAcceptBean;
 import com.kuwai.ysy.module.mine.bean.GiftBoxBean;
 import com.kuwai.ysy.module.mine.bean.GiftExchangeBean;
 import com.kuwai.ysy.module.mine.bean.GiftWithdrawalsBean;
+import com.kuwai.ysy.module.mine.bean.HomepageListBean;
 import com.kuwai.ysy.module.mine.bean.IntegralDetailBean;
 import com.kuwai.ysy.module.mine.bean.JobBean;
 import com.kuwai.ysy.module.mine.bean.LikeEach;
@@ -30,12 +31,14 @@ import com.kuwai.ysy.module.mine.bean.PersonalTreeHole;
 import com.kuwai.ysy.module.mine.bean.RechargeRecordBean;
 import com.kuwai.ysy.module.mine.bean.ShieldAndBlackListBean;
 import com.kuwai.ysy.module.mine.bean.TaGiftBean;
+import com.kuwai.ysy.module.mine.bean.TestVoice;
 import com.kuwai.ysy.module.mine.bean.TodayBean;
 import com.kuwai.ysy.module.mine.bean.TodayIntegral;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
 import com.kuwai.ysy.module.mine.bean.VisitorMore;
 import com.kuwai.ysy.module.mine.bean.WallBean;
 import com.kuwai.ysy.module.mine.bean.WalletDetailsBean;
+import com.kuwai.ysy.module.mine.bean.WheelBean;
 import com.kuwai.ysy.module.mine.bean.WithdrawalsRecordBean;
 import com.kuwai.ysy.module.mine.bean.place.LatestPlace;
 import com.kuwai.ysy.module.mine.bean.user.UserInfo;
@@ -100,7 +103,7 @@ public interface MineService {
      * 个人主页-资料-别人查看
      */
     @FormUrlEncoded
-    @POST("HomePage/OtherPersonalInfo_two")
+    @POST("HomePage/OtherPersonalInfo_three")
     Observable<PersolHome2PageBean> getOtherPersonal2Info(@Field("uid") String uid,
                                                          @Field("other_uid") String otherid);
 
@@ -583,7 +586,7 @@ public interface MineService {
      * 修改个人资料2.0
      */
     @FormUrlEncoded
-    @POST("HomePage/EditingMaterials_two")
+    @POST("HomePage/EditingMaterials_three")
     Observable<SimpleResponse> change2Info(@FieldMap Map<String, String> infos);
 
     /**
@@ -608,6 +611,13 @@ public interface MineService {
     Observable<ChangeHeadBean> changeHead(@PartMap Map<String, RequestBody> map);
 
     /**
+     * 修改头像
+     */
+    @Multipart
+    @POST("HomePage/addVoice")
+    Observable<SimpleResponse> uploadVoice(@PartMap Map<String, RequestBody> map);
+
+    /**
      * 开通会员
      */
     @FormUrlEncoded
@@ -627,4 +637,27 @@ public interface MineService {
     @POST("My/DelUserPhotoWall")
     Observable<SimpleResponse> deleteVideo(@Field("uid") String uid, @Field("v_id") int v_id, @Field("type") int type);
 
+    @Multipart
+    @POST("HomePage/PhoneIdent")
+    Observable<SimpleResponse> photoAuth(@PartMap Map<String, RequestBody> map);
+
+    /**
+     * 修改个人资料
+     */
+    @FormUrlEncoded
+    @POST("HomePage/Myinformationdisplay")
+    Observable<HomepageListBean> getHomepageInfo(@Field("uid") String uid);
+
+    /**
+     * 修改个人资料-获取数据列表
+     */
+    @FormUrlEncoded
+    @POST("HomePage/getPersonalDataList")
+    Observable<WheelBean> getWheelInfo(@Field("type") String type);
+
+    /**
+     * 职业接口
+     */
+    @GET("HomePage/getVoice")
+    Observable<TestVoice> getVoice();
 }

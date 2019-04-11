@@ -39,6 +39,17 @@
             app:sRightTvDrawableRight="@drawable/center_ic_list_arrow" />
 
         <com.allen.library.SuperTextView
+            android:id="@+id/st_private"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            app:sLeftTextColor="#282828"
+            app:sLeftTextSize="16sp"
+            app:sLeftTextString="隐私设置"
+            app:sRightTvDrawableRight="@drawable/center_ic_list_arrow" />
+
+        <com.allen.library.SuperTextView
             android:id="@+id/st_help"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -91,6 +102,7 @@
             android:paddingEnd="6dp"
             app:sLeftTextColor="#282828"
             app:sLeftTextSize="16sp"
+            android:visibility="gone"
             app:sLeftTextString="去评分"
             app:sRightTvDrawableRight="@drawable/center_ic_list_arrow" />
 

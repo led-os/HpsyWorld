@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.mine.business.visitor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -7,17 +8,20 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.callback.LookmeCallback;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.home.business.main.CardDetailActivity;
 import com.kuwai.ysy.module.mine.adapter.ExpandableVisitorAdapter;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
 import com.kuwai.ysy.module.mine.bean.VisitorMore;
 import com.kuwai.ysy.module.mine.bean.like.ParentLevel;
+import com.kuwai.ysy.utils.Utils;
 import com.rayhahah.dialoglib.CustomDialog;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
@@ -98,6 +102,8 @@ public class LookMeFragment extends BaseFragment<LookMePresenter> implements Loo
                 showMore(pos);
             }
         });
+
+
     }
 
     @Override

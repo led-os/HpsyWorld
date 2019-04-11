@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title1="编辑个人资料"
+        app:rightTxt="保存"
+        app:rightColor="@color/theme"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <com.allen.library.CircleImageView
+            android:id="@+id/img_head"
+            android:layout_width="82dp"
+            android:layout_height="82dp"
+            android:src="@drawable/icon" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_more"/>
+
+    </RelativeLayout>
+
+    <View style="@style/horizontal_line"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_sign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/tv_title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="交友宣言"
+            android:textColor="#ff666666"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title1"
+            android:layout_marginTop="14dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="在芸芸众生的人海里,你敢否与世隔绝,独善其身,任周围的人们闹腾,你却漠不关心,冷落,孤寂,像一朵花在荒凉的沙漠里,不愿向着微风吐馨"
+            android:textColor="#ff808080"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/img_edit_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/mine_icon_editor"/>
+    </RelativeLayout>
+
+    <TextView
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="基本资料"
+        android:textColor="#ff666666"
+        android:layout_marginLeft="10dp"
+        android:textSize="18sp" />
+
+    <View style="@style/horizontal_line"
+        android:layout_margin="10dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rl_basic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="高级资料"
+        android:textColor="#ff666666"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
+        android:textSize="18sp" />
+
+    <View style="@style/horizontal_line"
+        android:layout_margin="10dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rl_high"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="择偶标准"
+        android:textColor="#ff666666"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
+        android:textSize="18sp" />
+
+    <View style="@style/horizontal_line"
+        android:layout_margin="10dp"/>
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/tvZeou"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="22dp"
+        app:sCenterTextString=""
+        app:sCenterViewGravity="left_center"
+        app:sCenterViewMarginLeft="10dp"
+        app:sLeftTextColor="#bfbfbf"
+        app:sLeftTextSize="14sp"
+        app:sLeftTextString="点击添加择偶标准"
+        app:sLeftViewGravity="left_center"
+        app:sLeftViewWidth="120dp"
+        app:sRightIconMarginRight="16dp"
+        app:sRightIconRes="@drawable/data_icon_add"></com.allen.library.SuperTextView>
+
+
+    <com.kuwai.ysy.widget.shadow.TagFlowLayout
+        android:id="@+id/tv_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"></com.kuwai.ysy.widget.shadow.TagFlowLayout>
+
+</LinearLayout>
+</android.support.v4.widget.NestedScrollView>

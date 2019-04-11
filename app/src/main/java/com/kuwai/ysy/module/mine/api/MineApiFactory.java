@@ -17,6 +17,7 @@ import com.kuwai.ysy.module.mine.bean.FootCity;
 import com.kuwai.ysy.module.mine.bean.GiftAcceptBean;
 import com.kuwai.ysy.module.mine.bean.GiftBoxBean;
 import com.kuwai.ysy.module.mine.bean.GiftWithdrawalsBean;
+import com.kuwai.ysy.module.mine.bean.HomepageListBean;
 import com.kuwai.ysy.module.mine.bean.IntegralDetailBean;
 import com.kuwai.ysy.module.mine.bean.JobBean;
 import com.kuwai.ysy.module.mine.bean.LikeEach;
@@ -29,11 +30,13 @@ import com.kuwai.ysy.module.mine.bean.PersolHome2PageBean;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
 import com.kuwai.ysy.module.mine.bean.PersonalTreeHole;
 import com.kuwai.ysy.module.mine.bean.TaGiftBean;
+import com.kuwai.ysy.module.mine.bean.TestVoice;
 import com.kuwai.ysy.module.mine.bean.TodayBean;
 import com.kuwai.ysy.module.mine.bean.VisitorBean;
 import com.kuwai.ysy.module.mine.bean.VisitorMore;
 import com.kuwai.ysy.module.mine.bean.WallBean;
 import com.kuwai.ysy.module.mine.bean.WalletDetailsBean;
+import com.kuwai.ysy.module.mine.bean.WheelBean;
 import com.kuwai.ysy.module.mine.bean.place.LatestPlace;
 import com.kuwai.ysy.module.mine.bean.user.UserInfo;
 import com.kuwai.ysy.module.mine.bean.vip.VipBean;
@@ -79,6 +82,13 @@ public class MineApiFactory {
                 .create(MineService.class)
                 .getAllJob()
                 .compose(RxSchedulers.<JobBean>ioMain());
+    }
+
+    public static Observable<TestVoice> getVoice() {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getVoice()
+                .compose(RxSchedulers.<TestVoice>ioMain());
     }
 
     public static Observable<PersolHomePageBean> getOtherHomepageInfo(String uid, String otherid) {
@@ -326,6 +336,13 @@ public class MineApiFactory {
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
     }
 
+    public static Observable<SimpleResponse> photoAuth(Map<String, RequestBody> map) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .photoAuth(map)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
     public static Observable<SimpleResponse> getHouseAuthentication(Map<String, RequestBody> map) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)
@@ -480,6 +497,13 @@ public class MineApiFactory {
                 .compose(RxSchedulers.<ChangeHeadBean>ioMain());
     }
 
+    public static Observable<SimpleResponse> uploadVoice(Map<String, RequestBody> params) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .uploadVoice(params)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
     public static Observable<SimpleResponse> openVip(Map<String, Object> param) {
         return ApiClient.get(C.BaseURL.BASE_URL)
                 .create(MineService.class)
@@ -492,5 +516,19 @@ public class MineApiFactory {
                 .create(MineService.class)
                 .deleteVideo(uid, t_id, type)
                 .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<HomepageListBean> getHomepageInfo(String uid) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getHomepageInfo(uid)
+                .compose(RxSchedulers.<HomepageListBean>ioMain());
+    }
+
+    public static Observable<WheelBean> getWheelInfo(String type) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(MineService.class)
+                .getWheelInfo(type)
+                .compose(RxSchedulers.<WheelBean>ioMain());
     }
 }

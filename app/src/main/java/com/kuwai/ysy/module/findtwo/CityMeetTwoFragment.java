@@ -33,6 +33,7 @@ import com.kuwai.ysy.module.findtwo.business.MoreWindow;
 import com.kuwai.ysy.module.findtwo.business.MyMeetFragment;
 import com.kuwai.ysy.module.home.api.HomeApiFactory;
 import com.kuwai.ysy.module.home.bean.HomeVideoBean;
+import com.kuwai.ysy.module.home.business.main.CardDetailActivity;
 import com.kuwai.ysy.utils.DialogUtil;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
@@ -169,6 +170,25 @@ public class CityMeetTwoFragment extends BaseFragment implements View.OnClickLis
                     start(MeetDetailOtherFragment.newInstance(dateTwoAdapter.getData().get(position).getR_id(),""));
                 }
 
+            }
+        });
+
+        dateTwoAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()){
+                    case R.id.img_head:
+                        if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                            if (!SPManager.get().getStringValue("uid").equals(String.valueOf(dateTwoAdapter.getData().get(position).getUid()))) {
+                                Intent intent1 = new Intent(mContext, CardDetailActivity.class);
+                                intent1.putExtra("id", String.valueOf(dateTwoAdapter.getData().get(position).getUid()));
+                                startActivity(intent1);
+                            }
+                        } else {
+                            ToastUtils.showShort(R.string.login_error);
+                        }
+                        break;
+                }
             }
         });
 

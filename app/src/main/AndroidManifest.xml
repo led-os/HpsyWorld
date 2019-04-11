@@ -130,6 +130,10 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".module.circle.aliyun.VideoRecordActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".module.circletwo.VoiceActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.circletwo.PublishHoleTwoActivity"
+            android:screenOrientation="portrait"/>
 
         //发现
         <activity
@@ -157,6 +161,8 @@
         <activity android:name=".module.findtwo.MyDateActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".module.find.PerVideoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.findtwo.VideoRecordActivity"
             android:screenOrientation="portrait"/>
 
         //我的
@@ -191,6 +197,8 @@
         <activity android:name=".module.mine.business.question.AskQuestionActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".module.mine.OtherHomeActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.mine.MyHomeListActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".module.mine.business.homepage.HomePageActivity"
             android:screenOrientation="portrait"/>

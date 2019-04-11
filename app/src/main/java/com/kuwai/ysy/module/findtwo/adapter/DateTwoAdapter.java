@@ -31,6 +31,7 @@ public class DateTwoAdapter extends BaseQuickAdapter<MeetListBean.DataBean, Base
     @Override
     protected void convert(BaseViewHolder helper, final MeetListBean.DataBean item) {
 
+        helper.addOnClickListener(R.id.img_head);
         RecyclerView recyclerView = helper.getView(R.id.rl_pic);
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
         DatePicAdapter picAdapter = new DatePicAdapter();

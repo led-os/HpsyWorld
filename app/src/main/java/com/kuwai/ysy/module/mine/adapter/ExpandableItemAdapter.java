@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.module.chat.api.ChatApiFactory;
+import com.kuwai.ysy.module.home.business.main.CardDetailActivity;
 import com.kuwai.ysy.module.mine.OtherHomeActivity;
 import com.kuwai.ysy.module.mine.bean.LikeBean;
 import com.kuwai.ysy.module.mine.bean.LikeParent;
@@ -96,8 +97,8 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
                         public void onClick(View v) {
                             if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
                                 if (!SPManager.get().getStringValue("uid").equals(String.valueOf(likeBean.getUid()))) {
-                                    Intent intent1 = new Intent(mContext, OtherHomeActivity.class);
-                                    intent1.putExtra("uid", String.valueOf(likeBean.getUid()));
+                                    Intent intent1 = new Intent(mContext, CardDetailActivity.class);
+                                    intent1.putExtra("id", String.valueOf(likeBean.getUid()));
                                     mContext.startActivity(intent1);
                                 }
                             } else {

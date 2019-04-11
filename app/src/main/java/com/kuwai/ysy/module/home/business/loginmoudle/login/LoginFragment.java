@@ -28,6 +28,7 @@ import com.kuwai.ysy.module.home.business.loginmoudle.Regist1Fragment;
 import com.kuwai.ysy.module.home.business.loginmoudle.SendCodeFragment;
 import com.kuwai.ysy.utils.DialogUtil;
 import com.kuwai.ysy.utils.EventBusUtil;
+import com.kuwai.ysy.utils.SPUtils;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.MyEditText;
 import com.rayhahah.rbase.utils.base.ToastUtils;
@@ -39,11 +40,8 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.UserInfo;
 
-import static com.kuwai.ysy.app.C.MSG_LOGIN;
 
 public class LoginFragment extends BaseFragment<LoginPresenter> implements View.OnClickListener, LoginContract.ILoginView {
 
@@ -306,23 +304,11 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements View.
         DialogUtil.dismissDialog(true);
         if (loginBean.getCode() == 200) {
             SPManager.get().putString(C.SAN_FANG, type);
-            SPManager.get().putString("uid", String.valueOf(loginBean.getData().getUid()));
-            SPManager.get().putString("nickname", loginBean.getData().getNickname());
-            SPManager.get().putString("phone_", loginBean.getData().getPhone());
-            SPManager.get().putString("isvip_", String.valueOf(loginBean.getData().getIs_vip()));
-            SPManager.get().putString("grade_", String.valueOf(loginBean.getData().getVip_grade()));
-            SPManager.get().putString("ident_", String.valueOf(loginBean.getData().getIdent()));
-            SPManager.get().putString("city_", loginBean.getData().getCity());
+            SPUtils.savaLogin(loginBean);
             SPManager.get().putString("password_", Utils.encrypt32(mEtCode.getText().toString()));
-            SPManager.get().putString("icon", loginBean.getData().getAvatar());
-            SPManager.get().putString("sex_", String.valueOf(loginBean.getData().getGender()));
-            SPManager.get().putString(C.HAS_THIRD_PASS, String.valueOf(loginBean.getData().getPayment()));
-            SPManager.get().putString("rongyun_token", loginBean.getData().getRongyun_token());
-            SPManager.get().putString("token", loginBean.getData().getToken());
             SPManager.get().putString("cityName", "苏州");
             SPManager.get().putString("cityId", "114");
             connectRongYun(loginBean.getData().getRongyun_token(), loginBean);
-            EventBusUtil.sendEvent(new MessageEvent(MSG_LOGIN));
             startActivity(new Intent(getActivity(), HomeActivity.class));
             getActivity().finish();
         } else if (loginBean.getCode() == 201) {

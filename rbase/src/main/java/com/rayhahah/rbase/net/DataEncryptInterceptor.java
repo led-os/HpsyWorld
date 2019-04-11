@@ -86,7 +86,7 @@ public class DataEncryptInterceptor implements Interceptor {
                 MultipartBody.Builder builder = new MultipartBody.Builder();
                 builder.setType(MultipartBody.FORM);
                 MultipartBody multipartBody = (MultipartBody) requestBody;
-                builder.addFormDataPart("token_key", ConvertUtils.encrypt32(SPManager.get().getStringValue("uid") + SPManager.get().getStringValue("token")));
+                //builder.addFormDataPart("token_key", ConvertUtils.encrypt32(SPManager.get().getStringValue("uid") + SPManager.get().getStringValue("token")));
 
                 //添加原请求体
                 for (int i = 0; i < multipartBody.size(); i++) {

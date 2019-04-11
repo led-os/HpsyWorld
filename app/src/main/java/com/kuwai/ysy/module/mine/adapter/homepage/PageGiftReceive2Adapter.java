@@ -22,7 +22,7 @@ public class PageGiftReceive2Adapter extends BaseQuickAdapter<PersolHome2PageBea
     protected void convert(BaseViewHolder helper, PersolHome2PageBean.DataBean.GiftBean item) {
         GlideUtil.loadRetangle(mContext,item.getGirft_img_url(), (ImageView) helper.getView(R.id.img_gift));
 
-        helper.setText(R.id.img_num,item.getG_nums());
+        helper.setText(R.id.img_num,item.getG_nums()+"");
 
        /* CircleImageView circleImageView = helper.getView(R.id.img_user);
         if (helper.getAdapterPosition() == 0) {

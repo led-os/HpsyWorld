@@ -22,6 +22,7 @@ import com.kuwai.ysy.module.home.business.loginmoudle.login.LoginActivity;
 import com.kuwai.ysy.net.glide.ProgressInterceptor;
 import com.kuwai.ysy.utils.DialogUtil;
 import com.kuwai.ysy.utils.EventBusUtil;
+import com.kuwai.ysy.utils.SPUtils;
 import com.kuwai.ysy.utils.UploadHelper;
 import com.kuwai.ysy.utils.Utils;
 import com.rayhahah.rbase.base.RBasePresenter;
@@ -29,15 +30,12 @@ import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.functions.Consumer;
 import io.rong.imlib.RongIMClient;
 import okhttp3.RequestBody;
-import retrofit2.http.PATCH;
 
-import static com.kuwai.ysy.app.C.MSG_LOGIN;
 
 public class InfoInviteFragment extends BaseFragment implements View.OnClickListener {
 
@@ -149,24 +147,12 @@ public class InfoInviteFragment extends BaseFragment implements View.OnClickList
                 }*/
 
                 if (loginBean.getCode() == 200) {
+                    SPUtils.savaLogin(loginBean);
                     SPManager.get().putString(C.SAN_FANG, SPManager.get().getStringValue(C.SAN_FANG));
-                    SPManager.get().putString("uid", String.valueOf(loginBean.getData().getUid()));
-                    SPManager.get().putString("nickname", loginBean.getData().getNickname());
-                    SPManager.get().putString("phone_", loginBean.getData().getPhone());
-                    SPManager.get().putString("isvip_", String.valueOf(loginBean.getData().getIs_vip()));
                     SPManager.get().putString("password_", SPManager.get().getStringValue(C.REGIST_PSD));
-                    SPManager.get().putString("icon", loginBean.getData().getAvatar());
-                    SPManager.get().putString("city_", loginBean.getData().getCity());
-                    SPManager.get().putString("grade_", String.valueOf(loginBean.getData().getVip_grade()));
-                    SPManager.get().putString("ident_", String.valueOf(loginBean.getData().getIdent()));
-                    SPManager.get().putString("sex_", String.valueOf(loginBean.getData().getGender()));
-                    SPManager.get().putString(C.HAS_THIRD_PASS, String.valueOf(loginBean.getData().getPayment()));
-                    SPManager.get().putString("rongyun_token", loginBean.getData().getRongyun_token());
-                    SPManager.get().putString("token", loginBean.getData().getToken());
                     SPManager.get().putString("cityName", "苏州");
                     SPManager.get().putString("cityId", "114");
                     connectRongYun(loginBean.getData().getRongyun_token(), loginBean);
-                    EventBusUtil.sendEvent(new MessageEvent(MSG_LOGIN));
                     ToastUtils.showShort("注册成功");
                     startActivity(new Intent(getActivity(), HomeActivity.class));
                     getActivity().finish();

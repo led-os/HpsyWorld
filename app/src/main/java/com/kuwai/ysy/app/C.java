@@ -78,9 +78,9 @@ public class C {
     @Retention(RetentionPolicy.SOURCE)
     public @interface BaseURL {
         String TEST_URL = "http://baobab.kaiyanapp.com/api/";
-        //String BASE_URL = "http://test.yushuiyuan.cn/api/";
+        String BASE_URL = "http://test.yushuiyuan.cn/api/";
         String LOCAL_URL = "http://api.yushuiyuan.cn/api/";
-        String BASE_URL = "http://api.yushuiyuan.cn/api/";
+        //String BASE_URL = "http://api.yushuiyuan.cn/api/";
     }
 
     /**

@@ -372,7 +372,7 @@ public class EasyRecordView extends RelativeLayout
             finishRecodingTask = null;
         }
 
-        if (faceTrackPathTask != null) {
+      /*  if (faceTrackPathTask != null) {
             faceTrackPathTask.cancel(true);
             faceTrackPathTask = null;
         }
@@ -381,9 +381,9 @@ public class EasyRecordView extends RelativeLayout
             beautyParamCopyTask.cancel(true);
             beautyParamCopyTask = null;
         }
-
+*/
         if (recorder != null) {
-            recorder.destroy();
+            //recorder.destroy();
             Log.i(TAG, "destroy");
         }
 

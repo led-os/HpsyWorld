@@ -20,11 +20,13 @@ import com.kuwai.ysy.module.findtwo.bean.CloseBean;
 import com.kuwai.ysy.module.findtwo.bean.MeetListBean;
 import com.kuwai.ysy.module.findtwo.bean.MovieBean;
 import com.kuwai.ysy.module.home.business.main.CardDetailActivity;
+import com.kuwai.ysy.module.mine.OtherHomeActivity;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.MyRecycleViewDivider;
 import com.rayhahah.dialoglib.DialogInterface;
 import com.rayhahah.dialoglib.NormalAlertDialog;
 import com.rayhahah.rbase.base.RBasePresenter;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.ArrayList;
@@ -78,9 +80,15 @@ public class CloseFragment extends BaseFragment{
         closeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(getActivity(), CardDetailActivity.class);
-                intent.putExtra("id", String.valueOf(closeAdapter.getData().get(position).getUid()));
-                startActivity(intent);
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    if (!SPManager.get().getStringValue("uid").equals(String.valueOf(closeAdapter.getData().get(position).getUid()))) {
+                        Intent intent1 = new Intent(mContext, CardDetailActivity.class);
+                        intent1.putExtra("id", String.valueOf(closeAdapter.getData().get(position).getUid()));
+                        startActivity(intent1);
+                    }
+                } else {
+                    ToastUtils.showShort(R.string.login_error);
+                }
             }
         });
     }

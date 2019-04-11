@@ -22,6 +22,7 @@ import com.kuwai.ysy.callback.VideoCallBack;
 import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.module.find.api.FoundApiFactory;
 import com.kuwai.ysy.module.find.bean.VideoChatBean;
+import com.kuwai.ysy.module.findtwo.VideoRecordActivity;
 import com.kuwai.ysy.module.findtwo.api.Appoint2ApiFactory;
 import com.kuwai.ysy.module.findtwo.bean.CloseBean;
 import com.kuwai.ysy.module.home.api.HomeApiFactory;
@@ -138,6 +139,12 @@ public class PerVideoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 getHomeData("1");
+            }
+        });
+        mImgHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(PerVideoActivity.this, VideoRecordActivity.class));
             }
         });
     }

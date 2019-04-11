@@ -2,6 +2,7 @@ package com.kuwai.ysy.module.home.api;
 
 import com.kuwai.ysy.bean.ResponseWithData;
 import com.kuwai.ysy.bean.SimpleResponse;
+import com.kuwai.ysy.module.home.bean.AuthVideoBean;
 import com.kuwai.ysy.module.home.bean.HomeBean;
 import com.kuwai.ysy.module.home.bean.HomeCardBean;
 import com.kuwai.ysy.module.home.bean.HomeVideoBean;
@@ -70,4 +71,8 @@ public interface HomeService {
     @FormUrlEncoded
     @POST("HomePage/photo")
     Observable<PersonPicBean> getPic(@Field("uid") String uid);
+
+    @FormUrlEncoded
+    @POST("HomePage/getUserIdentVideo")
+    Observable<AuthVideoBean> getIdenVideo(@Field("uid") String uid,@Field("login_uid") String login_uid);
 }

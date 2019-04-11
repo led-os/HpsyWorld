@@ -22,6 +22,7 @@ public class SortHorAdapter extends BaseQuickAdapter<MeetDetailBean.DataBean.Sig
     protected void convert(BaseViewHolder helper, final MeetDetailBean.DataBean.SignBean item) {
         GlideUtil.load(mContext, item.getAvatar(), (ImageView) helper.getView(R.id.img_head));
         helper.addOnClickListener(R.id.tv_agree);
+        helper.addOnClickListener(R.id.img_head);
         ImageView imgSex = helper.getView(R.id.img_sex);
         if (item.getGender() == 1) {
             imgSex.setImageResource(R.drawable.home_icon_male);

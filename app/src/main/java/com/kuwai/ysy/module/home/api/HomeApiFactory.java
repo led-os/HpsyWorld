@@ -3,6 +3,7 @@ package com.kuwai.ysy.module.home.api;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.ResponseWithData;
 import com.kuwai.ysy.bean.SimpleResponse;
+import com.kuwai.ysy.module.home.bean.AuthVideoBean;
 import com.kuwai.ysy.module.home.bean.HomeBean;
 import com.kuwai.ysy.module.home.bean.HomeCardBean;
 import com.kuwai.ysy.module.home.bean.HomeVideoBean;
@@ -95,5 +96,12 @@ public class HomeApiFactory {
                 .create(HomeService.class)
                 .getPic(uid)
                 .compose(RxSchedulers.<PersonPicBean>ioMain());
+    }
+
+    public static Observable<AuthVideoBean> getIdenVideo(String uid, String loginId) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(HomeService.class)
+                .getIdenVideo(uid,loginId)
+                .compose(RxSchedulers.<AuthVideoBean>ioMain());
     }
 }

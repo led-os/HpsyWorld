@@ -52,6 +52,7 @@ import com.kuwai.ysy.utils.glide.GlideImageLoader;
 import com.kuwai.ysy.utils.glide.GlideRoundLoader;
 import com.kuwai.ysy.widget.BannerLayout;
 import com.kuwai.ysy.widget.BannerRound;
+import com.kuwai.ysy.widget.EntrancePageRecyclerViewHeader;
 import com.kuwai.ysy.widget.MyEditText;
 import com.kuwai.ysy.widget.TextBannerView;
 import com.kuwai.ysy.widget.ViewPagerIndicator;
@@ -158,6 +159,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
         mViewpager = mRootView.findViewById(R.id.bannerViewPager);
         mRefreshLayout = mRootView.findViewById(R.id.mRefreshLayout);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
+        //mRefreshLayout.setRefreshHeader(new EntrancePageRecyclerViewHeader(getActivity()));
         //mRefreshLayout.setDragRate(3);
         mRefreshLayout.setPrimaryColors(getResources().getColor(R.color.transparent));
         //mIndicatorLine = mRootView.findViewById(R.id.indicator_line);
@@ -299,7 +301,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
 
     @Override
     public void showViewLoading() {
-        //mLayoutStatusView.showLoading();
+        mLayoutStatusView.showLoading();
     }
 
     @Override
@@ -309,7 +311,7 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
 
     @Override
     public void showViewError(Throwable t) {
-        //mLayoutStatusView.showError();
+        mLayoutStatusView.showError();
     }
 
     @Override

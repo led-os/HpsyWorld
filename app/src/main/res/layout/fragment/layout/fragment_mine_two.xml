@@ -244,6 +244,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/center_lay"
                 android:layout_gravity="center"
+                android:layout_marginBottom="70dp"
                 app:cardBackgroundColor="@color/white"
                 app:cornerRadius="10dp"
                 app:elevation="14dp"
@@ -328,6 +329,47 @@
                             android:drawablePadding="0dp"
                             android:drawableTop="@drawable/mine_icon_gift"
                             android:text="我的礼物" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/line2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@+id/grid2"
+                        android:background="@color/line_color" />
+
+                    <LinearLayout
+                        android:id="@+id/grid3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/line1"
+                        android:divider="@drawable/divider"
+                        android:orientation="horizontal"
+                        android:showDividers="middle">
+
+                        <TextView
+                            android:id="@+id/tv_photo"
+                            style="@style/mine_regist_style"
+                            android:drawablePadding="0dp"
+                            android:drawableTop="@drawable/mine_icon_myphoto"
+                            android:paddingBottom="16dp"
+                            android:paddingTop="6dp"
+                            android:text="我的相册" />
+
+                        <TextView
+                            android:id="@+id/tv_dongtai"
+                            style="@style/mine_regist_style"
+                            android:drawablePadding="0dp"
+                            android:drawableTop="@drawable/mine_icon_mydynamic"
+                            android:text="我的动态" />
+
+                        <TextView
+                            android:id="@+id/tv_hole"
+                            style="@style/mine_regist_style"
+                            android:drawablePadding="0dp"
+                            android:drawableTop="@drawable/mine_icon_mytreehole"
+                            android:text="我的树洞" />
 
                     </LinearLayout>
                 </LinearLayout>

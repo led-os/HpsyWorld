@@ -63,7 +63,6 @@ import static com.kuwai.ysy.app.C.DY_TXT;
 
 public class PublishDyActivity extends BaseActivity<PublishPresenter> implements View.OnClickListener, BGASortableNinePhotoLayout.GridAdd, PublishDyContract.IPublishView {
 
-    private String accessKeyId, accessKeySecret, securityToken, expriedTime;
     private BGASortableNinePhotoLayout mPhotosSnpl;
     private String[] imgList = new String[]{"http://img.kaiyanapp.com/fa978756b844c4facbc08656a9916415.jpeg?imageMogr2/quality/60/format/jpg",
             "http://pic.chinahpsy.com/home/750/gl.jpg",
@@ -86,6 +85,7 @@ public class PublishDyActivity extends BaseActivity<PublishPresenter> implements
     private EditText et_content;
     private int themeId = R.style.picture_default_style;
 
+    private String accessKeyId, accessKeySecret, securityToken, expriedTime;
     private StsBean stsTokenBean;
     private VodSessionCreateInfo vodSessionCreateInfo;
     private VODSVideoUploadClient vodsVideoUploadClient;

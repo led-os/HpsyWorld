@@ -15,11 +15,13 @@ import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.circletwo.VoiceActivity;
 import com.kuwai.ysy.module.findtwo.MyActActivity;
 import com.kuwai.ysy.module.findtwo.MyDateActivity;
 import com.kuwai.ysy.module.home.business.loginmoudle.login.LoginActivity;
 import com.kuwai.ysy.module.mine.CloseActivity;
 import com.kuwai.ysy.module.mine.MyCreditActivity;
+import com.kuwai.ysy.module.mine.MyHomeListActivity;
 import com.kuwai.ysy.module.mine.MyPointActivity;
 import com.kuwai.ysy.module.mine.MyWalletActivity;
 import com.kuwai.ysy.module.mine.SettingActivity;
@@ -59,7 +61,7 @@ public class MineLoginTwoFragment extends BaseFragment<MinePresenter> implements
     private LinearLayout mGrid1;
     private LCardView top_lay;
     private TextView mTvClose;
-    private TextView mTvVisitor;
+    private TextView mTvVisitor,tv_photo;
     private LinearLayout ll_score, ll_wallet, ll_auth, ll_vip;
     private TextView mTvHomepage;
     private View mLine1;
@@ -104,6 +106,7 @@ public class MineLoginTwoFragment extends BaseFragment<MinePresenter> implements
         mTvWallet = mRootView.findViewById(R.id.tv_wallet);
         mGrid1 = mRootView.findViewById(R.id.grid1);
         mTvClose = mRootView.findViewById(R.id.tv_close);
+        tv_photo = mRootView.findViewById(R.id.tv_photo);
         mTvVisitor = mRootView.findViewById(R.id.tv_visitor);
         mTvHomepage = mRootView.findViewById(R.id.tv_homepage);
         mLine1 = mRootView.findViewById(R.id.line1);
@@ -122,6 +125,7 @@ public class MineLoginTwoFragment extends BaseFragment<MinePresenter> implements
         mTvDate.setOnClickListener(this);
         ll_vip.setOnClickListener(this);
         ll_auth.setOnClickListener(this);
+        tv_photo.setOnClickListener(this);
         mImgHead.setOnClickListener(this);
         mTvActivity.setOnClickListener(this);
     }
@@ -184,13 +188,16 @@ public class MineLoginTwoFragment extends BaseFragment<MinePresenter> implements
                 startActivity(new Intent(getActivity(), GiftActivity.class));
                 break;
             case R.id.tv_homepage:
-                startActivity(new Intent(getActivity(), HomePageActivity.class));
+                startActivity(new Intent(getActivity(), MyHomeListActivity.class));
                 break;
             case R.id.tv_date:
                 startActivity(new Intent(getActivity(), MyDateActivity.class));
                 break;
             case R.id.tv_activity:
                 startActivity(new Intent(getActivity(), MyActActivity.class));
+                break;
+            case R.id.tv_photo:
+                startActivity(new Intent(getActivity(), VoiceActivity.class));
                 break;
         }
     }

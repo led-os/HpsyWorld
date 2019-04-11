@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.mine.adapter;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -8,9 +9,12 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.callback.LookmeCallback;
+import com.kuwai.ysy.module.home.business.main.CardDetailActivity;
 import com.kuwai.ysy.module.mine.bean.TodayBean;
 import com.kuwai.ysy.module.mine.bean.like.ParentLevel;
+import com.kuwai.ysy.utils.Utils;
 import com.rayhahah.rbase.utils.base.DateTimeUitl;
+import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.GlideUtil;
 import com.rayhahah.rbase.utils.useful.SPManager;
 
@@ -101,6 +105,21 @@ public class ExpandableVisitorAdapter extends BaseMultiItemQuickAdapter<MultiIte
                         }
                     });
                 }
+
+                holder.getView(R.id.img_head).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                            if (!SPManager.get().getStringValue("uid").equals(String.valueOf(todayBean.getUid()))) {
+                                Intent intent1 = new Intent(mContext, CardDetailActivity.class);
+                                intent1.putExtra("id", String.valueOf(todayBean.getUid()));
+                                mContext.startActivity(intent1);
+                            }
+                        } else {
+                            ToastUtils.showShort(R.string.login_error);
+                        }
+                    }
+                });
 
 
 //                final ChildLevel lv1 = (ChildLevel) item;

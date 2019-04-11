@@ -94,7 +94,6 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
                 //getCode(SPManager.get().getStringValue("uid"), "123");
                 break;
             case R.id.tv_auth:
-
                 start(AuthFragment.newInstance());
                 break;
             case R.id.st_edu:
@@ -176,25 +175,24 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
         mPresenter.requestHomeData(SPManager.get().getStringValue("uid"));
     }
 
+    private String selectColor = "#5FBEFF";
+    private String defaultColor = "#bdbdbd";
     @Override
     public void setHomeData(CreditBean creditBean) {
         switch (creditBean.getData().get(0).getIs_avatar()) {
             case 0:
                 mStHeadicon.setRightString("去认证")
                         .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_photo_not))
-                        .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
-                        .setRightTextColor(Color.parseColor("#ff6161"));
+                        .setRightTextColor(Color.parseColor("#5FBEFF"));
                 break;
             case 1:
                 mStHeadicon.setRightString("已认证")
                         .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_photo_sure))
-                        .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
             case 2:
                 mStHeadicon.setRightString("审核中")
                         .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_photo_not))
-                        .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
         }
@@ -203,20 +201,17 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
             case 0:
                 mStPhone.setRightString("去认证")
                         .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_phone_not))
-                        .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
-                        .setRightTextColor(Color.parseColor("#ff6161"));
+                        .setRightTextColor(Color.parseColor("#5FBEFF"));
                 mStPhone.setOnClickListener(this);
                 break;
             case 1:
                 mStPhone.setRightString("已认证")
                         .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_phone_sure))
-                        .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
             case 2:
                 mStPhone.setRightString("审核中")
                         .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_photo_not))
-                        .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
         }
@@ -225,20 +220,17 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
             case 0:
                 mTvAuth.setRightString("去认证")
                         .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_name_not))
-                        .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
-                        .setRightTextColor(Color.parseColor("#ff6161"));
+                        .setRightTextColor(Color.parseColor("#5FBEFF"));
                 mTvAuth.setOnClickListener(this);
                 break;
             case 1:
                 mTvAuth.setRightString("已认证")
                         .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_name_sure))
-                        .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
             case 2:
                 mTvAuth.setRightString("审核中")
                         .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_name_not))
-                        .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
         }
@@ -247,20 +239,17 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
             case 0:
                 mStEdu.setRightString("去认证")
                         .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_edu_not))
-                        .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
-                        .setRightTextColor(Color.parseColor("#ff6161"));
+                        .setRightTextColor(Color.parseColor("#5FBEFF"));
                 mStEdu.setOnClickListener(this);
                 break;
             case 1:
                 mStEdu.setRightString("已认证")
                         .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_edu_sure))
-                        .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
             case 2:
                 mStEdu.setRightString("审核中")
                         .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_edu_not))
-                        .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
         }
@@ -269,20 +258,17 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
             case 0:
                 mStHouse.setRightString("去认证")
                         .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_house_not))
-                        .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
-                        .setRightTextColor(Color.parseColor("#ff6161"));
+                        .setRightTextColor(Color.parseColor("#5FBEFF"));
                 mStHouse.setOnClickListener(this);
                 break;
             case 1:
                 mStHouse.setRightString("已认证")
                         .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_house_sure))
-                        .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
             case 2:
                 mStHouse.setRightString("审核中")
                         .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_house_not))
-                        .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
         }
@@ -291,20 +277,38 @@ public class MyCreditFragment extends BaseFragment<MyCreditPresenter> implements
             case 0:
                 mStCar.setRightString("去认证")
                         .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_car_not))
-                        .setRightTvDrawableRight(getResources().getDrawable(R.drawable.center_ic_list_enter))
-                        .setRightTextColor(Color.parseColor("#ff6161"));
+                        .setRightTextColor(Color.parseColor("#5FBEFF"));
                 mStCar.setOnClickListener(this);
                 break;
             case 1:
                 mStCar.setRightString("已认证")
                         .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_car_sure))
-                        .setRightTvDrawableRight(null)
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
             case 2:
                 mStCar.setRightString("审核中")
                         .setLeftIcon(getResources().getDrawable(R.drawable.mine_icon_car_not))
-                        .setRightTvDrawableRight(null)
+                        .setRightTextColor(Color.parseColor("#bdbdbd"));
+                break;
+        }
+
+    }
+
+    private void setContent(int state,SuperTextView textView,int icon){
+        switch (state){
+            case 0:
+                textView.setRightString("去认证")
+                        .setLeftIcon(getResources().getDrawable(icon))
+                        .setRightTextColor(Color.parseColor("#5FBEFF"));
+                break;
+            case 1:
+                textView.setRightString("已认证")
+                        .setLeftIcon(getResources().getDrawable(icon))
+                        .setRightTextColor(Color.parseColor("#bdbdbd"));
+                break;
+            case 2:
+                textView.setRightString("审核中")
+                        .setLeftIcon(getResources().getDrawable(icon))
                         .setRightTextColor(Color.parseColor("#bdbdbd"));
                 break;
         }

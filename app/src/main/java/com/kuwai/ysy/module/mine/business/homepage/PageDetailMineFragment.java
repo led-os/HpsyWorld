@@ -17,6 +17,7 @@ import com.kuwai.ysy.module.mine.MyCreditActivity;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
 import com.kuwai.ysy.module.mine.bean.PersolHome2PageBean;
 import com.kuwai.ysy.module.mine.bean.PersolHomePageBean;
+import com.kuwai.ysy.module.mine.business.change.AttitudeChooseFragment;
 import com.kuwai.ysy.module.mine.business.change.ChangeInfoFragment;
 import com.kuwai.ysy.module.mine.business.change.ChangePlaceFragment;
 import com.kuwai.ysy.module.mine.business.change.ChangeXuanFragment;
@@ -87,9 +88,10 @@ public class PageDetailMineFragment extends BaseFragment implements View.OnClick
                 ((RBaseFragment) getParentFragment()).start(ChangeInfoFragment.newInstance(bundle1));
                 break;
             case R.id.chooseZeou:
-                Bundle bundle2 = new Bundle();
+                ((RBaseFragment) getParentFragment()).start(new AttitudeChooseFragment());
+                /*Bundle bundle2 = new Bundle();
                 bundle2.putSerializable("data", mPersolHomePageBean);
-                ((RBaseFragment) getParentFragment()).start(ChangeInfoFragment.newInstance(bundle2));
+                ((RBaseFragment) getParentFragment()).start(ChangeInfoFragment.newInstance(bundle2));*/
                 break;
             case R.id.changeXuan:
                 ((RBaseFragment) getParentFragment()).start(ChangeXuanFragment.newInstance(mPersolHomePageBean.getData().getInfo().getSig()));

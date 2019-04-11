@@ -9,7 +9,8 @@
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrool"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <com.kuwai.ysy.widget.MultipleStatusView
             android:id="@+id/multipleStatusView"
@@ -22,6 +23,8 @@
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:layout_below="@+id/rl_search"></com.youth.banner.Banner>
 
            <!-- <com.kuwai.ysy.widget.ViewPagerIndicator

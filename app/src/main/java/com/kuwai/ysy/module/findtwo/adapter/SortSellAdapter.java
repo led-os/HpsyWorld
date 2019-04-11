@@ -23,6 +23,7 @@ public class SortSellAdapter extends BaseQuickAdapter<MeetDetailBean.DataBean.Si
     @Override
     protected void convert(BaseViewHolder helper, final MeetDetailBean.DataBean.SignBean item) {
         helper.addOnClickListener(R.id.tv_agree);
+        helper.addOnClickListener(R.id.img_head);
         helper.setText(R.id.tv_name,item.getNickname());
         helper.setText(R.id.tv_sign,item.getSig());
         if(item.isContain()){

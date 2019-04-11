@@ -33,6 +33,7 @@ import com.kuwai.ysy.module.findtwo.bean.MeetDetailBean;
 import com.kuwai.ysy.module.findtwo.bean.MeetDetailOther;
 import com.kuwai.ysy.module.findtwo.bean.MeetListBean;
 import com.kuwai.ysy.module.findtwo.bean.SportBean;
+import com.kuwai.ysy.module.home.business.main.CardDetailActivity;
 import com.kuwai.ysy.utils.DialogUtil;
 import com.kuwai.ysy.utils.MapUtil;
 import com.kuwai.ysy.utils.Utils;
@@ -117,6 +118,20 @@ public class MeetDetailOtherFragment extends BaseFragment {
 
         mTvSure = mRootView.findViewById(R.id.tv_sure);
         mImgHead = mRootView.findViewById(R.id.img_head);
+        mImgHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                    if (!SPManager.get().getStringValue("uid").equals(String.valueOf(meetDetailOther.getData().getUid()))) {
+                        Intent intent1 = new Intent(mContext, CardDetailActivity.class);
+                        intent1.putExtra("id", String.valueOf(meetDetailOther.getData().getUid()));
+                        startActivity(intent1);
+                    }
+                } else {
+                    ToastUtils.showShort(R.string.login_error);
+                }
+            }
+        });
         mTvName = mRootView.findViewById(R.id.tv_name);
         gameLay = mRootView.findViewById(R.id.game_lay);
         mLookBtn = mRootView.findViewById(R.id.btn_look_name);

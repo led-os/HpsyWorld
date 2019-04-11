@@ -308,27 +308,29 @@ public class VideoRecordActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        //videoRecordView.stopPreview();
+        videoRecordView.stopPreview();
         super.onPause();
-        /*if (phoningToast != null) {
+        if (phoningToast != null) {
             phoningToast.cancel();
             phoningToast = null;
-        }*/
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-       /* if (phoneStateManger != null) {
+        if (phoneStateManger != null) {
             phoneStateManger.setOnPhoneStateChangeListener(null);
             phoneStateManger.unRegistPhoneStateListener();
             phoneStateManger = null;
-        }*/
+        }
     }
 
     @Override
     protected void onDestroy() {
-        //videoRecordView.destroyRecorder();
+
+        //闪退处
+        videoRecordView.destroyRecorder();
         super.onDestroy();
         if (copyAssetsTask != null) {
             copyAssetsTask.cancel(true);

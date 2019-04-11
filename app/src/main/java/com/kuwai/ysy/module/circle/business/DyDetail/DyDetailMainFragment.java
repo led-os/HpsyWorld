@@ -41,6 +41,7 @@ import com.kuwai.ysy.module.circle.business.DyDashang.DyDashangListFragment;
 import com.kuwai.ysy.module.circle.business.dycomment.DySecFragment;
 import com.kuwai.ysy.module.circle.business.DyZan.DyZanListFragment;
 import com.kuwai.ysy.module.find.bean.GiftPopBean;
+import com.kuwai.ysy.module.home.business.main.CardDetailActivity;
 import com.kuwai.ysy.module.mine.MyWalletActivity;
 import com.kuwai.ysy.module.mine.OtherHomeActivity;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
@@ -154,8 +155,8 @@ public class DyDetailMainFragment extends BaseFragment<DyDetailPresenter> implem
             case R.id.img_head:
                 if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
                     if (!SPManager.get().getStringValue("uid").equals(String.valueOf(mDyDetailBean.getData().getUid()))) {
-                        Intent intent1 = new Intent(getActivity(), OtherHomeActivity.class);
-                        intent1.putExtra("uid", String.valueOf(mDyDetailBean.getData().getUid()));
+                        Intent intent1 = new Intent(mContext, CardDetailActivity.class);
+                        intent1.putExtra("id", String.valueOf(mDyDetailBean.getData().getUid()));
                         startActivity(intent1);
                     }
                 } else {

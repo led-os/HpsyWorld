@@ -21,23 +21,20 @@ import com.kuwai.ysy.module.home.bean.login.CodeBean;
 import com.kuwai.ysy.module.home.bean.login.LoginBean;
 import com.kuwai.ysy.module.home.business.HomeActivity;
 import com.kuwai.ysy.utils.EventBusUtil;
+import com.kuwai.ysy.utils.SPUtils;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.CountDownTextView;
 import com.kuwai.ysy.widget.MyEditText;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.StringUtils;
 import com.rayhahah.rbase.utils.base.ToastUtils;
-import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.functions.Consumer;
-import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.UserInfo;
 
-import static com.kuwai.ysy.app.C.MSG_LOGIN;
 
 public class InputCodeFragment extends BaseFragment implements View.OnClickListener {
 
@@ -167,20 +164,8 @@ public class InputCodeFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void accept(LoginBean loginBean) throws Exception {
                 if (loginBean.getCode() == 200) {
-                    SPManager.get().putString("uid", String.valueOf(loginBean.getData().getUid()));
-                    SPManager.get().putString("rongyun_token", loginBean.getData().getRongyun_token());
-                    SPManager.get().putString("token", loginBean.getData().getToken());
-                    SPManager.get().putString("isvip_", String.valueOf(loginBean.getData().getIs_vip()));
-                    SPManager.get().putString("city_", loginBean.getData().getCity());
-                    SPManager.get().putString("grade_", String.valueOf(loginBean.getData().getVip_grade()));
-                    SPManager.get().putString("ident_", String.valueOf(loginBean.getData().getIdent()));
-                    SPManager.get().putString("sex_", String.valueOf(loginBean.getData().getGender()));
-                    SPManager.get().putString("phone_", loginBean.getData().getPhone());
-                    SPManager.get().putString("nickname", loginBean.getData().getNickname());
-                    SPManager.get().putString("icon", loginBean.getData().getAvatar());
-                    SPManager.get().putString(C.HAS_THIRD_PASS, String.valueOf(loginBean.getData().getPayment()));
+                    SPUtils.savaLogin(loginBean);
                     connectRongYun(loginBean.getData().getRongyun_token(), loginBean);
-                    EventBusUtil.sendEvent(new MessageEvent(MSG_LOGIN));
                     startActivity(new Intent(getActivity(), HomeActivity.class));
                     getActivity().finish();
                 } else {

@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.kuwai.ysy.R;
+import com.kuwai.ysy.module.home.business.main.CardDetailActivity;
 import com.kuwai.ysy.module.mine.OtherHomeActivity;
 import com.kuwai.ysy.module.mine.bean.GiftBoxBean;
 import com.kuwai.ysy.module.mine.bean.LikeEach;
@@ -54,10 +55,14 @@ public class LikeEachOtherAdapter extends BaseQuickAdapter<LikeEach.DataBean, Ba
             helper.getView(R.id.img_head).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!SPManager.get().getStringValue("uid").equals(String.valueOf(item.getUid()))) {
-                        Intent intent1 = new Intent(mContext, OtherHomeActivity.class);
-                        intent1.putExtra("uid", String.valueOf(item.getUid()));
-                        mContext.startActivity(intent1);
+                    if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                        if (!SPManager.get().getStringValue("uid").equals(String.valueOf(item.getUid()))) {
+                            Intent intent1 = new Intent(mContext, CardDetailActivity.class);
+                            intent1.putExtra("id", String.valueOf(item.getUid()));
+                            mContext.startActivity(intent1);
+                        }
+                    } else {
+                        ToastUtils.showShort(R.string.login_error);
                     }
                 }
             });

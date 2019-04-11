@@ -29,10 +29,13 @@ import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.callback.GiftClickCallback;
 import com.kuwai.ysy.module.chat.api.ChatApiFactory;
 import com.kuwai.ysy.module.find.api.AppointApiFactory;
+import com.kuwai.ysy.module.find.api.FoundApiFactory;
 import com.kuwai.ysy.module.find.bean.GiftPopBean;
+import com.kuwai.ysy.module.findtwo.api.Appoint2ApiFactory;
 import com.kuwai.ysy.module.home.business.main.MainFragment;
 import com.kuwai.ysy.widget.GiftPannelView;
 import com.rayhahah.dialoglib.CustomDialog;
+import com.rayhahah.rbase.utils.base.DateTimeUitl;
 import com.rayhahah.rbase.utils.base.StatusBarUtil;
 import com.rayhahah.rbase.utils.base.ToastUtils;
 import com.rayhahah.rbase.utils.useful.SPManager;
@@ -42,7 +45,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import cn.qqtheme.framework.util.LogUtils;
 import io.reactivex.functions.Consumer;
 import io.rong.callkit.BaseCallActivity;
 import io.rong.callkit.CallFloatBoxView;
@@ -90,6 +96,27 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
     private RelativeLayout mGualay, mGiftLay, mLoveLay;
     private boolean isBeau = false;
     private boolean isClose = false;
+
+    private Timer timer = new Timer(true);
+
+    private Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1) {
+                //todo something....
+                closeIncrease();
+            }
+        }
+    };
+
+    //任务
+    private TimerTask task = new TimerTask() {
+        public void run() {
+            Message msg = new Message();
+            msg.what = 1;
+            handler.sendMessage(msg);
+        }
+    };
 
     @Override
     final public boolean handleMessage(Message msg) {
@@ -211,6 +238,9 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
             CallFloatBoxView.hideFloatBox();
             finish();
         }
+
+        /*//启动定时器
+        timer.schedule(task, 0, 10 * 60 * 1000);*/
     }
 
     @Override
@@ -586,6 +616,8 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
         RelativeLayout btnLayout = (RelativeLayout) inflater.inflate(R.layout.button_layout, null);
         mButtonContainer.removeAllViews();
         mButtonContainer.addView(btnLayout);
+
+        //timer.schedule(task, 60 * 1000, 60 * 1000);
     }
 
     @Override
@@ -862,7 +894,7 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
     @Override
     public void onCallDisconnected(RongCallSession callSession, RongCallCommon.CallDisconnectedReason reason) {
         super.onCallDisconnected(callSession, reason);
-
+        finishVideo();
         String senderId;
         String extra = "";
 
@@ -1088,4 +1120,39 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
         }
     }
 
+    private void closeIncrease() {
+        FoundApiFactory.closeIncrease(SPManager.get().getStringValue("uid"),targetId).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(@NonNull SimpleResponse movieBean) throws Exception {
+                if (movieBean.code == 201) {
+                    LogUtils.error("chatRoom", "亲密值添加失败");
+                } else if (movieBean.code == 200) {
+                    LogUtils.error("chatRoom", "亲密值添加成功");
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(@NonNull Throwable throwable) throws Exception {
+                LogUtils.error(throwable);
+            }
+        });
+    }
+
+    private void finishVideo() {
+        FoundApiFactory.finishVideoChat(SPManager.get().getStringValue("uid"),targetId, DateTimeUitl.getTimeSeq()).subscribe(new Consumer<SimpleResponse>() {
+            @Override
+            public void accept(@NonNull SimpleResponse movieBean) throws Exception {
+                if (movieBean.code == 400) {
+                    LogUtils.error("chatRoom", "聊天结束失败");
+                } else if (movieBean.code == 200) {
+                    LogUtils.error("chatRoom", "聊天结束成功");
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(@NonNull Throwable throwable) throws Exception {
+                LogUtils.error(throwable);
+            }
+        });
+    }
 }

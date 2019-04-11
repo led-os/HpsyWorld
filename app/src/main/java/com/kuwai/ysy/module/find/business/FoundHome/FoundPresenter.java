@@ -36,7 +36,7 @@ public class FoundPresenter extends RBasePresenter<FoundContract.IHomeView> impl
             @Override
             public void accept(Throwable throwable) throws Exception {
                 Log.i(TAG, "accept: " + throwable);
-                //mView.showViewError(throwable);
+                mView.showViewError(throwable);
             }
         }));
     }

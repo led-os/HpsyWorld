@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.module.home.bean.HomeVideoBean;
+import com.kuwai.ysy.module.home.business.main.CardDetailActivity;
 import com.kuwai.ysy.module.mine.OtherHomeActivity;
 import com.kuwai.ysy.utils.Utils;
 import com.rayhahah.rbase.utils.base.ToastUtils;
@@ -70,8 +71,8 @@ public class HomePicAdapter extends BaseQuickAdapter<HomeVideoBean.DataBean, Bas
             public void onClick(View v) {
                 if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
                     if (!SPManager.get().getStringValue("uid").equals(String.valueOf(item.getUid()))) {
-                        Intent intent1 = new Intent(mContext, OtherHomeActivity.class);
-                        intent1.putExtra("uid", String.valueOf(item.getUid()));
+                        Intent intent1 = new Intent(mContext, CardDetailActivity.class);
+                        intent1.putExtra("id", String.valueOf(item.getUid()));
                         mContext.startActivity(intent1);
                     }
                 } else {

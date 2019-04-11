@@ -144,6 +144,7 @@ dependencies {
 
     implementation project(':AliyunSdk-RCE')
     implementation files('libs/commons-lang3-3.8.1.jar')
+    compile 'com.airbnb.android:lottie:1.0.1'
 
     //阿里云oss
     implementation 'com.aliyun.dpa:oss-android-sdk:2.4.5'

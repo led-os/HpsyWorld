@@ -68,6 +68,15 @@ public class LoginBean {
         private String token;
         private String city;
         private int ident;
+        private String sig;
+
+        public String getSig() {
+            return sig == null ? "" : sig;
+        }
+
+        public void setSig(String sig) {
+            this.sig = sig == null ? "" : sig;
+        }
 
         public String getCity() {
             return city == null ? "" : city;

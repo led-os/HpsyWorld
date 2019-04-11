@@ -45,6 +45,7 @@ import com.kuwai.ysy.module.mine.business.mine.MineLoginTwoFragment;
 import com.kuwai.ysy.socket.WsManager;
 import com.kuwai.ysy.socket.WsStatusListener;
 import com.kuwai.ysy.utils.EventBusUtil;
+import com.kuwai.ysy.utils.SPUtils;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.PageNavigationView;
 import com.rayhahah.rbase.base.RBaseFragment;
@@ -77,11 +78,9 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 import okhttp3.Call;
-import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import okio.ByteString;
 
-import static com.kuwai.ysy.app.C.MSG_LOGIN;
 
 public class HomeActivity extends BaseActivity implements AMapLocationListener, IUnReadMessageObserver {
 
@@ -232,21 +231,9 @@ public class HomeActivity extends BaseActivity implements AMapLocationListener, 
                 LogUtils.error("autoLogin",loginBean.toString());
                 if (loginBean.getCode() == 200) {
                     SPManager.get().putString(C.SAN_FANG, type);
-                    SPManager.get().putString("uid", String.valueOf(loginBean.getData().getUid()));
-                    SPManager.get().putString("nickname", loginBean.getData().getNickname());
-                    SPManager.get().putString("phone_", loginBean.getData().getPhone());
-                    SPManager.get().putString("city_", loginBean.getData().getCity());
-                    SPManager.get().putString("ident_", String.valueOf(loginBean.getData().getIdent()));
+                    SPUtils.savaLogin(loginBean);
                     SPManager.get().putString("password_", SPManager.get().getStringValue("password_"));
-                    SPManager.get().putString("icon", loginBean.getData().getAvatar());
-                    SPManager.get().putString("grade_", String.valueOf(loginBean.getData().getVip_grade()));
-                    SPManager.get().putString("sex_", String.valueOf(loginBean.getData().getGender()));
-                    SPManager.get().putString("isvip_", String.valueOf(loginBean.getData().getIs_vip()));
-                    SPManager.get().putString(C.HAS_THIRD_PASS, String.valueOf(loginBean.getData().getPayment()));
-                    SPManager.get().putString("rongyun_token", loginBean.getData().getRongyun_token());
-                    SPManager.get().putString("token", loginBean.getData().getToken());
                     connectRongYun(loginBean.getData().getRongyun_token(), loginBean);
-                    EventBusUtil.sendEvent(new MessageEvent(MSG_LOGIN));
                 } else {
                     if (C.LOGIN_QQ.equals(SPManager.get().getStringValue(C.SAN_FANG))) {
                         UMShareAPI.get(mContext).deleteOauth(HomeActivity.this, SHARE_MEDIA.QQ, null);

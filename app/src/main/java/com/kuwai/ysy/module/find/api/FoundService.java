@@ -12,6 +12,9 @@ import com.kuwai.ysy.module.find.bean.MyCommisDetailBean;
 import com.kuwai.ysy.module.find.bean.ProvincesAndCityBean;
 import com.kuwai.ysy.module.find.bean.TuoDanBean;
 import com.kuwai.ysy.module.find.bean.VideoChatBean;
+import com.kuwai.ysy.module.findtwo.bean.VideoRecordBean;
+import com.kuwai.ysy.module.mine.bean.IndentBean;
+import com.kuwai.ysy.module.mine.bean.PrivateBean;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -112,8 +115,42 @@ public interface FoundService {
 //                                      @Query("Message") String message,@Query("other") String othertheme);
 
 
-    //相亲活动列表
     @FormUrlEncoded
     @POST("HomePage/VideoChatRoomList")
     Observable<VideoChatBean> getVideoList(@FieldMap Map<String,Object> map);
+
+    //随机视频聊天加亲密值(每分钟1次)
+    @FormUrlEncoded
+    @POST("HomePage/VideoChatRoomIntimate")
+    Observable<SimpleResponse> closeIncrease(@Field("uid") String uid, @Field("other_uid") String other_uid);
+
+    //结束随机视频聊天
+    @FormUrlEncoded
+    @POST("HomePage/EndVideoChatRoom")
+    Observable<SimpleResponse> finishVideoChat(@Field("uid") String uid, @Field("other_uid") String other_uid, @Field("end_time") String end_time);
+
+    //随机视频聊天记录
+    @FormUrlEncoded
+    @POST("HomePage/VideoChatRoomLogList")
+    Observable<VideoRecordBean> getChatRecord(@Field("uid") String uid, @Field("page") int page);
+
+    //移除随机视频记录
+    @FormUrlEncoded
+    @POST("HomePage/DelVideoChatRoomLog")
+    Observable<SimpleResponse> removeChatRecord(@Field("uid") String uid, @Field("vl_id") int vl_id);
+
+    //隐私设置列表
+    @FormUrlEncoded
+    @POST("HomePage/PrivacySettingsList")
+    Observable<PrivateBean> getPrivateList(@Field("uid") String uid);
+
+    //隐私设置
+    @FormUrlEncoded
+    @POST("HomePage/PrivacySettings")
+    Observable<SimpleResponse> privateSet(@Field("uid") String uid, @Field("type") int type,@Field("settings") String settings);
+
+    //照片认证的时间
+    @FormUrlEncoded
+    @POST("HomePage/getPhoneIdentTime")
+    Observable<IndentBean> getIdentime(@Field("uid") String uid);
 }

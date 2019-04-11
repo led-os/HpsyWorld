@@ -20,6 +20,7 @@ import com.kuwai.ysy.module.home.business.loginmoudle.login.LoginActivity;
 import com.kuwai.ysy.module.mine.SettingActivity;
 import com.kuwai.ysy.module.mine.business.SecurityFragment;
 import com.kuwai.ysy.module.mine.business.black.BlackFragment;
+import com.kuwai.ysy.module.mine.business.privateset.PrivateSetFragment;
 import com.kuwai.ysy.utils.DataCleanManager;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
@@ -43,7 +44,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     private SuperTextView mStHelp;
     private SuperTextView mStAgree;
     private SuperTextView mStAbout;
-    private SuperTextView mStBlack;
+    private SuperTextView mStBlack,st_private;
     private SuperTextView mStScore;
     private SuperTextView mStClear;
     private SuperTextView mStExit;
@@ -68,6 +69,10 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.st_private:
+                start(PrivateSetFragment.newInstance());
+                //隐私设置
+                break;
             case R.id.st_security:
                 start(SecurityFragment.newInstance());
                 break;
@@ -163,6 +168,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
         mStHelp = mRootView.findViewById(R.id.st_help);
         mStAgree = mRootView.findViewById(R.id.st_agree);
         mStAbout = mRootView.findViewById(R.id.st_about);
+        st_private = mRootView.findViewById(R.id.st_private);
         mStBlack = mRootView.findViewById(R.id.st_black);
         mStScore = mRootView.findViewById(R.id.st_score);
         mStClear = mRootView.findViewById(R.id.st_clear);
@@ -172,6 +178,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
         mStSecurity.setOnClickListener(this);
         mStExit.setOnClickListener(this);
         mStAbout.setOnClickListener(this);
+        st_private.setOnClickListener(this);
         mStAgree.setOnClickListener(this);
         mStHelp.setOnClickListener(this);
         mStBlack.setOnClickListener(this);

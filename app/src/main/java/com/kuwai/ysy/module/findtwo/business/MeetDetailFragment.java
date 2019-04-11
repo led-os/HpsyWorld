@@ -1,5 +1,6 @@
 package com.kuwai.ysy.module.findtwo.business;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -32,6 +33,7 @@ import com.kuwai.ysy.module.findtwo.bean.MeetDetailBean;
 import com.kuwai.ysy.module.findtwo.bean.MeetDetailOther;
 import com.kuwai.ysy.module.findtwo.bean.Theme2Bean;
 import com.kuwai.ysy.module.home.business.HomeFragment;
+import com.kuwai.ysy.module.home.business.main.CardDetailActivity;
 import com.kuwai.ysy.utils.MapUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.NiceImageView;
@@ -146,6 +148,17 @@ public class MeetDetailFragment extends BaseFragment implements View.OnClickList
                     case R.id.tv_agree:
                         agreeApply(position, String.valueOf(sellAdapter.getData().get(position).getR_d_id()));
                         break;
+                    case R.id.img_head:
+                        if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                            if (!SPManager.get().getStringValue("uid").equals(String.valueOf(sellAdapter.getData().get(position).getUid()))) {
+                                Intent intent1 = new Intent(mContext, CardDetailActivity.class);
+                                intent1.putExtra("id", String.valueOf(sellAdapter.getData().get(position).getUid()));
+                                startActivity(intent1);
+                            }
+                        } else {
+                            ToastUtils.showShort(R.string.login_error);
+                        }
+                        break;
                 }
             }
         });
@@ -156,6 +169,17 @@ public class MeetDetailFragment extends BaseFragment implements View.OnClickList
                 switch (view.getId()) {
                     case R.id.tv_agree:
                         agreeApply(position, String.valueOf(sellAdapter.getData().get(position).getR_d_id()));
+                        break;
+                    case R.id.img_head:
+                        if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
+                            if (!SPManager.get().getStringValue("uid").equals(String.valueOf(horAdapter.getData().get(position).getUid()))) {
+                                Intent intent1 = new Intent(mContext, CardDetailActivity.class);
+                                intent1.putExtra("id", String.valueOf(horAdapter.getData().get(position).getUid()));
+                                startActivity(intent1);
+                            }
+                        } else {
+                            ToastUtils.showShort(R.string.login_error);
+                        }
                         break;
                 }
             }

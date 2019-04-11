@@ -6,6 +6,7 @@ import android.view.View;
 import com.hjq.bar.TitleBar;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.common.BaseActivity;
+import com.kuwai.ysy.module.circletwo.PublishHoleTwoActivity;
 import com.rayhahah.rbase.base.RBasePresenter;
 
 public class PublishHoleActivity extends BaseActivity implements View.OnClickListener {

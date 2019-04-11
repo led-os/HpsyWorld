@@ -13,6 +13,9 @@ import com.kuwai.ysy.module.find.bean.MyCommisDetailBean;
 import com.kuwai.ysy.module.find.bean.ProvincesAndCityBean;
 import com.kuwai.ysy.module.find.bean.TuoDanBean;
 import com.kuwai.ysy.module.find.bean.VideoChatBean;
+import com.kuwai.ysy.module.findtwo.bean.VideoRecordBean;
+import com.kuwai.ysy.module.mine.bean.IndentBean;
+import com.kuwai.ysy.module.mine.bean.PrivateBean;
 import com.kuwai.ysy.net.ApiClient;
 import com.rayhahah.rbase.utils.useful.RxSchedulers;
 
@@ -150,4 +153,52 @@ public class FoundApiFactory {
                 .compose(RxSchedulers.<VideoChatBean>ioMain());
     }
 
+    public static Observable<SimpleResponse> closeIncrease(String uid, String otherId) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(FoundService.class)
+                .closeIncrease(uid,otherId)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<SimpleResponse> finishVideoChat(String uid, String otherId,String time) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(FoundService.class)
+                .finishVideoChat(uid,otherId,time)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<VideoRecordBean> getChatRecord(String uid, int page) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(FoundService.class)
+                .getChatRecord(uid,page)
+                .compose(RxSchedulers.<VideoRecordBean>ioMain());
+    }
+
+    public static Observable<SimpleResponse> removeChatRecord(String uid, int vid) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(FoundService.class)
+                .removeChatRecord(uid,vid)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<PrivateBean> getPrivateList(String uid) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(FoundService.class)
+                .getPrivateList(uid)
+                .compose(RxSchedulers.<PrivateBean>ioMain());
+    }
+
+    public static Observable<SimpleResponse> privateSet(String uid, int type,String settings) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(FoundService.class)
+                .privateSet(uid,type,settings)
+                .compose(RxSchedulers.<SimpleResponse>ioMain());
+    }
+
+    public static Observable<IndentBean> getIdentime(String uid) {
+        return ApiClient.get(C.BaseURL.BASE_URL)
+                .create(FoundService.class)
+                .getIdentime(uid)
+                .compose(RxSchedulers.<IndentBean>ioMain());
+    }
 }

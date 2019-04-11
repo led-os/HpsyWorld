@@ -15,6 +15,7 @@ import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.adapter.DyZanAdapter;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.DyLikeListBean;
+import com.kuwai.ysy.module.home.business.main.CardDetailActivity;
 import com.kuwai.ysy.module.mine.OtherHomeActivity;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
@@ -79,8 +80,8 @@ public class DyZanListFragment extends BaseFragment<DyZanPresenter> implements D
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
                     if (!SPManager.get().getStringValue("uid").equals(String.valueOf(mDyLikeListBean.getData().getGood().get(position).getUid()))) {
-                        Intent intent1 = new Intent(getActivity(), OtherHomeActivity.class);
-                        intent1.putExtra("uid", String.valueOf(mDyLikeListBean.getData().getGood().get(position).getUid()));
+                        Intent intent1 = new Intent(mContext, CardDetailActivity.class);
+                        intent1.putExtra("id", String.valueOf(mDyLikeListBean.getData().getGood().get(position).getUid()));
                         startActivity(intent1);
                     }
                 } else {

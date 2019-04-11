@@ -5,10 +5,11 @@ import java.util.List;
 
 public class PersolHome2PageBean implements Serializable {
 
+
     /**
      * code : 200
      * msg : 获取成功
-     * data : {"info":{"nickname":"无所谓","avatar":"http://192.168.1.88/public/static/img/avatar/201812/19/1159e6106c38a19e6dd82d12de770cb5.jpg","uid":1,"gender":1,"city":"江苏-苏州市","age":"49","birthday":"1970-01-01","sig":"你去哪我跟哪，反正我没地方去","marriage":"已婚","children":"有","car_buying":"未购车","buy_house":"已购房","height":140,"annual_income":"3W以下","occupation":"IT/计算机","education":"大专以下","religion":"佛教","is_real":2,"is_phone":1,"is_education":2,"is_house":2,"is_vehicle":2,"is_avatar":0,"grade":4,"video":[{"v_id":1525,"video_id":"b426ae6fb91e46708975390738b1c3c8","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":1524,"video_id":"f6d3c9f9295c4773b77996e71ecd1d7b","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":1523,"video_id":"fabed24917014d0fa2386cd5d4658f58","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":1018,"video_id":"b426ae6fb91e46708975390738b1c3c8","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":1017,"video_id":"f6d3c9f9295c4773b77996e71ecd1d7b","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":1016,"video_id":"fabed24917014d0fa2386cd5d4658f58","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":510,"video_id":"b426ae6fb91e46708975390738b1c3c8","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":509,"video_id":"f6d3c9f9295c4773b77996e71ecd1d7b","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":508,"video_id":"fabed24917014d0fa2386cd5d4658f58","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":3,"video_id":"b426ae6fb91e46708975390738b1c3c8","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":2,"video_id":"f6d3c9f9295c4773b77996e71ecd1d7b","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":1,"video_id":"fabed24917014d0fa2386cd5d4658f58","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"}],"image":[{"img":"http://192.168.1.88/public/static/img/image/201812/27/53c13c7dab3e5289609a4a7c8b760fd2.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"}],"is_vip":1},"selection":{"love_age":"18-20","love_height":"170-175","love_address":"江苏-苏州市","annual_income":"20W以上","love_education":"博士"},"footprints":[{"f_id":2,"region_name":"南通市"},{"f_id":1,"region_name":"苏州市"}],"gift":[{"g_id":5,"girft_name":"锁定你","girft_img_url":"http://192.168.1.88/public/static/img/image/201812/11/638f1309d526a963785918bc405063a0.jpg","price":"56402","nickname":"赵六","avatar":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","uid":5,"gender":1,"is_vip":1},{"g_id":4,"girft_name":"烈焰红唇","girft_img_url":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","price":"39802","nickname":"王五","avatar":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","uid":4,"gender":1,"is_vip":1},{"g_id":26,"girft_name":"热辣似火","girft_img_url":"http://192.168.1.88/public/static/img/image/201811/08/bad6bd7eebf8f9917bd367a32d4412b4.png","price":"3571","nickname":"无所谓","avatar":"http://192.168.1.88/public/static/img/avatar/201812/19/1159e6106c38a19e6dd82d12de770cb5.jpg","uid":1,"gender":1,"is_vip":1},{"g_id":1,"girft_name":"甜蜜暗恋","girft_img_url":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","price":"7","nickname":"222","avatar":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","uid":2,"gender":2,"is_vip":1},{"g_id":58,"girft_name":"热辣似火","girft_img_url":"http://192.168.1.88/public/static/img/image/201811/08/bad6bd7eebf8f9917bd367a32d4412b4.png","price":"6","nickname":"峰","avatar":"http://192.168.1.88/public/static/img/avatar/201812/19/1159e6106c38a19e6dd82d12de770cb5.jpg","uid":104,"gender":1,"is_vip":1},{"g_id":52,"girft_name":"hi,你好","girft_img_url":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","price":"5","nickname":"qq888","avatar":"http://192.168.1.88/public/static/img/avatar/201901/02/534b1d9e110ac69d5eb6dad71ffce689.jpg","uid":105,"gender":1,"is_vip":1},{"g_id":2,"girft_name":"甜蜜暗恋","girft_img_url":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","price":"2","nickname":"李四","avatar":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","uid":3,"gender":1,"is_vip":1}],"view_face":1,"reminding_online":0,"love":0}
+     * data : {"info":{"nickname":"ysy_1_2019","avatar":"http://192.168.0.124/public/static/img/avatar/201903/13/4238b906f5041be581a9d693dc90c2c0.jpg","uid":10029,"gender":2,"city":"上海-上海市","age":"1","sig":"","marriage":"未婚","children":"否","car_buying":"未购车","buy_house":"未购房","height":165,"annual_income":"8W-10W","occupation":"其它","education":"大专","religion":"无","is_real":2,"is_phone":1,"is_education":0,"is_house":0,"is_vehicle":0,"is_avatar":1,"grade":1,"advantages":"0","love_view":"只想简简单单相爱到老","nature_view":"顺其自然","round":"0","birthday":"2018-01-01","weight":0,"login_time":1554798524,"lastcity":"苏州市","lastarea":"吴中区","intimate":"0.00","is_vip":0},"senior":[{"field":"marriage","name":"感情状况","is_see":0,"data":"未婚"},{"field":"children","name":"有无子女","is_see":0,"data":"否"},{"field":"car_buying","name":"购车情况","is_see":0,"data":"未购车"},{"field":"buy_house","name":"购房情况","is_see":0,"data":"未购房"},{"field":"annual_income","name":"年收入","is_see":0,"data":"8W-10W"},{"field":"job","name":"职业","is_see":0,"data":"其它"},{"field":"religion","name":"宗教信仰","is_see":0,"data":"无"},{"field":"advantages","name":"擅长","is_see":1,"data":"未填写"},{"field":"love_view","name":"对爱情的看法","is_see":1,"data":"只想简简单单相爱到老"},{"field":"nature_view","name":"对性的看法","is_see":1,"data":"顺其自然"},{"field":"round","name":"最满意的地方","is_see":1,"data":"未填写"},{"field":"is_children","name":"是否想要小孩","is_see":0,"data":"视情况而定"},{"field":"appointment","name":"偏爱的约会方式","is_see":0,"data":"吃饭，唱歌，看电影"},{"field":"wedding","name":"期待的婚礼形式","is_see":0,"data":"未填写"},{"field":"login_time","name":"最近活跃时间","is_see":1,"data":1547546941}],"selection":[{"s_id":2,"text":"啊嘎嘎"},{"s_id":4,"text":"昂大概"},{"s_id":5,"text":"奥迪嘎嘎"},{"s_id":6,"text":"agag"},{"s_id":7,"text":"阿迪嘎嘎"},{"s_id":8,"text":"444agag"},{"s_id":9,"text":"阿迪嘎嘎"},{"s_id":11,"text":"阿迪嘎嘎发"},{"s_id":12,"text":"444"},{"s_id":13,"text":"111"},{"s_id":14,"text":"222"},{"s_id":15,"text":"111"},{"s_id":16,"text":"222"},{"s_id":17,"text":"111"},{"s_id":18,"text":"222"},{"s_id":19,"text":"111"},{"s_id":20,"text":"222"},{"s_id":21,"text":"111"},{"s_id":22,"text":"222"},{"s_id":23,"text":"111"},{"s_id":24,"text":"222"},{"s_id":25,"text":"111"}],"footprints":[{"f_id":47,"region_name":"盐城市"},{"f_id":46,"region_name":"淮安市"},{"f_id":45,"region_name":"连云港市"},{"f_id":44,"region_name":"南通市"},{"f_id":42,"region_name":"苏州市"}],"gift":[{"girft_name":"捧在手心","girft_img_url":"http://192.168.0.124/public/static/img/image/201901/18/a968710f27bf1188eed235c09c48a7de.png","g_nums":"1"},{"girft_name":"甜蜜暗恋","girft_img_url":"http://192.168.0.124/public/static/img/image/201901/18/f0e38e9f8c4585928075859c2e3746d5.png","g_nums":"1"},{"girft_name":"热辣似火","girft_img_url":"http://192.168.0.124/public/static/img/image/201901/18/5d99be5ff7fa4af8b1d8c4c319a90a6c.png","g_nums":"1"}],"gift_sum":3,"reminding_online":0,"love":0}
      */
 
     private int code;
@@ -39,21 +40,24 @@ public class PersolHome2PageBean implements Serializable {
         this.data = data;
     }
 
-    public static class DataBean implements Serializable {
+    public static class DataBean {
         /**
-         * info : {"nickname":"无所谓","avatar":"http://192.168.1.88/public/static/img/avatar/201812/19/1159e6106c38a19e6dd82d12de770cb5.jpg","uid":1,"gender":1,"city":"江苏-苏州市","age":"49","birthday":"1970-01-01","sig":"你去哪我跟哪，反正我没地方去","marriage":"已婚","children":"有","car_buying":"未购车","buy_house":"已购房","height":140,"annual_income":"3W以下","occupation":"IT/计算机","education":"大专以下","religion":"佛教","is_real":2,"is_phone":1,"is_education":2,"is_house":2,"is_vehicle":2,"is_avatar":0,"grade":4,"video":[{"v_id":1525,"video_id":"b426ae6fb91e46708975390738b1c3c8","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":1524,"video_id":"f6d3c9f9295c4773b77996e71ecd1d7b","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":1523,"video_id":"fabed24917014d0fa2386cd5d4658f58","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":1018,"video_id":"b426ae6fb91e46708975390738b1c3c8","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":1017,"video_id":"f6d3c9f9295c4773b77996e71ecd1d7b","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":1016,"video_id":"fabed24917014d0fa2386cd5d4658f58","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":510,"video_id":"b426ae6fb91e46708975390738b1c3c8","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":509,"video_id":"f6d3c9f9295c4773b77996e71ecd1d7b","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":508,"video_id":"fabed24917014d0fa2386cd5d4658f58","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":3,"video_id":"b426ae6fb91e46708975390738b1c3c8","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":2,"video_id":"f6d3c9f9295c4773b77996e71ecd1d7b","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"v_id":1,"video_id":"fabed24917014d0fa2386cd5d4658f58","attach":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"}],"image":[{"img":"http://192.168.1.88/public/static/img/image/201812/27/53c13c7dab3e5289609a4a7c8b760fd2.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"}],"is_vip":1}
-         * selection : {"love_age":"18-20","love_height":"170-175","love_address":"江苏-苏州市","annual_income":"20W以上","love_education":"博士"}
-         * footprints : [{"f_id":2,"region_name":"南通市"},{"f_id":1,"region_name":"苏州市"}]
-         * gift : [{"g_id":5,"girft_name":"锁定你","girft_img_url":"http://192.168.1.88/public/static/img/image/201812/11/638f1309d526a963785918bc405063a0.jpg","price":"56402","nickname":"赵六","avatar":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","uid":5,"gender":1,"is_vip":1},{"g_id":4,"girft_name":"烈焰红唇","girft_img_url":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","price":"39802","nickname":"王五","avatar":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","uid":4,"gender":1,"is_vip":1},{"g_id":26,"girft_name":"热辣似火","girft_img_url":"http://192.168.1.88/public/static/img/image/201811/08/bad6bd7eebf8f9917bd367a32d4412b4.png","price":"3571","nickname":"无所谓","avatar":"http://192.168.1.88/public/static/img/avatar/201812/19/1159e6106c38a19e6dd82d12de770cb5.jpg","uid":1,"gender":1,"is_vip":1},{"g_id":1,"girft_name":"甜蜜暗恋","girft_img_url":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","price":"7","nickname":"222","avatar":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","uid":2,"gender":2,"is_vip":1},{"g_id":58,"girft_name":"热辣似火","girft_img_url":"http://192.168.1.88/public/static/img/image/201811/08/bad6bd7eebf8f9917bd367a32d4412b4.png","price":"6","nickname":"峰","avatar":"http://192.168.1.88/public/static/img/avatar/201812/19/1159e6106c38a19e6dd82d12de770cb5.jpg","uid":104,"gender":1,"is_vip":1},{"g_id":52,"girft_name":"hi,你好","girft_img_url":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","price":"5","nickname":"qq888","avatar":"http://192.168.1.88/public/static/img/avatar/201901/02/534b1d9e110ac69d5eb6dad71ffce689.jpg","uid":105,"gender":1,"is_vip":1},{"g_id":2,"girft_name":"甜蜜暗恋","girft_img_url":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","price":"2","nickname":"李四","avatar":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg","uid":3,"gender":1,"is_vip":1}]
-         * view_face : 1
+         * info : {"nickname":"ysy_1_2019","avatar":"http://192.168.0.124/public/static/img/avatar/201903/13/4238b906f5041be581a9d693dc90c2c0.jpg","uid":10029,"gender":2,"city":"上海-上海市","age":"1","sig":"","marriage":"未婚","children":"否","car_buying":"未购车","buy_house":"未购房","height":165,"annual_income":"8W-10W","occupation":"其它","education":"大专","religion":"无","is_real":2,"is_phone":1,"is_education":0,"is_house":0,"is_vehicle":0,"is_avatar":1,"grade":1,"advantages":"0","love_view":"只想简简单单相爱到老","nature_view":"顺其自然","round":"0","birthday":"2018-01-01","weight":0,"login_time":1554798524,"lastcity":"苏州市","lastarea":"吴中区","intimate":"0.00","is_vip":0}
+         * senior : [{"field":"marriage","name":"感情状况","is_see":0,"data":"未婚"},{"field":"children","name":"有无子女","is_see":0,"data":"否"},{"field":"car_buying","name":"购车情况","is_see":0,"data":"未购车"},{"field":"buy_house","name":"购房情况","is_see":0,"data":"未购房"},{"field":"annual_income","name":"年收入","is_see":0,"data":"8W-10W"},{"field":"job","name":"职业","is_see":0,"data":"其它"},{"field":"religion","name":"宗教信仰","is_see":0,"data":"无"},{"field":"advantages","name":"擅长","is_see":1,"data":"未填写"},{"field":"love_view","name":"对爱情的看法","is_see":1,"data":"只想简简单单相爱到老"},{"field":"nature_view","name":"对性的看法","is_see":1,"data":"顺其自然"},{"field":"round","name":"最满意的地方","is_see":1,"data":"未填写"},{"field":"is_children","name":"是否想要小孩","is_see":0,"data":"视情况而定"},{"field":"appointment","name":"偏爱的约会方式","is_see":0,"data":"吃饭，唱歌，看电影"},{"field":"wedding","name":"期待的婚礼形式","is_see":0,"data":"未填写"},{"field":"login_time","name":"最近活跃时间","is_see":1,"data":1547546941}]
+         * selection : [{"s_id":2,"text":"啊嘎嘎"},{"s_id":4,"text":"昂大概"},{"s_id":5,"text":"奥迪嘎嘎"},{"s_id":6,"text":"agag"},{"s_id":7,"text":"阿迪嘎嘎"},{"s_id":8,"text":"444agag"},{"s_id":9,"text":"阿迪嘎嘎"},{"s_id":11,"text":"阿迪嘎嘎发"},{"s_id":12,"text":"444"},{"s_id":13,"text":"111"},{"s_id":14,"text":"222"},{"s_id":15,"text":"111"},{"s_id":16,"text":"222"},{"s_id":17,"text":"111"},{"s_id":18,"text":"222"},{"s_id":19,"text":"111"},{"s_id":20,"text":"222"},{"s_id":21,"text":"111"},{"s_id":22,"text":"222"},{"s_id":23,"text":"111"},{"s_id":24,"text":"222"},{"s_id":25,"text":"111"}]
+         * footprints : [{"f_id":47,"region_name":"盐城市"},{"f_id":46,"region_name":"淮安市"},{"f_id":45,"region_name":"连云港市"},{"f_id":44,"region_name":"南通市"},{"f_id":42,"region_name":"苏州市"}]
+         * gift : [{"girft_name":"捧在手心","girft_img_url":"http://192.168.0.124/public/static/img/image/201901/18/a968710f27bf1188eed235c09c48a7de.png","g_nums":"1"},{"girft_name":"甜蜜暗恋","girft_img_url":"http://192.168.0.124/public/static/img/image/201901/18/f0e38e9f8c4585928075859c2e3746d5.png","g_nums":"1"},{"girft_name":"热辣似火","girft_img_url":"http://192.168.0.124/public/static/img/image/201901/18/5d99be5ff7fa4af8b1d8c4c319a90a6c.png","g_nums":"1"}]
+         * gift_sum : 3
          * reminding_online : 0
          * love : 0
          */
 
         private InfoBean info;
-        private List<SelectionBean> selection;
+        private int gift_sum;
         private int reminding_online;
         private int love;
+        private List<SeniorBean> senior;
+        private List<SelectionBean> selection;
         private List<FootprintsBean> footprints;
         private List<GiftBean> gift;
 
@@ -65,12 +69,12 @@ public class PersolHome2PageBean implements Serializable {
             this.info = info;
         }
 
-        public List<SelectionBean> getSelection() {
-            return selection;
+        public int getGift_sum() {
+            return gift_sum;
         }
 
-        public void setSelection(List<SelectionBean> selection) {
-            this.selection = selection;
+        public void setGift_sum(int gift_sum) {
+            this.gift_sum = gift_sum;
         }
 
         public int getReminding_online() {
@@ -89,6 +93,22 @@ public class PersolHome2PageBean implements Serializable {
             this.love = love;
         }
 
+        public List<SeniorBean> getSenior() {
+            return senior;
+        }
+
+        public void setSenior(List<SeniorBean> senior) {
+            this.senior = senior;
+        }
+
+        public List<SelectionBean> getSelection() {
+            return selection;
+        }
+
+        public void setSelection(List<SelectionBean> selection) {
+            this.selection = selection;
+        }
+
         public List<FootprintsBean> getFootprints() {
             return footprints;
         }
@@ -105,34 +125,42 @@ public class PersolHome2PageBean implements Serializable {
             this.gift = gift;
         }
 
-        public static class InfoBean implements Serializable{
+        public static class InfoBean {
             /**
-             * nickname : 无所谓
-             * avatar : http://192.168.1.88/public/static/img/avatar/201812/19/1159e6106c38a19e6dd82d12de770cb5.jpg
-             * uid : 1
-             * gender : 1
-             * city : 江苏-苏州市
-             * age : 49
-             * birthday : 1970-01-01
-             * sig : 你去哪我跟哪，反正我没地方去
-             * marriage : 已婚
-             * children : 有
+             * nickname : ysy_1_2019
+             * avatar : http://192.168.0.124/public/static/img/avatar/201903/13/4238b906f5041be581a9d693dc90c2c0.jpg
+             * uid : 10029
+             * gender : 2
+             * city : 上海-上海市
+             * age : 1
+             * sig :
+             * marriage : 未婚
+             * children : 否
              * car_buying : 未购车
-             * buy_house : 已购房
-             * height : 140
-             * annual_income : 3W以下
-             * occupation : IT/计算机
-             * education : 大专以下
-             * religion : 佛教
+             * buy_house : 未购房
+             * height : 165
+             * annual_income : 8W-10W
+             * occupation : 其它
+             * education : 大专
+             * religion : 无
              * is_real : 2
              * is_phone : 1
-             * is_education : 2
-             * is_house : 2
-             * is_vehicle : 2
-             * is_avatar : 0
-             * grade : 4
-             * image : [{"img":"http://192.168.1.88/public/static/img/image/201812/27/53c13c7dab3e5289609a4a7c8b760fd2.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"},{"img":"http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg"}]
-             * is_vip : 1
+             * is_education : 0
+             * is_house : 0
+             * is_vehicle : 0
+             * is_avatar : 1
+             * grade : 1
+             * advantages : 0
+             * love_view : 只想简简单单相爱到老
+             * nature_view : 顺其自然
+             * round : 0
+             * birthday : 2018-01-01
+             * weight : 0
+             * login_time : 1554798524
+             * lastcity : 苏州市
+             * lastarea : 吴中区
+             * intimate : 0.00
+             * is_vip : 0
              */
 
             private String nickname;
@@ -141,7 +169,6 @@ public class PersolHome2PageBean implements Serializable {
             private int gender;
             private String city;
             private String age;
-            private String birthday;
             private String sig;
             private String marriage;
             private String children;
@@ -159,71 +186,17 @@ public class PersolHome2PageBean implements Serializable {
             private int is_vehicle;
             private int is_avatar;
             private int grade;
-            private int is_vip;
-            private Long login_time;
-            private List<ImageBean> image;
             private String advantages;
             private String love_view;
             private String nature_view;
             private String round;
-            private String weight;
-            private double intimate;
-
-            public double getIntimate() {
-                return intimate;
-            }
-
-            public void setIntimate(double intimate) {
-                this.intimate = intimate;
-            }
-
-            public Long getLogin_time() {
-                return login_time;
-            }
-
-            public void setLogin_time(Long login_time) {
-                this.login_time = login_time;
-            }
-
-            public String getAdvantages() {
-                return advantages == null ? "" : advantages;
-            }
-
-            public void setAdvantages(String advantages) {
-                this.advantages = advantages == null ? "" : advantages;
-            }
-
-            public String getLove_view() {
-                return love_view == null ? "" : love_view;
-            }
-
-            public void setLove_view(String love_view) {
-                this.love_view = love_view == null ? "" : love_view;
-            }
-
-            public String getNature_view() {
-                return nature_view == null ? "" : nature_view;
-            }
-
-            public void setNature_view(String nature_view) {
-                this.nature_view = nature_view == null ? "" : nature_view;
-            }
-
-            public String getRound() {
-                return round == null ? "" : round;
-            }
-
-            public void setRound(String round) {
-                this.round = round == null ? "" : round;
-            }
-
-            public String getWeight() {
-                return weight == null ? "" : weight;
-            }
-
-            public void setWeight(String weight) {
-                this.weight = weight == null ? "" : weight;
-            }
+            private String birthday;
+            private int weight;
+            private int login_time;
+            private String lastcity;
+            private String lastarea;
+            private String intimate;
+            private int is_vip;
 
             public String getNickname() {
                 return nickname;
@@ -271,14 +244,6 @@ public class PersolHome2PageBean implements Serializable {
 
             public void setAge(String age) {
                 this.age = age;
-            }
-
-            public String getBirthday() {
-                return birthday;
-            }
-
-            public void setBirthday(String birthday) {
-                this.birthday = birthday;
             }
 
             public String getSig() {
@@ -417,6 +382,86 @@ public class PersolHome2PageBean implements Serializable {
                 this.grade = grade;
             }
 
+            public String getAdvantages() {
+                return advantages;
+            }
+
+            public void setAdvantages(String advantages) {
+                this.advantages = advantages;
+            }
+
+            public String getLove_view() {
+                return love_view;
+            }
+
+            public void setLove_view(String love_view) {
+                this.love_view = love_view;
+            }
+
+            public String getNature_view() {
+                return nature_view;
+            }
+
+            public void setNature_view(String nature_view) {
+                this.nature_view = nature_view;
+            }
+
+            public String getRound() {
+                return round;
+            }
+
+            public void setRound(String round) {
+                this.round = round;
+            }
+
+            public String getBirthday() {
+                return birthday;
+            }
+
+            public void setBirthday(String birthday) {
+                this.birthday = birthday;
+            }
+
+            public int getWeight() {
+                return weight;
+            }
+
+            public void setWeight(int weight) {
+                this.weight = weight;
+            }
+
+            public int getLogin_time() {
+                return login_time;
+            }
+
+            public void setLogin_time(int login_time) {
+                this.login_time = login_time;
+            }
+
+            public String getLastcity() {
+                return lastcity;
+            }
+
+            public void setLastcity(String lastcity) {
+                this.lastcity = lastcity;
+            }
+
+            public String getLastarea() {
+                return lastarea;
+            }
+
+            public void setLastarea(String lastarea) {
+                this.lastarea = lastarea;
+            }
+
+            public String getIntimate() {
+                return intimate;
+            }
+
+            public void setIntimate(String intimate) {
+                this.intimate = intimate;
+            }
+
             public int getIs_vip() {
                 return is_vip;
             }
@@ -424,87 +469,59 @@ public class PersolHome2PageBean implements Serializable {
             public void setIs_vip(int is_vip) {
                 this.is_vip = is_vip;
             }
+        }
 
-            public List<ImageBean> getImage() {
-                return image;
+        public static class SeniorBean {
+            /**
+             * field : marriage
+             * name : 感情状况
+             * is_see : 0
+             * data : 未婚
+             */
+
+            private String field;
+            private String name;
+            private int is_see;
+            private String data;
+
+            public String getField() {
+                return field;
             }
 
-            public void setImage(List<ImageBean> image) {
-                this.image = image;
+            public void setField(String field) {
+                this.field = field;
             }
 
-            public static class VideoBean implements Serializable{
-                /**
-                 * v_id : 1525
-                 * video_id : b426ae6fb91e46708975390738b1c3c8
-                 * attach : http://192.168.1.88/public/static/img/avatar/201811/01/58d5a5f64f7abd42248da91be37228aa.jpg
-                 */
-
-                private int v_id;
-                private String video_id;
-                private String attach;
-
-                public int getV_id() {
-                    return v_id;
-                }
-
-                public void setV_id(int v_id) {
-                    this.v_id = v_id;
-                }
-
-                public String getVideo_id() {
-                    return video_id;
-                }
-
-                public void setVideo_id(String video_id) {
-                    this.video_id = video_id;
-                }
-
-                public String getAttach() {
-                    return attach;
-                }
-
-                public void setAttach(String attach) {
-                    this.attach = attach;
-                }
+            public String getName() {
+                return name;
             }
 
-            public static class ImageBean implements Serializable{
-                /**
-                 * img : http://192.168.1.88/public/static/img/image/201812/27/53c13c7dab3e5289609a4a7c8b760fd2.jpg
-                 */
+            public void setName(String name) {
+                this.name = name;
+            }
 
-                private String img;
-                private String img_width;
-                private String img_height;
+            public int getIs_see() {
+                return is_see;
+            }
 
-                public String getImg() {
-                    return img;
-                }
+            public void setIs_see(int is_see) {
+                this.is_see = is_see;
+            }
 
-                public void setImg(String img) {
-                    this.img = img;
-                }
+            public String getData() {
+                return data;
+            }
 
-                public String getImg_width() {
-                    return img_width == null ? "" : img_width;
-                }
-
-                public void setImg_width(String img_width) {
-                    this.img_width = img_width == null ? "" : img_width;
-                }
-
-                public String getImg_height() {
-                    return img_height == null ? "" : img_height;
-                }
-
-                public void setImg_height(String img_height) {
-                    this.img_height = img_height == null ? "" : img_height;
-                }
+            public void setData(String data) {
+                this.data = data;
             }
         }
 
-        public static class SelectionBean implements Serializable{
+        public static class SelectionBean {
+            /**
+             * s_id : 2
+             * text : 啊嘎嘎
+             */
 
             private int s_id;
             private String text;
@@ -518,18 +535,18 @@ public class PersolHome2PageBean implements Serializable {
             }
 
             public String getText() {
-                return text == null ? "" : text;
+                return text;
             }
 
             public void setText(String text) {
-                this.text = text == null ? "" : text;
+                this.text = text;
             }
         }
 
-        public static class FootprintsBean implements Serializable{
+        public static class FootprintsBean {
             /**
-             * f_id : 2
-             * region_name : 南通市
+             * f_id : 47
+             * region_name : 盐城市
              */
 
             private int f_id;
@@ -552,34 +569,39 @@ public class PersolHome2PageBean implements Serializable {
             }
         }
 
-        public static class GiftBean implements Serializable{
+        public static class GiftBean {
+            /**
+             * girft_name : 捧在手心
+             * girft_img_url : http://192.168.0.124/public/static/img/image/201901/18/a968710f27bf1188eed235c09c48a7de.png
+             * g_nums : 1
+             */
 
             private String girft_name;
             private String girft_img_url;
             private String g_nums;
 
             public String getGirft_name() {
-                return girft_name == null ? "" : girft_name;
+                return girft_name;
             }
 
             public void setGirft_name(String girft_name) {
-                this.girft_name = girft_name == null ? "" : girft_name;
+                this.girft_name = girft_name;
             }
 
             public String getGirft_img_url() {
-                return girft_img_url == null ? "" : girft_img_url;
+                return girft_img_url;
             }
 
             public void setGirft_img_url(String girft_img_url) {
-                this.girft_img_url = girft_img_url == null ? "" : girft_img_url;
+                this.girft_img_url = girft_img_url;
             }
 
             public String getG_nums() {
-                return g_nums == null ? "" : g_nums;
+                return g_nums;
             }
 
             public void setG_nums(String g_nums) {
-                this.g_nums = g_nums == null ? "" : g_nums;
+                this.g_nums = g_nums;
             }
         }
     }

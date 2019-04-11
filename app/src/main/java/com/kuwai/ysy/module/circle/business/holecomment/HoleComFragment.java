@@ -22,6 +22,7 @@ import com.kuwai.ysy.module.circle.bean.DyCommentListBean;
 import com.kuwai.ysy.module.circle.bean.HoleCommentListBean;
 import com.kuwai.ysy.module.circle.business.dycomment.CommentContract;
 import com.kuwai.ysy.module.circle.business.dycomment.CommentPresenter;
+import com.kuwai.ysy.module.home.business.main.CardDetailActivity;
 import com.kuwai.ysy.module.mine.OtherHomeActivity;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
@@ -178,8 +179,8 @@ public class HoleComFragment extends BaseFragment<HoleCommentPresenter> implemen
                 public void toHomePage(int uid) {
                     if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
                         if (!SPManager.get().getStringValue("uid").equals(String.valueOf(uid))) {
-                            Intent intent1 = new Intent(getActivity(), OtherHomeActivity.class);
-                            intent1.putExtra("uid", String.valueOf(uid));
+                            Intent intent1 = new Intent(mContext, CardDetailActivity.class);
+                            intent1.putExtra("id", String.valueOf(uid));
                             startActivity(intent1);
                         }
                     } else {

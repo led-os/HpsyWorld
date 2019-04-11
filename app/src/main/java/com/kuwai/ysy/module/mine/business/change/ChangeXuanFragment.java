@@ -79,6 +79,7 @@ public class ChangeXuanFragment extends BaseFragment implements View.OnClickList
             public void accept(SimpleResponse response) throws Exception {
                 if (response.code == 200) {
                     Utils.showOrHide(getActivity(), mEtContent);
+                    SPManager.get().putString("sign_", mEtContent.getText().toString());
                     EventBusUtil.sendEvent(new MessageEvent(C.MSG_CHANGE_INFO));
                     pop();
                 }

@@ -331,8 +331,8 @@ public class CardDetailActivity extends BaseActivity implements View.OnClickList
         //高级资料
         persolHome2PageBean = persolHomePageBean;
         PersolHome2PageBean.DataBean.InfoBean infoBean = persolHomePageBean.getData().getInfo();
-        if (infoBean.getImage() != null && infoBean.getImage().size() > 0) {
-            GlideUtil.loadwithNobg(CardDetailActivity.this, infoBean.getImage().get(0).getImg(), iv_cover);
+        if (!Utils.isNullString(infoBean.getAvatar())) {
+            GlideUtil.loadwithNobg(CardDetailActivity.this, infoBean.getAvatar(), iv_cover);
         }else if(infoBean.getGender() == 1){
             GlideUtil.load(CardDetailActivity.this, R.drawable.defult_man, iv_cover);
         }else{
@@ -367,7 +367,7 @@ public class CardDetailActivity extends BaseActivity implements View.OnClickList
             sexTv.setBackgroundResource(R.drawable.bg_sex_round);
         }
 
-        btn_online.setText("亲密值 " + Utils.formatNumber(persolHomePageBean.getData().getInfo().getIntimate()));
+        btn_online.setText("亲密值 " + Utils.formatNumber(Double.parseDouble(persolHomePageBean.getData().getInfo().getIntimate())));
     }
 
     public void like(String uid, String otherId) {
@@ -377,7 +377,7 @@ public class CardDetailActivity extends BaseActivity implements View.OnClickList
 
                 if(response.code ==200){
                     startTextAnim();
-                    btn_online.setText("亲密值 " + Utils.formatNumber(persolHome2PageBean.getData().getInfo().getIntimate() + 1));
+                    btn_online.setText("亲密值 " + Utils.formatNumber(Double.parseDouble(persolHome2PageBean.getData().getInfo().getIntimate()) + 1));
                 }
 
             }

@@ -25,6 +25,7 @@ import com.kuwai.ysy.module.circle.api.CircleApiFactory;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
 import com.kuwai.ysy.module.circle.bean.HoleMainListBean;
 import com.kuwai.ysy.module.circle.business.PublishHoleActivity;
+import com.kuwai.ysy.module.circletwo.PublishHoleTwoActivity;
 import com.kuwai.ysy.module.home.WebviewH5Activity;
 import com.kuwai.ysy.module.home.business.HomeActivity;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
@@ -92,7 +93,7 @@ public class TreeHoleMainFragment extends BaseFragment<TreeHoleMainPresenter> im
         switch (v.getId()) {
             case R.id.tv_edit:
                 if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
-                    startActivity(new Intent(getActivity(), PublishHoleActivity.class));
+                    startActivity(new Intent(getActivity(), PublishHoleTwoActivity.class));
                 } else {
                     ToastUtils.showShort(R.string.login_error);
                 }

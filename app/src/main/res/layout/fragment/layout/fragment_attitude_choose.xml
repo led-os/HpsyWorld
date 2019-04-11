@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title1="对性的看法"
+        app:rightTxt="保存"
+        app:rightColor="@color/theme"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <EditText
+        android:id="@+id/et_content"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_below="@id/img_select"
+        android:layout_marginBottom="14dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/shape_jiyu"
+        android:gravity="left|top"
+        android:hint="说些好听的吧(我们会对发布的内容进行审查,请勿发表违法 违规的内容)"
+        android:inputType="textMultiLine"
+        android:maxLength="140"
+        android:maxLines="6"
+        android:padding="10dp"
+        android:scrollHorizontally="false"
+        android:singleLine="false"
+        android:textColor="@color/gray_7b"
+        android:textSize="12sp" />
+
+    <LinearLayout
+        android:id="@+id/ll_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:visibility="gone"
+        android:orientation="vertical">
+    <com.kuwai.ysy.widget.MyEditText
+        android:id="@+id/et_sport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="30dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp"
+        android:background="@null" />
+
+    <View style="@style/horizontal_line"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"/>
+    </LinearLayout>
+
+    <com.kuwai.ysy.widget.shadow.TagFlowLayout
+        android:id="@+id/tag_sex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.kuwai.ysy.widget.shadow.TagFlowLayout>
+</LinearLayout>

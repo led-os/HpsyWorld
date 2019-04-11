@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:rightColor="@color/theme"
-        app:rightTxt="实名作用？"
+        app:rightTxt="认证作用？"
         app:title1="信用认证">
 
     </com.kuwai.ysy.widget.NavigationLayout>
@@ -55,6 +55,8 @@
         app:sLeftTextString="真实照片认证"
         app:sRightTextColor="#ffbdbdbd"
         app:sRightTextSize="14sp"
+        app:sRightTextGravity="center"
+        app:sRightTvDrawableRight="@drawable/ic_arrow_right"
         app:sRightTextString="已认证" />
 
     <com.allen.library.SuperTextView
@@ -68,6 +70,8 @@
         app:sLeftTextString="手机号码认证"
         app:sRightTextColor="#ffbdbdbd"
         app:sRightTextSize="14sp"
+        app:sRightTextGravity="center"
+        app:sRightTvDrawableRight="@drawable/ic_arrow_right"
         app:sRightTextString="已认证" />
 
 
@@ -83,7 +87,7 @@
         app:sRightTextGravity="center"
         app:sRightTextSize="14sp"
         app:sRightTextString="去认证"
-        app:sRightTvDrawableRight="@drawable/center_ic_list_enter" />
+        app:sRightTvDrawableRight="@drawable/ic_arrow_right"/>
 
     <com.allen.library.SuperTextView
         android:id="@+id/st_edu"
@@ -94,10 +98,10 @@
         app:sLeftTextSize="16sp"
         app:sLeftTextString="学历认证"
         app:sRightTextColor="#ff6161"
-        app:sRightTextGravity="center"
         app:sRightTextSize="14sp"
         app:sRightTextString="去认证"
-        app:sRightTvDrawableRight="@drawable/center_ic_list_enter" />
+        app:sRightTextGravity="center"
+        app:sRightTvDrawableRight="@drawable/ic_arrow_right" />
 
 
     <TextView
@@ -124,10 +128,10 @@
         app:sLeftTextSize="16sp"
         app:sLeftTextString="房产认证"
         app:sRightTextColor="#ff6161"
-        app:sRightTextGravity="center"
         app:sRightTextSize="14sp"
         app:sRightTextString="去认证"
-        app:sRightTvDrawableRight="@drawable/center_ic_list_enter" />
+        app:sRightTextGravity="center"
+        app:sRightTvDrawableRight="@drawable/ic_arrow_right"/>
 
     <com.allen.library.SuperTextView
         android:id="@+id/st_car"
@@ -138,10 +142,10 @@
         app:sLeftTextSize="16sp"
         app:sLeftTextString="车辆认证"
         app:sRightTextColor="#ff6161"
-        app:sRightTextGravity="center"
         app:sRightTextSize="14sp"
         app:sRightTextString="去认证"
-        app:sRightTvDrawableRight="@drawable/center_ic_list_enter" />
+        app:sRightTextGravity="center"
+        app:sRightTvDrawableRight="@drawable/ic_arrow_right" />
 
     <TextView
         android:layout_width="match_parent"

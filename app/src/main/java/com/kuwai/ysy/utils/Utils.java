@@ -60,6 +60,10 @@ public class Utils {
         return false;
     }
 
+    public static MediaRecorderUtilsAmr getRecorderUtilsAmr(Context context) {
+        return new MediaRecorderUtilsAmr(context);
+    }
+
     public static void showOrHide(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         //  imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);//SHOW_FORCED表示强制显示

@@ -13,12 +13,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.allen.library.SuperButton;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kuwai.ysy.R;
 import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseFragment;
 import com.kuwai.ysy.module.circle.bean.CategoryBean;
+import com.kuwai.ysy.module.home.adapter.HomeOtherListAdapter;
 import com.kuwai.ysy.module.mine.VipCenterActivity;
+import com.kuwai.ysy.module.mine.adapter.HomeListAdapter;
 import com.kuwai.ysy.module.mine.adapter.homepage.PageGiftReceive2Adapter;
 import com.kuwai.ysy.module.mine.adapter.homepage.PageGiftReceiveAdapter;
 import com.kuwai.ysy.module.mine.bean.PersolHome2PageBean;
@@ -54,15 +57,9 @@ public class PageDetail2Fragment extends BaseFragment<PageDetail2Presenter> impl
     private ImageView mIsName, mIsHouse, mIsEdu, mIsCar, mIsPhone, mIsPhoto;
     private LayoutInflater mInflater;
     private TextView mGift, mSign;
-    private TextView mTvHouse;
-    private TextView mTvCar;
-    private TextView mTvMarry;
-    private TextView mTvZong;
-    private TextView mTvChild;
-    private TextView mTvJob;
-    private TextView tvGoodat, tvAboutlove, tvAboutSex, tvAgree, tvTime;
-
+    private RecyclerView mRlInfo;
     private PersolHome2PageBean.DataBean mPersonBean;
+    private HomeOtherListAdapter basicAdapter;
 
     public static PageDetail2Fragment newInstance(String id) {
         Bundle bundle = new Bundle();
@@ -90,7 +87,7 @@ public class PageDetail2Fragment extends BaseFragment<PageDetail2Presenter> impl
                 bundle.putString("uid", otherid);
                 start(TaAcceptGiftFragment.newInstance(bundle));*/
                 break;
-            case R.id.tv_about_love:
+            /*case R.id.tv_about_love:
                 initCleanDialog("对爱情的看法", mPersonBean.getInfo().getLove_view());
                 break;
             case R.id.tv_about_sex:
@@ -104,7 +101,7 @@ public class PageDetail2Fragment extends BaseFragment<PageDetail2Presenter> impl
                 break;
             case R.id.tv_time:
                 initCleanDialog("最近活跃时间", DateTimeUitl.getStandardDate(String.valueOf(mPersonBean.getInfo().getLogin_time())));
-                break;
+                break;*/
         }
     }
 
@@ -114,29 +111,20 @@ public class PageDetail2Fragment extends BaseFragment<PageDetail2Presenter> impl
         mIsHouse = mRootView.findViewById(R.id.tv_isHouse);
         mIsEdu = mRootView.findViewById(R.id.tv_isEdu);
         mIsCar = mRootView.findViewById(R.id.tv_isCar);
+        mRlInfo = mRootView.findViewById(R.id.rl_info);
+        mRlInfo.setLayoutManager(new LinearLayoutManager(getActivity()){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
         mIsPhone = mRootView.findViewById(R.id.tv_isPhone);
         mIsPhoto = mRootView.findViewById(R.id.tv_isPhoto);
         mSign = mRootView.findViewById(R.id.tv_sign);
         mGift = mRootView.findViewById(R.id.ta_gift);
-        mTvHouse = mRootView.findViewById(R.id.tv_house);
-        mTvCar = mRootView.findViewById(R.id.tv_car);
-        mTvMarry = mRootView.findViewById(R.id.tv_marry);
-        mTvZong = mRootView.findViewById(R.id.tv_zong);
-        mTvChild = mRootView.findViewById(R.id.tv_child);
-        mTvJob = mRootView.findViewById(R.id.tv_job);
-
-        tvAboutlove = mRootView.findViewById(R.id.tv_about_love);
-        tvAboutSex = mRootView.findViewById(R.id.tv_about_sex);
-        tvAgree = mRootView.findViewById(R.id.tv_agree);
-        tvGoodat = mRootView.findViewById(R.id.tv_good_at);
-        tvTime = mRootView.findViewById(R.id.tv_time);
-
+        basicAdapter = new HomeOtherListAdapter();
+        mRlInfo.setAdapter(basicAdapter);
         mGift.setOnClickListener(this);
-        tvTime.setOnClickListener(this);
-        tvGoodat.setOnClickListener(this);
-        tvAgree.setOnClickListener(this);
-        tvAboutSex.setOnClickListener(this);
-        tvAboutlove.setOnClickListener(this);
 
         mInflater = LayoutInflater.from(getActivity());
         tagFlowLayout = mRootView.findViewById(R.id.tv_tag);
@@ -157,6 +145,21 @@ public class PageDetail2Fragment extends BaseFragment<PageDetail2Presenter> impl
             }
         });
 
+        basicAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()){
+                    case R.id.tv_look:
+                        if("最近活跃时间".equals(basicAdapter.getData().get(position).getName())){
+                            initCleanDialog(basicAdapter.getData().get(position).getName(), DateTimeUitl.getStandardDate(basicAdapter.getData().get(position).getData()));
+                        }else{
+                            initCleanDialog(basicAdapter.getData().get(position).getName(), basicAdapter.getData().get(position).getData());
+                        }
+
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -176,18 +179,7 @@ public class PageDetail2Fragment extends BaseFragment<PageDetail2Presenter> impl
         //高级资料
         mPersonBean = persolHomePageBean.getData();
         PersolHome2PageBean.DataBean.InfoBean infoBean = persolHomePageBean.getData().getInfo();
-        mTvHouse.setText(infoBean.getBuy_house());
-        mTvCar.setText(infoBean.getCar_buying());
-        mTvMarry.setText(infoBean.getMarriage());
-        mTvZong.setText(infoBean.getReligion());
-        mTvChild.setText(infoBean.getChildren());
-        mTvJob.setText(infoBean.getOccupation());
-        //会员部分
-        //tvTime.setText(infoBean.ge);
-        /*tvGoodat.setText(infoBean.getAdvantages());
-        tvAgree.setText(infoBean.getRound());
-        tvAboutSex.setText(infoBean.getNature_view());
-        tvAboutlove.setText(infoBean.getLove_view());*/
+        basicAdapter.replaceData(persolHomePageBean.getData().getSenior());
 
         if (persolHomePageBean.getData().getInfo().getIs_real() == 1) {
             mIsName.setImageResource(R.drawable.personal_icon_id_sure);
