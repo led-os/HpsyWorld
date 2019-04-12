@@ -16,16 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kuwai.ysy.R;
-import com.kuwai.ysy.app.C;
-import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.bean.SimpleResponse;
 import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.module.mine.api.MineApiFactory;
-import com.kuwai.ysy.module.mine.bean.ChangeHeadBean;
-import com.kuwai.ysy.module.mine.bean.JobBean;
 import com.kuwai.ysy.module.mine.bean.TestVoice;
-import com.kuwai.ysy.utils.DialogUtil;
-import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.MediaPlayerUtils;
 import com.kuwai.ysy.utils.MediaRecorderUtilsAmr;
 import com.kuwai.ysy.utils.UploadHelper;
@@ -34,8 +28,6 @@ import com.kuwai.ysy.utils.glide.SecondsTimeFormatTime;
 import com.kuwai.ysy.widget.NavigationLayout;
 import com.rayhahah.rbase.base.RBasePresenter;
 import com.rayhahah.rbase.utils.base.ToastUtils;
-import com.rayhahah.rbase.utils.useful.GlideUtil;
-import com.rayhahah.rbase.utils.useful.SPManager;
 
 import java.io.File;
 
@@ -63,12 +55,14 @@ public class VoiceActivity extends BaseActivity implements View.OnClickListener,
 
     private Chronometer chronometer;
     private RelativeLayout audioLayout;
-    private TextView mic, info;
+    private TextView info;
+    private RelativeLayout mic;
     private ImageView micIcon;
     private NavigationLayout navigationLayout;
     private RelativeLayout mRlVoice;
     private TextView mTimeTv;
     private String duration;
+    private TextView tv_press;
 
     private MediaRecorderUtilsAmr mMediaRecorderUtils;
     private MediaPlayerUtils mMediaPlayerUtils;
@@ -98,6 +92,7 @@ public class VoiceActivity extends BaseActivity implements View.OnClickListener,
                     break;
                 case VOICE_RECORD_OK:
                     Toast.makeText(VoiceActivity.this, "录音保存成功", Toast.LENGTH_SHORT).show();
+                    mic.setBackground(getResources().getDrawable(R.drawable.mic_bg));
                     voiceFile = (File) msg.obj;
                     if (voiceFile != null) {
                         String path = voiceFile.getPath();
@@ -106,16 +101,6 @@ public class VoiceActivity extends BaseActivity implements View.OnClickListener,
                         String minuteTime = mMediaPlayerUtils.jsSecondMinuteText(new SecondsTimeFormatTime(), mMediaPlayerUtils.getDuration());
                         mTimeTv.setText(minuteTime);
                     }
-                   /* try {
-                        Thread.sleep(500);
-                        Intent intent = getIntent();
-                        intent.putExtra("file", file);
-                        //intent.putExtra("time", mMediaRecorderUtils.timeVoice(mVoiceRecordTime.getText().toString().trim()));
-                        setResult(VoiceActivity.PLAY_RECORD_TAG, intent);
-                        finish();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }*/
                     break;
                 case ERROR_TAG:
                     Toast.makeText(VoiceActivity.this, msg.obj + "", Toast.LENGTH_SHORT).show();
@@ -154,7 +139,8 @@ public class VoiceActivity extends BaseActivity implements View.OnClickListener,
         chronometer = (Chronometer) findViewById(R.id.time_display);
         chronometer.setOnChronometerTickListener(tickListener);
         micIcon = (ImageView) findViewById(R.id.mic_icon);
-        mic = (TextView) findViewById(R.id.tv_mic);
+        mic = (RelativeLayout) findViewById(R.id.tv_mic);
+        tv_press = findViewById(R.id.tv_press);
         navigationLayout = findViewById(R.id.navigation);
         navigationLayout.setRightClick(new View.OnClickListener() {
             @Override
@@ -320,7 +306,8 @@ public class VoiceActivity extends BaseActivity implements View.OnClickListener,
 
     private void stopAnim() {
         audioLayout.setVisibility(View.GONE);
-        mic.setBackground(getResources().getDrawable(R.drawable.mic_bg));
+        //tv_press.setText("重新录制");
+        //mic.setBackground(getResources().getDrawable(R.drawable.mic_bg));
         chronometer.stop();
     }
 

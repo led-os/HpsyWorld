@@ -180,8 +180,20 @@ public class MediaRecorderUtilsAmr {
      * 清空mMediaRecorder
      */
     private void clearRecorder() {
-        if (null != mMediaRecorder) {
+        /*if (null != mMediaRecorder) {
             mMediaRecorder.stop();
+            mMediaRecorder.release();
+            mMediaRecorder = null;
+        }*/
+        if (mMediaRecorder != null) {
+            try {
+                mMediaRecorder.stop();
+            } catch (IllegalStateException e) {
+                //  如果当前java状态和jni里面的状态不一致，
+                //e.printStackTrace();
+                mMediaRecorder = null;
+                mMediaRecorder = new MediaRecorder();
+            }
             mMediaRecorder.release();
             mMediaRecorder = null;
         }

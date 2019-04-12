@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
@@ -50,8 +51,13 @@ public class StartupPageActivity extends BaseActivity implements Animation.Anima
         return null;
     }
 
+    private boolean needImmersive() {
+        return false;
+    }
+
     @Override
     protected int getLayoutID() {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         return R.layout.activity_startup;
     }
 
@@ -84,23 +90,25 @@ public class StartupPageActivity extends BaseActivity implements Animation.Anima
                         .into(splashImage);
             }
 
-            Animation animation = new ScaleAnimation(1.0f, 1.0f, 1.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0); // 将图片放大1.2倍，从中心开始缩放
+            /*Animation animation = new ScaleAnimation(1.0f, 1.0f, 1.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0); // 将图片放大1.2倍，从中心开始缩放
             animation.setDuration(showtime * 1000); // 动画持续时间
             animation.setFillAfter(true); // 动画结束后停留在结束的位置
             animation.setAnimationListener(this);
-            splashImage.startAnimation(animation);
+            splashImage.startAnimation(animation);*/
+            requestLocationPermission();
 
         } else {
             //默认启动页
-            Glide.with(StartupPageActivity.this)
+            /*Glide.with(StartupPageActivity.this)
                     .load(R.drawable.bg_start)
-                    .into(splashImage);
+                    .into(splashImage);*/
 
-            Animation animation = new ScaleAnimation(1.0f, 1.1f, 1.0f, 1.1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); // 将图片放大1.2倍，从中心开始缩放
+           /* Animation animation = new ScaleAnimation(1.0f, 1.1f, 1.0f, 1.1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); // 将图片放大1.2倍，从中心开始缩放
             animation.setDuration(SPLASH_TIME_OUT); // 动画持续时间
             animation.setFillAfter(true); // 动画结束后停留在结束的位置
             animation.setAnimationListener(this);
-            splashImage.startAnimation(animation);
+            splashImage.startAnimation(animation);*/
+            requestLocationPermission();
         }
 
         getSts();
@@ -136,7 +144,7 @@ public class StartupPageActivity extends BaseActivity implements Animation.Anima
 
     @Override
     public void onAnimationEnd(Animation animation) {
-        requestLocationPermission();
+        //requestLocationPermission();
     }
 
     private void requestLocationPermission() {

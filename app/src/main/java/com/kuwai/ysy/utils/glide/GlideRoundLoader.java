@@ -42,14 +42,14 @@ public class GlideRoundLoader extends ImageLoader {
 //        imageView.setImageURI(uri);
     }
 
-    @Override
+   /* @Override
     public ImageView createImageView(Context context) {
         //使用fresco，需要创建它提供的ImageView，当然你也可以用自己自定义的具有图片加载功能的ImageView
         NiceImageView simpleDraweeView = new NiceImageView(context);
         //simpleDraweeView.setCornerRadius(Utils.dp2px(10));
         return simpleDraweeView;
     }
-
+*/
    /* @Override
     public void displayImage(Context context, Object path, ImageView imageView) {
         *//**

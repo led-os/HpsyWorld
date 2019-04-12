@@ -24,6 +24,7 @@ import com.kuwai.ysy.module.circle.api.CircleApiFactory;
 import com.kuwai.ysy.module.circle.bean.UnreadBean;
 import com.kuwai.ysy.module.circle.business.TreeHoleMain.TreeHoleMainFragment;
 import com.kuwai.ysy.module.circle.business.dongtai.DongtaiMainFragment;
+import com.kuwai.ysy.module.circletwo.HoleListTwoFragment;
 import com.kuwai.ysy.utils.EventBusUtil;
 import com.kuwai.ysy.utils.Utils;
 import com.kuwai.ysy.widget.pageitem.RoundMessageView;
@@ -97,7 +98,7 @@ public class DongtaiFragment extends BaseFragment implements View.OnClickListene
         list_Title = new ArrayList<>();
         fragmentList.add(DongtaiMainFragment.newInstance(TYPE_DY_ALL));
         fragmentList.add(DongtaiMainFragment.newInstance(TYPE_DY_FRIEND));
-        fragmentList.add(TreeHoleMainFragment.newInstance());
+        fragmentList.add(new HoleListTwoFragment());
         list_Title.add("动态");
         list_Title.add("好友");
         list_Title.add("树洞");
@@ -124,7 +125,7 @@ public class DongtaiFragment extends BaseFragment implements View.OnClickListene
                     ((TextView) view).setTextColor(ContextCompat.getColor(mContext, R.color.theme));
                 }
 
-                switch (tab.getPosition()) {
+                /*switch (tab.getPosition()) {
                     case 0:
                         //设置状态栏为黑色
                         //StatusBarUtil.setColor(getActivity(), getResources().getColor(R.color.transparent), 0);
@@ -146,7 +147,7 @@ public class DongtaiFragment extends BaseFragment implements View.OnClickListene
                         mBgLay.setBackgroundColor(getResources().getColor(R.color.black));
                         StatusBarUtil.setDarkMode(getActivity());
                         break;
-                }
+                }*/
             }
 
             @Override
@@ -189,11 +190,11 @@ public class DongtaiFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         if (getActivity() != null) {
-            if (!isVisibleToUser) {
+           /* if (!isVisibleToUser) {
                 StatusBarUtil.setLightMode(getActivity());
             } else if (mTabLayout.getSelectedTabPosition() == 2) {
                 StatusBarUtil.setDarkMode(getActivity());
-            }
+            }*/
             if (isVisibleToUser) {
                 if (!Utils.isNullString(SPManager.get().getStringValue("uid"))) {
                     getUnreadData();

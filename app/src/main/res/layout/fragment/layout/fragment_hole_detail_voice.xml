@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.NavigationLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title1="树洞详情"></com.kuwai.ysy.widget.NavigationLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/navigation">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:background="@drawable/shape_elevation_radius"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <com.allen.library.CircleImageView
+                    android:id="@+id/img_head"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:src="@drawable/icon" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_toRightOf="@id/img_head"
+                    android:text="有人和我聊聊吗 最近很压抑"
+                    android:textColor="#ff666666"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/tv_title"
+                    android:layout_below="@id/tv_title"
+                    android:layout_marginTop="4dp"
+                    android:text="发布于一小时前"
+                    android:textColor="#ff808080"
+                    android:textSize="10sp" />
+            </RelativeLayout>
+
+            <include
+                android:id="@+id/lay_voice"
+                layout="@layout/layout_voice" />
+
+            <TextView
+                android:id="@+id/tv_money"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#1a52bbff"
+                android:gravity="center"
+                android:text="本文赏金20桃花币 未发放"
+                android:textColor="#ff52bbff"
+                android:textSize="14sp" />
+
+            <View
+                style="@style/horizontal_line"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="12dp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rc_voice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <com.allen.library.SuperButton
+            android:id="@+id/btn_talk"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="14dp"
+            android:layout_weight="1"
+            android:text="按住说话"
+            android:textColor="#66000000"
+            android:textSize="13sp"
+            app:sCornersRadius="20dp"
+            app:sSolidColor="#0d000000" />
+
+        <ImageView
+            android:id="@+id/img_anony"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="6dp"
+            android:src="@drawable/center_vip_ic_zanshi" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="匿名用户"
+            android:textColor="#ff52bbff"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <View
+        style="@style/horizontal_line"
+        android:layout_above="@id/bottom" />
+</RelativeLayout>

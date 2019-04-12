@@ -15,6 +15,7 @@ import com.kuwai.ysy.app.C;
 import com.kuwai.ysy.bean.MessageEvent;
 import com.kuwai.ysy.common.BaseActivity;
 import com.kuwai.ysy.common.BaseFragment;
+import com.kuwai.ysy.module.circletwo.HoleVoiceDetailActivity;
 import com.kuwai.ysy.module.circletwo.VoiceActivity;
 import com.kuwai.ysy.module.findtwo.MyActActivity;
 import com.kuwai.ysy.module.findtwo.MyDateActivity;
@@ -61,7 +62,7 @@ public class MineLoginTwoFragment extends BaseFragment<MinePresenter> implements
     private LinearLayout mGrid1;
     private LCardView top_lay;
     private TextView mTvClose;
-    private TextView mTvVisitor,tv_photo;
+    private TextView mTvVisitor,tv_photo,tv_hole;
     private LinearLayout ll_score, ll_wallet, ll_auth, ll_vip;
     private TextView mTvHomepage;
     private View mLine1;
@@ -94,6 +95,7 @@ public class MineLoginTwoFragment extends BaseFragment<MinePresenter> implements
         mTvAuth = mRootView.findViewById(R.id.tv_auth);
         mTvName = mRootView.findViewById(R.id.tv_name);
         mVipTv = mRootView.findViewById(R.id.tv_vip);
+        tv_hole = mRootView.findViewById(R.id.tv_hole);
         ll_auth = mRootView.findViewById(R.id.ll_auth);
         ll_vip = mRootView.findViewById(R.id.ll_vip);
         mTvId = mRootView.findViewById(R.id.tv_id);
@@ -119,6 +121,7 @@ public class MineLoginTwoFragment extends BaseFragment<MinePresenter> implements
         mImgSetting.setOnClickListener(this);
         ll_score.setOnClickListener(this);
         ll_wallet.setOnClickListener(this);
+        tv_hole.setOnClickListener(this);
         mTvVisitor.setOnClickListener(this);
         mTvHomepage.setOnClickListener(this);
         mTvGift.setOnClickListener(this);
@@ -198,6 +201,9 @@ public class MineLoginTwoFragment extends BaseFragment<MinePresenter> implements
                 break;
             case R.id.tv_photo:
                 startActivity(new Intent(getActivity(), VoiceActivity.class));
+                break;
+            case R.id.tv_hole:
+                startActivity(new Intent(getActivity(), HoleVoiceDetailActivity.class));
                 break;
         }
     }

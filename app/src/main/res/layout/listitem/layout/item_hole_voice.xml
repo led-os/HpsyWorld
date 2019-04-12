@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.allen.library.CircleImageView
+            android:id="@+id/img_head"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:src="@drawable/icon" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:text="夜礼服假面"
+            android:textColor="#ff666666"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/img_sex"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:scaleType="center"
+            android:src="@drawable/home_icon_male" />
+
+        <TextView
+            android:id="@+id/tv_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="26"
+            android:textColor="#ff888888"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/img_vip"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginLeft="4dp"
+            android:src="@drawable/mine_icon_diamond_s" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="4dp"
+            android:src="@drawable/dyn_dc_ic_like_nor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="199"
+            android:textColor="#ff888888"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="34dp">
+
+        <include layout="@layout/layout_voice" />
+    </LinearLayout>
+
+</LinearLayout>

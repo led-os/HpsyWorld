@@ -27,7 +27,7 @@
                 android:focusableInTouchMode="true"
                 android:layout_below="@+id/rl_search"></com.youth.banner.Banner>
 
-           <!-- <com.kuwai.ysy.widget.ViewPagerIndicator
+            <!--<com.kuwai.ysy.widget.ViewPagerIndicator
                 android:id="@+id/indicator_line"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"

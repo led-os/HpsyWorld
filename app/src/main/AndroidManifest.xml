@@ -134,6 +134,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".module.circletwo.PublishHoleTwoActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".module.circletwo.HoleVoiceDetailActivity"
+            android:screenOrientation="portrait"/>
 
         //发现
         <activity

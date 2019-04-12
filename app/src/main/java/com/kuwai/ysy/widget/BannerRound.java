@@ -366,10 +366,10 @@ public class BannerRound extends FrameLayout implements OnPageChangeListener {
             } else {
                 url = imagesUrl.get(i - 1);
             }
-            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(66, 27);
+            /*ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(66, 27);
             params.width = Utils.getScreenWidth() - Utils.dp2px(100);
-            params.height = params.width * 27 / 66;
-            imageView.setLayoutParams(params);
+            params.height = params.width;
+            imageView.setLayoutParams(params);*/
             imageViews.add(imageView);
             if (imageLoader != null)
                 imageLoader.displayImage(context, url, imageView);

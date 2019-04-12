@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/line_color"
+    android:orientation="vertical">
+
+    <com.kuwai.ysy.widget.BannerRound
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"></com.kuwai.ysy.widget.BannerRound>
+
+    <com.kuwai.ysy.widget.ViewPagerIndicator
+        android:id="@+id/indicator_line"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        app:vpi_default_color="#4d5FBEFF"
+        app:vpi_distance="12dp"
+        app:vpi_distanceType="BY_DISTANCE"
+        app:vpi_indicatorType="CIRCLE"
+        app:vpi_length="14dp"
+        android:background="#15ff00ff"
+        app:vpi_radius="3dp"
+        app:vpi_selected_color="@color/theme" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:background="@drawable/shape_elevation_radius"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rl_hole"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+</LinearLayout>
